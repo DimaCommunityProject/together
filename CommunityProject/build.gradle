@@ -24,6 +24,9 @@ repositories {
 }
 
 dependencies {
+
+    // 메일 보내는 디펜던시 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
