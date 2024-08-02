@@ -13,7 +13,53 @@
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
 		$(function () {
-			$("#userId").on('keyup', checkId)
+			$("#memberId").on('keyup', checkId)
+			$("#memberPw").on('keyup', checkPw)
+			$("#memberPw2").on('keyup', pwDoubleCheck)
+			$("#sendEmail").on('click', function () {
+				let memberId = $("#memberId").val();
+				let memberPw = $("#memberPw").val();
+				let memberName = $("#memberName").val();
+				let memberGroup = $("#memberGroup").val();
+				let memberPhone = $("#memberPhone").val();
+				let memberEmail = $("#memberEmail").val();
+				let memberEnabled = $("#memberEnabled").val();
+				let memberRole = $("#memberRole").val();
+				$.ajax({
+					url: "email/send",
+					method: "POST",
+					data: {
+						memberId: memberId, memberPw: memberPw, memberName: memberName
+						, memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail
+						, memberEnabled: memberEnabled, memberRole: memberRole
+					},
+					success: function (resp) {
+						if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.")
+						else alert("메일을 성공적으로 전송했습니다.")
+					}
+				})
+			})
+			$("#verifyCode").on('click', function () {
+				if (!$("#termsCheckbox").is(':checked')) {
+					alert("약관 동의에 체크해주세요");
+					return;
+				}
+				let myVerifyCode = $("#myVerifyCode").val();
+				let myEmail = $("#memberEmail");
+				$.ajax({
+					url: "email/verifyCode"
+					, method: "GET"
+					, data: { memberVerifyCode: myVerifyCode, memberEmail: myEmail }
+					, success: function (resp) {
+						if (!resp) alert("본인인증에 실패하였습니다. 다시한번 시도해주세요.")
+						else {
+							$("#maintainJoinPage").text = "";
+							$("#closeJoinPage").prop('type', "submit");
+							alert("본인인증에 성공했습니다. ");
+						}
+					}
+				})
+			})
 
 		});
 
@@ -36,6 +82,47 @@
 			})
 		};
 
+		function checkPw() {
+			let pw = $("#memberPw").val();
+			if (id.trim().length < 8 || id.trim().length > 15) {
+				$("#checkPw").css("color", "red");
+				$("#checkPw").val("비밀번호는 8~15자리로 설정해주세요.");
+			}
+			$("#checkPw").val("");
+		}
+
+		function pwDoubleCheck() {
+			let pw = $("#memberPw").val();
+			let pw2 = $("#memberPw2").val();
+			if (pw.trim() != pw2.trim()) {
+				$("#pwDoubleCheck").css("color", "red");
+				$("#pwDoubleCheck").val("비밀번호가 일치하지 않습니다.");
+			} else {
+				$("#pwDoubleCheck").css("color", "black");
+				$("#pwDoubleCheck").val("비밀번호가 일치합니다.");
+			}
+		}
+
+		function checkPhone() {
+			let phone = $("#memberPhone").val();
+			if (phone.trim().length != 11) {
+				$("#checkPhone").css("color", "red");
+				$("#checkPhone").val("전화번호는 '-'를 포함하여 13자리 입니다.");
+			}
+		}
+
+		function checkEmail() {
+			let email = $("#memberEmail").val();
+			if (email === "") {
+				$("#checkEmail").html("이메일은 필수값입니다.<br>");
+			} else if (email.indexOf("@") === -1) {
+				$("#checkEmail").html("올바른 이메일 형식으로 입력해주세요.");
+			} else {
+				$("#checkEmail").html(null);
+			}
+
+		}
+
 	</script>
 </head>
 
@@ -48,7 +135,7 @@
 	</div> <!-- .container 끝 -->
 
 	<div class="content">
-		<form th:action="@{/user/joinProc}" method="POST">
+		<form action="member/joinProc" method="get">
 			<div class="section pointColor">
 				<div class="article">
 					<ul>
@@ -59,22 +146,51 @@
 						</li>
 						<li>
 							<i class="fa-solid fa-lock"></i>
-							<input type="password" name="userPwd" placeholder="Password">
+							<input type="password" name="memberPw" id="memberPw" placeholder="Password">
+							<span id="checkPw"></span>
+
+							<p>비밀번호 중복 체크</p>
+							<input type="password" name="memberPw2" id="memberPw2">
+							<span id="pwDoubleCheck"></span>
 						</li>
 						<li>
 							<i class="fa-solid fa-user"></i>
-							<input type="text" name="userName" placeholder="Name">
+							<input type="text" name="memberName" id="memberName" placeholder="실명으로 작성해주세요">
+						</li>
+						<li>
+							<select name="memberGroup" id="memberGroup">
+								<option value="1기">1기</option>
+								<option value="2기">2기</option>
+								<option value="3기">3기</option>
+								<option value="4기">4기</option>
+							</select>
+						</li>
+						<li>
+							<input type="text" name="mamberPhone" id="memberPhone"
+								placeholder="000-0000-0000 형식으로 작성해주세요">
+							<span id="checkPhone"></span>
 						</li>
 						<li>
 							<i class="fa-solid fa-envelope"></i>
 							<input type="email" name="email" placeholder="Email">
+							<span id="checkEmail"></span>
+						</li>
+						<input type="hidden" name="memberEnabled" id="memberEnabled" value="N">
+						<input type="hidden" name="memberRole" id="memberRole" value="USER">
+						<div class="agree-check">
+							<input type="checkbox" class="checkbox" id="termsCheckbox" />
+							이용약관 개인정보 수집 및 이용약관에 모두 동의합니다.
+						</div>
+
+						<li>
+							<input type="button" value="이메일로 본인인증" id="sendEmail">
+							<input type="text" value="인증번호를 입력해주세요" id="myVerifyCode" name="myVerifyCode">
+							<input type="button" value="인증하기" id="verifyCode">
 						</li>
 					</ul>
 
-					<div class="btns">
-						<input type="submit" id="submitBtn" value="회원가입" class="btn btn-primary">
-						<input type="reset" id="resetBtn" value="초기화" class="btn btn-secondary">
-					</div>
+					<input type="hidden" id="closeJoinPage" value="회원가입 완료하기">
+					<span id="maintainJoinPage">본인인증을 완료해 주세요.</span>
 				</div>
 			</div>
 		</form>

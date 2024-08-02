@@ -15,22 +15,19 @@ public class MemberController {
 
     @GetMapping("/join")
     public String join() {
-        return "member/join";
+        return "join";
     }
 
-    @PostMapping("/joinProc")
-    public String joinProc(Member member) {
+    @GetMapping("/joinProc")
+    public String joinProc() {
 
         return "main";
     }
 
     @GetMapping("checkDuplicate")
     public boolean checkDuplicate(String id) {
-        try {
-            memberService.findById(id);
-        } catch (Exception e) {
-            return true;// 사용가능한 id
-        }
-        return false;// 사용불가능한 id
+        boolean result = memberService.findByIdThroughConn(id);
+
+        return result;
     }
 }

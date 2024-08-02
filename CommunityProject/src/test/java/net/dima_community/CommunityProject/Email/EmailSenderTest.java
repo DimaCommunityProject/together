@@ -25,12 +25,9 @@ public class EmailSenderTest {
                 .content("인증번호는 1234입니다.")
                 .build();
         // when
-        String result = "Fail";
-        try {
-            result = emailSender.sendMail(email);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        boolean result = false;
+        result = emailSender.sendMail(email);
+
         // then
         assertThat(result).isEqualTo("Success");
     }

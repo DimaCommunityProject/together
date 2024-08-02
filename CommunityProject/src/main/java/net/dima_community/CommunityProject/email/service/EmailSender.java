@@ -28,7 +28,7 @@ public class EmailSender {
         this.mailSender = javaMailSender;
     }
 
-    public String sendMail(Email email) throws MessagingException {
+    public boolean sendMail(Email email) {
         SimpleMailMessage message = new SimpleMailMessage();
         log.info(email.toString());
         message.setTo(email.getTo());
@@ -36,7 +36,13 @@ public class EmailSender {
         message.setSubject(email.getTitle());
         message.setText(email.getContent());
 
-        mailSender.send(message);
-        return "Success";
+        try {
+            mailSender.send(message);
+        } catch (Exception e) {
+            e.getStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

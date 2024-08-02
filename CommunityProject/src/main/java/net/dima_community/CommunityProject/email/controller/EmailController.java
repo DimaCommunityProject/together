@@ -3,7 +3,9 @@ package net.dima_community.CommunityProject.email.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class EmailController {
     private final VerifyRandomCodeHolder verifyRandomCodeHolder;
     private final MemberService memberService;
 
+    @ResponseBody
     @PostMapping("/send")
     public boolean send(Member member) throws MessagingException {
         Member newMember = memberService.setEncodedPassword(member);
@@ -34,16 +37,18 @@ public class EmailController {
                 .content("인증번호는 " + generatedString + " 입니다.")
                 .build();
 
-        emailSender.sendMail(email);
-        return true;
+        boolean result = emailSender.sendMail(email);
+        return result;
     }
 
+    @ResponseBody
     @GetMapping("/verifyCode")
     public boolean verifyCode(String to, String code) {
         boolean result = memberService.verifyMemberByCode(to, code);
         return result;
     }
 
+    @ResponseBody
     @GetMapping("/approve")
     public boolean approve(String id, String to) {
         memberService.approve(id);
@@ -60,6 +65,7 @@ public class EmailController {
         return true;
     }
 
+    @ResponseBody
     @GetMapping("/refuse")
     public boolean refuse(String id, String to) {
         Email email = Email.builder()
