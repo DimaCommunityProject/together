@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.port.VerifyRandomCodeHolder;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
@@ -16,8 +18,9 @@ import net.dima_community.CommunityProject.member.domain.Member;
 import net.dima_community.CommunityProject.member.service.MemberService;
 
 @Controller
-@RequestMapping("email")
+@RequestMapping("/email")
 @RequiredArgsConstructor
+@Slf4j
 public class EmailController {
 
     private final EmailSender emailSender;
@@ -26,9 +29,11 @@ public class EmailController {
 
     @ResponseBody
     @PostMapping("/send")
-    public boolean send(Member member) throws MessagingException {
+    public boolean send(@RequestBody Member member) throws MessagingException {
         Member newMember = memberService.setEncodedPassword(member);
         String generatedString = verifyRandomCodeHolder.setRandomCode();
+        log.info(newMember.toString());
+
         // member 가저장..
         memberService.saveMemberWithVerificationCode(newMember, generatedString);
         Email email = Email.builder()
@@ -43,7 +48,8 @@ public class EmailController {
 
     @ResponseBody
     @GetMapping("/verifyCode")
-    public boolean verifyCode(String to, String code) {
+    public boolean verifyCode(@RequestParam(name = "memberEmail") String to,
+            @RequestParam(name = "memberVerifyCode") String code) {
         boolean result = memberService.verifyMemberByCode(to, code);
         return result;
     }

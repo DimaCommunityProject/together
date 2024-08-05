@@ -67,7 +67,7 @@ public class MemberService {
         }
         Member member = result.get();
         if (!code.equals(member.getMemberVerifyCode())) {
-            memberRepository.delete(member);
+            // memberRepository.delete(member);
             return false;
         }
         return true;
