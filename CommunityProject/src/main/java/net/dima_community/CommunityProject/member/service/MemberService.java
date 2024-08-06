@@ -8,8 +8,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
-
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.common.infra.DBConnector;

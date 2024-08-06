@@ -2,9 +2,11 @@ package net.dima_community.CommunityProject.member.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 
 @Getter
+@ToString
 public class Member {
 
     public String memberId;
@@ -34,6 +36,10 @@ public class Member {
     public String memberResume;
 
     public String memberVerifyCode;
+
+    public Member() {
+
+    }
 
     @Builder
     public Member(String memberId, String memberPw, String memberEnabled, String memberRole, String memberName,

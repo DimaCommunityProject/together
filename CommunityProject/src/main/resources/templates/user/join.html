@@ -29,6 +29,7 @@
 				$.ajax({
 					url: "/email/send",
 					method: "POST",
+					contentType: 'application/json',
 					data: JSON.stringify({
 						memberId: memberId, memberPw: memberPw, memberName: memberName
 						, memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail
@@ -46,9 +47,9 @@
 					return;
 				}
 				let myVerifyCode = $("#myVerifyCode").val();
-				let myEmail = $("#memberEmail");
+				let myEmail = $("#memberEmail").val();
 				$.ajax({
-					url: "email/verifyCode"
+					url: "/email/verifyCode"
 					, method: "GET"
 					, data: { memberVerifyCode: myVerifyCode, memberEmail: myEmail }
 					, success: function (resp) {
@@ -178,7 +179,7 @@
 						</li>
 						<li>
 							<i class="fa-solid fa-envelope"></i>
-							<input type="email" name="email" placeholder="Email">
+							<input type="email" name="memberEmail" id="memberEmail" placeholder="Email">
 							<span id="checkEmail"></span>
 						</li>
 						<input type="hidden" name="memberEnabled" id="memberEnabled" value="N">
