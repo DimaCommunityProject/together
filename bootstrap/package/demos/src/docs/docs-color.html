@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
+  data-boxed-layout="boxed">
+<head>
+  @@include("../main/partials/head.html")
+  <title>Modernize Bootstrap Admin</title>
+
+  <link rel="stylesheet" href="@@webRoot/node_modules/prismjs/themes/prism-okaidia.min.css" />
+</head>
+<body>
+
+  <!-- ============================================================== -->
+  <!-- Main wrapper - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!--Desktop view sidebar menu-->
+    <aside class="left-sidebar with-vertical">
+      @@include("./partials/sidebar.html")
+    </aside>
+
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+      <!-- ============================================================== -->
+      <!-- Topbar header - style you can find in pages.scss -->
+      <!-- ============================================================== -->
+      <header class="topbar position-relative">
+        <div class="navbar navbar-header bg-white d-flex align-items-center justify-content-between p-3 fixed-top">
+          <!-- ============================================================== -->
+          <!-- Toggle which is visible on mobile only -->
+          <!-- ============================================================== -->
+          <!-- Logo icon -->
+          <a href="index.html">
+            <b class="logo-icon d-xl-none d-block">
+              <!-- Dark Logo icon -->
+              <img src="@@webRoot/assets/images/logos/dark-logo.svg" alt="homepage" class="dark-logo" />
+            </b>
+            <!--End Logo icon -->
+          </a>
+          <div class="d-flex align-items-center">
+            <!---Mobile view canvas button--->
+            <a class="fs-8 text-muted d-xl-none d-block sidebartoggler" href="javascript:void(0)" role="button">
+              <i class="ti ti-menu-2"></i>
+            </a>
+          </div>
+        </div>
+      </header>
+      <!-- ============================================================== -->
+      <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="body-wrapper" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true"
+        tabindex="0">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid mt-4">
+          <div class="mt-5">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <h4 class="mb-4 pb-2 fs-5">Color</h4>
+            <div class="mt-4 card">
+              <div class="card-body">
+                <h4 class="card-title">1. Override Colors</h4>
+                <h5 class="card-subtitle mt-2 text-muted mb-4">
+                  For any change in colors :
+                  <span class="text-dark fw-bold">scss/variable.scss</span>
+                </h5>
+                <pre style="height: 500px;">
+                  <code class="language-css">
+// colors
+$white: #fff !default;
+$gray-100: #f6f9fc !default;
+$gray-200: #eaeff4 !default;
+$gray-300: #dfe5ef !default;
+$gray-400: #7c8fac !default;
+$gray-500: #5a6a85 !default;
+$gray-600: #2a3547 !default;
+$black: #000 !default;
+
+// Color
+$blue: #5d87ff !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #d63384 !default;
+$red: #fa896b !default;
+$orange: #fd7e14 !default;
+$yellow: #ffae1f !default;
+$green: #13deb9 !default;
+$teal: #20c997 !default;
+$cyan: #539bff !default;
+
+// Main Colors
+$primary: $blue !default;
+$secondary: #49beff !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$muted: $gray-500 !default;
+$dark: $gray-600 !default;
+$dark-light: $gray-600 !default;
+$light-gray: $gray-100 !default;
+$light-indigo: #ebf3fe;
+
+// light colors
+$primary-bg-subtle: #ecf2ff !default;
+$secondary-bg-subtle: #e8f7ff !default;
+$success-bg-subtle: #e6fffa !default;
+$info-bg-subtle: #ebf3fe !default;
+$warning-bg-subtle: #fef5e5 !default;
+$danger-bg-subtle: #fbf2ef !default;
+$light-bg-subtle: $gray-100 !default;
+$dark-bg-subtle: $gray-600 !default;
+                  </code>
+              </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Page wrapper  -->
+      <!-- ============================================================== -->
+    </div>
+  </div>
+  <div class="dark-transparent sidebartoggler"></div>
+  <!-- ============================================================== -->
+  <!-- End Wrapper -->
+  <!-- ============================================================== -->
+  <!-- End Page -->
+  <!-- ============================================================== -->
+  <!-- All Jquery -->
+  <!-- ============================================================== -->
+  @@include("../docs/partials/scripts.html")
+  <script src="@@webRoot/node_modules/prismjs/prism.js"></script>
+  <!-- End JS -->
+</body>
+</html>
