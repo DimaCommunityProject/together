@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:src="http://www.thymeleaf.org/extras/spring-security"   
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!--css  설정-->
+    <link rel="stylesheet" th:href="@{ /css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
+    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"><img th:src="@{/images/festival.png}" alt="로고"></a>
+            <h2>회원가입</h2>
+        </div>
+    </div><!--container 끝-->
+
+    <div class="content">
+        <form th:action="@{/member/joinProc}" method="POST">
+            <div class="section pointColor">
+                <div class="article">
+                    <ul>
+                        <li>
+                            <i class="fa-solid fa-id-card"></i>
+                            <input type="text" id="memberId" name="memberId" placeholder="ID">
+                            <br>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="memberPw" placeholder="Password">
+                            <br>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-user-tie"></i>
+                            <input type="text" name="memberName" placeholder="Name">
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <input type="email" name="memberEmail" placeholder="Email">
+                        </li>
+                    </ul>
+
+                    <div class="btns">
+                        <input type="submit" id="submitBtn" value="회원가입" class="btn btn-primary">
+                        <input type="reset" id="resetBtn" value="초기화" class="btn btn-secondary">
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

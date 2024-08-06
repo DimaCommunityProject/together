@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:src="http://www.thymeleaf.org/extras/spring-security"   
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 찾기</title>
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!--css  설정-->
+    <link rel="stylesheet" th:href="@{ /css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
+    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+
+    <script>
+        $(function(){
+            $("#find_Pw").on('click', findPw_click);
+        })
+
+        function find_Pw(){
+            let memberId = $('#memberId').val()
+            let memberName = $('#memberName').val()
+            let memberEmail = $('#memberEmail').val()
+
+            //이메일 유효성 검사
+            let emailPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            if (!emailPattern.test(memberEmail)){
+                $("#confirmEmail").css("color", "red");
+                $('#confirmEmail').html("이메일 형식을 다시 확인하세요.");
+                $("#memberEmail").val('');
+                return;
+            }
+            if(memberName.trim().length == 0) {
+                $("#confirmName").css("color", "red");
+                $("#confirmName").html("이름을 입력하세요.");
+                return;
+            }
+            if(memberId.trim().length == 0) {
+                $("#confirmId").css("color", "red");
+                $("#confirmId").html("아이디를 입력하세요.");
+                return;
+            }
+
+            // $.ajax({
+            //     url : "/member/findPw"
+            //     , type : "POST"
+            //     , data : {"memberName" : memberName, "memberEmail":memberEmail, "memberId":memberId}
+            //     , success : function(data){
+            //         alert
+            //     }
+            // });
+        }//end find_Pw
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"><img th:src="@{/images/festival.png}" alt="로고"></a>
+            <h2>비밀번호 찾기</h2>
+        </div>
+    </div><!--container 끝-->
+
+    <div class="content">
+        <form th:action="@{/member/findPwResult}" method="POST">
+            <div class="section pointColor">
+                <div class="article">
+                    <ul>
+                        <li>
+                            <i class="fa-solid fa-user-tie"></i>
+                            <input type="text" id="memberId" name="memberId" placeholder="아이디를 입력해주세요">
+                            <span id="confirmId" style="font-size: 1em;"></span>
+                            <br>
+                            <br>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-user-tie"></i>
+                            <input type="text" id="memberName" name="memberName" placeholder="이름을 입력해주세요">
+                            <span id="confirmName" style="font-size: 1em;"></span>
+                            <br>
+                            <br>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <input type="email" id="memberEmail" name="memberEmail" placeholder="이메일을 입력해주세요">
+                            <span id="confirmEmail" style="font-size: 1em;"></span>
+                            <br>
+                            <br>
+                        </li>
+                    </ul>
+
+                    <div class="btns">
+                        <!-- <button type="button" id='find_id' onclick="findId_click()" >아이디 찾기</button> -->
+                        <input type="submit" id="find_Pw" value="비밀번호 찾기" class="btn btn-primary">
+                        <a th:href="@{/member/findId}" class="btn btn-secondary">아이디 찾기</a>
+                        <a th:href="@{/member/login}" class="btn btn-secondary">로그인 하기</a>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
