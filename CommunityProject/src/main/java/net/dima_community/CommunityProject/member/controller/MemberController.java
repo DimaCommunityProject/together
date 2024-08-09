@@ -16,7 +16,7 @@ public class MemberController {
 
     @GetMapping("/join")
     public String join() {
-        return "user/join";
+        return "authentication-register2";
     }
 
     @GetMapping("/joinProc")
