@@ -1,13 +1,21 @@
 package net.dima_community.CommunityProject.member.infra;
 
+import org.hibernate.mapping.OneToMany;
+import org.springframework.core.annotation.Order;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
+import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 import net.dima_community.CommunityProject.member.domain.Member;
 
 @Entity
@@ -38,15 +46,22 @@ public class MemberEntity {
 
     private String badge1;
     private String badge2;
-
-    @Column(name = "member_git")
-    private String memberGit;
-    @Column(name = "member_blog")
-    private String memberBlog;
-    @Column(name = "member_resume")
-    private String memberResume;
     @Column(name = "member_verify_code")
     private String memberVerifyCode;
+
+    /*
+     * MemberPage와 관계 설정
+     */
+    @jakarta.persistence.OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("memberpage_Seq asc")
+    private MemberPageEntity memberPageEntity;
+
+    /*
+     * MemberProject와 관계 설정
+     */
+    @jakarta.persistence.OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("memberproject_seq asc")
+    private MemberProjectEntity memberProjectEntity;
 
     public static MemberEntity from(Member member) {
         return MemberEntity.builder()
@@ -60,9 +75,6 @@ public class MemberEntity {
                 .memberEmail(member.getMemberEmail())
                 .badge1(member.getBadge1())
                 .badge2(member.getBadge2())
-                .memberGit(member.getMemberGit())
-                .memberBlog(member.getMemberBlog())
-                .memberResume(member.getMemberResume())
                 .memberVerifyCode(member.getMemberVerifyCode())
                 .build();
     }
@@ -79,9 +91,6 @@ public class MemberEntity {
                 .memberEmail(memberEmail)
                 .badge1(badge1)
                 .badge2(badge2)
-                .memberGit(memberGit)
-                .memberBlog(memberBlog)
-                .memberResume(memberResume)
                 .memberVerifyCode(memberVerifyCode)
                 .build();
     }
