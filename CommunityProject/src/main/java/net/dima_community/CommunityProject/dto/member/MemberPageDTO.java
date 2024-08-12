@@ -15,7 +15,7 @@ public class MemberPageDTO {
 
     public String memberSelfInfo;
 
-    public String memberInterst;
+    public String memberInterest;
 
     public String memberSkill;
 
@@ -24,4 +24,15 @@ public class MemberPageDTO {
     public String memberBlog;
 
     public String memberResume;
+
+    public MemberPageDTO update(MemberPageDTO memberPage) {
+        this.memberSelfInfo = memberPage.getMemberSelfInfo();
+        this.memberInterest = memberPage.getMemberInterest();
+        this.memberSkill = memberPage.getMemberSkill();
+        this.memberGit = memberPage.getMemberGit();
+        this.memberBlog = memberPage.getMemberBlog();
+        this.memberResume = memberPage.getMemberResume();
+
+        return this;
+    }
 }

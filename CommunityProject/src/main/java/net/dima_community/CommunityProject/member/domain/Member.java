@@ -75,5 +75,11 @@ public class Member {
 
     public void enabledToYes() {
         this.memberEnabled = Character.toString('Y');
+    }
+
+    public Member update(String memberName2, String memberEmail2) {
+        this.memberName = memberName2;
+        this.memberEmail = memberEmail2;
+        return this;
     };
 }

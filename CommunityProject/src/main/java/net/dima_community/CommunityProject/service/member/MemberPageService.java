@@ -12,8 +12,15 @@ import net.dima_community.CommunityProject.repository.member.MemberPageRepositor
 public class MemberPageService {
     public final MemberPageRepository memberPageRepository;
 
-    public MemberPageDTO findByUsername(Member member) {
-        return memberPageRepository.findByUsername(member);
+    public MemberPageDTO findByUsername(String memberId) {
+        return memberPageRepository.findByUsername(memberId);
+    }
+
+    public MemberPageDTO updatePage(Member updatedMember, MemberPageDTO memberPage) {
+        MemberPageDTO originalMemberPage = findByUsername(updatedMember.getMemberId());
+        MemberPageDTO updatedMemberPage = originalMemberPage.update(memberPage);
+        memberPageRepository.save(updatedMember, updatedMemberPage);
+        return updatedMemberPage;
     }
 
 }

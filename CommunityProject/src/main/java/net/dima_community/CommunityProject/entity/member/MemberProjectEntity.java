@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import lombok.Builder;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
 import net.dima_community.CommunityProject.member.domain.Member;
+import net.dima_community.CommunityProject.member.infra.MemberEntity;
 
 @Entity
 @Table(name = "memberproject")
@@ -28,7 +29,7 @@ public class MemberProjectEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private MemberEntity memberEntity;
 
     @Column(name = "project_title")
     private String projectTitle;
@@ -39,10 +40,10 @@ public class MemberProjectEntity {
     @Column(name = "project_git")
     private String projectGit;
 
-    public static MemberProjectEntity from(MemberProjectDTO memberProjectDTO, Member member) {
+    public static MemberProjectEntity from(MemberProjectDTO memberProjectDTO, MemberEntity memberEntity) {
         return MemberProjectEntity.builder()
                 .memberProjectSeq(memberProjectDTO.getMemberProjectSeq())
-                .member(member)
+                .memberEntity(memberEntity)
                 .projectTitle(memberProjectDTO.getProjectTitle())
                 .projectSubtitle(memberProjectDTO.getProjectSubtitle())
                 .projectGit(memberProjectDTO.getProjectGit())
@@ -52,7 +53,7 @@ public class MemberProjectEntity {
     public MemberProjectDTO toModel() {
         return MemberProjectDTO.builder()
                 .memberProjectSeq(memberProjectSeq)
-                .memberId(member.getMemberId())
+                .memberId(memberEntity.getMemberId())
                 .projectTitle(projectTitle)
                 .projectSubtitle(projectSubtitle)
                 .projectGit(projectGit)

@@ -5,6 +5,8 @@ import net.dima_community.CommunityProject.member.domain.Member;
 
 public interface MemberPageRepository {
 
-    MemberPageDTO findByUsername(Member member);
+    MemberPageDTO findByUsername(String memberId);
+
+    void save(Member updatedMember, MemberPageDTO updatedMemberPage);
 
 }

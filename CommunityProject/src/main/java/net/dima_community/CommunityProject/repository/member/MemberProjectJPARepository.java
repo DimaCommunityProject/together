@@ -6,4 +6,6 @@ import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 
 public interface MemberProjectJPARepository extends JpaRepository<MemberProjectEntity, Long> {
 
+    MemberProjectEntity findByMemberId(String memberId);
+
 }

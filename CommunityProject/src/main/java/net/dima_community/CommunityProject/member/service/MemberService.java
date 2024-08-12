@@ -83,4 +83,11 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Member updateMember(String memberId, String memberName, String memberEmail) {
+        Member member = findById(memberId);
+        Member updatedMember = member.update(memberName, memberEmail);
+        memberRepository.save(updatedMember);
+        return updatedMember;
+    }
+
 }

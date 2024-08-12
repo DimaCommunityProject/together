@@ -33,7 +33,7 @@ public class MemberPageEntity {
     private String memberSelfInfo;
 
     @Column(name = "member_interest")
-    private String memberInterst;
+    private String memberInterest;
 
     @Column(name = "member_skill")
     private String memberSkill;
@@ -52,7 +52,7 @@ public class MemberPageEntity {
                 .memberPageSeq(memberPage.getMemberPageSeq())
                 .memberEntity(memberEntity)
                 .memberSelfInfo(memberPage.getMemberSelfInfo())
-                .memberInterst(memberPage.getMemberInterst())
+                .memberInterest(memberPage.getMemberInterest())
                 .memberSkill(memberPage.getMemberSkill())
                 .memberGit(memberPage.getMemberGit())
                 .memberBlog(memberPage.getMemberBlog())
@@ -65,7 +65,7 @@ public class MemberPageEntity {
                 .memberPageSeq(memberPageSeq)
                 .memberId(memberEntity.getMemberId())
                 .memberSelfInfo(memberSelfInfo)
-                .memberInterst(memberInterst)
+                .memberInterest(memberInterest)
                 .memberSkill(memberSkill)
                 .memberGit(memberGit)
                 .memberBlog(memberBlog)
