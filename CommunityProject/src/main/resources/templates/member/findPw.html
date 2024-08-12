@@ -9,18 +9,18 @@
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--css  설정-->
-    <link rel="stylesheet" th:href="@{ /css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
-    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
+    <script th:src="@{/static/script/jquery-3.7.1.min.js}"></script>
 
     <script>
         $(function(){
             $("#find_Pw").on('click', findPw_click);
         })
 
-        function find_Pw(){
+        function findPw_click(){
             let memberId = $('#memberId').val()
-            let memberName = $('#memberName').val()
             let memberEmail = $('#memberEmail').val()
+            let memberName = $('#memberName').val()
 
             //이메일 유효성 검사
             let emailPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -30,16 +30,18 @@
                 $("#memberEmail").val('');
                 return;
             }
-            if(memberName.trim().length == 0) {
-                $("#confirmName").css("color", "red");
-                $("#confirmName").html("이름을 입력하세요.");
-                return;
-            }
             if(memberId.trim().length == 0) {
                 $("#confirmId").css("color", "red");
                 $("#confirmId").html("아이디를 입력하세요.");
                 return;
             }
+            if(memberName.trim().length == 0) {
+                $("#confirmName").css("color", "red");
+                $("#confirmName").html("이름을 입력하세요.");
+                return;
+            }
+            // 유효성 검사를 통과한 경우, 폼을 제출
+            $("#findPwForm").submit();
 
             // $.ajax({
             //     url : "/member/findPw"
@@ -49,20 +51,20 @@
             //         alert
             //     }
             // });
-        }//end find_Pw
+        };//end find_Pw
 
     </script>
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <a th:href="@{/}"><img th:src="@{/images/festival.png}" alt="로고"></a>
+            <a th:href="@{/}"><img th:src="@{/static/images/festival.png}" alt="로고"></a>
             <h2>비밀번호 찾기</h2>
         </div>
     </div><!--container 끝-->
 
     <div class="content">
-        <form th:action="@{/member/findPwResult}" method="POST">
+        <form th:action="@{/member/findPwResult}" method="POST" id="findPwForm">
             <div class="section pointColor">
                 <div class="article">
                     <ul>
@@ -91,7 +93,7 @@
 
                     <div class="btns">
                         <!-- <button type="button" id='find_id' onclick="findId_click()" >아이디 찾기</button> -->
-                        <input type="submit" id="find_Pw" value="비밀번호 찾기" class="btn btn-primary">
+                        <input type="button" id="find_Pw" value="비밀번호 찾기" class="btn btn-primary">
                         <a th:href="@{/member/findId}" class="btn btn-secondary">아이디 찾기</a>
                         <a th:href="@{/member/login}" class="btn btn-secondary">로그인 하기</a>
                     </div>

@@ -26,9 +26,6 @@ public class MemberDTO {
 	private String memberEmail;
 	private String badge1;
 	private String badge2;
-	private String memberGit;
-	private String memberBlog;
-	private String memberResume;
 	
 	public static MemberDTO toDTO(MemberEntity memberEntity) {
 		return MemberDTO.builder()
@@ -42,9 +39,6 @@ public class MemberDTO {
 			.memberEmail(memberEntity.getMemberEmail())
 			.badge1(memberEntity.getBadge1())
 			.badge2(memberEntity.getBadge2())
-			.memberGit(memberEntity.getMemberGit())
-			.memberBlog(memberEntity.getMemberBlog())
-			.memberResume(memberEntity.getMemberResume())
 			.build();
 	}
 

@@ -54,15 +54,6 @@ public class MemberEntity {
 	@Column(name="badge2")
 	private String badge2;
 	
-	@Column(name="member_git")
-	private String memberGit;
-	
-	@Column(name="member_blog")
-	private String memberBlog;
-	
-	@Column(name="member_resume")
-	private String memberResume;
-	
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()
 				.memberId(memberDTO.getMemberId())
@@ -75,9 +66,6 @@ public class MemberEntity {
 				.memberPhone(memberDTO.getMemberPhone())
 				.badge1(memberDTO.getBadge1())
 				.badge2(memberDTO.getBadge2())
-				.memberGit(memberDTO.getMemberGit())
-				.memberBlog(memberDTO.getMemberBlog())
-				.memberResume(memberDTO.getMemberResume())
 				.build();
 	}
 }

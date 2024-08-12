@@ -58,21 +58,27 @@ public class MemberService {
 		return id;
 	}
 	
-//	//사용자가 맞는지 확인
-//	public int PwCheck(MemberDTO memberDTO) {
-//	    log.info("Checking existence with parameters: memberId={}, memberName={}, memberEmail={}",
-//	             memberDTO.getMemberId(), memberDTO.getMemberName(), memberDTO.getMemberEmail());
+	//사용자가 맞는지 확인
+//	public int PwCheck(String memberEmail, String memberId) {
 //	    
-//		int pw = memberRepository.existsByMemberNameAndMemberEmailAndMemberId(memberDTO.getMemberId(), memberDTO.getMemberName(), memberDTO.getMemberEmail());
+//		int pw = memberRepository.findIdByMemberEmailAndMemberId(memberEmail, memberId);
 //		
 //		log.info("사용자 확인 레퍼지토리에서 찾아옴 : {}", pw);
 //		return pw;
 //	}
-//	
-//	//임시비번 암호화 후 업뎃
-//	public void PwUpdate(MemberDTO memberDTO) {
-//		String newPwUpdate = bCryptPasswordEncoder.encode(memberDTO.getMemberPw());	//임시비번 암호화
-//		memberDTO.setMemberPw(newPwUpdate);		
-//		memberRepository.PwUpdate(memberDTO.getMemberId(), newPwUpdate);			//업뎃
-//	}//end findmemId
+	
+	public int PwCheck(MemberDTO memberDTO) {
+	    
+		int pw = memberRepository.findIdByMemberEmailAndMemberId(memberDTO.getMemberEmail(), memberDTO.getMemberId());
+		
+		log.info("사용자 확인 레퍼지토리에서 찾아옴 : {}", pw);
+		return pw;
+	}
+	
+	//임시비번 암호화 후 업뎃
+	public void PwUpdate(MemberDTO memberDTO) {
+		String newPwUpdate = bCryptPasswordEncoder.encode(memberDTO.getMemberPw());	//임시비번 암호화
+		memberDTO.setMemberPw(newPwUpdate);		
+		memberRepository.PwUpdate(memberDTO.getMemberId(), newPwUpdate);			//업뎃
+	}//end findmemId
 }

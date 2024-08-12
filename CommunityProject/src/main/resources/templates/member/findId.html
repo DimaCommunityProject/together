@@ -10,8 +10,8 @@
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--css  설정-->
-    <link rel="stylesheet" th:href="@{ /css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
-    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
+    <script th:src="@{/static/script/jquery-3.7.1.min.js}"></script>
 
     <script>
         $(function(){
@@ -36,30 +36,30 @@
                 return;
             }
 
-            $.ajax({
-                url : "/member/findId"
-                , type : "POST"
-                , data : {"memberName" : memberName, "memberEmail":memberEmail}
-                , success : function(data){
-                    if(!data){
-                        alert("회원 정보를 확인해주세요!");
-                        $("#memberName").val('');
-                        $("#memberEmail").val('');
-                        $('#confirmEmail').html("");
-                        $('#confirmName').html("");
-                    } else{
-                        alert("회원님의 아이디를 확인해 주세요." + data);
-                        $("#memberName").val('');
-                        $("#memberEmail").val('');
-                        $('#confirmEmail').html("");
-                        $('#confirmName').html("");
-                    }
-                },
-                // AJAX 요청이 실패했을 때 호출되는 함수
-                error: function() {
-                    alert("에러입니다");
-                }
-            });
+            // $.ajax({
+            //     url : "/member/findId"
+            //     , type : "POST"
+            //     , data : {"memberName" : memberName, "memberEmail":memberEmail}
+            //     , success : function(data){
+            //         if(!data){
+            //             alert("회원 정보를 확인해주세요!");
+            //             $("#memberName").val('');
+            //             $("#memberEmail").val('');
+            //             $('#confirmEmail').html("");
+            //             $('#confirmName').html("");
+            //         } else{
+            //             alert("회원님의 아이디를 확인해 주세요." + data);
+            //             $("#memberName").val('');
+            //             $("#memberEmail").val('');
+            //             $('#confirmEmail').html("");
+            //             $('#confirmName').html("");
+            //         }
+            //     },
+            //     // AJAX 요청이 실패했을 때 호출되는 함수
+            //     error: function() {
+            //         alert("에러입니다");
+            //     }
+            // });
         };//end findId_click
 
     </script>
@@ -67,13 +67,13 @@
 <body>
     <div class="container">
         <div class="logo">
-            <a th:href="@{/}"><img th:src="@{/images/festival.png}" alt="로고"></a>
+            <a th:href="@{/}"><img th:src="@{/static/images/festival.png}" alt="로고"></a>
             <h2>아이디 찾기</h2>
         </div>
     </div><!--container 끝-->
 
     <div class="content">
-        <form th:action="@{/member/findId}" method="POST">
+        <form th:action="@{/member/findIdResult}" method="POST">
             <div class="section pointColor">
                 <div class="article">
                     <ul>
@@ -95,7 +95,7 @@
 
                     <div class="btns">
                         <!-- <button type="button" id='find_id' onclick="findId_click()" >아이디 찾기</button> -->
-                        <input type="button" id="find_id" value="아이디 찾기" class="btn btn-primary">
+                        <input type="submit" id="find_id" value="아이디 찾기" class="btn btn-primary">
                         <a th:href="@{/member/findPw}" class="btn btn-secondary">비밀번호 찾기</a>
                         <a th:href="@{/member/login}" class="btn btn-secondary">로그인 하기</a>
                     </div>
