@@ -1,5 +1,7 @@
 package net.dima_community.CommunityProject.repository.member;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,8 @@ public class MemberProjectRepositoryImpl implements MemberProjectRepository {
     public final MemberProjectJPARepository memberProjectJPARepository;
 
     @Override
-    public MemberProjectDTO findByUsername(String memberId) {
-        return memberProjectJPARepository.findByMemberId(memberId).toModel();
+    public Optional<MemberProjectDTO> findByUsername(String memberId) {
+        return memberProjectJPARepository.findByMemberId(memberId).map(entity -> entity.toModel());
     }
 
     @Override

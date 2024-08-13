@@ -61,6 +61,7 @@ public class MemberPageController {
         MemberPageDTO updatedMemberPage = memberPageService.updatePage(updatedMember, memberPage);
         MemberProjectDTO updatedMemberProject = memberProjectService.updateProject(updatedMember, memberProject);
 
-        return "redirect:/memberpage/showpage";
+        return null;
+        // return "redirect:/memberpage/showpage";
     }
 }

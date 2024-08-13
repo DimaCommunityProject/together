@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.member.domain.Member;
 import net.dima_community.CommunityProject.member.service.port.MemberRepository;
 
 @Repository
 @RequiredArgsConstructor
+@Builder
 public class MemberRepositoryImpl implements MemberRepository {
 
     public final MemberJpaRepository memberJpaRepository;

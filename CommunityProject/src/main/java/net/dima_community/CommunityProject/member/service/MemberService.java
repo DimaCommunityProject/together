@@ -8,14 +8,18 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
-import net.dima_community.CommunityProject.common.infra.DBConnector;
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
+import net.dima_community.CommunityProject.common.port.DBConnector;
 import net.dima_community.CommunityProject.member.domain.Member;
 import net.dima_community.CommunityProject.member.service.port.MemberRepository;
 
 @Service
+@Slf4j
+@Builder
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -27,6 +31,8 @@ public class MemberService {
     // SQL Injection 대비 PreparedStatement 사용
     public boolean findByIdThroughConn(String id) {
         Connection conn = dbConnector.getConnection();
+        if (conn != null)
+            log.info("conn 생성");
 
         String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
         try {
@@ -39,18 +45,20 @@ public class MemberService {
             return true; // 사용 가능한 아이디
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            log.info("SQLException 발생!");
             e.printStackTrace();
             return false;
         }
     }
 
     public Member findById(String id) {
-        Optional<Member> member = memberRepository.findById(id);
-        if (member == null || !member.isPresent()) {
+        Optional<Member> result = memberRepository.findById(id);
+        if (result == null | !result.isPresent()) {
             throw new ResourceNotFoundException("Member", id);
         }
-        return member.get();
+        return result.get();
+        // return memberRepository.findById(id).orElseThrow(() -> new
+        // ResourceNotFoundException("Member", id));
     }
 
     public void saveMemberWithVerificationCode(Member member, String verifyCode) {
@@ -84,7 +92,13 @@ public class MemberService {
     }
 
     public Member updateMember(String memberId, String memberName, String memberEmail) {
-        Member member = findById(memberId);
+        Member member = null;
+        // try {
+        log.info("updateMember 도착");
+        member = findById(memberId);
+        // } catch (ResourceNotFoundException e) {
+        // return member;
+        // }
         Member updatedMember = member.update(memberName, memberEmail);
         memberRepository.save(updatedMember);
         return updatedMember;

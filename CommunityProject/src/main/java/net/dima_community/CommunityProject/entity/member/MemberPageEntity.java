@@ -4,28 +4,32 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.member.infra.MemberEntity;
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "memberpage")
 public class MemberPageEntity {
 
-    // @SequenceGenerator(name = "mamberpage_seq", sequenceName = "memberpage_seq",
-    // initialValue = 1, allocationSize = 1)
     @Id
-    // @GeneratedValue(generator = "memberpage_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_page_seq")
     private Long memberPageSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 

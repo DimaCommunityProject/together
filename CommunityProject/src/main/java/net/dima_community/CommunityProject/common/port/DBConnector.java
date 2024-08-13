@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.common.infra;
+package net.dima_community.CommunityProject.common.port;
 
 import java.sql.Connection;
 

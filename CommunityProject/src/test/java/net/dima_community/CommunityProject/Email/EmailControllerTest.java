@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-
 import jakarta.mail.MessagingException;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.email.controller.EmailController;
@@ -42,7 +41,7 @@ public class EmailControllerTest {
     public void 인증코드를_보내면_인증_된다() {
         // given
         // when
-        boolean result = emailController.verifyCode("ssehn9327@gmail.com", "jyLOVpAR6WAB1D8AlWxN");
+        boolean result = emailController.verifyCode("ssehn9327@gmail.com", "5KZoZ3QAkY4yRjlvlbq1");
         // then
         assertThat(result).isTrue();
     }

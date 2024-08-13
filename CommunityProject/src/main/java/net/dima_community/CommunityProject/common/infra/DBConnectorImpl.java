@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.common.port;
+package net.dima_community.CommunityProject.common.infra;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 import org.springframework.context.annotation.Configuration;
 
-import net.dima_community.CommunityProject.common.infra.DBConnector;
+import net.dima_community.CommunityProject.common.port.DBConnector;
 
 @Configuration
 public class DBConnectorImpl implements DBConnector {
 
-    private String driver = "com.mysql.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/test_db";
+    private String driver = "com.mysql.cj.jdbc.Driver";
+    private String url = "jdbc:mysql://localhost:3306/dmcommunity";
     private String id = "root";
     private String pwd = "0000";
 
