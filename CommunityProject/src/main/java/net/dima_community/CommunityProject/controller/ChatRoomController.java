@@ -114,8 +114,8 @@ public class ChatRoomController {
      * @param principal
      * @return
      */
-    @GetMapping("/api/chat/getRooms")
-    @ResponseBody 
+    @GetMapping("/getRooms")
+    @ResponseBody
     public List<Map<String, Object>> getChatRooms(Principal principal) {
         String currentUserId = principal.getName();
         return chatRoomService.getChatRoomDetails(currentUserId);  // 채팅방의 ID와 이름을 반환하는 메서드

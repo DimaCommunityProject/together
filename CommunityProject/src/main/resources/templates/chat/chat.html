@@ -76,7 +76,7 @@
 	                    const rooms = response.data;
 	                    const chatRoomList = document.getElementById('chatList'); // 채팅방 리스트를 표시할 요소
 	                    chatRoomList.innerHTML = ''; // 기존 목록을 초기화합니다.
-	
+
 	                    rooms.forEach(room => {
 	                        const roomElement = document.createElement('div');
 	                        roomElement.classList.add('chatRoom');
@@ -167,6 +167,10 @@
 	        }
 	
 	        function showMessage(message) {
+	            if (!message || !message.senderId || !message.content) {
+	                console.error('Invalid message format:', message);
+	                return;
+	            }
 	            const messageElement = `<div><strong>${message.senderId}:</strong> ${message.content}</div>`;
 	            $('#messageArea').append(messageElement);
 	        }
