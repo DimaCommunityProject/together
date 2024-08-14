@@ -167,14 +167,21 @@
 	        }
 	
 	        function showMessage(message) {
-	            if (!message || !message.senderId || !message.content) {
+	            if (typeof message === 'string') {
+	                // 문자열일 경우 그대로 출력
+	                $('#messageArea').append(`<div><strong>알 수 없음:</strong> ${message}</div>`);
+	                return;
+	            }
+
+	            if (!message || typeof message.senderId === 'undefined' || typeof message.content === 'undefined') {
 	                console.error('Invalid message format:', message);
 	                return;
 	            }
+
 	            const messageElement = `<div><strong>${message.senderId}:</strong> ${message.content}</div>`;
 	            $('#messageArea').append(messageElement);
 	        }
-	
+	        
 	        $('#sendButton').click(function () {
 	            const content = $('#messageInput').val();
 	            if (content && stompClient && currentChatRoomId) {
