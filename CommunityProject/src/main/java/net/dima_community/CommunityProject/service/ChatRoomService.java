@@ -9,6 +9,7 @@ import net.dima_community.CommunityProject.repository.jpa.ChatRoomRepository;
 import net.dima_community.CommunityProject.repository.jpa.ChattingRoomMemberRepository;
 import net.dima_community.CommunityProject.repository.jpa.MemberRepository;
 
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -32,6 +39,7 @@ public class ChatRoomService {
     @Autowired
     private final ChattingRoomMemberRepository chattingRoomMemberRepository;
     private final MemberRepository memberRepository;
+    private final RabbitAdmin rabbitAdmin;
 
     @Transactional
     public ChatRoom createChatRoom(String createdBy, String recipientId) {
@@ -48,6 +56,17 @@ public class ChatRoomService {
 
                 ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
                 addMemberToChatRoom(savedChatRoom.getId(), List.of(createdBy, recipientId));
+
+                // 큐 이름 생성
+                String queueName = "chat.room." + savedChatRoom.getId();
+
+                // 큐 생성
+                Queue queue = new Queue(queueName, true); // 내구성 있는 큐 생성
+                rabbitAdmin.declareQueue(queue);
+
+                // 큐를 Exchange에 바인딩
+                Binding binding = BindingBuilder.bind(queue).to(new TopicExchange("chat.exchange")).with(queueName);
+                rabbitAdmin.declareBinding(binding);
 
                 return savedChatRoom;
             });

@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.entity.ChatMessage;
 import net.dima_community.CommunityProject.repository.mongo.ChatMessageRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 
@@ -22,15 +24,19 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 public class ChatService {
+	
 
     private final ChatMessageRepository chatMessageRepository;
     
     public List<ChatMessage> getMessages(String roomId) {
         return chatMessageRepository.findByRoomId(roomId);
     }
+    
+    
 
     public void saveMessage(ChatMessage message) {
         try {
+        	log.info("Attempting to save message: {}", message);
             message.setTimestamp(LocalDateTime.now().toString());
             chatMessageRepository.save(message);
             log.info("Message saved to DB: {}", message);

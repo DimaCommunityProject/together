@@ -29,17 +29,12 @@ import net.dima_community.CommunityProject.service.MemberService;
 @RequiredArgsConstructor
 public class ChatController {
 
-	private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
-    private static final String CHAT_QUEUE_NAME = "chat.queue";
-
+    private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
+    
     private final ChatService chatService;
     private final RabbitMessagingTemplate messagingTemplate;
     private final RabbitTemplate rabbitTemplate;
-    
-    // Queue: Queue는 단일 소비자에게 메시지를 전달/ 주로 비동기적으로 메시지 처리 / 한번에 하나의 소비자에게 전달할 때 사용 
-    // Topic: 며러 소비자에게 브로드캐스트 / 특정 주제에 대한 구독자들은 모두 해당 메시지 수신  
-    
-    
+
     /**
      * 대화 입장 시 알림 
      * @param chat
@@ -58,24 +53,27 @@ public class ChatController {
         log.info("User {} entered room {}", chat.getSenderId(), chatRoomId);
     }
     
-    /**
-     * Queue로 전달된 메시지를 수신하여 DB에 저장
-     * 다시 브로드캐스트할 필요 없으므로 메시지 브로드캐스트 코드 제거 (queue)
-     * 
-     * @param chatMessage
-     */
-    @RabbitListener(queues = CHAT_QUEUE_NAME)
-    public void handleIncomingMessage(ChatMessage chatMessage) {
+    // 채팅방 선택 시 큐에서 메시지 수신
+    public void receiveMessagesFromQueue(String queueName) {
         try {
-            chatService.saveMessage(chatMessage);
-            log.info("Message saved to DB: {}", chatMessage.getContent());
+            boolean keepReceiving = true;
+            while (keepReceiving) {
+                ChatMessage message = (ChatMessage) rabbitTemplate.receiveAndConvert(queueName);
+                if (message != null) {
+                    chatService.saveMessage(message);
+                    log.info("Message from {} saved to DB: {}", queueName, message.getContent());
+                } else {
+                    keepReceiving = false;  // 더 이상 메시지가 없으면 루프 종료
+                }
+            }
         } catch (Exception e) {
-            log.error("Error occurred while saving message to DB", e);
+            log.error("Error occurred while receiving messages from queue", e);
         }
     }
     
     /**
-     * 메시지 전송 및 수신은 STOMP 프로트콜 사용하여 모든 클라이언트에게 실시간으로 메시지 브로드캐스트 (topic)
+     * 메시지 전송 및 수신은 STOMP 프로토콜 사용하여 모든 클라이언트에게 실시간으로 메시지 브로드캐스트 (topic)
+     * 메시지는 또한 RabbitMQ를 통해 전달되고, MongoDB에 저장
      * @param chat
      * @param chatRoomId
      */
@@ -84,12 +82,16 @@ public class ChatController {
         chat.setTimestamp(LocalDateTime.now().toString());
         chat.setRoomId(chatRoomId);
 
-        messagingTemplate.convertAndSend("/topic/messages/" + chatRoomId, chat);
+        // RabbitMQ로 메시지 전달
+        String routingKey = "room." + chatRoomId;
+        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, routingKey, chat);
 
-        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId, chat);
+        // 메시지를 MongoDB에 저장
+        chatService.saveMessage(chat);
         
         log.info("Sent message to room {}: {}", chatRoomId, chat.getContent());
     }
+
     
     /**
      * 채팅방 선택 시 이전 메시지 확인하는 매서드 
@@ -98,13 +100,19 @@ public class ChatController {
      */
     @GetMapping("/chatRoom/getMessages/{roomId}")
     @ResponseBody
-    public List<String> getMessages(@PathVariable String roomId) {
+    public List<String> getMessages(@PathVariable("roomId") String roomId) {
+        // 채팅방에 연결된 큐 이름
+        String queueName = "chat.room." + roomId;
+
+        // 큐에서 메시지 수신
+        receiveMessagesFromQueue(queueName);
+
+        // MongoDB에서 저장된 메시지 가져오기
         return chatService.getMessagesByRoomId(roomId)
                 .stream()
-                .map(ChatMessage::getContent) // 각 메시지의 내용만 반환
+                .map(ChatMessage::getContent)
                 .collect(Collectors.toList());
     }
-    
     
     //==========================================================
     /**
@@ -117,5 +125,4 @@ public class ChatController {
     public boolean getUserStatus(@PathVariable String userId) {
         return chatService.isUserOnline(userId);
     }
-    
 }

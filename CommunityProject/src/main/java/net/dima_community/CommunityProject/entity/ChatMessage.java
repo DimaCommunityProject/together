@@ -29,6 +29,14 @@ public class ChatMessage {
 //      public enum MessageType {
 //      CHAT, JOIN, LEAVE
 //  }
+    
+ //test하기 위해  새로운 생성자 추가
+    public ChatMessage(String roomId, String content) {
+        this.roomId = roomId;
+        this.content = content;
+        this.timestamp = LocalDateTime.now().toString();
+        this.deleted = false;
+    }
 }
 
 
