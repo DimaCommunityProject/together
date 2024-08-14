@@ -125,24 +125,31 @@
 	            stompClient = Stomp.over(socket);
 	            stompClient.connect({}, function (frame) {
 	                console.log('Connected: ' + frame);
+	                
+	             // 첫 채팅방 구독 설정
+	                if (currentChatRoomId) {
+	                    joinChatRoom(currentChatRoomId);
+	                }
 	            });
 	        }
 	
 	        function joinChatRoom(roomId) {
 	            if (stompClient && roomId) {
 	                const queue = `/queue/chat.room.${roomId}`;
-	                
+
 	                // 기존 구독 해제
 	                if (currentChatRoomId) {
 	                    stompClient.unsubscribe(currentChatRoomId);
 	                }
-	
+
+	                currentChatRoomId = roomId;  // 구독 전에 현재 채팅방 ID를 설정합니다.
+
 	                // 새로운 큐 구독
 	                stompClient.subscribe(queue, function (messageOutput) {
 	                    const message = JSON.parse(messageOutput.body);
 	                    showMessage(message);
 	                });
-	
+
 	                // 기존 메시지 로드
 	                axios.get(`/chatRoom/getMessages/${roomId}`)
 	                    .then(response => {

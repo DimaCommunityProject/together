@@ -49,13 +49,19 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 //		        
 //    }
 	
+//	@Override
+//	public boolean configureMessageConverters(List<MessageConverter> converters) {
+//	    MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+//	    converter.setObjectMapper(new ObjectMapper().registerModule(new JavaTimeModule())); // JavaTimeModule을 등록하여 Java8 날짜와 시간을 처리할 수 있게 함
+//	    converters.add(converter);
+//	    return false; // 기본 컨버터를 유지하려면 false를 반환
+//	}
+	
 	@Override
-	public boolean configureMessageConverters(List<MessageConverter> converters) {
-	    MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-	    converter.setObjectMapper(new ObjectMapper().registerModule(new JavaTimeModule())); // JavaTimeModule을 등록하여 Java8 날짜와 시간을 처리할 수 있게 함
-	    converters.add(converter);
-	    return false; // 기본 컨버터를 유지하려면 false를 반환
-	}
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/queue", "/topic");  // "/queue"와 "/topic"에서 브로커 활성화
+        config.setApplicationDestinationPrefixes("/app"); // "/app" 접두사를 가진 메시지는 @MessageMapping 메서드로 라우팅
+    }
     
 
     

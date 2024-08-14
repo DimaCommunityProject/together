@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,18 +79,27 @@ public class ChatController {
      * @param chatRoomId
      */
     @MessageMapping("/chat.message/{chatRoomId}")
-    public void sendMessage(@Payload ChatMessage chat, @DestinationVariable("chatRoomId") String chatRoomId) {
-        chat.setTimestamp(LocalDateTime.now().toString());
-        chat.setRoomId(chatRoomId);
-
-        // RabbitMQ로 메시지 전달
-        String routingKey = "room." + chatRoomId;
-        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, routingKey, chat);
-
-        // 메시지를 MongoDB에 저장
-        chatService.saveMessage(chat);
+    @SendTo("/queue/chat.room.{chatRoomId}")
+    public ChatMessage sendMessage(@DestinationVariable("chatRoomId") String chatRoomId, ChatMessage message) {
+        log.info("sendMessage method called with chatRoomId: {} and message: {}", chatRoomId, message.getContent());
         
-        log.info("Sent message to room {}: {}", chatRoomId, chat.getContent());
+        try {
+            message.setTimestamp(LocalDateTime.now().toString());
+            message.setRoomId(chatRoomId);
+
+            // RabbitMQ로 메시지 전달
+            String routingKey = "room." + chatRoomId;
+            rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, routingKey, message);
+
+            // 메시지를 MongoDB에 저장
+            chatService.saveMessage(message);
+
+            log.info("Sent message to room {}: {}", chatRoomId, message.getContent());
+        } catch (Exception e) {
+            log.error("Error in sendMessage: ", e);
+        }
+
+        return message;
     }
 
     
