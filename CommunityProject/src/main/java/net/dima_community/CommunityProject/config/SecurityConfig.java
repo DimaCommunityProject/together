@@ -60,7 +60,7 @@ public class SecurityConfig {
 		 http
          .authorizeHttpRequests(authorizeRequests ->
              authorizeRequests
-                 .anyRequest().permitAll() // 모든 요청에 대해 접근 허용
+                 .anyRequest().permitAll() //모든 요청에 대해 접근 허용
          );
 		 
 		 // Custom Login 설정 
@@ -93,7 +93,7 @@ public class SecurityConfig {
         headers.xssProtection(
                 xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)
         ).contentSecurityPolicy(
-                cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline'")
+                cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline'" )
         ));
 		
 		return http.build();

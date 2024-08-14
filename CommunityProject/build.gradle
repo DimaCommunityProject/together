@@ -24,13 +24,26 @@ repositories {
 }
 
 dependencies {
+
+	//외부 브로커를 사용하기 위해
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
+
+	//jackson2json에서 LocalDateTime을 handling 하기 위해
+	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+	
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     
+    
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
     implementation 'org.webjars:sockjs-client:1.5.1'
     implementation 'org.webjars:stomp-websocket:2.3.3'
 
@@ -38,13 +51,20 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
     
     //보안관련
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'	//추가했음
     implementation 'org.springframework.boot:spring-boot-starter-security'	
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+    implementation 'org.springframework.security:spring-security-messaging'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
 }
