@@ -12,13 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle&family=East+Sea+Dokdo&display=swap" rel="stylesheet">
 
     <!-- CSS 설정 -->
-    <link rel="stylesheet" th:href="@{/static/css/main.css}">
+    <link rel="stylesheet" th:href="@{/static/assets/css/main.css}">
 </head>
 <body>
     <!-- 로그인 유저 이름 : <span th:text="${loginName}"></span> -->
     <div class="container">
         <div class="logo">
-            <img th:src="@{/static/images/festival.png}" alt="로고">
+            <img th:src="@{/static/assets/images/festival.png}" alt="로고">
             <h2>회원 전용 게시판</h2>
         </div>
     
@@ -29,7 +29,8 @@
                 <li sec:authorize="isAnonymous()"><a th:href="@{/member/login}">로그인</a></li>
 
                 <!--인증이 된 사람-->
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/member/logout}">[[${memberId}]]님, 로그아웃</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/member/logout}">[[${loginName}]]님, 로그아웃</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/member/changePw(loginName=${loginName})}">비밀번호 바꾸기</a></li>
             </ul>
         </div>
 
@@ -41,7 +42,7 @@
         <h2 sec:authorize="hasRole('ROLE_USER')">인증된 사용자</h2>
         <br>
         <!-- ROLE_ANANYMOUS 계정을 가지고 있으면 아래 내용 출력 -->
-        <h2 sec:authorize="hasRole('ROLE_ANANYMOUS')">낯선 자</h2>
+        <h2 sec:authorize="hasRole('ROLE_ANANYMOUS')">낯선 자</h2> 
         <br>
         <!-- 어느 권한이건 상관없이 인증이 되었다면!!-->
         <h2 sec:authorize="isAuthenticated()">인증 완료됨</h2>

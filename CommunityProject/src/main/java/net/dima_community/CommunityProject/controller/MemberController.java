@@ -85,22 +85,25 @@ public class MemberController {
 		return "member/findId";
 	}
 	
-	//사용자 아이디 찾기
+	//사용자 아이디 찾기 결과
 	@PostMapping("/member/findIdResult")
+	@ResponseBody
 	public String findIdResult(
 			HttpServletRequest request, 
 			@RequestParam("memberName") String memberName,@RequestParam("memberEmail") String memberEmail, Model model
 			) {
 		String result = memberservive.findmemId(memberName, memberEmail);
+		log.info("사용자 아이디 찾기 결과 : {}", result);
 		
-		if(result == null) {
-			model.addAttribute("msg", "조회결과가 없습니다.");
-		}
+//		if(result == null) {
+//			model.addAttribute("bool", false); 
+//			model.addAttribute("message", "조회결과가 없습니다.");
+//		} 
+//		
+//		model.addAttribute("bool", true);
+//		model.addAttribute("message", "회원님의 아이디는 " + result + "입니다.");
 		
-		log.info("사용자 아이디 : {}", result);
-		model.addAttribute("result", result);
-		
-		return "member/findIdResult";
+		return result;
 	}//end findIdProc
 	
 	//사용자 비밀번호 찾기 화면 요청
@@ -112,8 +115,9 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
-	//사용자 비밀번호 찾기
+	//사용자 비밀번호 찾기 결과
 	@PostMapping("/member/findPwResult")
+	@ResponseBody
 	public String findPwResult(
 			HttpServletRequest request, 
 			@RequestParam("memberEmail") String memberEmail, @RequestParam("memberId") String memberId, @RequestParam("memberName") String memberName
@@ -129,8 +133,9 @@ public class MemberController {
 			int search = memberservive.PwCheck(memberDTO);	//서비스 단에서 사용자 맞는지 확인
 			
 			if(search == 0) {
-				model.addAttribute("msg", "기입된 정보가 잘못되었습니다. 다시 입력해주세요.");
-				return "member/findPwResult"; 
+				//model.addAttribute("msg", "기입된 정보가 잘못되었습니다. 다시 입력해주세요.");
+				//return "member/findPwResult"; 
+				return "none"; 
 			}
 			
 			//String newPw = RandomStringUtils.randomAlphanumeric(10);	//대소문자, 숫자를 랜덤으로 생성 => 
@@ -157,12 +162,41 @@ public class MemberController {
 			log.info("이메일이 갔나요? : {}", result);
 			
 		    memberservive.PwUpdate(memberDTO);							//업뎃
-			model.addAttribute("newPw", newPw);							//사용자에게 보여줌
+			//model.addAttribute("newPw", newPw);							//사용자에게 보여줌
+		    return newPw;
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "오류가 발생되었습니다.");
+			//model.addAttribute("msg", "오류가 발생되었습니다.");
+			return "error";
 		}
-		return "member/findPwResult";
+		//return "member/findPwResult";
 	}//end findPwProc
-}
+	
+	//비밀번호 바꾸기 화면 요청
+	@GetMapping("/member/changePw")
+	public String changePw(
+			HttpServletRequest request, @RequestParam("loginName") String memberId, Model model) {
+		model.addAttribute("loginName", memberId);
+		return "member/changePw";
+	}//end changePw
+	
+	//비밀번호 바꾸기
+	@PostMapping("/member/changePw")
+	@ResponseBody
+	public Boolean chagePwck(
+			HttpServletRequest request, @RequestParam("newmemberPw") String newmemberPw, 
+			@RequestParam("loginName") String memberId, MemberDTO memberDTO, Model model) {
+		
+		log.info("아이디 확인 : {}", memberId);
+		log.info("새 비번 확인 : {}", newmemberPw);
+		
+		memberDTO.setMemberId(memberId);
+		memberDTO.setMemberPw(newmemberPw);
+		
+		log.info("새 비번 DTO 확인 : {}", memberDTO.toString());
+		
+		Boolean changePw = memberservive.PwUpdate(memberDTO);	//비번 업뎃
+		return changePw;
+	}
+}//end class

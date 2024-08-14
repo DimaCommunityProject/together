@@ -26,7 +26,8 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
 		String errMessage = "";
 		
 		if(exception instanceof BadCredentialsException) {	//아이디가 존재하지만 비번이 틀린 경우(계정이 존재하지 않는 경우를 따로 처리하는 것도 있지만 그냥 한 번에 처리)
-			errMessage = exception.getMessage() + "\n아이디 또는 비밀번호가 일치하지 않습니다.";
+			//errMessage = exception.getMessage() + "\n아이디 또는 비밀번호가 일치하지 않습니다.";
+			errMessage =  "아이디 또는 비밀번호가 일치하지 않습니다.";
 		} else if (exception instanceof InternalAuthenticationServiceException) {	//스프링 시큐리티 내부에서 발생하는 예외
 			errMessage = exception.getMessage() + "내부 시스템 문제로 로그인 요청을 처리할 수 없습니다. 관리자에게 문의하세요.";
 		}  else if (exception instanceof AuthenticationCredentialsNotFoundException) { //인증 요청이 잘못된 형식으로 제출되거나 필요한 인증 정보가 누락된 경우. => 프론트에서 키업으로 경고주고 백단에서도 예외처리 필요

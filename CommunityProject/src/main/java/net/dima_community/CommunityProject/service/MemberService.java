@@ -76,9 +76,11 @@ public class MemberService {
 	}
 	
 	//임시비번 암호화 후 업뎃
-	public void PwUpdate(MemberDTO memberDTO) {
+	public boolean PwUpdate(MemberDTO memberDTO) {
 		String newPwUpdate = bCryptPasswordEncoder.encode(memberDTO.getMemberPw());	//임시비번 암호화
 		memberDTO.setMemberPw(newPwUpdate);		
-		memberRepository.PwUpdate(memberDTO.getMemberId(), newPwUpdate);			//업뎃
+		int result =  memberRepository.PwUpdate(memberDTO.getMemberId(), newPwUpdate);			//업뎃
+		
+		return result > 0;
 	}//end findmemId
 }

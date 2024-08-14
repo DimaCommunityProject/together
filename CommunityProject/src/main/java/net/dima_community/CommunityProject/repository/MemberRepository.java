@@ -28,7 +28,5 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 	@Modifying		//데베 상태 바꿈
 	@Transactional
 	@Query("UPDATE MemberEntity m SET m.memberPw = :memberPw WHERE m.memberId = :memberId")
-	//void PwUpdate(String memberId, String newPwUpdate);
-	void PwUpdate(@Param("memberId") String memberId, @Param("memberPw") String memberPw);
-	
+	int PwUpdate(@Param("memberId") String memberId, @Param("memberPw") String memberPw);
 }
