@@ -9,8 +9,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import jakarta.mail.MessagingException;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
+import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.controller.EmailController;
-import net.dima_community.CommunityProject.member.domain.Member;
 
 @SpringBootTest
 public class EmailControllerTest {
@@ -21,7 +21,7 @@ public class EmailControllerTest {
     @Test
     public void 받는사람_이메일을_보내_인증_코드_이메일을_보낼_수_있다() throws MessagingException {
         // given
-        Member member = Member.builder()
+        MemberDTO member = MemberDTO.builder()
                 .memberId("ssehn9327")
                 .memberPw("qqqqqqqq")
                 .memberEnabled("N")

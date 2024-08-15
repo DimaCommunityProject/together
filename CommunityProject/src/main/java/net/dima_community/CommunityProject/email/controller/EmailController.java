@@ -12,10 +12,10 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.port.VerifyRandomCodeHolder;
+import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
-import net.dima_community.CommunityProject.member.domain.Member;
-import net.dima_community.CommunityProject.member.service.MemberService;
+import net.dima_community.CommunityProject.service.MemberService;
 
 @Controller
 @RequestMapping("/email")
@@ -29,8 +29,8 @@ public class EmailController {
 
     @ResponseBody
     @PostMapping("/send")
-    public boolean send(@RequestBody Member member) throws MessagingException {
-        Member newMember = memberService.setEncodedPassword(member);
+    public boolean send(@RequestBody MemberDTO member) throws MessagingException {
+        MemberDTO newMember = memberService.setEncodedPassword(member);
         String generatedString = verifyRandomCodeHolder.setRandomCode();
         log.info(newMember.toString());
 

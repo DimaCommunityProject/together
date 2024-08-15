@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
+import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
+import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
-import net.dima_community.CommunityProject.member.domain.Member;
-import net.dima_community.CommunityProject.member.infra.MemberEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,8 +22,8 @@ public class MemberPageRepositoryImpl implements MemberPageRepository {
     }
 
     @Override
-    public void save(Member member, MemberPageDTO updatedMemberPage) {
-        memberPageJPARepository.save(MemberPageEntity.from(updatedMemberPage, MemberEntity.from(member)));
+    public void save(MemberDTO member, MemberPageDTO updatedMemberPage) {
+        memberPageJPARepository.save(MemberPageEntity.from(updatedMemberPage, MemberEntity.toEntity(member)));
     }
 
 }

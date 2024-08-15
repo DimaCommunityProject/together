@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
+import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
-import net.dima_community.CommunityProject.member.domain.Member;
 import net.dima_community.CommunityProject.repository.member.MemberPageRepository;
 
 @Service
@@ -25,7 +25,7 @@ public class MemberPageService {
         // .orElseThrow(() -> new ResourceNotFoundException("MemberPage", memberId));
     }
 
-    public MemberPageDTO updatePage(Member updatedMember, MemberPageDTO memberPage) {
+    public MemberPageDTO updatePage(MemberDTO updatedMember, MemberPageDTO memberPage) {
         MemberPageDTO originalMemberPage = null;
         try {
             originalMemberPage = findByUsername(updatedMember.getMemberId());

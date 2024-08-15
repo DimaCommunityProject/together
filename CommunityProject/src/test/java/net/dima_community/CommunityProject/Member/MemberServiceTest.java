@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import net.dima_community.CommunityProject.member.domain.Member;
-import net.dima_community.CommunityProject.member.service.MemberService;
+import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.service.MemberService;
 
 @SpringBootTest
 public class MemberServiceTest {
@@ -33,7 +33,7 @@ public class MemberServiceTest {
     public void id를_이용해_Member를_찾을_수_있다() {
         // given
         // when
-        Member result = memberService.findById("ssehn9327");
+        MemberDTO result = memberService.findById("ssehn9327");
         // then
         assertThat(result.getMemberId()).isEqualTo("ssehn9327");
         assertThat(result.getMemberName()).isEqualTo("심세현");
@@ -43,7 +43,7 @@ public class MemberServiceTest {
     public void Member_를_업데이트_할_수_있다() {
         // given
         // when
-        Member result = memberService.updateMember("ssehn9327", "심가현", "ssehn9324@naver.com");
+        MemberDTO result = memberService.updateMember("ssehn9327", "심가현", "ssehn9324@naver.com");
         // then
         assertThat(result.getMemberId()).isEqualTo("ssehn9327");
         assertThat(result.getMemberName()).isEqualTo("심가현");

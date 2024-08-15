@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/static/assets/css/styles.css" />
+    <script th:src="@{/static/assets/js/jquery-3.7.1.min.js}"></script>
+    <script>
+        $(function () {
+            $("#submitBtn").on('click', submitBtn);
+        })
+
+        function submitBtn() {
+            let memberId = $('#memberId').val()
+            let memberPw = $('#memberPw').val()
+
+            // 이전 경고 메시지 지우기
+            $("#confirmId").html("");
+            $("#confirmPw").html("");
+            $("#errormessage").html("");
+
+            if (memberId.trim().length == 0) {
+                $("#confirmId").css("color", "red");
+                $("#confirmId").html("아이디를 입력하세요");
+                return;
+            }
+            if (memberPw.trim().length == 0) {
+                $("#confirmPw").css("color", "red");
+                $("#confirmPw").html("비밀번호를 입력하세요");
+                return;
+            }
+            // 유효성 검사를 통과한 경우, 폼을 제출
+            $("#loginForm").submit();
+        }//end submitBtn
+    </script>
+</head>
+
+<body>
+    <!-- 맨 위 로고 -->
+    <div class="preloader">
+        <img src="/static/assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    </div>
+    <div id="main-wrapper" class="auth-customizer-none">
+        <div
+            class="position-relative overflow-hidden radial-gradient min-vh-100 w-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 col-xxl-3 auth-card">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a th:href="@{/}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
+                                    <img src="/static/assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+                                </a>
+                                <form th:action="@{/member/loginProc}" method="POST" id="loginForm">
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">UserID</label>
+                                        <input type="text" class="form-control" id="memberId" name="memberId"
+                                            aria-describedby="emailHelp">
+                                        <span id="confirmId" style="font-size: 1em;"></span>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="memberPw" name="memberPw">
+                                        <span id="confirmPw" style="font-size: 1em;"></span>
+                                    </div>
+                                    <!--에러 발생시 출력-->
+                                    <th:block th:if="${error}">
+                                        <div th:text="${errMessage}" style="font-size: 0.8em; color:red;" id="errormessage"></div>
+                                    </th:block>
+
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                        <a class="text-primary fw-medium" th:href="@{/member/findId}">Forgot ID ?</a>
+                                        <a class="text-primary fw-medium" th:href="@{/member/findPw}">Forgot Password ?</a>
+                                    </div>
+                                    <input type="button" id="submitBtn" value="Sign In" class="btn btn-primary w-100 py-8 mb-4 rounded-2">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <p class="fs-4 mb-0 fw-medium">New to DIMACommunity?</p>
+                                        <a class="text-primary fw-medium ms-2" th:href="@{/member/join}">Create an
+                                            account</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Import Js Files -->
+        <script src="/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/assets/libs/simplebar/dist/simplebar.min.js"></script>
+        <script src="/static/assets/js/theme/app.init.js"></script>
+        <script src="/static/assets/js/theme/theme.js"></script>
+        <script src="/static/assets/js/theme/app.min.js"></script>
+</body>
+
+</html>
