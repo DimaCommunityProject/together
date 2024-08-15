@@ -28,8 +28,10 @@ public class MemberPageController {
     @GetMapping("/showpage")
     public String showpage(Model model) {
         // 로그인한 유저 정보 가져오기
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
+        // Object principal =
+        // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // String username = ((UserDetails) principal).getUsername();
+        String username = "ssehn9327";
 
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
         Member member = memberService.findById(username);
@@ -39,7 +41,7 @@ public class MemberPageController {
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);
         model.addAttribute("memberProject", memberProject);
-        return "member/MemberPage";
+        return "member/page-user-profile";
     }
 
     @GetMapping("/updatepage")
