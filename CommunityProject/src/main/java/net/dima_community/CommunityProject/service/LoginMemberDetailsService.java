@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.LoginMemberDetails;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.repository.MemberRepository;
+import net.dima_community.CommunityProject.repository.jpa.MemberRepository;
 
 @RequiredArgsConstructor
 @Service

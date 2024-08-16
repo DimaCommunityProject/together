@@ -8,7 +8,7 @@
     <title>게시판</title>
     <!--웹 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Dongle&family=East+Sea+Dokdo&display=swap" rel="stylesheet">
 
     <!-- CSS 설정 -->
@@ -30,6 +30,7 @@
 
                 <!--인증이 된 사람-->
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/member/logout}">[[${memberId}]]님, 로그아웃</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{api/chat/chatPage}">채팅하기</a></li>
             </ul>
         </div>
 

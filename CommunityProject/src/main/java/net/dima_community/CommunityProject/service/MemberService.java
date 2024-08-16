@@ -1,7 +1,10 @@
 package net.dima_community.CommunityProject.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.repository.MemberRepository;
+import net.dima_community.CommunityProject.repository.jpa.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +60,30 @@ public class MemberService {
 		log.info("사용자 id 레퍼지토리에서 찾아옴 : {}", id);
 		return id;
 	}
+	
+	/**
+	 * MemberDTO를 반환하는 메소드 추가
+	 * @param memberId
+	 * @return MemberDTO
+	 */
+	public MemberDTO findByMemberId(String memberId) {
+	    Optional<MemberEntity> entity = memberRepository.findByMemberId(memberId);
+	    if (entity.isPresent()) {
+	        return MemberDTO.toDTO(entity.get());  // MemberEntity를 MemberDTO로 변환
+	    } else {
+	        throw new UsernameNotFoundException("User not found with id: " + memberId);
+	    }
+	}
+	
+	/**
+	 * 전체 회원 조회 
+	 */
+	
+	public List<MemberDTO> getAllMembers() {
+        return memberRepository.findAll().stream()
+                .map(MemberDTO::toDTO)
+                .collect(Collectors.toList());
+    }
 	
 //	//사용자가 맞는지 확인
 //	public int PwCheck(MemberDTO memberDTO) {

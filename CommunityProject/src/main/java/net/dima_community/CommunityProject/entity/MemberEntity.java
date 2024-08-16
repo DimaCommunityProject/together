@@ -2,9 +2,14 @@ package net.dima_community.CommunityProject.entity;
 
 import net.dima_community.CommunityProject.dto.MemberDTO;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +29,8 @@ import lombok.ToString;
 @Table(name="Member")
 public class MemberEntity {
 	@Id
-	@Column(name="member_id")
-	private String memberId;
+	@Column(name="member_id", nullable = false, unique = true)
+	private String memberId; 
 	
 	@Column(name="member_pw", nullable=false)
 	private String memberPw;
@@ -62,6 +67,9 @@ public class MemberEntity {
 	
 	@Column(name="member_resume")
 	private String memberResume;
+	
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ChattingRoomMemberEntity> chattingRoomMembers;
 	
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()
