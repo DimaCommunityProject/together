@@ -49,7 +49,7 @@ public class AdminController {
 		model.addAttribute("enablelist", enabledtoList);
 		model.addAttribute("navi", navi);
 		model.addAttribute("disablelist", disabledtoList);
-		model.addAttribute("memberGroup", memberGroup); // memberGroup 값을 모델에 추가
+		//model.addAttribute("memberGroup", memberGroup); // memberGroup 값을 모델에 추가
 		
 		return "admin/adminPage";
 	}//end adminPage
