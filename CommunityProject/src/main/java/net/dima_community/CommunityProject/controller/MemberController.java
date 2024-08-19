@@ -2,7 +2,6 @@ package net.dima_community.CommunityProject.controller;
 
 import java.util.Random;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
-import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.repository.MemberRepository;
 import net.dima_community.CommunityProject.service.MemberService;
 
 @Controller
@@ -26,16 +23,15 @@ import net.dima_community.CommunityProject.service.MemberService;
 public class MemberController {
 	private final MemberService memberservice;
 	private final EmailSender emailSender;
-	private final MemberRepository memberRepository;
 
 	/**
 	 * 회원가입을 위한 화면 요청
 	 * 
 	 * @return
 	 */
-	@GetMapping("/member/join")
+	@GetMapping("/member/authentication-register2")
 	public String join() {
-		return "authentication-register2";
+		return "member/authentication-register2";
 	}
 
 	// ID 중복확인
@@ -75,9 +71,10 @@ public class MemberController {
 			HttpServletRequest request,
 			@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail,
 			Model model) {
+
 		String result = memberservice.findmemId(memberName, memberEmail);
 		log.info("사용자 아이디 찾기 결과 : {}", result);
-
+	
 		return result;
 	}// end findIdProc
 
@@ -140,9 +137,8 @@ public class MemberController {
 			
 			
 //			memberRepository.save(entity);
-//			@Query("UPDATE MemberEntity m SET m.memberPw = :memberPw WHERE m.memberId = :memberId")
-			if(bool) {return newPw;}
-			else {return "error";}
+			if(bool) {return newPw;}	//임시비번 잘 업뎃함
+			else {return "false";}		//임시비번 업뎃 실패
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,7 +157,7 @@ public class MemberController {
 	// 비밀번호 바꾸기
 	@PostMapping("/member/changePw")
 	@ResponseBody
-	public Boolean chagePwck(
+	public String chagePwck(
 			HttpServletRequest request, @RequestParam("newmemberPw") String newmemberPw,
 			@RequestParam("loginName") String memberId, MemberDTO memberDTO, Model model) {
 
@@ -174,11 +170,15 @@ public class MemberController {
 		log.info("새 비번 DTO 확인 : {}", memberDTO.toString());
 
 		try {
-			memberservice.setEncodedPassword(memberDTO); // 비번 암호화 후 dto 업뎃
-			memberservice.PwUpdate(memberDTO);			 // dto를 레파지토리에서 db로 업뎃 
+			memberservice.setEncodedPassword(memberDTO); 		// 비번 암호화 후 dto 업뎃
+			boolean bool = memberservice.PwUpdate(memberDTO);	// dto를 레파지토리에서 db로 업뎃 
+			
+			if(bool) {return "true";}				
+			else {return "false";}
+			
 		} catch (Exception e) {
-			return false;
+			e.printStackTrace();
+			return "error";
 		}
-		return true;
-	}
+	}//end chagePwck
 }// end class
