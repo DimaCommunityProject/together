@@ -1,5 +1,7 @@
 package net.dima_community.CommunityProject.controller.member;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
@@ -18,6 +21,7 @@ import net.dima_community.CommunityProject.service.member.MemberProjectService;
 @Controller
 @RequestMapping("/memberpage")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberPageController {
     public final MemberService memberService;
     public final MemberPageService memberPageService;
@@ -34,7 +38,7 @@ public class MemberPageController {
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
         MemberDTO member = memberService.findById(username);
         MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());
-        MemberProjectDTO memberProject = memberProjectService.findByUsername(member.getMemberId());
+        List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(member.getMemberId());
 
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);

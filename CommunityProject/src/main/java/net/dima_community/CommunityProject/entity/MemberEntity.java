@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -17,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -72,9 +74,9 @@ public class MemberEntity {
 	/*
 	 * MemberProject와 관계 설정
 	 */
-	@OneToOne(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@OrderBy("memberproject_seq asc")
-	private MemberProjectEntity memberProjectEntity;
+	private List<MemberProjectEntity> memberProjectEntity;
 
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()
