@@ -1,10 +1,7 @@
 package net.dima_community.CommunityProject.config;
 
 import lombok.RequiredArgsConstructor;
-import java.util.concurrent.ConcurrentHashMap;
 import net.dima_community.CommunityProject.service.ChatService;
-
-import java.util.Map;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;

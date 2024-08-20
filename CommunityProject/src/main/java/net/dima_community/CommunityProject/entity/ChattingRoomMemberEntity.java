@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -34,6 +36,7 @@ public class ChattingRoomMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatting_room_id", nullable = false)
+    @JsonManagedReference
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)

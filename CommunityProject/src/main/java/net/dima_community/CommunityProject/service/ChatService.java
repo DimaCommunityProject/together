@@ -6,8 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.entity.ChatMessage;
 import net.dima_community.CommunityProject.repository.mongo.ChatMessageRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 

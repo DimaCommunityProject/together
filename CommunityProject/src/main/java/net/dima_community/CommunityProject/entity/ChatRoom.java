@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -46,5 +48,6 @@ public class ChatRoom {
     private List<String> memberIds;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<ChattingRoomMemberEntity> chattingRoomMembers;
 }

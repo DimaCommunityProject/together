@@ -3,9 +3,6 @@ package net.dima_community.CommunityProject.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -21,9 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.entity.ChatMessage;
-import net.dima_community.CommunityProject.service.ChatRoomService;
 import net.dima_community.CommunityProject.service.ChatService;
-import net.dima_community.CommunityProject.service.MemberService;
 
 @Slf4j
 @Controller
@@ -43,15 +38,13 @@ public class ChatController {
      * @param headerAccessor
      */
     @MessageMapping("/chat.enter/{chatRoomId}")
-    public void enterUser(@Payload ChatMessage chat, @DestinationVariable String chatRoomId, SimpMessageHeaderAccessor headerAccessor) {
+    public void enterUser(@Payload ChatMessage chat, @DestinationVariable("chatRoomId") String chatRoomId, SimpMessageHeaderAccessor headerAccessor) {
         chat.setTimestamp(LocalDateTime.now().toString());
         chat.setContent(chat.getSenderId() + " 님 입장!!");
         chat.setRoomId(chatRoomId);
 
         // 메시지 발송
-        messagingTemplate.convertAndSend("/topic/messages/" + chatRoomId, chat);
-
-        log.info("User {} entered room {}", chat.getSenderId(), chatRoomId);
+        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId, chat);
     }
     
     // 채팅방 선택 시 큐에서 메시지 수신
@@ -110,7 +103,7 @@ public class ChatController {
      */
     @GetMapping("/chatRoom/getMessages/{roomId}")
     @ResponseBody
-    public List<String> getMessages(@PathVariable("roomId") String roomId) {
+    public List<ChatMessage> getMessages(@PathVariable("roomId") String roomId) {
         // 채팅방에 연결된 큐 이름
         String queueName = "chat.room." + roomId;
 
@@ -118,10 +111,8 @@ public class ChatController {
         receiveMessagesFromQueue(queueName);
 
         // MongoDB에서 저장된 메시지 가져오기
-        return chatService.getMessagesByRoomId(roomId)
-                .stream()
-                .map(ChatMessage::getContent)
-                .collect(Collectors.toList());
+        return chatService.getMessagesByRoomId(roomId);
+
     }
     
     //==========================================================

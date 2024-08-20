@@ -27,7 +27,6 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 
 @Slf4j
 @Service
@@ -71,6 +70,53 @@ public class ChatRoomService {
                 return savedChatRoom;
             });
     }
+    
+    @Transactional
+    public ChatRoom createGroupChat(String currentUserId, String existingRoomId, List<String> newMemberIds) {
+        if (currentUserId == null) {
+            throw new IllegalArgumentException("currentUserId cannot be null");
+        }
+
+        try {
+            // 기존 채팅방의 멤버 가져오기
+            Long roomId = Long.parseLong(existingRoomId);
+            List<String> existingMemberIds = chatRoomRepository.findMemberIdsByChatRoomId(roomId);
+
+            // 새로운 멤버들과 기존 멤버들을 합침
+            List<String> allMemberIds = new ArrayList<>(existingMemberIds);
+            allMemberIds.addAll(newMemberIds);
+            allMemberIds = allMemberIds.stream().distinct().collect(Collectors.toList()); // 중복 제거
+
+            // 멤버들을 정렬하고 uniqueKey 생성
+            allMemberIds.sort(String::compareTo);
+            String uniqueKey = String.join("-", allMemberIds);
+
+            // 새로운 방 생성
+            ChatRoom newRoom = new ChatRoom();
+            newRoom.setName(uniqueKey); // 멤버들로 이름 생성
+            newRoom.setCreatedDate(LocalDateTime.now());
+            newRoom.setCreatedBy(currentUserId);
+            newRoom.setUniqueKey(uniqueKey);
+
+            // 채팅방 저장
+            ChatRoom savedChatRoom = chatRoomRepository.save(newRoom);
+
+            // 모든 멤버 추가
+            addMemberToChatRoom(savedChatRoom.getId(), allMemberIds);
+
+            // 큐 이름 생성 및 바인딩
+            String queueName = "chat.room." + savedChatRoom.getId();
+            Queue queue = new Queue(queueName, true);
+            rabbitAdmin.declareQueue(queue);
+            Binding binding = BindingBuilder.bind(queue).to(new TopicExchange("chat.exchange")).with(queueName);
+            rabbitAdmin.declareBinding(binding);
+
+            return savedChatRoom;
+        } catch (Exception e) {
+            log.error("Error creating group chat", e);
+            throw e;
+        }
+    }
 
     @Transactional
     public void addMemberToChatRoom(Long chatRoomId, List<String> memberIds) { // chatRoomId의 타입을 Long으로 변경
@@ -89,6 +135,8 @@ public class ChatRoomService {
             chattingRoomMemberRepository.save(memberChattingRoom);
         }
     }
+    
+    
     
     public List<Map<String, Object>> getChatRoomDetails(String userId) {
         // chatting_room_member 테이블에서 사용자의 chatting_room_id 목록을 가져옴
@@ -125,4 +173,9 @@ public class ChatRoomService {
     public Optional<ChatRoom> findById(Long roomId) {
         return chatRoomRepository.findById(roomId);
     }
+    
+    
+    
+   
+    
 }

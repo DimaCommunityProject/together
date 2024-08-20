@@ -47,3 +47,37 @@
     padding: 10px 20px;
     font-size: 16px;
 }
+
+.date-divider {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #888;
+}
+
+.my-message {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 10px;
+    background-color: #DCF8C6; /* 자신의 메시지는 연한 초록색으로 */
+    padding: 5px 10px;
+    border-radius: 10px;
+    max-width: 60%;
+}
+
+.their-message {
+    text-align: left;
+    margin-right: auto;
+    margin-left: 10px;
+    background-color: #FFFFFF; /* 상대방의 메시지는 흰색으로 */
+    padding: 5px 10px;
+    border-radius: 10px;
+    max-width: 60%;
+}
+
+.time {
+    font-size: 0.8em;
+    color: #888;
+    margin-left: 5px;
+}
+
