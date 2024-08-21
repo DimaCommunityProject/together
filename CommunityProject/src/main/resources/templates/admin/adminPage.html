@@ -9,13 +9,6 @@
   <title>관리자 페이지</title>
   <link rel="stylesheet" href="/static/css/styles.css" />
   <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
-  <script>
-    function pageFormSubmit(page){
-            //alert(page);
-            document.getElementById("requestPage").value = page;    //요청하는 페이지값 넣기
-            document.getElementById("searchForm").submit();         //요청 페이지값과 함께 컨트롤러에 제출
-        }
-  </script>
 </head>
 
 <body class="link-sidebar">
@@ -78,41 +71,22 @@
           </div>
           <!-- 아이템 센터 끝 -->
           <!-- 사이드바 대신  -->
-          <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
-            id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <!-- 버튼 누르면 본문이 action됨 -->
-              <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-profile-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                aria-selected="true">
-                <i class="ti ti-user-circle fs-5"></i>
-                <span class="d-none d-md-block">회원 관리</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-followers-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-followers" type="button" role="tab" aria-controls="pills-followers"
-                aria-selected="false">
-                <i class="ti ti-heart fs-5"></i>
-                <span class="d-none d-md-block">게시글 관리</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-friends-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-friends" type="button" role="tab" aria-controls="pills-friends"
-                aria-selected="false">
-                <i class="ti ti-user-circle fs-5"></i>
-                <span class="d-none d-md-block">공지사항</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-gallery-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-gallery" type="button" role="tab" aria-controls="pills-gallery"
-                aria-selected="false">
-                <i class="ti ti-photo-plus fs-5"></i>
-                <span class="d-none d-md-block">Gallery</span>
-              </button>
-            </li>
+          <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
+            <a type="submit" th:href="@{/admin/adminPage}"
+              style="display: flex; align-items: center; font-size: 16.5px; margin: 12px;">
+              <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
+              <span class="d-none d-md-block">회원 관리</span>
+            </a>
+            <a type="submit" th:href="@{/admin/adminPageBoard}"
+              style="display: flex; align-items: center; font-size: 16.5px;  margin: 12px;">
+              <i class="ti ti-heart fs-5" style="margin-right: 8px;"></i>
+              <span class="d-none d-md-block">게시글 관리</span>
+            </a>
+            <a type="submit" th:href="@{/admin/adminPageNote}"
+              style="display: flex; align-items: center; font-size: 16.5px;  margin: 12px;">
+              <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
+              <span class="d-none d-md-block">공지사항</span>
+            </a>
           </ul>
           <!-- 사이드바 대신 끝-->
         </div>
@@ -145,43 +119,17 @@
                 <table class="table search-table align-middle text-nowrap">
                   <p style="display: inline;">게시글 개수 : [[${enablelist.totalElements}]] </p>
                   <form id="searchForm" th:action="@{/admin/adminPage}" method="GET">
-                    <!-- <input type="hidden" id="memberGroupInput" name="memberGroup" th:value="${memberGroup}" > -->
                     <input type="hidden" name="page" id="requestPage" th:value="${page}">
-                    
-                    <select name="memberGroup" class="btn bg-secondary-subtle text-secondary dropdown-toggle" style="margin-left: 870px;">
+                    <select name="memberGroup" class="btn bg-secondary-subtle text-secondary dropdown-toggle"
+                      style="margin-left: 870px;">
                       <option value="1기" th:selected="${memberGroup == '1기'}">1기</option>
                       <option value="2기" th:selected="${memberGroup == '2기'}">2기</option>
                       <option value="3기" th:selected="${memberGroup == '3기'}">3기</option>
                       <option value="4기" th:selected="${memberGroup == '4기'}">4기</option>
                       <option value="5기" th:selected="${memberGroup == '5기'}">5기</option>
-                  </select>
-                  <button type="submit" class="btn bg-secondary-subtle text-secondary">
-                    검색
-                  </button>
-                  <!-- <input type="submit" value="검색" class="btn bg-secondary-subtle text-secondary"> -->
-                    <!-- <div class="btn-group" style="margin-left: 900px; margin-top: 0px;">
-                      <button class="btn bg-secondary-subtle text-secondary  btn-sm dropdown-toggle" type="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        기수 선택
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a class="dropdown-item" href="#" data-value="1기">1기</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#" data-value="2기">2기</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#" data-value="3기">3기</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#" data-value="4기">4기</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#" data-value="5기">5기</a>
-                        </li>
-                      </ul>
-                    </div> -->
+                    </select>
+                    <input type="submit" class="btn bg-secondary-subtle text-secondary" value="검색">
+                    </input>
                   </form>
                   <thead class="header-item">
                     <th>
@@ -249,61 +197,25 @@
                 </table>
               </div>
             </div>
-
-            <!-- Page Navigatiton -->
+            <!-- 페이징 -->
             <nav class="pagination" style="text-align: center; display: block; font-size: 18px;">
-              <!-- 앞 그룹 -->
-              <!-- 2번 그룹 이상일 때 -->
-              <th:block th:if="${navi.startPageGroup > 1}">
-                <a class="page-no navi" style="font-size: 20px;"
-                  th:href="|javascript:pageFormSubmit(${navi.startPageGroup-1})|">&laquo;</a>
-              </th:block>
-              <!-- 1번 그룹 이상일 때 -->
-              <th:block th:unless="${navi.startPageGroup > 1}">
-                <span class="page-no navi">&laquo;</span>
-              </th:block>
-
-              <!-- 앞 페이지 -->
-              <!-- 2 페이지 이상의 페이지를 보고 있으면 링크 생김 -->
-              <th:block th:if="${navi.page > 1}">
-                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.page -1})|">&lsaquo;</a>
-              </th:block>
-              <!-- 1 페이지를 보고있으면 링크 생기지 않음 -->
-              <th:block th:unless="${navi.page > 1}">
-                <span class="page-no navi">&lsaquo;</span>
-              </th:block>
-
-              <!-- 페이지 번호 출력 -->
+              <a th:if="${navi.startPageGroup > 1}"
+                th:href="@{|/admin/adminPage?page=${navi.startPageGroup - 10}&memberGroup=${memberGroup}|}"
+                class="btn prev">&laquo; Previous</a>
               <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-                <!-- 보고있는 페이지가 요청한 페이지와 같을 때는 링크 안생김 -->
                 <span th:if="${count == navi.page}">
                   <b class="page-no current" th:text="${count}"></b>
                 </span>
                 <span th:unless="${count == navi.page}">
-                  <a class="page-no" th:href="|javascript:pageFormSubmit(${count})|" th:text="${count}"></a>
+                  <a class="page-no" th:href="@{|/admin/adminPage?page=${count}&memberGroup=${memberGroup}|}"
+                    th:text="${count}"></a>
                 </span>
               </span>
-
-              <!-- 뒷 페이지 -->
-              <!-- 현재 페이지 뒤에 다른 페이지가 있으면 링크가 생김 -->
-              <th:block th:if="${navi.totalPages > navi.page}">
-                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.page + 1})|">&rsaquo;</a>
-              </th:block>
-              <!-- 마지막 페이지를 보고 있을 때는 링크가 생기면 안됨 -->
-              <th:block th:unless="${navi.totalPages > navi.page}">
-                <span class="page-no navi">&rsaquo;</span>
-              </th:block>
-
-              <!-- 뒷 그룹 -->
-              <!-- 다음 그룹이 있으면 링크가 생겨야함 -->
-              <th:block th:if="${navi.totalGroupCount > navi.currentGroup}">
-                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.endPageGroup + 1})|">&raquo;</a>
-              </th:block>
-              <!-- 마지막 그룹을 보고 있을 때는 링크가 생기면 안됨 -->
-              <th:block th:unless="${navi.totalGroupCount > navi.currentGroup}">
-                <span class="page-no navi">&raquo;</span>
-              </th:block>
+              <a th:if="${navi.endPageGroup < navi.totalPages}"
+                th:href="@{|/admin/adminPage?page=${navi.endPageGroup + 1}&memberGroup=${memberGroup}|}"
+                class="btn next10">Next &raquo;</a>
             </nav>
+            <!--페이징 끝-->
             <!-- 승인된 회원 보여줌 끝-->
 
             <!-- 승인 안된 회원 보여줌 -->
@@ -312,7 +224,6 @@
               <div class="table-responsive">
                 <table class="table search-table align-middle text-nowrap">
                   <p style="display: inline;" th:text="'게시글 개수 : ' + ${disablelist.size()}"> </p>
-
                   <thead class="header-item">
                     <th>
                       <div class="n-chk align-self-center text-center">
@@ -365,12 +276,18 @@
                       </td>
                       <td>
                         <div class="action-btn">
-                          <button type="button" class="btn bg-secondary-subtle text-secondary">
+                          <a class="btn bg-secondary-subtle text-secondary"
+                            th:href="@{/email/approve(memberId=${member.memberId}, memberEmail=${member.memberEmail})}">
                             승인
-                          </button>
-                          <button type="button" class="btn bg-danger-subtle text-danger">
+                          </a>
+                          <a type="button" class="btn bg-danger-subtle text-danger"
+                            th:href="@{/email/refuse(memberId=${member.memberId}, memberEmail=${member.memberEmail})}">
                             거부
-                          </button>
+                          </a>
+                          <!--에러 발생시 출력-->
+                          <th:block th:if="${error}">
+                            <div th:text="${errMessage}" style="font-size: 0.8em; color:red;" id="errormessage"></div>
+                          </th:block>
                         </div>
                       </td>
                     </tr>
@@ -384,758 +301,36 @@
         </div>
         <!-- 첫번째 본문 끝 -->
 
-        <!-- 두번째 버튼 클릭 시 본문 시작 -->
-        <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab"
-          tabindex="0">
-          <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
-            <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">게시글 관리
-            </h3>
-            <form class="position-relative">
-              <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh"
-                placeholder="Search Followers">
-              <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
-            </form>
-          </div>
-        </div>
-        <!-- 두번째 본문 끝 -->
-        <!-- 세번째 본문 시작 -->
-        <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
-          <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
-            <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">공지사항
-            </h3>
-            <form class="position-relative">
-              <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Friends">
-              <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
-            </form>
-          </div>
-        </div>
-        <!-- 세번째 본문 끝 -->
-
-
-
-
-
-
       </div>
       <!-- 이 div가 본문들의 전체를 감싸야함 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <!-- 네번째 본문 시작 -->
-      <div class="tab-pane fade" id="pills-gallery" role="tabpanel" aria-labelledby="pills-gallery-tab" tabindex="0">
-        <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
-          <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Gallery <span
-              class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">12</span>
-          </h3>
-          <form class="position-relative">
-            <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Friends">
-            <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
-          </form>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s1.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Isuava wakceajo fe.jpg</h6>
-                    <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Isuava wakceajo fe.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s2.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Ip docmowe vemremrif.jpg</h6>
-                    <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Ip docmowe vemremrif.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s3.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Duan cosudos utaku.jpg</h6>
-                    <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Duan cosudos utaku.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s4.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Fu netbuv oggu.jpg</h6>
-                    <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Fu netbuv oggu.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s5.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Di sekog do.jpg</h6>
-                    <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Di sekog do.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s6.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Lo jogu camhiisi.jpg</h6>
-                    <span class="text-dark fs-2">Thu, Dec 15, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Lo jogu camhiisi.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s7.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Orewac huosazud robuf.jpg</h6>
-                    <span class="text-dark fs-2">Fri, Dec 16, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Orewac huosazud robuf.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s8.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Nira biolaizo tuzi.jpg</h6>
-                    <span class="text-dark fs-2">Sat, Dec 17, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Nira biolaizo tuzi.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s9.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Peri metu ejvu.jpg</h6>
-                    <span class="text-dark fs-2">Sun, Dec 18, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Peri metu ejvu.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s10.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Vurnohot tajraje isusufuj.jpg</h6>
-                    <span class="text-dark fs-2">Mon, Dec 19, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Vurnohot tajraje isusufuj.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s11.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Juc oz ma.jpg</h6>
-                    <span class="text-dark fs-2">Tue, Dec 20, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Juc oz ma.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card hover-img overflow-hidden">
-              <div class="card-body p-0">
-                <img src="../assets/images/products/s12.jpg" alt="modernize-img" height="220"
-                  class="w-100 object-fit-cover">
-                <div class="p-4 d-flex align-items-center justify-content-between">
-                  <div>
-                    <h6 class="mb-0">Povipvez marjelliz zuuva.jpg</h6>
-                    <span class="text-dark fs-2">Wed, Dec 21, 2024</span>
-                  </div>
-                  <div class="dropdown">
-                    <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)"
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="ti ti-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu overflow-hidden">
-                      <li>
-                        <a class="dropdown-item" href="javascript:void(0)">Povipvez marjelliz zuuva.jpg</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 네번재 본문 끝 -->
-    </div>
-  </div>
-  </div>
-  <!-- <script>
-  function handleColorTheme(e) {
-    document.documentElement.setAttribute("data-color-theme", e);
-  }
-</script>
-      <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        <i class="icon ti ti-settings fs-7"></i>
-      </button>
-
-      <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
-          <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
-            Settings
-          </h4>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body h-n80" data-simplebar>
-          <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
-
-          <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
-              <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
-            </label>
-
-            <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
-              <i class="icon ti ti-moon fs-7 me-2"></i>Dark
-            </label>
-          </div>
-
-          <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
-          <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <input type="radio" class="btn-check" name="direction-l" id="ltr-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="ltr-layout">
-              <i class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR
-            </label>
-
-            <input type="radio" class="btn-check" name="direction-l" id="rtl-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="rtl-layout">
-              <i class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL
-            </label>
-          </div>
-
-          <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
-
-          <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
-            <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">
-              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
-                <i class="ti ti-check text-white d-flex icon fs-5"></i>
-              </div>
-            </label>
-
-            <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">
-              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
-                <i class="ti ti-check text-white d-flex icon fs-5"></i>
-              </div>
-            </label>
-
-            <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">
-              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
-                <i class="ti ti-check text-white d-flex icon fs-5"></i>
-              </div>
-            </label>
-
-            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
-              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
-                <i class="ti ti-check text-white d-flex icon fs-5"></i>
-              </div>
-            </label>
-
-            <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
-              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
-                <i class="ti ti-check text-white d-flex icon fs-5"></i>
-              </div>
-            </label>
-
-            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
-              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
-                <i class="ti ti-check text-white d-flex icon fs-5"></i>
-              </div>
-            </label>
-          </div>
-
-          <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
-          <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <div>
-              <input type="radio" class="btn-check" name="page-layout" id="vertical-layout" autocomplete="off" />
-              <label class="btn p-9 btn-outline-primary" for="vertical-layout">
-                <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical
-              </label>
-            </div>
-            <div>
-              <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout" autocomplete="off" />
-              <label class="btn p-9 btn-outline-primary" for="horizontal-layout">
-                <i class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal
-              </label>
-            </div>
-          </div>
-
-          <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
-
-          <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="boxed-layout">
-              <i class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed
-            </label>
-
-            <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="full-layout">
-              <i class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full
-            </label>
-          </div>
-
-          <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
-          <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <a href="javascript:void(0)" class="fullsidebar">
-              <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar" autocomplete="off" />
-              <label class="btn p-9 btn-outline-primary" for="full-sidebar">
-                <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
-              </label>
-            </a>
-            <div>
-              <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar" autocomplete="off" />
-              <label class="btn p-9 btn-outline-primary" for="mini-sidebar">
-                <i class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse
-              </label>
-            </div>
-          </div>
-
-          <h6 class="mt-5 fw-semibold fs-4 mb-2">Card With</h6>
-
-          <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <input type="radio" class="btn-check" name="card-layout" id="card-with-border" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="card-with-border">
-              <i class="icon ti ti-border-outer fs-7 me-2"></i>Border
-            </label>
-
-            <input type="radio" class="btn-check" name="card-layout" id="card-without-border" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="card-without-border">
-              <i class="icon ti ti-border-none fs-7 me-2"></i>Shadow
-            </label>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!--  Search Bar -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-      <div class="modal-content rounded-1">
-        <div class="modal-header border-bottom">
-          <input type="search" class="form-control fs-3" placeholder="Search here" id="search" />
-          <a href="javascript:void(0)" data-bs-dismiss="modal" class="lh-1">
-            <i class="ti ti-x fs-5 ms-3"></i>
-          </a>
-        </div>
-        <div class="modal-body message-body" data-simplebar="">
-          <h5 class="mb-0 fs-5 p-1">Quick Page Links</h5>
-          <ul class="list mb-0 py-2">
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Modern</span>
-                <span class="text-muted d-block">/dashboards/dashboard1</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Dashboard</span>
-                <span class="text-muted d-block">/dashboards/dashboard2</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Contacts</span>
-                <span class="text-muted d-block">/apps/contacts</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Posts</span>
-                <span class="text-muted d-block">/apps/blog/posts</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Detail</span>
-                <span
-                  class="text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Shop</span>
-                <span class="text-muted d-block">/apps/ecommerce/shop</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Modern</span>
-                <span class="text-muted d-block">/dashboards/dashboard1</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Dashboard</span>
-                <span class="text-muted d-block">/dashboards/dashboard2</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Contacts</span>
-                <span class="text-muted d-block">/apps/contacts</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Posts</span>
-                <span class="text-muted d-block">/apps/blog/posts</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Detail</span>
-                <span
-                  class="text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
-              </a>
-            </li>
-            <li class="p-1 mb-1 bg-hover-light-black">
-              <a href="javascript:void(0)">
-                <span class="d-block">Shop</span>
-                <span class="text-muted d-block">/apps/ecommerce/shop</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--  Shopping Cart -->
-  <div class="offcanvas offcanvas-end shopping-cart" tabindex="-1" id="offcanvasRight"
-    aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header justify-content-between py-4">
-      <h5 class="offcanvas-title fs-5 fw-semibold" id="offcanvasRightLabel">
-        Shopping Cart
-      </h5>
-      <span class="badge bg-primary rounded-4 px-3 py-1 lh-sm">5 new</span>
-    </div>
-    <div class="offcanvas-body h-100 px-4 pt-0" data-simplebar>
-      <ul class="mb-0">
-        <li class="pb-7">
-          <div class="d-flex align-items-center">
-            <img src="../assets/images/products/product-1.jpg" width="95" height="75"
-              class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
-            <div>
-              <h6 class="mb-1">Supreme toys cooker</h6>
-              <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
-              <div class="d-flex align-items-center justify-content-between mt-2">
-                <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
-                <div class="input-group input-group-sm w-50">
-                  <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button"
-                    id="add1">
-                    -
-                  </button>
-                  <input type="text"
-                    class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty" placeholder=""
-                    aria-label="Example text with button addon" aria-describedby="add1" value="1" />
-                  <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button" id="addo2">
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="pb-7">
-          <div class="d-flex align-items-center">
-            <img src="../assets/images/products/product-2.jpg" width="95" height="75"
-              class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
-            <div>
-              <h6 class="mb-1">Supreme toys cooker</h6>
-              <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
-              <div class="d-flex align-items-center justify-content-between mt-2">
-                <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
-                <div class="input-group input-group-sm w-50">
-                  <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button"
-                    id="add2">
-                    -
-                  </button>
-                  <input type="text"
-                    class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty" placeholder=""
-                    aria-label="Example text with button addon" aria-describedby="add2" value="1" />
-                  <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button"
-                    id="addon34">
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="pb-7">
-          <div class="d-flex align-items-center">
-            <img src="../assets/images/products/product-3.jpg" width="95" height="75"
-              class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
-            <div>
-              <h6 class="mb-1">Supreme toys cooker</h6>
-              <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
-              <div class="d-flex align-items-center justify-content-between mt-2">
-                <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
-                <div class="input-group input-group-sm w-50">
-                  <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button"
-                    id="add3">
-                    -
-                  </button>
-                  <input type="text"
-                    class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty" placeholder=""
-                    aria-label="Example text with button addon" aria-describedby="add3" value="1" />
-                  <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button"
-                    id="addon3">
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="align-bottom">
-        <div class="d-flex align-items-center pb-7">
-          <span class="text-dark fs-3">Sub Total</span>
-          <div class="ms-auto">
-            <span class="text-dark fw-semibold fs-3">$2530</span>
-          </div>
-        </div>
-        <div class="d-flex align-items-center pb-7">
-          <span class="text-dark fs-3">Total</span>
-          <div class="ms-auto">
-            <span class="text-dark fw-semibold fs-3">$6830</span>
-          </div>
-        </div>
-        <a href="../minisidebar/eco-checkout.html" class="btn btn-outline-primary w-100">Go to shopping cart</a>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div class="dark-transparent sidebartoggler"></div> -->
-  <!-- Import Js Files -->
-  <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-  <script src="/static/js/theme/app.init.js"></script>
-  <script src="/static/js/theme/theme.js"></script>
-  <script src="/static/js/theme/app.min.js"></script>
-  <script src="/static/js/theme/sidebarmenu.js"></script>
 
-  <!-- solar icons -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
-  <script src="/static/libs/fullcalendar/index.global.min.js"></script>
-  <script src="/static/js/apps/contact.js"></script>
+    <div class="dark-transparent sidebartoggler"></div> -->
+    <!-- Import Js Files -->
+    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+    <script src="/static/js/theme/app.init.js"></script>
+    <script src="/static/js/theme/theme.js"></script>
+    <script src="/static/js/theme/app.min.js"></script>
+    <script src="/static/js/theme/sidebarmenu.js"></script>
 
-  <script>
-    //button으로 드롭다운 할 때 컨트롤러로 보냄
-    // document.querySelectorAll('.dropdown-item').forEach(item => {
-    //   item.addEventListener('click', function (event) {
-    //     event.preventDefault();
+    <!-- solar icons -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
+    <script src="/static/libs/fullcalendar/index.global.min.js"></script>
+    <script src="/static/js/apps/contact.js"></script>
 
-    //     var selectedValue = this.getAttribute('data-value');
-
-    //     document.getElementById('memberGroup').value = selectedValue;
-
-    //     document.getElementById('searchForm').submit();
-    //   });
-    // });
-  </script>
+    <script>
+      function pageFormSubmit(page) {
+        document.getElementById("requestPage").value = page;
+        // 선택한 검색 옵션과 검색어를 폼에 추가하여 서브밋
+        var memberGroup = document.getElementById("memberGroup").value;
+        document
+          .getElementById("memberGroup")
+          .setAttribute("name", "memberGroup");
+        document.getElementById("searchForm").submit();
+      }
+    </script>
 </body>
 
 </html>
