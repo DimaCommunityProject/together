@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import java.util.List;
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -76,7 +77,7 @@ public class MemberEntity {
 	 */
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@OrderBy("memberproject_seq asc")
-	private List<MemberProjectEntity> memberProjectEntity;
+	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
 
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()

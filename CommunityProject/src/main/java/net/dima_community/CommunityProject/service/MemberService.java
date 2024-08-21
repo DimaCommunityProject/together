@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
@@ -139,6 +140,16 @@ public class MemberService {
 
 		log.info("사용자 확인 레퍼지토리에서 찾아옴 : {}", pw);
 		return pw;
+	}
+
+	@Transactional
+	public void updateVerificationCode(String memberId, String generatedString) {
+
+		MemberDTO originalMember = findById(memberId);
+		MemberDTO updatedMember = originalMember.updateVerificationCode(generatedString);
+		log.info("인증번호 업데이트 완료");
+
+		log.info("인증번호 저장 완료");
 	}
 
 	// // 임시비번 암호화 후 업뎃

@@ -35,4 +35,9 @@ public class MemberPageDTO {
 
         return this;
     }
+
+    public MemberPageDTO updateSkill(String memberSkill) {
+        this.memberSkill = memberSkill;
+        return this;
+    }
 }

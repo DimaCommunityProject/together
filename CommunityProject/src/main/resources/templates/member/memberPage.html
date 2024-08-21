@@ -96,7 +96,9 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <h5 class="mb-0" th:text="${member.memberName}">Mathew Anderson</h5>
+                  <span class="mb-1 badge rounded-pill  bg-info-subtle text-info"
+                    th:text="${member.memberGroup}"></span>
+                  <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson</h5>
                   <p class="mb-0" th:text="${member.memberId}">Designer</p>
                 </div>
               </div>
@@ -106,20 +108,20 @@
                 class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
                 <li>
                   <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
-                    href="javascript:void(0)" width="30" height="30">
-                    <i class="ti ti-brand-facebook"></i>
+                    href=`chat?memberId=${member.memberId}` width="30" height="30">
+                    <i class="ti ti-message-chatbot"></i>
                   </a>
                 </li>
                 <li>
                   <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                    href="javascript:void(0)">
-                    <i class="ti ti-brand-dribbble"></i>
+                    href="mailto:${member.memberEmail}">
+                    <i class=" ti ti-mail"></i>
                   </a>
                 </li>
                 <li>
                   <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                    href="javascript:void(0)">
-                    <i class="ti ti-brand-youtube"></i>
+                    th:href="${memberPage.memberBlog}">
+                    <i class="ti ti-brand-blogger"></i>
                   </a>
                 </li>
                 <li>
@@ -322,6 +324,10 @@
 
                 </div>
               </div>
+              <span style="margin: 10px; float: right;">
+                <a th:href="@{/memberpage/updatepage(memberId=${member.memberId})}">수정하기</a></span>
+
+
             </div>
           </div>
           <!-- Import Js Files -->

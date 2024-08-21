@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,27 +29,30 @@ public class MemberPageController {
     public final MemberProjectService memberProjectService;
 
     @GetMapping("/showpage")
-    public String showpage(Model model) {
+    public String showpage(@RequestParam(name = "memberId") String memberId, Model model) {
         // 로그인한 유저 정보 가져오기
         // Object principal =
         // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // String username = ((UserDetails) principal).getUsername();
-        String username = "ssehn9327";
 
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
-        MemberDTO member = memberService.findById(username);
+        MemberDTO member = memberService.findById(memberId);
         MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());
         List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(member.getMemberId());
 
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);
         model.addAttribute("memberProject", memberProject);
-        return "member/page-user-profile";
+        return "member/memberPage";
     }
 
     @GetMapping("/updatepage")
-    public String updatepage1(@RequestParam MemberDTO member, @RequestParam MemberPageDTO memberPage,
-            @RequestParam MemberProjectDTO memberProject, Model model) {
+    public String updatepage1(@RequestParam(name = "memberId") String memberId, Model model) {
+
+        // 회원, 회원페이지, 회원프로젝트 객체 가져오기
+        MemberDTO member = memberService.findById(memberId);
+        MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());
+        List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(member.getMemberId());
 
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);
@@ -67,5 +71,13 @@ public class MemberPageController {
 
         return null;
         // return "redirect:/memberpage/showpage";
+    }
+
+    @PostMapping("/updateMemberSkill")
+    @ResponseBody
+    public boolean updateMemberSkill(@RequestParam(name = "memberId") String memberId,
+            @RequestParam(name = "memberSkill") String memberSkill) {
+        boolean result = memberPageService.updateMemberSkill(memberId, memberSkill);
+        return result;
     }
 }
