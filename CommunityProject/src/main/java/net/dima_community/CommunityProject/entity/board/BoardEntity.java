@@ -88,7 +88,6 @@ public class BoardEntity {
     // 자식
     // 1) JobBoardEntity
     @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("board_id")
     private JobBoardEntity jobBoardEntity;
     
     // 2) BoardReport

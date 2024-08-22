@@ -32,6 +32,7 @@ function validTitle(){
 function validContent(){
     // ckeditor에서 글 내용 가져오기
     var content = window.editor.getData();
+    console.log("content : "+content);
     if (!content) {
         // alert("내용을 입력하세요");
         $(".ck-content").focus(); // ckeditor에 focus

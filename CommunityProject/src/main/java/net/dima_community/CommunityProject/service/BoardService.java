@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.BoardReportDTO;
 import net.dima_community.CommunityProject.dto.board.JobBoardRecruitDTO;
@@ -33,6 +34,7 @@ import net.dima_community.CommunityProject.repository.board.LikeRepository;
 import net.dima_community.CommunityProject.repository.board.MemberRepository;
 import net.dima_community.CommunityProject.util.FileService;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -258,6 +260,7 @@ public class BoardService {
     /**
      * 전달받은 게시글 DTO를 Entity로 변환 후 Board DB에 저장하는 함수
      */
+    @Transactional
     public void insertBoard(BoardDTO dto) {
         // 게시글 작성자 데이터(부모테이블) 가져오기
         MemberEntity memberEntity = selectMemberEntity(dto.getMemberId());
@@ -270,11 +273,12 @@ public class BoardService {
         }
 
         // 게시글 DTO -> 엔티티 변환 후 DB 저장
-        boardRepository.save(BoardEntity.toEntity(dto, memberEntity));
+        BoardEntity boardEntity = boardRepository.save(BoardEntity.toEntity(dto, memberEntity));
 
+        log.info("========== 저장된 entity의 ID : "+boardEntity.getBoardId());
         // activity/recruit 게시글인 경우 
         if (dto.getCategory()==BoardCategory.activity || dto.getCategory()==BoardCategory.recruit) {
-            insertJobBoard(dto); // JobBoard DB 저장
+            insertJobBoard(boardEntity, dto); // JobBoard DB 저장
         }
 
     }
@@ -284,14 +288,15 @@ public class BoardService {
      * @param dto
      * @return
      */
-    public void insertJobBoard(BoardDTO boardDTO) {
-        BoardEntity boardEntity = selectBoardEntity(boardDTO.getBoardId());
+    public void insertJobBoard(BoardEntity boardEntity, BoardDTO boardDTO) {
         JobBoardEntity jobBoardEntity = JobBoardEntity.builder()
+                                                    .boardId(boardEntity.getBoardId())
                                                     .boardEntity(boardEntity)
                                                     .deadline(boardDTO.getDeadline())
                                                     .limitNumber(boardDTO.getLimitNumber())
                                                     .currentNumber(0) // DEFAULT : 0
                                                     .build();
+        log.info("===============JobBoardEntity의 ID 및 여러가지 : "+jobBoardEntity.getBoardId()+", deadline : "+jobBoardEntity.getDeadline());
         jobBoardRepository.save(jobBoardEntity);
     }
 

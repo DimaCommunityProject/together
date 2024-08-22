@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -38,7 +39,8 @@ public class JobBoardEntity {
     private Long boardId;
     
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", insertable = false, updatable = false)
+    @MapsId  // MapsId 사용으로 ID 매핑
+    @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
 
     @Column(name = "deadline")
@@ -56,7 +58,7 @@ public class JobBoardEntity {
 
     public static JobBoardEntity toEntity(JobBoardDTO dto, BoardEntity boardEntity) {
         return JobBoardEntity.builder()
-                .boardId(dto.getBoardId())
+                .boardId(boardEntity.getBoardId())
                 .boardEntity(boardEntity)
                 .deadline(dto.getDeadline())
                 .limitNumber(dto.getLimitNumber())
