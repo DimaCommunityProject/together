@@ -21,6 +21,7 @@ function validTitle(){
     var title = $("#inputText2").val().trim();
     if (!title) {
         alert("제목을 입력하세요");
+        // $("#validTitle").text("제목을 입력하세요")
         $("#inputText2").select();
         return false;
     }
@@ -32,7 +33,7 @@ function validContent(){
     // ckeditor에서 글 내용 가져오기
     var content = window.editor.getData();
     if (!content) {
-        alert("내용을 입력하세요");
+        // alert("내용을 입력하세요");
         $(".ck-content").focus(); // ckeditor에 focus
         return false;
     }else{

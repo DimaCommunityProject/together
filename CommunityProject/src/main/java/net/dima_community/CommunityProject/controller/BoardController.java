@@ -119,27 +119,31 @@ public class BoardController {
     // ================== 게시글 생성 ===================
     
     /**
-     * 게시글 작성 화면 요청 - activity or recruit 외 카테고리 
+     * 게시글 작성 화면 요청
      * @param param
      * @return
      */
     @GetMapping("/board/write")
     public String writeBoard(@RequestParam(name = "category") BoardCategory category, Model model) {
         model.addAttribute("category", category);
+        // activity/recruit 게시글인 경우 
+        if (category==BoardCategory.activity || category==BoardCategory.recruit) {
+            return "board/writeActivityOrRecruit";
+        }
         return "board/write";
     }
 
     
-    /**
-     * 게시글 작성 화면 요청 - activity or recruit
-     * @param param
-     * @return
-     */
-    @GetMapping("/board/writeActivityOrRecruit")
-    public String writeJobBoard(@RequestParam(name = "category") BoardCategory category, Model model) {
-        model.addAttribute("category", category);
-        return "board/writeActivityOrRecruit";
-    }
+    // /**
+    //  * 게시글 작성 화면 요청 - activity or recruit
+    //  * @param param
+    //  * @return
+    //  */
+    // @GetMapping("/board/writeActivityOrRecruit")
+    // public String writeJobBoard(@RequestParam(name = "category") BoardCategory category, Model model) {
+    //     model.addAttribute("category", category);
+    //     return "board/writeActivityOrRecruit";
+    // }
     
     
     /**
