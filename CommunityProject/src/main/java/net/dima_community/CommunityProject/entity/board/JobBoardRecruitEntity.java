@@ -1,5 +1,6 @@
 package net.dima_community.CommunityProject.entity.board;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

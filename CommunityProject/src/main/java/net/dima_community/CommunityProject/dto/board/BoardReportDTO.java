@@ -2,14 +2,14 @@ package net.dima_community.CommunityProject.dto.board;
 
 import java.time.LocalDateTime;
 
-import net.dima_community.CommunityProject.dto.board.check.ReportCategory;
-import net.dima_community.CommunityProject.entity.board.BoardReportEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import net.dima_community.CommunityProject.dto.board.check.ReportCategory;
+import net.dima_community.CommunityProject.entity.board.BoardReportEntity;
 
 @AllArgsConstructor
 @RequiredArgsConstructor

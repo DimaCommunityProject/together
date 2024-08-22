@@ -7,11 +7,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.BoardReportDTO;
-import net.dima_community.CommunityProject.dto.board.JobBoardDTO;
+import net.dima_community.CommunityProject.dto.board.JobBoardRecruitDTO;
 import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.dto.board.combine.BoardListDTO;
 import net.dima_community.CommunityProject.service.BoardService;
@@ -122,18 +124,20 @@ public class BoardController {
      * @return
      */
     @GetMapping("/board/write")
-    public String writeBoard() {
+    public String writeBoard(@RequestParam(name = "category") BoardCategory category, Model model) {
+        model.addAttribute("category", category);
         return "board/write";
     }
 
-
+    
     /**
      * 게시글 작성 화면 요청 - activity or recruit
      * @param param
      * @return
      */
     @GetMapping("/board/writeActivityOrRecruit")
-    public String writeJobBoard() {
+    public String writeJobBoard(@RequestParam(name = "category") BoardCategory category, Model model) {
+        model.addAttribute("category", category);
         return "board/writeActivityOrRecruit";
     }
     
@@ -146,14 +150,13 @@ public class BoardController {
     @PostMapping("/board/write")
     public String writeBoard(@ModelAttribute BoardDTO dto, Model model) {
         
+        // DEFAULT 값 세팅
+        dto.setHitCount(0);
+        dto.setLikeCount(0);
+        dto.setReported(false);
+
         // 전달받은 게시글 DTO를 Board 테이블에 삽입
         boardService.insertBoard(dto);
-        
-        // activity or recruit -> JobBoard 테이블에 정보 삽입 
-        if (dto.getCategory()==BoardCategory.activity || dto.getCategory()==BoardCategory.recruit) {
-            JobBoardDTO jobBoardDTO = new JobBoardDTO(dto.getBoardId(), dto.getDeadline(), dto.getLimitNumber(), dto.getCurrentNumber());
-            boardService.insertJobBoard(jobBoardDTO);
-        }
         
         // 게시글 목록에 필요한 파라미터 값 세팅 후 model에 담기
         model.addAttribute("category", dto.getCategory());
@@ -163,40 +166,95 @@ public class BoardController {
     }
     
 
+    // =================== 게시글 조회 =====================
+
+    /**
+     * 게시글 조회 화면 요청
+     * @param boardId
+     * @param category
+     * @param searchWord
+     * @param model
+     * @return
+     */
+    @GetMapping("/board/detail")
+    public String boardDetail(@RequestParam(name = "boardId") Long boardId, 
+                            @RequestParam(name = "category") BoardCategory category,
+                            @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
+                            Model model) {
+        
+        // boardId에 해당하는 게시글 DTO 
+        BoardDTO board = boardService.selectOne(boardId);
+        // 조회수 증가
+        boardService.increaseHitCount(boardId);
+
+        model.addAttribute("board", board);
+        model.addAttribute("searchWord", searchWord);
+        model.addAttribute("category", category);
+
+        return "board/detail";
+    }
+
+    /**
+     * ajax - activity/recruit 게시글인 경우 해당 게시글의 마감 여부 확인 요청
+     * @param param
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/board/isDead")
+    public boolean jobBoardIsDead(@RequestParam(name = "boardId") Long boardId) {
+        boolean deadline = boardService.isDeadline(boardId);
+        boolean exceededLimitNumber = boardService.isExceededLimitNumber(boardId);
+        return deadline||exceededLimitNumber ? true  : false ; // deadline이 넘었거나 제한 인원을 초과했으면 true 반환
+    }
+
+    /**
+     * ajax - recruit 게시글인 경우 로그인한 사용자의 참여 여부 요청
+     * @param boardId
+     * @param memberId
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/board/isRecruited")
+    public boolean jobBoardRecruitIsRecruited(@RequestParam(name = "boardId") Long boardId, @RequestParam(name = "memberId")String memberId){
+        return boardService.isRecruited(boardId, memberId);
+    }
+    
+
     // ===================== 게시글 좋아요 ===================
 
     /**
-     * Ajax - 게시글 좋아요 요청 및 해제
-     * @param boardId
+     * ajax - 게시글 좋아요수 요청
+     * @param param
      * @return
+     */
+    @ResponseBody
+    @GetMapping("/board/getLikeCount")
+    public long getBoardLikeCount(@RequestParam(name = "boardId")Long boardId) {
+        return boardService.getLikeCount(boardId);
+    }
+
+    /**
+     * ajax - 전달받은 memberId가 해당 게시글 좋아요 눌렀는지 확인을 위한 요청
+     * @param boardId
+     * @return 좋아요 설정된 상태 → true / 좋아요 해제된 상태 → false
+     */
+    @ResponseBody
+    @GetMapping("/board/isLikeCount")
+    public boolean boardIsLikeCount(@RequestParam(name = "boardId")Long boardId, @RequestParam(name = "memberId") String memberId) {
+        return boardService.isBoardLikedByMember(boardId,memberId);
+    }
+    
+    /**
+     * ajax - 게시글 좋아요 요청 및 해제
+     * @param boardId
+     * @return 좋아요 설정 → true / 좋아요 해제 → false
      */
     @ResponseBody
     @GetMapping("/board/likeUpdate")
-    public String boardLikeUpdate(@RequestParam(name = "boardId") Long boardId, @RequestParam(name = "memberId") String memberId) {
-        return new String();
+    public boolean boardLikeUpdate(@RequestParam(name = "boardId") Long boardId, @RequestParam(name = "memberId") String memberId) {
+        return boardService.toggleLikeOnBoard(boardId,memberId);
     }
 
-    /**
-     * Ajax - 게시글 좋아요 수 요청
-     * @param boardId
-     * @return
-     */
-    @ResponseBody
-    @GetMapping("/board/getLike")
-    public String getBoardLikeCount(@RequestParam(name = "boardId") Long boardId) {
-        return new String();
-    }
-
-    /**
-     * Ajax - 게시글에 대한 현재 로그인한 사용자 좋아요 여부 
-     * @param boardId
-     * @return
-     */
-    @ResponseBody
-    @GetMapping("/board/isLikedByUser")
-    public String boardIsLikedByUser(@RequestParam(name = "boardId") Long boardId, @RequestParam(name = "memberId") String memberId) {
-        return new String();
-    }
     
 
     // ===================== 게시글 신고 =====================
@@ -208,22 +266,125 @@ public class BoardController {
      */
     @PostMapping("/board/report")
     public String postMethodName(@ModelAttribute BoardReportDTO dto, 
-                            @RequestParam(name = "category") BoardCategory category,
-                            @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
-                            RedirectAttributes rttr) {
-
-        // 신고 당한 게시글 블라인드 처리 후  
+                                @RequestParam(name = "category") BoardCategory category,
+                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
+                                RedirectAttributes rttr) {
+        
         // JobBoardReport DB에 저장
         boardService.insertJobBoardReported(dto);
-
+        
+        // Board의 report 컬럼 값 수정
+        boardService.updateRportedCount(dto.getBoardId());
+        
         // 카테고리, 검색어, 페이지
         rttr.addAttribute("category", category);
         rttr.addAttribute("searchWord", searchWord);
         
-        return "redirect:/board/list"; // 해당 게시글 화면
+        return "redirect:/board/list"; // 게시글 목록으로 이동
+    }
+    
+    // ===================== recruit 참여 =====================
+    
+    /**
+     * ajax - 게시글 참여 처리 요청
+     * @param param
+     * @return 참여 성공 → true / 참여 실패(or 이미 참여한 경우) → false
+     */
+    @ResponseBody
+    @GetMapping("/board/insertBoardRecruit")
+    public boolean insertJobBoardRecruit(@RequestParam(name = "boardId") Long boardId,
+                                @RequestParam(name = "memberId") String memberId,
+                                @RequestParam(name = "memberGroup") String memberGroup,
+                                @RequestParam(name = "memberPhone") String memberPhone,
+                                @RequestParam(name = "memberEmail") String memberEmail) {
+        // 해당 게시글에 해당 사용자의 참여여부 확인
+        if(boardService.isRecruited(boardId, memberId)) return false; // 이미 참여함
+
+        // BoardRecruitDTO 생성
+        JobBoardRecruitDTO jobBoardRecruitDTO = new JobBoardRecruitDTO(null, boardId, memberId, memberGroup, memberPhone, memberEmail);
+        // DB에 저장
+        if(boardService.saveJobBoardRecruit(jobBoardRecruitDTO)!=null){
+            boardService.updateCurrentNumber(boardId); // jobBoardEntity의 currentNumber 변경 
+            return true;
+        }else{ 
+            return false; // DB 저장 실패
+        }
     }
 
 
+    // ===================== 게시글 수정 =====================
+    
+    /**
+     * 게시글 수정 화면 요청
+     * @param boardId
+     * @param model
+     * @return
+     */
+    @GetMapping("/board/update")
+    public String updateBoard(@RequestParam(name = "boardId") Long boardId, 
+                            @RequestParam(name = "category") BoardCategory category,
+                            @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+        // 수정할 게시글 DTO
+        BoardDTO boardDTO = boardService.selectOne(boardId);
+        
+        model.addAttribute("board", boardDTO);
+        model.addAttribute("category", category);
+        model.addAttribute("searchWord", searchWord);
+        return "board/update";
+    }
+    
+    /**
+     * activity/recruit 게시글 수정 화면 요청
+     * @param boardId
+     * @param model
+     * @return
+     */
+    @GetMapping("/board/updateActivityOrRecruit")
+    public String updateActivityOrRecruitBoard(@RequestParam(name = "boardId") Long boardId, 
+                                                @RequestParam(name = "category") BoardCategory category,
+                                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+        // 수정할 게시글 DTO
+        BoardDTO boardDTO = boardService.selectOne(boardId);
+        
+        model.addAttribute("board", boardDTO);
+        model.addAttribute("category", category);
+        model.addAttribute("searchWord", searchWord);
+        return "board/updateActivityOrRecruit";
+    }
+    
+    /**
+     * 게시글 수정 처리 요청
+     * @param boardDTO
+     * @param category
+     * @param searchWord
+     * @param model
+     * @return
+     */
+    @PostMapping("/board/update")
+    public String postMethodName(@ModelAttribute BoardDTO boardDTO, 
+                                @RequestParam(name = "category") BoardCategory category,
+                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+        // 전달받은 boardDTO로 기존 board 정보 수정 처리
+        boardService.updateBoard(boardDTO);
+        
+        model.addAttribute("board", boardDTO);
+        model.addAttribute("category", category);
+        model.addAttribute("searchWord", searchWord);
+        return "board/detail";
+    }
+    
+    /**
+     * ajax - 게시글 작성자의 마감 요청
+     * @param param
+     * @return 마감 처리 성공 → true / 마감 처리 실패 → false
+     */
+    @ResponseBody
+    @GetMapping("/board/updateDeadline")
+    public boolean updateDeadline(@RequestParam(name = "boardId") Long boardId) {
+        return boardService.updateDeadLine(boardId);
+    }
+    
+    
 
     
 } 

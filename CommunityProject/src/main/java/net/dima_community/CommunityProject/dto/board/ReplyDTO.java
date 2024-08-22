@@ -1,5 +1,6 @@
 package net.dima_community.CommunityProject.dto.board;
 
+import java.util.List;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +26,12 @@ public class ReplyDTO {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private int likeCount;
+
+    // 로그인한 사용자의 댓글 좋아요 여부 정보를 담기 위한 변수
+    private boolean likeByUser;
+
+    // 대댓글 리스트
+    private List<ReplyDTO> childReplies;
 
     public static ReplyDTO toDTO(ReplyEntity entity, Long boardId, String memberId){
         return ReplyDTO.builder()

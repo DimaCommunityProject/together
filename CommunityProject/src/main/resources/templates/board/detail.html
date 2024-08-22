@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical">
+
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon icon-->
+  <link rel="shortcut icon" type="image/png" th:href="@{/assets/images/logos/favicon.png}" />
+
+  <!-- Core Css -->
+  <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+
+  <title>Modernize Bootstrap Admin</title>
+</head>
+
+<body class="link-sidebar">
+  <!-- Preloader -->
+  <div class="preloader">
+    <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+  </div>
+  <div id="main-wrapper">
+
+      <div class="body-wrapper">
+        <div class="container-fluid">
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">Blog Detail</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">Blog Detail</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img th:src="@{/assets/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card overflow-hidden">
+            <div class="position-relative">
+              <a href="javascript:void(0)">
+                <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="440">
+              </a>
+              <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2
+                min Read</span>
+              <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Esther Lindsey">
+            </div>
+            <div class="card-body p-4">
+              <span class="badge text-bg-light mt-3" th:value="${board.category}">Lifestyle</span>
+              <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}">Streaming video way before it was cool, go dark tomorrow</h2>
+              <div class="d-flex align-items-center gap-4">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="ti ti-eye text-dark fs-5"></i><p th:text="${board.hitCount}"></p> <!--조회수-->
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <i class="ti ti-message-2 text-dark fs-5"></i> 3 <!--댓글 수-->
+                </div>
+                <div class="d-flex align-items-center fs-2 ms-auto">
+                  <i class="ti ti-point text-dark"></i>Sat, Jan 14 <p th:text="${board.createDate}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body border-top p-4">
+              <h2 class="fs-8 fw-semibold mb-3">Title of the paragraph</h2>
+              <p class="mb-3" th:text="${board.content}">
+                But you cannot figure out what it is or what it can do. MTA web directory is the simplest way in which
+                one can bid on a link, or a few links if they wish to do so. The link
+                directory on MTA displays all of the links it currently has, and does so in alphabetical order, which
+                makes it much easier for someone to find what they are looking for if it is
+                something specific and they do not want to go through all the other sites and links as well. It allows
+                you to start your bid at the bottom and slowly work your way to the top
+                of the list.
+              </p>
+              <p class="mb-3">
+                Gigure out what it is or what it can do. MTA web directory is the simplest way in which one can bid on a
+                link, or a few links if they wish to do so. The link directory on MTA
+                displays all of the links it currently has, and does so in alphabetical order, which makes it much
+                easier for someone to find what they are looking for if it is something
+                specific and they do not want to go through all the other sites and links as well. It allows you to
+                start your bid at the bottom and slowly work your way to the top of the
+              </p>
+              <p class="text-dark mb-0">
+                <strong>This is strong text.</strong>
+              </p>
+              <p class="mb-0">
+                <em>This is italic text.</em>
+              </p>
+              <div class="border-top mt-7 pt-7">
+                <h3 class="fw-semibold">Unorder list.</h3>
+                <ul class="my-3 ps-4 text-dark">
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="p-1 text-bg-dark rounded-circle"></span>
+                    Gigure
+                    out what it is or
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="p-1 text-bg-dark rounded-circle"></span> The
+                    links
+                    it currently
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="p-1 text-bg-dark rounded-circle"></span> It
+                    allows
+                    you to start your bid
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="p-1 text-bg-dark rounded-circle"></span>
+                    Gigure
+                    out what it is or
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="p-1 text-bg-dark rounded-circle"></span> The
+                    links
+                    it currently
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="p-1 text-bg-dark rounded-circle"></span> It
+                    allows
+                    you to start your bid
+                  </li>
+                </ul>
+              </div>
+              <div class="border-top mt-7 pt-7">
+                <h3 class="fw-semibold">Order list.</h3>
+                <ol class="my-3 text-dark">
+                  <li>Gigure out what it is or</li>
+                  <li>The links it currently</li>
+                  <li>It allows you to start your bid</li>
+                  <li>Gigure out what it is or</li>
+                  <li>The links it currently</li>
+                  <li>It allows you to start your bid</li>
+                </ol>
+              </div>
+              <div class="border-top mt-7 pt-7">
+                <h3 class="fw-semibold mb-2">Quotes</h3>
+                <div class="p-3 bg-light rounded border-start border-2 border-primary">
+                  <h6 class="mb-0 fs-4 fw-semibold">
+                    <i class="ti ti-quote fs-7"></i>Life is short, Smile while you still
+                    have teeth!
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="mb-4 fw-semibold">Post Comments</h4>
+              <form>
+                <textarea class="form-control mb-4" rows="5"></textarea>
+                <button class="btn btn-primary">Post Comment</button>
+              </form>
+              <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
+                <h4 class="mb-0">Comments</h4>
+                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">3</span>
+              </div>
+              <div class="position-relative">
+                <div class="p-4 rounded-4 text-bg-light mb-3">
+                  <div class="d-flex align-items-center gap-3">
+                    <img th:src="@{/assets/images/profile/user-2.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
+                    <h6 class="mb-0 fs-4">Don Russell</h6>
+                    <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                  </div>
+                  <p class="my-3">Es do ujurus nejson imju azgudpi toceztep ji cocicoci bosawrop korze ta.
+                    Casetlu udumej umocu wanaro webmos ijafa ud muli amja softoj ma pijum.
+                  </p>
+                  <div class="d-flex align-items-center gap-2">
+                    <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+                      <i class="ti ti-arrow-back-up"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="p-4 rounded-4 text-bg-light mb-3">
+                  <div class="d-flex align-items-center gap-3">
+                    <img th:src="@{/assets/images/profile/user-3.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
+                    <h6 class="mb-0 fs-4">Cordelia Potter</h6>
+                    <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                  </div>
+                  <p class="my-3">Huwso jewzehgu julriw niwgazep lewbob isujirmuz hemto pahop cewa zuhucze rinitba
+                    etdebluj.
+                    Obdevo bo fa siztes laobeir agoemugo rut sapaviw mulati do re dabelul wo tumnik wih mu.
+                  </p>
+                  <div class="d-flex align-items-center gap-2">
+                    <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+                      <i class="ti ti-arrow-back-up"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="p-4 rounded-4 text-bg-light mb-3 ms-7">
+                  <div class="d-flex align-items-center gap-3">
+                    <img th:src="@{/assets/images/profile/user-6.jpg}" alt="modernize-img" class="rounded-circle" width="40" height="40">
+                    <h6 class="mb-0 fs-4">Irene Hanson</h6>
+                    <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                  </div>
+                  <p class="my-3">Uborofgic be rof lom sedge vapozi ohoinu nutremcuc ro ko atmeg anrov git ve vuj ki teb
+                    or.
+                    Lohi hafa faddegon horoz ebema kew idful ducam nev rol iga wikkobsu sucdu gud.
+                  </p>
+                </div>
+                <div class="p-4 rounded-4 text-bg-light">
+                  <div class="d-flex align-items-center gap-3">
+                    <img th:src="@{/assets/images/profile/user-4.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
+                    <h6 class="mb-0 fs-4">Seth Ortiz</h6>
+                    <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                  </div>
+                  <p class="my-3">Icme rasejmat ciwo ifekemug owoca vicoz ukikitus famiftat nuk eroewu za upe.
+                    Pobrikvup kivofvac tuba ot veh ozoab sa gesi hahoniha hop burbip volo hufotobo di uted vojoamu.
+                  </p>
+                  <div class="d-flex align-items-center gap-2">
+                    <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+                      <i class="ti ti-arrow-back-up"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function handleColorTheme(e) {
+          document.documentElement.setAttribute("data-color-theme", e);
+        }
+      </script>
+      <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="icon ti ti-settings fs-7"></i>
+      </button>
+
+      <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+          <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
+            Settings
+          </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body h-n80" data-simplebar>
+          <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
+
+          <div class="d-flex flex-row gap-3 customizer-box" role="group">
+            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
+              <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
+            </label>
+
+            <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
+              <i class="icon ti ti-moon fs-7 me-2"></i>Dark
+            </label>
+          </div>
+
+          <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
+          <div class="d-flex flex-row gap-3 customizer-box" role="group">
+            <input type="radio" class="btn-check" name="direction-l" id="ltr-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="ltr-layout">
+              <i class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR
+            </label>
+
+            <input type="radio" class="btn-check" name="direction-l" id="rtl-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="rtl-layout">
+              <i class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL
+            </label>
+          </div>
+
+          <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
+
+          <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
+            <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">
+              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
+                <i class="ti ti-check text-white d-flex icon fs-5"></i>
+              </div>
+            </label>
+
+            <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">
+              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
+                <i class="ti ti-check text-white d-flex icon fs-5"></i>
+              </div>
+            </label>
+
+            <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">
+              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
+                <i class="ti ti-check text-white d-flex icon fs-5"></i>
+              </div>
+            </label>
+
+            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
+              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
+                <i class="ti ti-check text-white d-flex icon fs-5"></i>
+              </div>
+            </label>
+
+            <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
+              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
+                <i class="ti ti-check text-white d-flex icon fs-5"></i>
+              </div>
+            </label>
+
+            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
+              <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
+                <i class="ti ti-check text-white d-flex icon fs-5"></i>
+              </div>
+            </label>
+          </div>
+
+          <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
+          <div class="d-flex flex-row gap-3 customizer-box" role="group">
+            <div>
+              <input type="radio" class="btn-check" name="page-layout" id="vertical-layout" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="vertical-layout">
+                <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical
+              </label>
+            </div>
+            <div>
+              <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="horizontal-layout">
+                <i class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal
+              </label>
+            </div>
+          </div>
+
+          <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
+
+          <div class="d-flex flex-row gap-3 customizer-box" role="group">
+            <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="boxed-layout">
+              <i class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed
+            </label>
+
+            <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="full-layout">
+              <i class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full
+            </label>
+          </div>
+
+          <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
+          <div class="d-flex flex-row gap-3 customizer-box" role="group">
+            <a href="javascript:void(0)" class="fullsidebar">
+              <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="full-sidebar">
+                <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
+              </label>
+            </a>
+            <div>
+              <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="mini-sidebar">
+                <i class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse
+              </label>
+            </div>
+          </div>
+
+          <h6 class="mt-5 fw-semibold fs-4 mb-2">Card With</h6>
+
+          <div class="d-flex flex-row gap-3 customizer-box" role="group">
+            <input type="radio" class="btn-check" name="card-layout" id="card-with-border" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="card-with-border">
+              <i class="icon ti ti-border-outer fs-7 me-2"></i>Border
+            </label>
+
+            <input type="radio" class="btn-check" name="card-layout" id="card-without-border" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="card-without-border">
+              <i class="icon ti ti-border-none fs-7 me-2"></i>Shadow
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+  <div class="dark-transparent sidebartoggler"></div>
+  <!-- Import Js Files -->
+  <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/assets/js/theme/app.init.js}"></script>
+  <script th:src="@{/assets/js/theme/theme.js}"></script>
+  <script th:src="@{/assets/js/theme/app.min.js}"></script>
+  <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
+
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

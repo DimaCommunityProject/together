@@ -1,5 +1,6 @@
 package net.dima_community.CommunityProject.dto.board;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

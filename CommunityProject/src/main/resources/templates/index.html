@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>첫화면</title>
+</head>
+<body>
+    <h1>디마 커뮤니티</h1>
+
+    <br>
+    <br>
+    <br>
+    <li><a th:href="@{/board/list(category=free)}">게시글 목록</a></li>
+    <li><a th:href="@{/board/detail(boardId=1, category=info)}">게시글 조회</a></li>
+    <li><a th:href="@{/board/write(category=free)}">게시글 작성</a></li>
+
+</body>
+</html>

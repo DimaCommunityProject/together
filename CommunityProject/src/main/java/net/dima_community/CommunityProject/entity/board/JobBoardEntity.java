@@ -4,7 +4,16 @@ import java.util.List;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +36,7 @@ public class JobBoardEntity {
     @Id
     @Column(name = "board_id")
     private Long boardId;
-
+    
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", insertable = false, updatable = false)
     private BoardEntity boardEntity;
@@ -43,7 +52,6 @@ public class JobBoardEntity {
 
     // 자식
     @OneToMany(mappedBy = "jobBoardEntity", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("board_id")
     private List<JobBoardRecruitEntity> JobBoardRecruitEntities;
 
     public static JobBoardEntity toEntity(JobBoardDTO dto, BoardEntity boardEntity) {

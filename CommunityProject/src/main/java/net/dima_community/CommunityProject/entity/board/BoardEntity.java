@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -88,14 +89,18 @@ public class BoardEntity {
     // 1) JobBoardEntity
     @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("board_id")
-    private List<JobBoardEntity> jobBoardEntities;
+    private JobBoardEntity jobBoardEntity;
     
     // 2) BoardReport
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("report_date")
     private List<BoardReportEntity> boardReportEntities;
-
+    
     // 3) Like
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("member_id")
+    private List<LikeEntity> likeEntities;
+    
 
 
 

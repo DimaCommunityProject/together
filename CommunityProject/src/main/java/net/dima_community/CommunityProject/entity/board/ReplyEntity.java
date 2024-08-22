@@ -26,7 +26,7 @@ import net.dima_community.CommunityProject.dto.board.ReplyDTO;
 @ToString
 @Builder
 @Entity
-@Table(name = "job_board_reply")
+@Table(name = "reply")
 public class ReplyEntity {
     @Id
     @Column(name="reply_id")
