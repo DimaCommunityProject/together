@@ -1,4 +1,3 @@
-
 $(function(){
     $("#submitBtn").click(submitBoardWrite);
     $("#resetBtn").click(resetBoardWrite);
@@ -45,14 +44,19 @@ function validContent(){
 
 // 게시글 등록 초기화 (제목, 내용, 파일)
 function resetBoardWrite(){
+    var category = $("#inputText1").val();
     resetTitle();
     resetCkeditor();
     resetUploadFile();
+    if (category == "recruit" || category =="activity") {
+        resetDeadline();
+        resetLimitNumber();
+    }
 }
 
 // Title 값 삭제
 function resetTitle(){
-    var title = $("#inputText2").val('');
+    $("#inputText2").val('');
 }
 // ckeditor 값 삭제
 function resetCkeditor(){
@@ -60,7 +64,15 @@ function resetCkeditor(){
 }
 // uploadFile 삭제
 function resetUploadFile(){
-    var uploadFile = $("#inputGroupFile01").val('');
+    $("#inputGroupFile01").val('');
+}
+// deadline 초기화
+function resetDeadline(){
+    $("#deadline").val('');
+}
+// limitNumber 초기화
+function resetLimitNumber(){
+    $("#limitNumber").val('');
 }
 
 // 게시글 등록 취소 (게시글 목록 요청)
