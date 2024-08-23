@@ -131,20 +131,7 @@ public class BoardController {
             return "board/writeActivityOrRecruit";
         }
         return "board/write";
-    }
-
-    
-    // /**
-    //  * 게시글 작성 화면 요청 - activity or recruit
-    //  * @param param
-    //  * @return
-    //  */
-    // @GetMapping("/board/writeActivityOrRecruit")
-    // public String writeJobBoard(@RequestParam(name = "category") BoardCategory category, Model model) {
-    //     model.addAttribute("category", category);
-    //     return "board/writeActivityOrRecruit";
-    // }
-    
+    }    
     
     /**
      * 게시글 작성 요청 (Board 테이블 삽입)

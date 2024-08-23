@@ -22,7 +22,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
                 "LOWER(b.title) LIKE LOWER(CONCAT('%', :searchWord, '%'))")
         Page<BoardEntity> findByMemberGroupAndNotReportedAndTitleContaining(@Param("userGroup") String userGroup, @Param("searchWord") String searchWord, Pageable pageRequest);
 
-        // 기수별 게시판 목록 (반환 타입 : BoardListDTO)
+        // group 게시판 목록 (반환 타입 : BoardListDTO)
         @Query("SELECT new net.dima_community.CommunityProject.dto.board.combine.BoardListDTO(" +
                 "b.boardId, " +
                 "b.memberEntity.memberId, " +

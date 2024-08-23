@@ -99,8 +99,12 @@ public class BoardEntity {
     private List<LikeEntity> likeEntities;
     
 
-
-
+    /**
+     * Entity 변환 함수 (jobBoardEntity 값은 null로 세팅)
+     * @param dto
+     * @param memberEntity
+     * @return
+     */
     public static BoardEntity toEntity(BoardDTO dto, MemberEntity memberEntity){
         return BoardEntity.builder()
                 .boardId(dto.getBoardId())
@@ -116,6 +120,8 @@ public class BoardEntity {
                 .originalFileName(dto.getOriginalFileName())
                 .savedFileName(dto.getSavedFileName())
                 .reported(dto.isReported())
+                .jobBoardEntity(null)
                 .build();
     }
+
 }

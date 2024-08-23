@@ -274,8 +274,8 @@ public class BoardService {
 
         // 게시글 DTO -> 엔티티 변환 후 DB 저장
         BoardEntity boardEntity = boardRepository.save(BoardEntity.toEntity(dto, memberEntity));
+        log.info("========== Board 저장했어. boardEntity의 ID : "+boardEntity.getBoardId());
 
-        log.info("========== 저장된 entity의 ID : "+boardEntity.getBoardId());
         // activity/recruit 게시글인 경우 
         if (dto.getCategory()==BoardCategory.activity || dto.getCategory()==BoardCategory.recruit) {
             insertJobBoard(boardEntity, dto); // JobBoard DB 저장
@@ -289,15 +289,18 @@ public class BoardService {
      * @return
      */
     public void insertJobBoard(BoardEntity boardEntity, BoardDTO boardDTO) {
+        // JobBoardEntity 생성
         JobBoardEntity jobBoardEntity = JobBoardEntity.builder()
-                                                    .boardId(boardEntity.getBoardId())
-                                                    .boardEntity(boardEntity)
                                                     .deadline(boardDTO.getDeadline())
                                                     .limitNumber(boardDTO.getLimitNumber())
                                                     .currentNumber(0) // DEFAULT : 0
                                                     .build();
-        log.info("===============JobBoardEntity의 ID 및 여러가지 : "+jobBoardEntity.getBoardId()+", deadline : "+jobBoardEntity.getDeadline());
-        jobBoardRepository.save(jobBoardEntity);
+        // JobBoardEntity 저장
+        JobBoardEntity savedJobBoardEntity = jobBoardRepository.save(jobBoardEntity);
+        log.info("========== JobBoard 저장했어. JobBoardEntity의 ID : "+jobBoardEntity.getJobBoardId());
+        // BoardEntity 의 jobBoardEntity 값 세팅
+        boardEntity.setJobBoardEntity(savedJobBoardEntity); 
+        log.info("========== Board에 세팅했어. Board의 JobBoardId : "+boardEntity.getJobBoardEntity().getJobBoardId());
     }
 
 
@@ -462,9 +465,7 @@ public class BoardService {
      * @return 참여 성공 → jobBoardRecruitEntity / 참여 실패 → null
      */
     public JobBoardRecruitEntity saveJobBoardRecruit(JobBoardRecruitDTO jobBoardRecruitDTO) { 
-
-        Optional<JobBoardEntity> jobBoardEntity = jobBoardRepository.findById(jobBoardRecruitDTO.getBoardId());
-
+        Optional<JobBoardEntity> jobBoardEntity = jobBoardRepository.findById(jobBoardRecruitDTO.getJobBoardId());
         if (jobBoardEntity.isPresent()) {
             // 부모 Entity 준비
             JobBoardEntity jobBoard = jobBoardEntity.get(); // jobBoardEntity
