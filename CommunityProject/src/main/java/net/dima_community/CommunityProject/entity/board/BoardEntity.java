@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +44,7 @@ public class BoardEntity {
     @Column(name = "board_id")
     private Long boardId;
 
-    // FK
+    // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
@@ -85,17 +84,16 @@ public class BoardEntity {
     @Column(name = "reported")
     private boolean reported;
 
-    // 자식
-    // 1) JobBoardEntity
-    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    // FK (1:1)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_board_id")
     private JobBoardEntity jobBoardEntity;
-    
-    // 2) BoardReport
-    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("report_date")
-    private List<BoardReportEntity> boardReportEntities;
-    
-    // 3) Like
+
+    // 자식
+    // 1) BoardReport
+    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private BoardReportEntity boardReportEntity;
+    // 2) Like
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("member_id")
     private List<LikeEntity> likeEntities;

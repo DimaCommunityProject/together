@@ -33,12 +33,12 @@ public class JobBoardRecruitEntity {
     @Column(name = "recruit_id")
     private Long recruitId;
 
-    // FK
+    // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "job_board_id")
     private JobBoardEntity jobBoardEntity;
     
-    // FK
+    // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;

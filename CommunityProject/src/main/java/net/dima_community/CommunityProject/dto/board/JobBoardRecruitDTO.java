@@ -17,16 +17,16 @@ import net.dima_community.CommunityProject.entity.board.JobBoardRecruitEntity;
 @Builder
 public class JobBoardRecruitDTO {
     private Long recruitId;
-    private Long boardId;
+    private Long jobBoardId;
     private String memberId;
     private String memberGroup;
     private String memberPhone;
     private String memberEmail;
 
-    public static JobBoardRecruitDTO toDTO (JobBoardRecruitEntity entity, Long boardId, String memberId){
+    public static JobBoardRecruitDTO toDTO (JobBoardRecruitEntity entity, Long jobBoardId, String memberId){
         return JobBoardRecruitDTO.builder()
             .recruitId(entity.getRecruitId())
-            .boardId(boardId)
+            .jobBoardId(jobBoardId)
             .memberId(memberId)
             .memberGroup(entity.getMemberGroup())
             .memberPhone(entity.getMemberPhone())

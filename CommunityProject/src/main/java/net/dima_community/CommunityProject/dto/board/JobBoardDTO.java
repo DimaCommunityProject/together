@@ -18,14 +18,14 @@ import net.dima_community.CommunityProject.entity.board.JobBoardEntity;
 @ToString
 @Builder
 public class JobBoardDTO {
-    private Long boardId;
+    private Long jobBoardId;
     private LocalDateTime deadline;
     private int limitNumber;
     private int currentNumber;
 
     public static JobBoardDTO toDTO(JobBoardEntity entity){
         return JobBoardDTO.builder()
-                .boardId(entity.getBoardId())
+                .jobBoardId(entity.getJobBoardId())
                 .deadline(entity.getDeadline())
                 .limitNumber(entity.getLimitNumber())
                 .currentNumber(entity.getCurrentNumber())

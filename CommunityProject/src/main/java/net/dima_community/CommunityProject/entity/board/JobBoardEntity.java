@@ -4,14 +4,13 @@ import java.util.List;
 
 import java.time.LocalDateTime;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -35,13 +34,9 @@ import net.dima_community.CommunityProject.dto.board.JobBoardDTO;
 public class JobBoardEntity {
     
     @Id
-    @Column(name = "board_id")
-    private Long boardId;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId  // MapsId 사용으로 ID 매핑
-    @JoinColumn(name = "board_id")
-    private BoardEntity boardEntity;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "job_board_id")
+    private Long jobBoardId;
 
     @Column(name = "deadline")
     private LocalDateTime deadline;
@@ -53,13 +48,16 @@ public class JobBoardEntity {
     private int currentNumber;
 
     // 자식
+    // 1) Board (1:1)
+    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private BoardEntity boardEntity;
+    // 2) JobBoardRecruit (1:N)
     @OneToMany(mappedBy = "jobBoardEntity", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval = true)
     private List<JobBoardRecruitEntity> JobBoardRecruitEntities;
 
-    public static JobBoardEntity toEntity(JobBoardDTO dto, BoardEntity boardEntity) {
+    public static JobBoardEntity toEntity(JobBoardDTO dto) {
         return JobBoardEntity.builder()
-                .boardId(boardEntity.getBoardId())
-                .boardEntity(boardEntity)
+                .jobBoardId(dto.getJobBoardId())
                 .deadline(dto.getDeadline())
                 .limitNumber(dto.getLimitNumber())
                 .currentNumber(dto.getCurrentNumber())
