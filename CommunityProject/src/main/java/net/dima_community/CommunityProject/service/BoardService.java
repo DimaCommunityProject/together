@@ -274,8 +274,7 @@ public class BoardService {
 
         // 게시글 DTO -> 엔티티 변환 후 DB 저장
         BoardEntity boardEntity = boardRepository.save(BoardEntity.toEntity(dto, memberEntity));
-        log.info("========== Board 저장했어. boardEntity의 ID : "+boardEntity.getBoardId());
-
+        
         // activity/recruit 게시글인 경우 
         if (dto.getCategory()==BoardCategory.activity || dto.getCategory()==BoardCategory.recruit) {
             insertJobBoard(boardEntity, dto); // JobBoard DB 저장
@@ -297,10 +296,8 @@ public class BoardService {
                                                     .build();
         // JobBoardEntity 저장
         JobBoardEntity savedJobBoardEntity = jobBoardRepository.save(jobBoardEntity);
-        log.info("========== JobBoard 저장했어. JobBoardEntity의 ID : "+jobBoardEntity.getJobBoardId());
         // BoardEntity 의 jobBoardEntity 값 세팅
         boardEntity.setJobBoardEntity(savedJobBoardEntity); 
-        log.info("========== Board에 세팅했어. Board의 JobBoardId : "+boardEntity.getJobBoardEntity().getJobBoardId());
     }
 
 
