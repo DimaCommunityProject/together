@@ -24,6 +24,10 @@ public class MemberController {
 	private final MemberService memberservice;
 	private final EmailSender emailSender;
 
+	
+	// ===================== 회원가입 요청 페이지 =====================
+	
+	
 	/**
 	 * 회원가입을 위한 화면 요청
 	 * 
@@ -34,7 +38,11 @@ public class MemberController {
 		return "member/authentication-register2";
 	}
 
-	// ID 중복확인
+	/**
+	 * ID 중복확인
+	 * @param memberId
+	 * @return
+	 */
 	@GetMapping("checkDuplicate")
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberservice.findByIdThroughConn(memberId);
@@ -42,7 +50,17 @@ public class MemberController {
 		return result;
 	}
 
-	// 로그인 화면 요청(사용자 이전 url 기억 필요)
+	
+	// ===================== 로그인  =====================
+	
+	/**
+	 * 로그인 화면 요청(사용자 이전 url 기억 필요)
+	 * @param request
+	 * @param error
+	 * @param errMessage
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/login")
 	public String login(
 			HttpServletRequest request, // 이전 url 가져오기
@@ -56,15 +74,34 @@ public class MemberController {
 		return "member/login";
 	}// end login
 
-	// 사용자 아이디 찾기 화면 요청
+	
+	
+	
+	// ===================== 아이디 찾기  =====================
+	
+
+	/**
+	 * 사용자 아이디 찾기 화면 요청
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/findId")
 	public String findId(
 			HttpServletRequest request, // 이전 url 가져오기
 			Model model) {
 		return "member/findId";
-	}
+	}//end findId
 
-	// 사용자 아이디 찾기 결과
+	
+	/**
+	 * 사용자 아이디 찾기 결과
+	 * @param request
+	 * @param memberName
+	 * @param memberEmail
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/member/findIdResult")
 	@ResponseBody
 	public String findIdResult(
@@ -78,7 +115,17 @@ public class MemberController {
 		return result;
 	}// end findIdProc
 
-	// 사용자 비밀번호 찾기 화면 요청
+	
+	
+	// ===================== 비밀번호 찾기  =====================
+	
+	
+	/**
+	 * 사용자 비밀번호 찾기 화면 요청
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/findPw")
 	public String findPw(
 			HttpServletRequest request, // 이전 url 가져오기
@@ -86,7 +133,16 @@ public class MemberController {
 		return "member/findPw";
 	}
 
-	// 사용자 비밀번호 찾기 결과
+	/**
+	 * 사용자 비밀번호 찾기 결과
+	 * @param request
+	 * @param memberEmail
+	 * @param memberId
+	 * @param memberName
+	 * @param memberDTO
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/member/findPwResult")
 	@ResponseBody
 	public String findPwResult(
@@ -146,7 +202,19 @@ public class MemberController {
 		}
 	}// end findPwProc
 
-	// 비밀번호 바꾸기 화면 요청
+	
+	
+	
+	// ===================== 비밀번호 바꾸기  =====================
+	
+	
+	/**
+	 * 비밀번호 바꾸기 화면 요청
+	 * @param request
+	 * @param memberId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/changePw")
 	public String changePw(
 			HttpServletRequest request, @RequestParam("loginName") String memberId, Model model) {
@@ -154,7 +222,16 @@ public class MemberController {
 		return "member/changePw";
 	}// end changePw
 
-	// 비밀번호 바꾸기
+	
+	/**
+	 * 비밀번호 바꾸기
+	 * @param request
+	 * @param newmemberPw
+	 * @param memberId
+	 * @param memberDTO
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/member/changePw")
 	@ResponseBody
 	public String chagePwck(

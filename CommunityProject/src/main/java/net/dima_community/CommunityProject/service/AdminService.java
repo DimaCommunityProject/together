@@ -19,10 +19,15 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.util.FileService;
 import net.dima_community.CommunityProject.dto.AdminNoteDTO;
 import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.board.BoardDTO;
+import net.dima_community.CommunityProject.dto.board.BoardReportDTO;
 import net.dima_community.CommunityProject.entity.AdminNoteEntity;
 import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.board.BoardReportEntity;
 import net.dima_community.CommunityProject.repository.AdminNoteRepository;
 import net.dima_community.CommunityProject.repository.MemberRepository;
+import net.dima_community.CommunityProject.repository.board.BoardReportRepository;
 
 
 @RequiredArgsConstructor
@@ -31,6 +36,8 @@ import net.dima_community.CommunityProject.repository.MemberRepository;
 public class AdminService {
 	private final MemberRepository memberRepository;
 	private final AdminNoteRepository adminNoteRepository;
+	private final BoardReportRepository boardReportRepository;
+	
 
 	@Value("${admin.page.pageLimit}")
 	int pageLimit;
@@ -39,7 +46,14 @@ public class AdminService {
 	@Value("${spring.servlet.multipart.location}")
 	String uploadPath;
 
-	// 승인된 회원 목록 가져오기
+	// ===================== 관리자 회원 관리 =====================
+	
+	/**
+	 * 승인된 회원 목록 가져오기
+	 * @param pageable
+	 * @param memberGroup
+	 * @return
+	 */
 	public Page<MemberDTO> selectEnableAll(Pageable pageable, String memberGroup) {
 		int page = pageable.getPageNumber() - 1; // 사용자가 요청한 페이지 번호. default 1
 
@@ -58,7 +72,12 @@ public class AdminService {
 		return dtoList;
 	}// end selectAll
 
-	// 승인 안된 회원 목록 가져오기
+	
+	
+	/**
+	 * 승인 안된 회원 목록 가져오기
+	 * @return
+	 */
 	public List<MemberDTO> selectDisableAll() {
 
 		List<MemberEntity> entityList = null;
@@ -75,7 +94,15 @@ public class AdminService {
 				.collect(Collectors.toList());
 	}//end selectDisableAll
 	
-	//공지사항 목록 가져오기
+	
+	
+	// ===================== 관리자 공지사항 관리 =====================
+	
+	/**
+	 * 공지사항 목록 가져오기
+	 * @param pageable
+	 * @return
+	 */
 	public Page<AdminNoteDTO> selectNoteAll(Pageable pageable) {
 		int page = pageable.getPageNumber() - 1;
 		
@@ -97,7 +124,12 @@ public class AdminService {
 		return dtoList;
 	}// end selectNoteAll
 	
-	//공지사항 db에 글 저장
+	
+	/**
+	 * 공지사항 db에 글 저장
+	 * @param adminNoteDTO
+	 * @return
+	 */
 	public boolean insertAdminNote(AdminNoteDTO adminNoteDTO) {
 		log.info("저장경로 : {}", uploadPath);
 		
@@ -123,7 +155,12 @@ public class AdminService {
 		}
 	}//end insertAdminNote
 	
-	//공지사항 상세 페이지
+	
+	/**
+	 * 공지사항 상세 페이지
+	 * @param adminNoteNum
+	 * @return
+	 */
 	public AdminNoteDTO selectNoteOne(Long adminNoteNum) {
 		Optional<AdminNoteEntity> entity = adminNoteRepository.findById(adminNoteNum);
 		
@@ -135,7 +172,11 @@ public class AdminService {
 		return null;
 	}//end selectNoteOne
 	
-	//조회수 증가
+	
+	/**
+	 * 조회수 증가
+	 * @param adminNoteNum
+	 */
 	@Transactional
 	public void incrementHitcount(Long adminNoteNum) {
 		Optional<AdminNoteEntity> entity = adminNoteRepository.findById(adminNoteNum);
@@ -151,7 +192,11 @@ public class AdminService {
 		
 	}//end incrementHitcount
 	
-	//공지사항 수정
+	
+	/**
+	 * 공지사항 수정
+	 * @param adminNoteDTO
+	 */
 	@Transactional
 	public void updateNoteOne(AdminNoteDTO adminNoteDTO) {
 		log.info("공지사항 수정 서비스단 1: {}", adminNoteDTO.toString());
@@ -200,7 +245,11 @@ public class AdminService {
 		}
 	}//end updateNoteOne
 	
-	//공지사항 삭제
+	
+	/**
+	 * 공지사항 삭제
+	 * @param adminNoteNum
+	 */
 	@Transactional
 	public void delectNoteOne(Long adminNoteNum) {
 		Optional<AdminNoteEntity> entity = adminNoteRepository.findById(adminNoteNum);
@@ -218,4 +267,81 @@ public class AdminService {
 			adminNoteRepository.deleteById(adminNoteNum);
 		}
 	}//end delectNoteOne
+
+	
+	
+	// ===================== 관리자 신고 게시글  =====================
+	
+	/**
+	 * 관리자 신고 게시글 테이블
+	 * @param pageable
+	 * @return
+	 */
+	public Page<BoardReportDTO> selectBoardReportAll(Pageable pageable) {
+		int page = pageable.getPageNumber() - 1;
+		
+		Pageable pageable1 = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, "reportDate"));
+		Page<BoardReportEntity> entityList = boardReportRepository.findAll(pageable1);
+		
+		log.info("관리자 신고게시글 테이블(서비스단) : {}", entityList.getContent());
+		
+		Page<BoardReportDTO> dtoList = null;
+		
+		//앞단으로 가져갈 내용만 추려서 생성
+		dtoList = entityList.map(boardReport ->
+			new BoardReportDTO(boardReport.getReportId(),
+					boardReport.getReason(),
+					boardReport.getCategory(),
+					boardReport.getReportDate()));
+		return dtoList;
+	}
+
+
+	/**
+	 * 신고 게시글 상세 조회
+	 * @param reportId
+	 * @return
+	 */
+	public BoardReportDTO selectBoardReportOne(Long reportId) {
+		Optional<BoardReportEntity> entity = boardReportRepository.findById(reportId);
+		
+		if (entity.isPresent()) {
+	        BoardReportEntity boardReportEntity = entity.get();
+	        
+	        // BoardEntity를 가져오기
+	        BoardEntity boardEntity = boardReportEntity.getBoardEntity();
+	        
+	        // BoardDTO 생성
+	        BoardDTO boardDTO = BoardDTO.toDTO(boardEntity, boardEntity.getMemberEntity().getMemberId());
+	        
+	        // BoardDTO가 추가된 BoardReportDTO 생성
+	        BoardReportDTO boardReportDTO = BoardReportDTO.builder()
+	                .reportId(boardReportEntity.getReportId())
+	                .reason(boardReportEntity.getReason())
+	                .category(boardReportEntity.getCategory())
+	                .reportDate(boardReportEntity.getReportDate())
+	                .boardDTO(boardDTO) 
+	                .build();
+	        
+	        return boardReportDTO;
+	    }
+		return null;
+	}
+
+
+	/**
+	 * 신고 게시글 삭제
+	 * @param reportId
+	 */
+	@Transactional
+	public void deleteBoardOne(Long reportId) {
+		Optional<BoardReportEntity> entity = boardReportRepository.findById(reportId);
+		
+		if(entity.isPresent()) {
+			boardReportRepository.deleteById(reportId);
+		}
+	}//end deleteBoardOne
+
+	
+	
 }//end class
