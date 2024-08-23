@@ -49,7 +49,7 @@ public class JobBoardEntity {
 
     // 자식
     // 1) Board (1:1)
-    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(mappedBy = "jobBoardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private BoardEntity boardEntity;
     // 2) JobBoardRecruit (1:N)
     @OneToMany(mappedBy = "jobBoardEntity", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval = true)
