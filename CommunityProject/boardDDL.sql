@@ -1,11 +1,41 @@
--- member (임시로 만듦)
-DROP TABLE IF EXISTS member;
+use dimacommunity;
 
-create table member(
-	member_id varchar(30) ,
-    member_group varchar(20),
-	primary key (member_id)
-);
+-- 취업 게시판 Table
+
+DROP TABLE IF EXISTS job_board;
+
+CREATE TABLE job_board (
+    job_board_id bigint NOT NULL AUTO_INCREMENT,
+    deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    limit_number INT DEFAULT 0,
+    current_number INT DEFAULT 0,
+    PRIMARY KEY (job_board_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SELECT * FROM job_board;
+
+
+
+
+-- 취업 게시판 구인 Table
+
+DROP TABLE IF EXISTS job_board_recruit;
+
+CREATE TABLE job_board_recruit (
+    recruit_id BIGINT NOT NULL AUTO_INCREMENT,
+    job_board_id BIGINT NOT NULL,
+    member_id VARCHAR(30) NOT NULL,
+    member_group VARCHAR(20) NOT NULL,
+    member_phone VARCHAR(20),
+    member_email VARCHAR(200),
+    PRIMARY KEY (recruit_id),
+    FOREIGN KEY (job_board_id) REFERENCES job_board(job_board_id), -- job_board 테이블의 job_board_id를 FK로 참조
+    FOREIGN KEY (member_id) REFERENCES member(member_id) -- member 테이블의 member_id를 FK로 참조
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SELECT * FROM job_board_recruit;
+
+
 
 
 -- 게시글 Table
@@ -26,29 +56,13 @@ CREATE TABLE board (
     original_file_name VARCHAR(200),
     saved_file_name VARCHAR(200),
     reported INT DEFAULT 0 CHECK(reported IN (0,1)),
+	job_board_id bigint,
     PRIMARY KEY (board_id),
-    FOREIGN KEY (member_id) REFERENCES member(member_id) -- member 테이블의 member_id를 FK로 참조
+    FOREIGN KEY (member_id) REFERENCES member(member_id), -- member 테이블의 member_id를 FK로 참조
+    FOREIGN KEY (job_board_id) REFERENCES job_board(job_board_id) -- job_board 테이블의 job_board_id를 FK로 참조
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SELECT * FROM board;
-
-
-
--- 취업 게시판 Table
-
-DROP TABLE IF EXISTS job_board;
-
-CREATE TABLE job_board (
-    board_id BIGINT NOT NULL,
-    deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    limit_number INT DEFAULT 0,
-    current_number INT DEFAULT 0,
-    PRIMARY KEY (board_id),
-    FOREIGN KEY (board_id) REFERENCES board(board_id) -- board 테이블의 board_id를 FK로 참조
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-SELECT * FROM job_board;
-
 
 
 
@@ -68,27 +82,6 @@ CREATE TABLE board_report(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SELECT * FROM board_report;
-
-
-
-
--- 취업 게시판 구인 Table
-
-DROP TABLE IF EXISTS job_board_recruit;
-
-CREATE TABLE job_board_recruit (
-    recruit_id BIGINT NOT NULL AUTO_INCREMENT,
-    board_id BIGINT NOT NULL,
-    member_id VARCHAR(30) NOT NULL,
-    member_group VARCHAR(20) NOT NULL,
-    member_phone VARCHAR(20),
-    member_email VARCHAR(200),
-    PRIMARY KEY (recruit_id),
-    FOREIGN KEY (board_id) REFERENCES job_board(board_id), -- job_board 테이블의 board_id를 FK로 참조
-    FOREIGN KEY (member_id) REFERENCES member(member_id) -- member 테이블의 member_id를 FK로 참조
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-SELECT * FROM job_board_recruit;
 
 
 
@@ -134,3 +127,6 @@ CREATE TABLE likes (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SELECT * FROM likes;
+
+commit;
+
