@@ -148,45 +148,48 @@ $(document).ready(function () {
 			}
 	
 	        function showMessage(message) {
-		        const currentUserId = $('#userId').text();
-		
-		        if (typeof message === 'string') {
-		            try {
-		                // 문자열일 경우 JSON으로 파싱 시도
-		                message = JSON.parse(message);
-		            } catch (e) {
-		                console.error('Message is not a valid JSON:', message);
-		                return;
-		            }
-		        }
-		
-		        // 메시지 객체의 유효성 검사
-		        if (!message || typeof message.senderId === 'undefined' || typeof message.content === 'undefined' || typeof message.timestamp === 'undefined') {
-		            console.error('Invalid message format:', message);
-		            return;
-		        }
-		
-		        // 메시지의 날짜와 시간을 포맷팅
-		        const messageDate = new Date(message.timestamp);
-		        const hours = messageDate.getHours().toString().padStart(2, '0');
-		        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
-		        const timeString = `${hours}:${minutes}`;
-		        
-		        const messageDateString = messageDate.toISOString().split('T')[0].replace(/-/g, '.'); // 날짜를 "YYYY.MM.DD" 형식으로 변환
-		
-		        // 날짜가 바뀌면 날짜를 출력
-		        if (currentDate !== messageDateString) {
-		            currentDate = messageDateString;
-		            $('#messageArea').append(`<div class="date-divider">-------------${currentDate}-------------</div>`);
-		        }
-		
-		        // 나와 상대방의 메시지를 구분하여 다른 클래스를 적용
-		        const messageClass = message.senderId === currentUserId ? 'my-message' : 'their-message';
-		
-		        // 메시지 출력
-		        const messageElement = `<div class="${messageClass}"><strong>${message.senderId}:</strong> ${message.content} <span class="time">${timeString}</span></div>`;
-		        $('#messageArea').append(messageElement);
-		    }
+			    const currentUserId = $('#userId').text();
+			
+			    if (typeof message === 'string') {
+			        try {
+			            // 문자열일 경우 JSON으로 파싱 시도
+			            message = JSON.parse(message);
+			        } catch (e) {
+			            console.error('Message is not a valid JSON:', message);
+			            return;
+			        }
+			    }
+			
+			    // 메시지 객체의 유효성 검사
+			    if (!message || typeof message.senderId === 'undefined' || typeof message.content === 'undefined' || typeof message.timestamp === 'undefined') {
+			        console.error('Invalid message format:', message);
+			        return;
+			    }
+			
+			    // 메시지의 날짜와 시간을 포맷팅
+			    const messageDate = new Date(message.timestamp);
+			    const hours = messageDate.getHours().toString().padStart(2, '0');
+			    const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+			    const timeString = `${hours}:${minutes}`;
+			    
+			    const messageDateString = messageDate.toISOString().split('T')[0].replace(/-/g, '.'); // 날짜를 "YYYY.MM.DD" 형식으로 변환
+			
+			    // 정각 기준으로 날짜 출력
+			    if (hours === '00' && minutes === '00') {
+			        $('#messageArea').append(`<div class="date-divider">-------------${messageDateString}-------------</div>`);
+			    } else if (currentDate !== messageDateString) {
+			        // 날짜가 바뀌면 날짜를 출력
+			        currentDate = messageDateString;
+			        $('#messageArea').append(`<div class="date-divider">-------------${currentDate}-------------</div>`);
+			    }
+			
+			    // 나와 상대방의 메시지를 구분하여 다른 클래스를 적용
+			    const messageClass = message.senderId === currentUserId ? 'my-message' : 'their-message';
+			
+			    // 메시지 출력
+			    const messageElement = `<div class="${messageClass}"><strong>${message.senderId}:</strong> ${message.content} <span class="time">${timeString}</span></div>`;
+			    $('#messageArea').append(messageElement);
+			}
 	        
 	        $('#sendButton').click(function () {
 	            const content = $('#messageInput').val();

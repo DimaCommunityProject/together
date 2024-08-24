@@ -60,7 +60,7 @@ public class RabbitMQConfig {
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(jackson2JsonMessageConverter());
+        factory.setMessageConverter(jackson2JsonMessageConverter()); // 메시지 변환기 설정
         return factory;
     }
 
@@ -89,7 +89,7 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         // JSON 형식의 메시지를 직렬화하고 역직렬할 수 있도록 설정 
-        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
+        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());  // 메시지 변환기 설정
         return rabbitTemplate;
     }
     
