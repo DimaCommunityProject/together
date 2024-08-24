@@ -14,4 +14,6 @@ public interface MemberProjectRepository {
 
     Optional<MemberProjectDTO> findById(Long id);
 
+    void deleteById(Long projectSeq);
+
 }

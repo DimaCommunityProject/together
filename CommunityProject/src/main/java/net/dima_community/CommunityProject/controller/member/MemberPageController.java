@@ -52,25 +52,37 @@ public class MemberPageController {
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
         MemberDTO member = memberService.findById(memberId);
         MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());
-        List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(member.getMemberId());
 
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);
-        model.addAttribute("memberProject", memberProject);
+
         return "member/updatePage";
     }
 
-    @PostMapping("/updatepage")
-    public String updatepage2(@RequestParam String memberId, @RequestParam String memberName,
-            @RequestParam String memberEmail, @RequestParam MemberPageDTO memberPage,
-            @RequestParam MemberProjectDTO memberProject, Model model) {
+    @PostMapping("/showproject")
+    @ResponseBody
+    public List<MemberProjectDTO> showproject(@RequestParam(name = "memberId") String memberId) {
+        List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(memberId);
+        return memberProject;
+    }
 
-        MemberDTO updatedMember = memberService.updateMember(memberId, memberName, memberEmail);
-        MemberPageDTO updatedMemberPage = memberPageService.updatePage(updatedMember, memberPage);
-        MemberProjectDTO updatedMemberProject = memberProjectService.updateProject(updatedMember, memberProject);
+    @PostMapping("/updatePage")
+    @ResponseBody
+    public boolean updatepage2(@RequestParam(name = "memberId") String memberId,
+            @RequestParam(name = "memberSelfInfo") String memberSelfInfo,
+            @RequestParam(name = "memberInterest") String memberInterest,
+            @RequestParam(name = "memberEmail") String memberEmail,
+            @RequestParam(name = "memberGit") String memberGit, @RequestParam(name = "memberBlog") String memberBlog) {
 
-        return null;
-        // return "redirect:/memberpage/showpage";
+        memberService.updateEmail(memberId, memberEmail);
+        memberPageService.updatePage(memberId, MemberPageDTO.builder()
+                .memberId(memberId)
+                .memberSelfInfo(memberSelfInfo)
+                .memberInterest(memberInterest)
+                .memberGit(memberGit)
+                .memberBlog(memberBlog)
+                .build());
+        return true;
     }
 
     @PostMapping("/updateMemberSkill")

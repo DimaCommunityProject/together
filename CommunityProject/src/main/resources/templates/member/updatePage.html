@@ -19,12 +19,149 @@
 
   <title>Modernize Bootstrap Admin</title>
   <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+
+  <script th:inline="javascript">
+    // memberProject가 JSON 배열로 변환되어 JavaScript 변수에 할당됩니다.
+    var memberProject = /*[[${memberProject}]]*/[];
+    // console.log(memberProject[0].memberProjectSeq); // JavaScript 배열로서 사용 가능
+  </script>
+
   <script>
     $(function () {
+      init();
+      let originalEmail = $("#memberEmail").val();
       $("#skillUpdateBtn").on('click', updateSkill);
+      $("#memberEmail").on('keyup', function () { addInvalidClass(originalEmail) });
       $("#sendVerifyCode").on('click', sendVerifyCode);
+      $("#verifyCode").on('click', verifyCode);
+      $("#pageUpdateBtn").on('click', updatePage);
+      $("#newProject").on('click', insertNewProject);
+
     })
 
+    function init() {
+      let memberId = $("#memberId").text();
+      $.ajax({
+        url: "/memberpage/showproject"
+        , data: { memberId: memberId }
+        , method: "POST"
+        , success: function (resp) {
+          $("div").remove(".projectComponent");
+          let data = "";
+          $.each(resp, function (index, item) {
+            data += `<div class="card card-hover projectComponent">
+                        <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
+                            <input type="text" class="form-control" id="title${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" value="${item.projectTitle}" style="width: 80%"></input>
+                        </div>
+                        <div class="card-body">
+                          <input class="form-control" id="subtitle${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" value="${item.projectSubtitle}" style="width: 80%; margin-bottom:10px"></input>
+                          <input class="form-control" id="git${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" value="${item.projectGit}" style="width: 80%"></input>  
+                            <div style="display: flex; justify-content: flex-end;">
+                              <span hidden id="project${item.memberProjectSeq}Complete"
+                        style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+                      <button type="button" id="update${item.memberProjectSeq}"  class="projectSaveBtns btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
+                      <button type="button" id="delete${item.memberProjectSeq}"  class="projectDeleteBtns btn bg-danger-subtle text-danger" style="margin:10px">삭제</button>
+                    </div>
+                        </div>
+                    </div>`;
+          })
+          $("#startProject").after(data);
+          $(".projectSaveBtns").on('click', updateProject);
+          $(".projectDeleteBtns").on('click', deleteProject);
+        }
+      })
+
+      $.ajax({
+        url: "/board/showBoard"
+        , data: { memberId: memberId }
+        , method: "POST"
+        , success: function (resp) {
+          let data = "";
+          $.each(resp, function (index, item) {
+            data += `<div class="row">
+                          <div data-draggable="true" class="card img-task">
+                            <div class="card-body" style="padding: 10px;">
+                              <div class="task-header">
+                                <div>
+                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                              margin-bottom: 0;" text="${item.title}">
+                                    padding 0으로 해보새요!</h4>
+                                </div>
+                                <div class="tb-section-2">
+                                  <span class="badge text-bg-warning fs-1" text="${item.category}">Code</span>
+                                </div>
+                              </div>
+
+                              <div class="task-content">
+                                <p class="mb-0"
+                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." text="${item.content}">
+                                  프론트 질문있습니다..
+                                </p>
+                              </div>
+                              <div class="task-body">
+                                <div class="task-bottom">
+                                  <div class="tb-section-1">
+                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" text="${item.createDate}">
+                                      <i class="ti ti-calendar fs-5"></i> 24 July
+                                    </span>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>`;
+          })
+          $("#navpill-111").html(data);
+
+        }
+      })
+      data = "";
+
+      $.ajax({
+        url: "/reply/showReply"
+        , data: { memberId: memberId }
+        , method: "POST"
+        , success: function (resp) {
+          $.each(resp, function (key, value) {
+            data += `<div class="row">
+                          <div data-draggable="true" class="card img-task">
+                            <div class="card-body" style="padding: 10px;">
+                              <div class="task-header">
+                                <div>
+                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                              margin-bottom: 0;" text="${value.content}">
+                                    padding 0으로 해보새요!</h4>
+                                </div>
+                                <div class="tb-section-2">
+                                  <span class="badge text-bg-warning fs-1" text="${key.category}">Code</span>
+                                </div>
+                              </div>
+
+                              <div class="task-content">
+                                <p class="mb-0"
+                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." text="${key.content}">
+                                  프론트 질문있습니다..
+                                </p>
+                              </div>
+                              <div class="task-body">
+                                <div class="task-bottom">
+                                  <div class="tb-section-1">
+                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" text="${key.createDate}">
+                                      <i class="ti ti-calendar fs-5"></i> 24 July
+                                    </span>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>`;
+          })
+        }
+      })
+
+    }
     function updateSkill() {
       let memberId = $("#memberId").text();
       let memberSkill = "";
@@ -46,21 +183,161 @@
       return;
 
     };
+    function addInvalidClass(originalEmail) {
+      console.log(originalEmail);
+      console.log($("#memberEmail").val());
+      if ($("#memberEmail").val() != originalEmail) {
+        if ($("#memberEmail").hasClass("is-invalid")) { return; }
+        $("#memberEmail").addClass("is-invalid");
+        $("#invalidEmail").attr("hidden", false);
+      } else {
+        $("#memberEmail").removeClass("is-invalid");
+        $("#invalidEmail").attr("hidden", true);
+      }
+    }
 
     function sendVerifyCode() {
       let memberId = $("#memberId").text();
       let memberEmail = $("#memberEmail").val();
+      toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
+        progressBar: true,
+      });
       $.ajax({
         url: "/email/resend"
         , method: "POST"
         , data: { memberId: memberId, memberEmail: memberEmail }
         , success: function (resp) {
-          alert("성공");
 
         }
-      })
-      return;
+      });
     }
+
+    function verifyCode() {
+      let memberId = $("#memberId").text();
+      let memberEmail = $("#memberEmail").val();
+      let verificationCode = $("#verificationCode").val();
+      $.ajax({
+        url: "/member/updateVerificationcode"
+        , data: { memberId: memberId, verificationCode: verificationCode }
+        , method: "POST"
+        , success: function (resp) {
+          if (resp) {
+            $("#memberEmail").removeClass("is-invalid");
+            $("#memberEmail").addClass("is-valid");
+            $("#invalidEmail").removeClass("invalid-feedback");
+            $("#invalidEmail").addClass("valid-feedback");
+            $("#invalidEmail").text("이메일 인증이 완료되었습니다");
+          }
+          else { alert("본인인증에 실패했습니다.") }
+        }
+      })
+
+    }
+
+    function updatePage() {
+      if ($("#memberEmail").hasClass("is-invalid")) { alert("이메일 본인인증을 완료해주세요"); return; }
+      else {
+        let memberId = $("#memberId").text();
+        let memberSelfInfo = $("#memberSelfInfo").val();
+        let memberInterest = $("#memberInterest").val();
+        let memberEmail = $("#memberEmail").val();
+        let memberGit = $("#memberGit").val();
+        let memberBlog = $("#memberBlog").val();
+        $.ajax({
+          url: "/memberpage/updatePage"
+          , data: {
+            memberId: memberId,
+            memberSelfInfo: memberSelfInfo, memberInterest: memberInterest, memberEmail: memberEmail,
+            memberGit: memberGit, memberBlog: memberBlog
+          }
+          , method: "POST"
+          , success: function (resp) {
+            if (!resp) { alert("저장을 실패했습니다. 다시 시도해 주세요."); return; }
+            $("#pageComplete").attr("hidden", false);
+            return;
+          }
+        })
+      }
+
+    }
+
+    function updateProject() {
+      let memberId = $("#memberId").text();
+      let btnId = $(this).attr('id').charAt($(this).attr('id').length - 1);
+      let projectTitle = $("#title" + btnId).val();
+      let projectSubtitle = $("#subtitle" + btnId).val();
+      let projectGit = $("#git" + btnId).val();
+      let data = { memberId: memberId, projectSeq: btnId, projectTitle: projectTitle, projectSubtitle: projectSubtitle, projectGit: projectGit }
+      $.ajax({
+        url: "/memberproject/updateproject"
+        , data: data
+        , method: "POST"
+        , success: function (resp) {
+          $("#project" + btnId + "Complete").attr("hidden", false);
+          return;
+        }
+      })
+
+    }
+
+    function deleteProject() {
+      let btnId = $(this).attr('id').charAt($(this).attr('id').length - 1);
+      $.ajax({
+        url: "/memberproject/deleteproject"
+        , data: { projectSeq: btnId }
+        , method: "POST"
+        , success: function (resp) {
+          init();
+        }
+      })
+    }
+
+    function insertNewProject() {
+      if ($("#projectForm").children(":last-child").hasClass("newProject")) {
+        console.log("도착!")
+        return;
+      } else {
+        let data = `<div class="card card-hover projectComponent newProject">
+                        <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897); display:flex; justify-content: space-between;
+    align-items: center;">
+                            <input type="text" class="form-control" id="newTitle" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" style="width: 80%"></input>
+                            <button type="button" 
+                      class="btn mb-1 bg-danger-subtle rounded-circle round-40 btn-sm d-inline-flex align-items-center justify-content-center"
+                      style="margin-left: 7px;" id="cancleNewProject"> <i class="btn-close"></i>
+                    </button>
+                        </div>
+                        <div class="card-body">
+                          <input class="form-control" id="newSubtitle" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" style="width: 80%; margin-bottom:10px"></input>
+                          <input class="form-control" id="newGit" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" style="width: 80%"></input>  
+                            <div style="display: flex; justify-content: flex-end;">
+                      <button type="button" id="insertNewProjectBtns" class = "btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
+                    </div>
+                        </div>
+                    </div>`;
+        $("#projectForm:last-child").append(data);
+        $("#insertNewProjectBtns").on('click', saveNewProject);
+        $("#cancleNewProject").on('click', function () {
+          init();
+        })
+      }
+    }
+
+    function saveNewProject() {
+      let memberId = $("#memberId").text();
+      let projectTitle = $("#newTitle").val();
+      let projectSubtitle = $("#newSubtitle").val();
+      let projectGit = $("#newGit").val();
+      let data = { memberId: memberId, projectTitle: projectTitle, projectSubtitle: projectSubtitle, projectGit: projectGit }
+      $.ajax({
+        url: "/memberproject/savenewproject"
+        , data: data
+        , method: "POST"
+        , success: function (resp) {
+          init();
+        }
+      })
+    }
+
   </script>
 </head>
 
@@ -180,29 +457,27 @@
                 <div class="card-body">
                   <h4 class="mb-3">Introduction</h4>
                   <div class="form-group">
-                    <textarea class="form-control" id="memberSelfInfo" rows="3"
-                      th:placeholder="${memberPage.memberSelfInfo}" data-bs-toggle="tooltip" data-bs-placement="right"
-                      title="간단한 자기소개를 입력해주세요"></textarea>
+                    <textarea class="form-control" id="memberSelfInfo" rows="3" th:text="${memberPage.memberSelfInfo}"
+                      data-bs-toggle="tooltip" data-bs-placement="right" title="간단한 자기소개를 입력해주세요"></textarea>
                   </div>
                   <div class="vstack gap-3 mt-4">
                     <div class="hstack gap-6">
                       <i class="ti ti-briefcase text-dark fs-6"></i>
                       <input type="text" class="form-control" id="memberInterest"
-                        th:placeholder="${memberPage.memberInterest}" data-bs-toggle="tooltip" data-bs-placement="right"
+                        th:value="${memberPage.memberInterest}" data-bs-toggle="tooltip" data-bs-placement="right"
                         title="관심분야">
                     </div>
                     <div class="hstack gap-6">
                       <i class="ti ti-mail text-dark fs-6"></i>
                       <form style="width: 100%;">
-                        <input type="text" class="form-control is-invalid" id="memberEmail"
-                          th:placeholder="${member.memberEmail}" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="이메일">
-                        <div class="invalid-feedback">
+                        <input type="text" class="form-control" id="memberEmail" th:value="${member.memberEmail}"
+                          data-bs-toggle="tooltip" data-bs-placement="right" title="이메일">
+                        <div id="invalidEmail" class="invalid-feedback" hidden>
                           본인인증을 완료해주세요
                         </div>
                         <div style="display: flex; width: 100%;">
                           <button type="button" id="sendVerifyCode"
-                            class="btn btn-rounded bg-warning-subtle text-warning" style="margin: 5px; ">
+                            class="btn btn-rounded bg-warning-subtle text-warning " style="margin: 5px; ">
                             인증코드 보내기
                           </button>
                           <input type="text" id="verificationCode" class="form-control"
@@ -217,12 +492,12 @@
 
                     <div class="hstack gap-6">
                       <i class="ti ti-device-desktop text-dark fs-6"></i>
-                      <input type="text" class="form-control" id="helpInput10" th:placeholder="${memberPage.memberGit}"
+                      <input type="text" class="form-control" id="memberGit" th:value="${memberPage.memberGit}"
                         data-bs-toggle="tooltip" data-bs-placement="right" title="Github 주소">
                     </div>
                     <div class=" hstack gap-6">
                       <i class="ti ti-map-pin text-dark fs-6"></i>
-                      <input type="text" class="form-control" id="helpInput10" th:placeholder="${memberPage.memberBlog}"
+                      <input type="text" class="form-control" id="memberBlog" th:value="${memberPage.memberBlog}"
                         data-bs-toggle="tooltip" data-bs-placement="right" title="블로그 주소">
                     </div>
                   </div>
@@ -230,7 +505,7 @@
                     <span hidden id="pageComplete"
                       style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
 
-                    <button type="button" id="pageUpdateBtn" class="btn btn-rounded bg-warning-subtle text-warning"
+                    <button type="button" id="pageUpdateBtn" class="btn bg-secondary-subtle text-secondary"
                       style="margin: 10px;">
                       저장
                     </button>
@@ -256,74 +531,10 @@
                     <!-- Tab panes -->
                     <div class="tab-content border mt-2">
                       <div class="tab-pane active p-3" id="navpill-111" role="tabpanel">
-                        <div class="row">
-                          <div data-draggable="true" class="card img-task">
-                            <div class="card-body" style="padding: 10px;">
-                              <div class="task-header">
-                                <div>
-                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-    margin-bottom: 0;">
-                                    프로젝트 팀원 모집합니다</h4>
-                                </div>
-                                <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1">Project</span>
-                                </div>
-                              </div>
 
-                              <div class="task-content">
-                                <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
-                                  디마 커뮤니티 팀원 모집합니다 ...
-                                </p>
-                              </div>
-                              <div class="task-body">
-                                <div class="task-bottom">
-                                  <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July">
-                                      <i class="ti ti-calendar fs-5"></i> 24 July
-                                    </span>
-                                  </div>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                       <div class="tab-pane p-3" id="navpill-222" role="tabpanel">
-                        <div class="row">
-                          <div data-draggable="true" class="card img-task">
-                            <div class="card-body" style="padding: 10px;">
-                              <div class="task-header">
-                                <div>
-                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;">
-                                    padding 0으로 해보새요!</h4>
-                                </div>
-                                <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1">Code</span>
-                                </div>
-                              </div>
 
-                              <div class="task-content">
-                                <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
-                                  프론트 질문있습니다..
-                                </p>
-                              </div>
-                              <div class="task-body">
-                                <div class="task-bottom">
-                                  <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July">
-                                      <i class="ti ti-calendar fs-5"></i> 24 July
-                                    </span>
-                                  </div>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                       <div class="tab-pane p-3" id="navpill-333" role="tabpanel">
                         <div class="row">
@@ -515,7 +726,7 @@
                       <span hidden id="skillComplete"
                         style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
 
-                      <button type="button" id="skillUpdateBtn" class="btn btn-rounded bg-warning-subtle text-warning"
+                      <button type="button" id="skillUpdateBtn" class="btn bg-secondary-subtle text-secondary"
                         style="margin: 10px;">
                         저장
                       </button>
@@ -524,27 +735,14 @@
                 </div>
               </div>
               <div class="card">
-                <div class="card-body border-bottom">
-                  <h4 class="card-title mb-3">Project</h4>
-                  <!-- <p th:text="${memberProject}" id="projects" hidden>Projects</p> -->
-                  <div th:each="entry : ${memberProject}">
-
-                    <div class="card card-hover">
-                      <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
-                        <h4 th:text="${entry.projectTitle}" class="mb-0 text-dark card-title">Card Title</h4>
-                      </div>
-                      <div class="card-body">
-                        <h3 th:text="${entry.projectSubtitle}" class="card-title">Special title treatment</h3>
-                        <p th:text="${entry.projectGit}" class="card-text">
-                          With supporting text below as a natural lead-in to
-                          additional content.
-                        </p>
-                        <a th:href="${entry.projectGit}" class="btn btn-primary">Git Repository 바로가기</a>
-                      </div>
-                    </div>
-
-                  </div>
-
+                <div class="card-body border-bottom" id="projectForm">
+                  <h4 class="card-title mb-3" id="startProject">Project
+                    <button type="button"
+                      class="btn mb-1 bg-info-subtle rounded-circle round-32 btn-sm d-inline-flex align-items-center justify-content-center"
+                      style="margin-left: 7px;" id="newProject">
+                      <i class="fs-5 ti ti-plus"></i>
+                    </button>
+                  </h4>
                 </div>
               </div>
               <span style="margin: 10px; float: right;">
@@ -569,6 +767,7 @@
           <script src="../../static/libs/select2/dist/js/select2.min.js"></script>
           <script src="../../static/js/forms/select2.init.js"></script>
           <script src="../../static/js/apps/kanban.js"></script>
+          <script src="../../static/js/plugins/toastr-init.js"></script>
 </body>
 
 </html>

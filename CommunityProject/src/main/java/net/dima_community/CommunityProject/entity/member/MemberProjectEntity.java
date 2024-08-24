@@ -27,7 +27,7 @@ public class MemberProjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_project_seq")
+    @Column(name = "memberproject_seq")
     private Long memberProjectSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)

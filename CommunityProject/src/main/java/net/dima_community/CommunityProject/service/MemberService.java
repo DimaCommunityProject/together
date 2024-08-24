@@ -145,11 +145,25 @@ public class MemberService {
 	@Transactional
 	public void updateVerificationCode(String memberId, String generatedString) {
 
-		MemberDTO originalMember = findById(memberId);
-		MemberDTO updatedMember = originalMember.updateVerificationCode(generatedString);
-		log.info("인증번호 업데이트 완료");
+		MemberEntity originalMember = memberRepository.findById(memberId).get();
+		log.info(generatedString);
+		originalMember.setMemberVerifyCode(generatedString);
+	}
 
-		log.info("인증번호 저장 완료");
+	public boolean updateEmailProcess(String memberId, String verificationCode) {
+		MemberEntity memberEntity = memberRepository.findById(memberId).get();
+		if (memberEntity.getMemberVerifyCode().equals(verificationCode)) {
+			// 이메일 변경은 진짜 저장 버튼 누를 때!!!!!
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Transactional
+	public void updateEmail(String memberId, String memberEmail) {
+		MemberEntity memberEntity = memberRepository.findById(memberId).get();
+		memberEntity.setMemberEmail(memberEmail);
 	}
 
 	// // 임시비번 암호화 후 업뎃

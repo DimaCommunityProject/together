@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -94,4 +95,5 @@ public class MemberEntity {
 				.memberVerifyCode(memberDTO.getMemberVerifyCode())
 				.build();
 	}
+
 }

@@ -37,20 +37,19 @@ public class MemberProjectService {
     }
 
     public MemberProjectDTO updateProject(MemberDTO updatedMember, MemberProjectDTO memberProject) {
-        List<MemberProjectDTO> originalMemberProject = null;
-        try {
-            originalMemberProject = findByUsername(updatedMember.getMemberId());
-        } catch (ResourceNotFoundException e) {
-            // 기존에 없으면 신규 저장
-            memberProjectRepository.save(updatedMember, memberProject);
-            return memberProject;
-        }
         // 있으면 업데이트 후 저장
-        // MemberProjectDTO updatedMemberProject =
-        // originalMemberProject.update(memberProject);
-        // memberProjectRepository.save(updatedMember, updatedMemberProject);
-        // return updatedMemberProject;
-        return null;
+        MemberProjectDTO originalMemberProject = findById(memberProject.getMemberProjectSeq());
+        MemberProjectDTO updatedMemberProject = originalMemberProject.update(memberProject);
+        memberProjectRepository.save(updatedMember, updatedMemberProject);
+        return updatedMemberProject;
+    }
+
+    public void deleteProject(Long projectSeq) {
+        memberProjectRepository.deleteById(projectSeq);
+    }
+
+    public void save(MemberDTO member, MemberProjectDTO memberProjectDTO) {
+        memberProjectRepository.save(member, memberProjectDTO);
     }
 
 }

@@ -182,4 +182,12 @@ public class MemberController {
 		}
 		return true;
 	}
+
+	@PostMapping("/member/updateVerificationcode")
+	@ResponseBody
+	public Boolean updateVerificatiocCode(@RequestParam(name = "memberId") String memberId,
+			@RequestParam(name = "verificationCode") String verificationCode) {
+		boolean result = memberservice.updateEmailProcess(memberId, verificationCode);
+		return result;
+	}
 }// end class

@@ -33,4 +33,9 @@ public class MemberProjectRepositoryImpl implements MemberProjectRepository {
         return memberProjectJPARepository.findById(id).map(entity -> entity.toModel());
     }
 
+    @Override
+    public void deleteById(Long projectSeq) {
+        memberProjectJPARepository.deleteById(projectSeq);
+    }
+
 }

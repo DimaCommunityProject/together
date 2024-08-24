@@ -27,18 +27,19 @@ public class MemberPageService {
         // .orElseThrow(() -> new ResourceNotFoundException("MemberPage", memberId));
     }
 
-    public MemberPageDTO updatePage(MemberDTO updatedMember, MemberPageDTO memberPage) {
+    public MemberPageDTO updatePage(String memberId, MemberPageDTO memberPage) {
         MemberPageDTO originalMemberPage = null;
+        MemberDTO memberDTO = memberService.findById(memberId);
         try {
-            originalMemberPage = findByUsername(updatedMember.getMemberId());
+            originalMemberPage = findByUsername(memberDTO.getMemberId());
         } catch (ResourceNotFoundException e) {
             // 기존에 없으면 신규 저장
-            memberPageRepository.save(updatedMember, memberPage);
+            memberPageRepository.save(memberDTO, memberPage);
             return memberPage;
         }
         // 있으면 업데이트 후 저장
         MemberPageDTO updatedMemberPage = originalMemberPage.update(memberPage);
-        memberPageRepository.save(updatedMember, updatedMemberPage);
+        memberPageRepository.save(memberDTO, updatedMemberPage);
         return updatedMemberPage;
     }
 
