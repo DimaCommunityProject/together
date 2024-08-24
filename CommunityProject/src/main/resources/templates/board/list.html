@@ -8,29 +8,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" th:href="@{/assets/images/logos/favicon.png}" />
 
   <!-- Core Css -->
-  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
 
-  <title>Modernize Bootstrap Admin</title>
+  <title>게시글 목록</title>
 </head>
 
 <body class="link-sidebar">
+  <!-- model에 담겨온 것들 -->
+  <input type="hidden" name="searchWord" th:value="${searchWord}">
+  <input type="hidden" name="navi" th:value="${navi}">
   <!-- Preloader -->
   <div class="preloader">
-    <img src="../assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
     <aside class="left-sidebar with-vertical">
-      <div><!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
+      <!-- <div> ---------------------------------- --&gt;
+        &lt;!-- Start Vertical Layout Sidebar --&gt;
+        &lt;!-- ---------------------------------- --&gt;
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="../main/index.html" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="../assets/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          <a th:href="@{/main/index.html}" class="text-nowrap logo-img">
+            <img th:src="@{/assets/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+            <img th:src="@{/assets/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
@@ -40,16 +43,16 @@
 
         <nav class="sidebar-nav scroll-sidebar" data-simplebar>
           <ul id="sidebarnav">
-            <!-- ---------------------------------- -->
-            <!-- Home -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Home --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Home</span>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Dashboard -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Dashboard --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link" href="" id="get-url" aria-expanded="false">
                 <span>
@@ -59,7 +62,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/index2.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/index2.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-shopping-cart"></i>
                 </span>
@@ -67,7 +70,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/index3.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/index3.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-currency-dollar"></i>
                 </span>
@@ -75,7 +78,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/index4.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/index4.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-cpu"></i>
                 </span>
@@ -83,7 +86,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/index5.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/index5.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-activity-heartbeat"></i>
                 </span>
@@ -91,22 +94,22 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/index6.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/index6.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-playlist"></i>
                 </span>
                 <span class="hide-menu">Music</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Apps -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Apps --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Apps</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/app-calendar.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/app-calendar.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-calendar"></i>
                 </span>
@@ -114,7 +117,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/app-kanban.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/app-kanban.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-kanban"></i>
                 </span>
@@ -138,7 +141,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/app-notes.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/app-notes.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-notes"></i>
                 </span>
@@ -146,7 +149,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/app-contact.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/app-contact.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-phone"></i>
                 </span>
@@ -154,7 +157,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/app-contact2.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/app-contact2.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-list-details"></i>
                 </span>
@@ -162,7 +165,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/app-invoice.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/app-invoice.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-text"></i>
                 </span>
@@ -170,7 +173,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/page-user-profile.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/page-user-profile.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-circle"></i>
                 </span>
@@ -186,7 +189,7 @@
               </a>
               <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item">
-                  <a href="../main/blog-posts.html" class="sidebar-link">
+                  <a th:href="@{/main/blog-posts.html}" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -194,7 +197,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="../main/blog-detail.html" class="sidebar-link">
+                  <a th:href="@{/main/blog-detail.html}" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -212,7 +215,7 @@
               </a>
               <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item">
-                  <a href="../main/eco-shop.html" class="sidebar-link">
+                  <a th:href="@{/main/eco-shop.html}" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -220,7 +223,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="../main/eco-shop-detail.html" class="sidebar-link">
+                  <a th:href="@{/main/eco-shop-detail.html}" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -228,7 +231,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="../main/eco-product-list.html" class="sidebar-link">
+                  <a th:href="@{/main/eco-product-list.html}" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -236,7 +239,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="../main/eco-checkout.html" class="sidebar-link">
+                  <a th:href="@{/main/eco-checkout.html}" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -245,15 +248,15 @@
                 </li>
               </ul>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- PAGES -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- PAGES --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">PAGES</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/page-pricing.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/page-pricing.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-currency-dollar"></i>
                 </span>
@@ -261,7 +264,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/page-faq.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/page-faq.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-help"></i>
                 </span>
@@ -269,7 +272,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../main/page-account-settings.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/main/page-account-settings.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-circle"></i>
                 </span>
@@ -277,7 +280,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../landingpage/index.html" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/landingpage/index.html}" aria-expanded="false">
                 <span>
                   <i class="ti ti-app-window"></i>
                 </span>
@@ -342,16 +345,16 @@
                 </li>
               </ul>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- UI -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- UI --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">UI</span>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- UI Elements -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- UI Elements --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -523,9 +526,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Cards -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Cards --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -569,9 +572,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Component -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Component --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -623,16 +626,16 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Forms -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Forms --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Forms</span>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Form Elements -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Elements --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -692,9 +695,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Form Addons -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Addons --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -730,9 +733,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Form Validation -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Validation --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -760,9 +763,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Form Pickers -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Pickers --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -806,9 +809,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Form Editor -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Editor --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -836,9 +839,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Form Input -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Input --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link" href="../main/form-basic.html" aria-expanded="false">
                 <span class="d-flex">
@@ -911,9 +914,9 @@
                 <span class="hide-menu">Form Floating Input</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Form Wizard -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Wizard --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link" href="../main/form-wizard.html" aria-expanded="false">
                 <span class="d-flex">
@@ -922,9 +925,9 @@
                 <span class="hide-menu">Form Wizard</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Form Repeater -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Form Repeater --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link" href="../main/form-repeater.html" aria-expanded="false">
                 <span class="d-flex">
@@ -933,16 +936,16 @@
                 <span class="hide-menu">Form Repeater</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Tables -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Tables --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Tables</span>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Bootstrap Table -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Bootstrap Table --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -985,9 +988,9 @@
                 </li>
               </ul>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Datatable -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Datatable --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -1022,20 +1025,20 @@
                 </li>
               </ul>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Table Jsgrid -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Table Jsgrid --&gt;
+            &lt;!-- ---------------------------------- --&gt;
 
-            <!-- ---------------------------------- -->
-            <!-- Charts -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Charts --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Charts</span>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Apex Chart -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Apex Chart --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                 <span class="d-flex">
@@ -1095,9 +1098,9 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Sample Pages -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Sample Pages --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Sample Pages</span>
@@ -1162,16 +1165,16 @@
               </ul>
             </li>
 
-            <!-- ---------------------------------- -->
-            <!-- Icons -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Icons --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Icons</span>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Tabler Icon -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Tabler Icon --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link sidebar-link" href="../main/icon-tabler.html" aria-expanded="false">
                 <span class="rounded-3">
@@ -1180,9 +1183,9 @@
                 <span class="hide-menu">Tabler Icon</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- Solar Icon -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- Solar Icon --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="sidebar-item">
               <a class="sidebar-link sidebar-link" href="../main/icon-solar.html" aria-expanded="false">
                 <span class="rounded-3">
@@ -1191,9 +1194,9 @@
                 <span class="hide-menu">Solar Icon</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- AUTH -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- AUTH --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">AUTH</span>
@@ -1318,9 +1321,9 @@
                 <span class="hide-menu">Maintenance</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- DOCUMENTATION -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- DOCUMENTATION --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">DOCUMENTATION</span>
@@ -1333,9 +1336,9 @@
                 <span class="hide-menu">Getting Started</span>
               </a>
             </li>
-            <!-- ---------------------------------- -->
-            <!-- OTHER -->
-            <!-- ---------------------------------- -->
+            &lt;!-- ---------------------------------- --&gt;
+            &lt;!-- OTHER --&gt;
+            &lt;!-- ---------------------------------- --&gt;
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">OTHER</span>
@@ -1457,7 +1460,7 @@
         <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
           <div class="hstack gap-3">
             <div class="john-img">
-              <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="40" height="40" alt="modernize-img" />
+              <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="40" height="40" alt="modernize-img" />
             </div>
             <div class="john-title">
               <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
@@ -1469,12 +1472,13 @@
           </div>
         </div>
 
-        <!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
-      </div>
-    </aside>
+        &lt;!-- ---------------------------------- --&gt;
+        &lt;!-- Start Vertical Layout Sidebar --&gt;
+        &lt;!-- ---------------------------------- --&gt;
+      </div> -->
+    </aside> 
     <!--  Sidebar End -->
+
     <div class="page-wrapper">
       <!--  Header Start -->
       <header class="topbar">
@@ -1514,9 +1518,9 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../main/app-chat.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-chat.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-chat.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1525,18 +1529,18 @@
                                       <span class="fs-2 d-block text-body-secondary">New messages arrived</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-invoice.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-invoice.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-invoice.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Invoice App</h6>
                                       <span class="fs-2 d-block text-body-secondary">Get latest invoice</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-contact2.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-contact2.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-mobile.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1545,9 +1549,9 @@
                                       <span class="fs-2 d-block text-body-secondary">2 Unsaved Contacts</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-email.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-email.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-message-box.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Email App</h6>
@@ -1558,9 +1562,9 @@
                               </div>
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../main/page-user-profile.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/page-user-profile.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-cart.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1569,9 +1573,9 @@
                                       <span class="fs-2 d-block text-body-secondary">learn more information</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-calendar.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-calendar.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-date.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1580,9 +1584,9 @@
                                       <span class="fs-2 d-block text-body-secondary">Get dates</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-contact.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-contact.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-lifebuoy.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1591,9 +1595,9 @@
                                       <span class="fs-2 d-block text-body-secondary">Add new contact</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-notes.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-notes.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-application.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1625,26 +1629,26 @@
                           <h5 class="fs-5 mb-9 fw-semibold">Quick Links</h5>
                           <ul class="">
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/page-pricing.html">Pricing Page</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/page-pricing.html}">Pricing Page</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/authentication-login.html">Authentication
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/authentication-login.html}">Authentication
                                 Design</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/authentication-register.html">Register Now</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/authentication-register.html}">Register Now</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/authentication-error.html">404 Error Page</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/authentication-error.html}">404 Error Page</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/app-notes.html">Notes App</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/app-notes.html}">Notes App</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/page-user-profile.html">User Application</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/page-user-profile.html}">User Application</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/page-account-settings.html">Account Settings</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/page-account-settings.html}">Account Settings</a>
                             </li>
                           </ul>
                         </div>
@@ -1657,20 +1661,20 @@
               <!-- end apps Dropdown -->
               <!-- ------------------------------- -->
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../main/app-chat.html">Chat</a>
+                <a class="nav-link" th:href="@{/main/app-chat.html}">Chat</a>
               </li>
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../main/app-calendar.html">Calendar</a>
+                <a class="nav-link" th:href="@{/main/app-calendar.html}">Calendar</a>
               </li>
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../main/app-email.html">Email</a>
+                <a class="nav-link" th:href="@{/main/app-email.html}">Email</a>
               </li>
             </ul>
 
             <div class="d-block d-lg-none py-4">
-              <a href="../main/index.html" class="text-nowrap logo-img">
-                <img src="../assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-                <img src="../assets/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+              <a th:href="@{/main/index.html}" class="text-nowrap logo-img">
+                <img th:src="@{/assets/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+                <img th:src="@{/assets/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
               </a>
             </div>
             <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -1695,31 +1699,31 @@
                   </li>
                   <li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
                     <a class="nav-link" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                      <img src="../assets/images/svgs/icon-flag-en.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                      <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                       <div class="message-body">
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-en.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">English (UK)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-cn.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-cn.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">中国人 (Chinese)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-fr.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-fr.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">français (French)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-sa.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-sa.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">عربي (Arabic)</p>
                         </a>
@@ -1759,7 +1763,7 @@
                       <div class="message-body" data-simplebar>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-2.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-2.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -1768,7 +1772,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-3.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-3.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">New message</h6>
@@ -1777,7 +1781,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-4.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-4.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Bianca sent payment</h6>
@@ -1786,7 +1790,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-5.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-5.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Jolly completed tasks</h6>
@@ -1795,7 +1799,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-6.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-6.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">John received payment</h6>
@@ -1804,7 +1808,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-7.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-7.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -1828,7 +1832,7 @@
                     <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                       <div class="d-flex align-items-center">
                         <div class="user-profile-img">
-                          <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="35" height="35" alt="modernize-img" />
+                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
                         </div>
                       </div>
                     </a>
@@ -1838,7 +1842,7 @@
                           <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
                         </div>
                         <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="80" height="80" alt="modernize-img" />
+                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3">Mathew Anderson</h5>
                             <span class="mb-1 d-block">Designer</span>
@@ -1848,27 +1852,27 @@
                           </div>
                         </div>
                         <div class="message-body">
-                          <a href="../main/page-user-profile.html" class="py-8 px-7 mt-8 d-flex align-items-center">
+                          <a th:href="@{/main/page-user-profile.html}" class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img src="../assets/images/svgs/icon-account.svg" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/assets/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
                               <span class="fs-2 d-block text-body-secondary">Account Settings</span>
                             </div>
                           </a>
-                          <a href="../main/app-email.html" class="py-8 px-7 d-flex align-items-center">
+                          <a th:href="@{/main/app-email.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img src="../assets/images/svgs/icon-inbox.svg" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/assets/images/svgs/icon-inbox.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Inbox</h6>
                               <span class="fs-2 d-block text-body-secondary">Messages & Emails</span>
                             </div>
                           </a>
-                          <a href="../main/app-notes.html" class="py-8 px-7 d-flex align-items-center">
+                          <a th:href="@{/main/app-notes.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img src="../assets/images/svgs/icon-tasks.svg" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/assets/images/svgs/icon-tasks.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Task</h6>
@@ -1885,12 +1889,12 @@
                               </div>
                               <div class="col-6">
                                 <div class="m-n4 unlimited-img">
-                                  <img src="../assets/images/backgrounds/unlimited-bg.png" alt="modernize-img" class="w-100" />
+                                  <img th:src="@{/assets/images/backgrounds/unlimited-bg.png}" alt="modernize-img" class="w-100" />
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <a href="../main/authentication-login.html" class="btn btn-outline-primary">Log Out</a>
+                          <a th:href="@{/main/authentication-login.html}" class="btn btn-outline-primary">Log Out</a>
                         </div>
                       </div>
                     </div>
@@ -1913,10 +1917,10 @@
           <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar" aria-labelledby="offcanvasWithBothOptionsLabel">
             <nav class="sidebar-nav scroll-sidebar">
               <div class="offcanvas-header justify-content-between">
-                <img src="../assets/images/logos/favicon.ico" alt="modernize-img" class="img-fluid" />
+                <img th:src="@{/assets/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
-              <div class="offcanvas-body h-n80" data-simplebar="" data-simplebar>
+              <div class="offcanvas-body h-n80" data-simplebar>
                 <ul id="sidebarnav">
                   <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
@@ -1927,9 +1931,9 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level my-3">
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-chat.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-chat.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-chat.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
@@ -1938,9 +1942,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-invoice.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-invoice.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-invoice.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Invoice App</h6>
@@ -1949,9 +1953,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-cotact.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-cotact.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-mobile.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Contact Application</h6>
@@ -1960,9 +1964,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-email.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-email.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-message-box.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Email App</h6>
@@ -1971,9 +1975,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/page-user-profile.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/page-user-profile.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-cart.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">User Profile</h6>
@@ -1982,9 +1986,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-calendar.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-calendar.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-date.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Calendar App</h6>
@@ -1993,9 +1997,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-contact2.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-contact2.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-lifebuoy.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Contact List Table</h6>
@@ -2004,9 +2008,9 @@
                         </a>
                       </li>
                       <li class="sidebar-item py-2">
-                        <a href="../main/app-notes.html" class="d-flex align-items-center">
+                        <a th:href="@{/main/app-notes.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img src="../assets/images/svgs/icon-dd-application.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/assets/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
@@ -2019,32 +2023,32 @@
                           <h5 class="fs-5 fw-semibold">Quick Links</h5>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/page-pricing.html">Pricing Page</a>
+                          <a class="fw-semibold text-dark" th:href="@{/main/page-pricing.html}">Pricing Page</a>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/authentication-login.html">Authentication
+                          <a class="fw-semibold text-dark" th:href="@{/main/authentication-login.html}">Authentication
                             Design</a>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/authentication-register.html">Register Now</a>
+                          <a class="fw-semibold text-dark" th:href="@{/main/authentication-register.html}">Register Now</a>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/authentication-error.html">404 Error Page</a>
+                          <a class="fw-semibold text-dark" th:href="@{/main/authentication-error.html}">404 Error Page</a>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/app-notes.html">Notes App</a>
+                          <a class="fw-semibold text-dark" th:href="@{/main/app-notes.html}">Notes App</a>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/page-user-profile.html">User Application</a>
+                          <a class="fw-semibold text-dark" th:href="@{/main/page-user-profile.html}">User Application</a>
                         </li>
                         <li class="sidebar-item py-2">
-                          <a class="fw-semibold text-dark" href="../main/page-account-settings.html">Account Settings</a>
+                          <a class="fw-semibold text-dark" th:href="@{/main/page-account-settings.html}">Account Settings</a>
                         </li>
                       </ul>
                     </ul>
                   </li>
                   <li class="sidebar-item">
-                    <a class="sidebar-link" href="../main/app-chat.html" aria-expanded="false">
+                    <a class="sidebar-link" th:href="@{/main/app-chat.html}" aria-expanded="false">
                       <span>
                         <i class="ti ti-message-dots"></i>
                       </span>
@@ -2052,7 +2056,7 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a class="sidebar-link" href="../main/app-calendar.html" aria-expanded="false">
+                    <a class="sidebar-link" th:href="@{/main/app-calendar.html}" aria-expanded="false">
                       <span>
                         <i class="ti ti-calendar"></i>
                       </span>
@@ -2060,7 +2064,7 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a class="sidebar-link" href="../main/app-email.html" aria-expanded="false">
+                    <a class="sidebar-link" th:href="@{/main/app-email.html}" aria-expanded="false">
                       <span>
                         <i class="ti ti-mail"></i>
                       </span>
@@ -2081,9 +2085,9 @@
                 </a>
               </li>
               <li class="nav-item d-none d-xl-block">
-                <a href="../main/index.html" class="text-nowrap nav-link">
-                  <img src="../assets/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
-                  <img src="../assets/images/logos/light-logo.svg" class="light-logo" width="180" alt="modernize-img" />
+                <a th:href="@{/main/index.html}" class="text-nowrap nav-link">
+                  <img th:src="@{/assets/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                  <img th:src="@{/assets/images/logos/light-logo.svg}" class="light-logo" width="180" alt="modernize-img" />
                 </a>
               </li>
               <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-xl-flex">
@@ -2111,9 +2115,9 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../main/app-chat.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-chat.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-chat.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2122,18 +2126,18 @@
                                       <span class="fs-2 d-block text-body-secondary">New messages arrived</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-invoice.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-invoice.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-invoice.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Invoice App</h6>
                                       <span class="fs-2 d-block text-body-secondary">Get latest invoice</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-contact2.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-contact2.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-mobile.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2142,9 +2146,9 @@
                                       <span class="fs-2 d-block text-body-secondary">2 Unsaved Contacts</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-email.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-email.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-message-box.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Email App</h6>
@@ -2155,9 +2159,9 @@
                               </div>
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../main/page-user-profile.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/page-user-profile.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-cart.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2166,9 +2170,9 @@
                                       <span class="fs-2 d-block text-body-secondary">learn more information</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-calendar.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-calendar.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-date.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2177,9 +2181,9 @@
                                       <span class="fs-2 d-block text-body-secondary">Get dates</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-contact.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-contact.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-lifebuoy.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2188,9 +2192,9 @@
                                       <span class="fs-2 d-block text-body-secondary">Add new contact</span>
                                     </div>
                                   </a>
-                                  <a href="../main/app-notes.html" class="d-flex align-items-center pb-9 position-relative">
+                                  <a th:href="@{/main/app-notes.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="../assets/images/svgs/icon-dd-application.svg" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/assets/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2222,26 +2226,26 @@
                           <h5 class="fs-5 mb-9 fw-semibold">Quick Links</h5>
                           <ul class="">
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/page-pricing.html">Pricing Page</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/page-pricing.html}">Pricing Page</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/authentication-login.html">Authentication
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/authentication-login.html}">Authentication
                                 Design</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/authentication-register.html">Register Now</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/authentication-register.html}">Register Now</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/authentication-error.html">404 Error Page</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/authentication-error.html}">404 Error Page</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/app-notes.html">Notes App</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/app-notes.html}">Notes App</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/page-user-profile.html">User Application</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/page-user-profile.html}">User Application</a>
                             </li>
                             <li class="mb-3">
-                              <a class="fw-semibold bg-hover-primary" href="../main/page-account-settings.html">Account Settings</a>
+                              <a class="fw-semibold bg-hover-primary" th:href="@{/main/page-account-settings.html}">Account Settings</a>
                             </li>
                           </ul>
                         </div>
@@ -2254,18 +2258,18 @@
               <!-- end apps Dropdown -->
               <!-- ------------------------------- -->
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../main/app-chat.html">Chat</a>
+                <a class="nav-link" th:href="@{/main/app-chat.html}">Chat</a>
               </li>
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../main/app-calendar.html">Calendar</a>
+                <a class="nav-link" th:href="@{/main/app-calendar.html}">Calendar</a>
               </li>
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../main/app-email.html">Email</a>
+                <a class="nav-link" th:href="@{/main/app-email.html}">Email</a>
               </li>
             </ul>
             <div class="d-block d-xl-none">
-              <a href="../main/index.html" class="text-nowrap nav-link">
-                <img src="../assets/images/logos/dark-logo.svg" width="180" alt="modernize-img" />
+              <a th:href="@{/main/index.html}" class="text-nowrap nav-link">
+                <img th:src="@{/assets/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
               </a>
             </div>
             <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -2292,31 +2296,31 @@
                   </li>
                   <li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
                     <a class="nav-link" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                      <img src="../assets/images/svgs/icon-flag-en.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                      <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                       <div class="message-body">
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-en.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">English (UK)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-cn.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-cn.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">中国人 (Chinese)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-fr.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-fr.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">français (French)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img src="../assets/images/svgs/icon-flag-sa.svg" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/assets/images/svgs/icon-flag-sa.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">عربي (Arabic)</p>
                         </a>
@@ -2356,7 +2360,7 @@
                       <div class="message-body" data-simplebar>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-2.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-2.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -2365,7 +2369,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-3.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-3.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">New message</h6>
@@ -2374,7 +2378,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-4.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-4.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Bianca sent payment</h6>
@@ -2383,7 +2387,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-5.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-5.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Jolly completed tasks</h6>
@@ -2392,7 +2396,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-6.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-6.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">John received payment</h6>
@@ -2401,7 +2405,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img src="../assets/images/profile/user-7.jpg" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/assets/images/profile/user-7.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -2425,7 +2429,7 @@
                     <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                       <div class="d-flex align-items-center">
                         <div class="user-profile-img">
-                          <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="35" height="35" alt="modernize-img" />
+                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
                         </div>
                       </div>
                     </a>
@@ -2435,7 +2439,7 @@
                           <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
                         </div>
                         <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="80" height="80" alt="modernize-img" />
+                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3">Mathew Anderson</h5>
                             <span class="mb-1 d-block">Designer</span>
@@ -2445,27 +2449,27 @@
                           </div>
                         </div>
                         <div class="message-body">
-                          <a href="../main/page-user-profile.html" class="py-8 px-7 mt-8 d-flex align-items-center">
+                          <a th:href="@{/main/page-user-profile.html}" class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img src="../assets/images/svgs/icon-account.svg" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/assets/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
                               <span class="fs-2 d-block text-body-secondary">Account Settings</span>
                             </div>
                           </a>
-                          <a href="../main/app-email.html" class="py-8 px-7 d-flex align-items-center">
+                          <a th:href="@{/main/app-email.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img src="../assets/images/svgs/icon-inbox.svg" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/assets/images/svgs/icon-inbox.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Inbox</h6>
                               <span class="fs-2 d-block text-body-secondary">Messages & Emails</span>
                             </div>
                           </a>
-                          <a href="../main/app-notes.html" class="py-8 px-7 d-flex align-items-center">
+                          <a th:href="@{/main/app-notes.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img src="../assets/images/svgs/icon-tasks.svg" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/assets/images/svgs/icon-tasks.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Task</h6>
@@ -2482,12 +2486,12 @@
                               </div>
                               <div class="col-6">
                                 <div class="m-n4 unlimited-img">
-                                  <img src="../assets/images/backgrounds/unlimited-bg.png" alt="modernize-img" class="w-100" />
+                                  <img th:src="@{/assets/images/backgrounds/unlimited-bg.png}" alt="modernize-img" class="w-100" />
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <a href="../main/authentication-login.html" class="btn btn-outline-primary">Log Out</a>
+                          <a th:href="@{/main/authentication-login.html}" class="btn btn-outline-primary">Log Out</a>
                         </div>
                       </div>
                     </div>
@@ -2528,37 +2532,37 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/index.html" class="sidebar-link">
+                    <a th:href="@{/main/index.html}" class="sidebar-link">
                       <i class="ti ti-aperture"></i>
                       <span class="hide-menu">Modern</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/index2.html" class="sidebar-link">
+                    <a th:href="@{/main/index2.html}" class="sidebar-link">
                       <i class="ti ti-shopping-cart"></i>
                       <span class="hide-menu">eCommerce</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/index3.html" class="sidebar-link">
+                    <a th:href="@{/main/index3.html}" class="sidebar-link">
                       <i class="ti ti-currency-dollar"></i>
                       <span class="hide-menu">NFT</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/index4.html" class="sidebar-link">
+                    <a th:href="@{/main/index4.html}" class="sidebar-link">
                       <i class="ti ti-cpu"></i>
                       <span class="hide-menu">Crypto</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/index5.html" class="sidebar-link">
+                    <a th:href="@{/main/index5.html}" class="sidebar-link">
                       <i class="ti ti-activity-heartbeat"></i>
                       <span class="hide-menu">General</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/index6.html" class="sidebar-link">
+                    <a th:href="@{/main/index6.html}" class="sidebar-link">
                       <i class="ti ti-playlist"></i>
                       <span class="hide-menu">Music</span>
                     </a>
@@ -2581,25 +2585,25 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/app-calendar.html" class="sidebar-link">
+                    <a th:href="@{/main/app-calendar.html}" class="sidebar-link">
                       <i class="ti ti-calendar"></i>
                       <span class="hide-menu">Calendar</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/app-kanban.html" class="sidebar-link">
+                    <a th:href="@{/main/app-kanban.html}" class="sidebar-link">
                       <i class="ti ti-layout-kanban"></i>
                       <span class="hide-menu">Kanban</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/app-chat.html" class="sidebar-link">
+                    <a th:href="@{/main/app-chat.html}" class="sidebar-link">
                       <i class="ti ti-message-dots"></i>
                       <span class="hide-menu">Chat</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a class="sidebar-link" href="../main/app-email.html" aria-expanded="false">
+                    <a class="sidebar-link" th:href="@{/main/app-email.html}" aria-expanded="false">
                       <span>
                         <i class="ti ti-mail"></i>
                       </span>
@@ -2607,67 +2611,67 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/app-contact.html" class="sidebar-link">
+                    <a th:href="@{/main/app-contact.html}" class="sidebar-link">
                       <i class="ti ti-phone"></i>
                       <span class="hide-menu">Contact Table</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/app-contact2.html" class="sidebar-link">
+                    <a th:href="@{/main/app-contact2.html}" class="sidebar-link">
                       <i class="ti ti-list-details"></i>
                       <span class="hide-menu">Contact List</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/app-notes.html" class="sidebar-link">
+                    <a th:href="@{/main/app-notes.html}" class="sidebar-link">
                       <i class="ti ti-notes"></i>
                       <span class="hide-menu">Notes</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/app-invoice.html" class="sidebar-link">
+                    <a th:href="@{/main/app-invoice.html}" class="sidebar-link">
                       <i class="ti ti-file-text"></i>
                       <span class="hide-menu">Invoice</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/page-user-profile.html" class="sidebar-link">
+                    <a th:href="@{/main/page-user-profile.html}" class="sidebar-link">
                       <i class="ti ti-user-circle"></i>
                       <span class="hide-menu">User Profile</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/blog-posts.html" class="sidebar-link">
+                    <a th:href="@{/main/blog-posts.html}" class="sidebar-link">
                       <i class="ti ti-article"></i>
                       <span class="hide-menu">Posts</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/blog-detail.html" class="sidebar-link">
+                    <a th:href="@{/main/blog-detail.html}" class="sidebar-link">
                       <i class="ti ti-details"></i>
                       <span class="hide-menu">Detail</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/eco-shop.html" class="sidebar-link">
+                    <a th:href="@{/main/eco-shop.html}" class="sidebar-link">
                       <i class="ti ti-shopping-cart"></i>
                       <span class="hide-menu">Shop</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/eco-shop-detail.html" class="sidebar-link">
+                    <a th:href="@{/main/eco-shop-detail.html}" class="sidebar-link">
                       <i class="ti ti-basket"></i>
                       <span class="hide-menu">Shop Detail</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/eco-product-list.html" class="sidebar-link">
+                    <a th:href="@{/main/eco-product-list.html}" class="sidebar-link">
                       <i class="ti ti-list-check"></i>
                       <span class="hide-menu">List</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/eco-checkout.html" class="sidebar-link">
+                    <a th:href="@{/main/eco-checkout.html}" class="sidebar-link">
                       <i class="ti ti-brand-shopee"></i>
                       <span class="hide-menu">Checkout</span>
                     </a>
@@ -2690,43 +2694,43 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/page-faq.html" class="sidebar-link">
+                    <a th:href="@{/main/page-faq.html}" class="sidebar-link">
                       <i class="ti ti-help"></i>
                       <span class="hide-menu">FAQ</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/page-account-settings.html" class="sidebar-link">
+                    <a th:href="@{/main/page-account-settings.html}" class="sidebar-link">
                       <i class="ti ti-user-circle"></i>
                       <span class="hide-menu">Account Setting</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/page-pricing.html" class="sidebar-link">
+                    <a th:href="@{/main/page-pricing.html}" class="sidebar-link">
                       <i class="ti ti-currency-dollar"></i>
                       <span class="hide-menu">Pricing</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/widgets-cards.html" class="sidebar-link">
+                    <a th:href="@{/main/widgets-cards.html}" class="sidebar-link">
                       <i class="ti ti-cards"></i>
                       <span class="hide-menu">Card</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/widgets-banners.html" class="sidebar-link">
+                    <a th:href="@{/main/widgets-banners.html}" class="sidebar-link">
                       <i class="ti ti-ad"></i>
                       <span class="hide-menu">Banner</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/widgets-charts.html" class="sidebar-link">
+                    <a th:href="@{/main/widgets-charts.html}" class="sidebar-link">
                       <i class="ti ti-chart-bar"></i>
                       <span class="hide-menu">Charts</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../landingpage/index.html" class="sidebar-link">
+                    <a th:href="@{/landingpage/index.html}" class="sidebar-link">
                       <i class="ti ti-app-window"></i>
                       <span class="hide-menu">Landing Page</span>
                     </a>
@@ -2752,121 +2756,121 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/ui-accordian.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-accordian.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Accordian</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-badge.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-badge.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Badge</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-buttons.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-buttons.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Buttons</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-dropdowns.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-dropdowns.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Dropdowns</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-modals.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-modals.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Modals</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-tab.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-tab.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Tab</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-tooltip-popover.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-tooltip-popover.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Tooltip & Popover</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-notification.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-notification.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Alerts</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-progressbar.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-progressbar.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Progressbar</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-pagination.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-pagination.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Pagination</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-typography.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-typography.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Typography</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-bootstrap-ui.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-bootstrap-ui.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Bootstrap UI</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-breadcrumb.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-breadcrumb.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Breadcrumb</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-offcanvas.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-offcanvas.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Offcanvas</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-lists.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-lists.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Lists</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-grid.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-grid.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Grid</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-carousel.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-carousel.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Carousel</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-scrollspy.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-scrollspy.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Scrollspy</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-spinner.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-spinner.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Spinner</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/ui-link.html" class="sidebar-link">
+                    <a th:href="@{/main/ui-link.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Link</span>
                     </a>
@@ -2893,94 +2897,94 @@
                 <ul aria-expanded="false" class="collapse first-level">
                   <!-- form elements -->
                   <li class="sidebar-item">
-                    <a href="../main/form-inputs.html" class="sidebar-link">
+                    <a th:href="@{/main/form-inputs.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Forms Input</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-input-groups.html" class="sidebar-link">
+                    <a th:href="@{/main/form-input-groups.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Input Groups</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-input-grid.html" class="sidebar-link">
+                    <a th:href="@{/main/form-input-grid.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Input Grid</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-checkbox-radio.html" class="sidebar-link">
+                    <a th:href="@{/main/form-checkbox-radio.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Checkbox & Radios</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-bootstrap-switch.html" class="sidebar-link">
+                    <a th:href="@{/main/form-bootstrap-switch.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Bootstrap Switch</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-select2.html" class="sidebar-link">
+                    <a th:href="@{/main/form-select2.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Select2</span>
                     </a>
                   </li>
                   <!-- form inputs -->
                   <li class="sidebar-item">
-                    <a href="../main/form-basic.html" class="sidebar-link">
+                    <a th:href="@{/main/form-basic.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Basic Form</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-vertical.html" class="sidebar-link">
+                    <a th:href="@{/main/form-vertical.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Form Vertical</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-horizontal.html" class="sidebar-link">
+                    <a th:href="@{/main/form-horizontal.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Form Horizontal</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-actions.html" class="sidebar-link">
+                    <a th:href="@{/main/form-actions.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Form Actions</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-row-separator.html" class="sidebar-link">
+                    <a th:href="@{/main/form-row-separator.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Row Separator</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-bordered.html" class="sidebar-link">
+                    <a th:href="@{/main/form-bordered.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Form Bordered</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/form-detail.html" class="sidebar-link">
+                    <a th:href="@{/main/form-detail.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Form Detail</span>
                     </a>
                   </li>
                   <!-- form wizard -->
                   <li class="sidebar-item">
-                    <a href="../main/form-wizard.html" class="sidebar-link">
+                    <a th:href="@{/main/form-wizard.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Form Wizard</span>
                     </a>
                   </li>
                   <!-- Quill Editor -->
                   <li class="sidebar-item">
-                    <a href="../main/form-editor-quill.html" class="sidebar-link">
+                    <a th:href="@{/main/form-editor-quill.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Quill Editor</span>
                     </a>
@@ -3006,43 +3010,43 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/table-basic.html" class="sidebar-link">
+                    <a th:href="@{/main/table-basic.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Basic Table</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/table-dark-basic.html" class="sidebar-link">
+                    <a th:href="@{/main/table-dark-basic.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Dark Basic Table</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/table-sizing.html" class="sidebar-link">
+                    <a th:href="@{/main/table-sizing.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Sizing Table</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/table-layout-coloured.html" class="sidebar-link">
+                    <a th:href="@{/main/table-layout-coloured.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Coloured Table</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/table-datatable-basic.html" class="sidebar-link">
+                    <a th:href="@{/main/table-datatable-basic.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Basic Initialisation</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/table-datatable-api.html" class="sidebar-link">
+                    <a th:href="@{/main/table-datatable-api.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">API</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/table-datatable-advanced.html" class="sidebar-link">
+                    <a th:href="@{/main/table-datatable-advanced.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Advanced Initialisation</span>
                     </a>
@@ -3068,37 +3072,37 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/chart-apex-line.html" class="sidebar-link">
+                    <a th:href="@{/main/chart-apex-line.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Line Chart</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/chart-apex-area.html" class="sidebar-link">
+                    <a th:href="@{/main/chart-apex-area.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Area Chart</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/chart-apex-bar.html" class="sidebar-link">
+                    <a th:href="@{/main/chart-apex-bar.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Bar Chart</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/chart-apex-pie.html" class="sidebar-link">
+                    <a th:href="@{/main/chart-apex-pie.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Pie Chart</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/chart-apex-radial.html" class="sidebar-link">
+                    <a th:href="@{/main/chart-apex-radial.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Radial Chart</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/chart-apex-radar.html" class="sidebar-link">
+                    <a th:href="@{/main/chart-apex-radar.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Radar Chart</span>
                     </a>
@@ -3124,13 +3128,13 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../main/icon-tabler.html" class="sidebar-link">
+                    <a th:href="@{/main/icon-tabler.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Tabler Icon</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="../main/icon-solar.html" class="sidebar-link">
+                    <a th:href="@{/main/icon-solar.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Solar Icon</span>
                     </a>
@@ -3147,7 +3151,7 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="../docs/index.html" class="sidebar-link">
+                    <a th:href="@{/docs/index.html}" class="sidebar-link">
                       <i class="ti ti-circle"></i>
                       <span class="hide-menu">Documentation</span>
                     </a>
@@ -3205,25 +3209,30 @@
           <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
             <div class="card-body px-4 py-3">
               <div class="row align-items-center">
+
                 <div class="col-9">
-                  <h4 class="fw-semibold mb-8">Blog</h4>
+                  <h4 class="fw-semibold mb-8">[[${category}]] 게시글 목록 </h4>
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
-                        <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+                        <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
                       </li>
-                      <li class="breadcrumb-item" aria-current="page">Blog</li>
+                      <li class="breadcrumb-item" aria-current="page">[[${category}]]</li>
                     </ol>
                   </nav>
                 </div>
+
                 <div class="col-3">
                   <div class="text-center mb-n5">
-                    <img src="../assets/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+                    <img th:src="@{/assets/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
+          
+          <!-- 게시글 목록  -->
           <div class="row">
             <div class="col-md-6 col-lg-8">
               <div class="card blog blog-img-one position-relative overflow-hidden hover-img">
@@ -3231,12 +3240,12 @@
                   <div class="d-flex flex-column justify-content-between h-100">
                     <div class="d-flex align-items-start justify-content-between">
                       <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mollie Underwood">
-                        <img src="../assets/images/profile/user-4.jpg" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
+                        <img th:src="@{/assets/images/profile/user-4.jpg}" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
                       </div>
                       <span class="badge text-bg-primary fs-2 fw-semibold">Gadget</span>
                     </div>
                     <div>
-                      <a href="../main/blog-detail.html" class="fs-7 my-4 fw-semibold text-white d-block lh-sm text-primary">Early Black Friday
+                      <a th:href="@{/main/blog-detail.html}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm text-primary">Early Black Friday
                         Amazon deals: cheap TVs, headphones, laptops</a>
                       <div class="d-flex align-items-center gap-4">
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
@@ -3257,28 +3266,40 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <!-- class="col-md-6 col-lg-4" 이거를 반복시키면 될듯 -->
+            <div class="col-md-6 col-lg-4"> 
               <div class="card blog blog-img-two position-relative overflow-hidden hover-img">
                 <div class="card-body position-relative">
                   <div class="d-flex flex-column justify-content-between h-100">
                     <div class="d-flex align-items-start justify-content-between">
                       <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Francisco Quinn">
-                        <img src="../assets/images/profile/user-5.jpg" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
+                        <!-- 작성자 이미지 -->
+                        <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
                       </div>
+                      <!-- 여기에 마감기한, 모집인원 넣으면 될듯 -->
                       <span class="badge text-bg-primary fs-2 fw-semibold">Health</span>
                     </div>
                     <div>
-                      <a href="../main/blog-detail.html" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">Presented by Max
+                      <!-- 게시글 제목 -->
+                      <a th:href="@{/main/blog-detail.html}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">Presented by Max
                         Rushden with Barry Glendenning, Philippe Auclair</a>
                       <div class="d-flex align-items-center gap-4">
+                        <!-- 조회수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                           <i class="ti ti-eye fs-5"></i>
                           713
                         </div>
+                        <!-- 댓글수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                           <i class="ti ti-message-2 fs-5"></i>
                           3
                         </div>
+                        <!-- 좋아요수 -->
+                        <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
+                          <i class="ti fa-solid fa-heart fs-5"></i>
+                          3
+                        </div>
+                        <!-- 작성 날짜 -->
                         <div class="d-flex align-items-center gap-1 text-white fw-normal ms-auto">
                           <i class="ti ti-point"></i>
                           <small>Wed, Jan 18</small>
@@ -3292,16 +3313,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img6.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img6.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Addie Keller">
+                  <img th:src="@{/assets/images/profile/user-3.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Addie Keller">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Gadget</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">As yen
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">As yen
                     tumbles, gadget-loving Japan goes
                     for iPhones</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3321,16 +3342,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img11.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img11.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-2.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Walter Palmer">
+                  <img th:src="@{/assets/images/profile/user-2.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Walter Palmer">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Social</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">Intel loses
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">Intel loses
                     bid to revive antitrust case
                     against patent foe Fortress</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3350,16 +3371,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img8.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img8.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Miguel Kennedy">
+                  <img th:src="@{/assets/images/profile/user-3.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Miguel Kennedy">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Health</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">COVID
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">COVID
                     outbreak deepens as more lockdowns
                     loom in China</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3379,16 +3400,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img5.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-5.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Esther Lindsey">
+                  <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Esther Lindsey">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Lifestyle</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">Streaming
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">Streaming
                     video way before it was cool, go
                     dark tomorrow</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3408,16 +3429,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img3.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img3.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Leroy Greer">
+                  <img th:src="@{/assets/images/profile/user-3.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Leroy Greer">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Design</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">Apple is
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">Apple is
                     apparently working on a new
                     ‘streamlined’ accessibility</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3437,16 +3458,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img2.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img2.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-2.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tommy Butler">
+                  <img th:src="@{/assets/images/profile/user-2.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tommy Butler">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Lifestyle</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">After
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">After
                     Twitter Staff Cuts, Survivors Face
                     ‘Radio Silence</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3466,16 +3487,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img4.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img4.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-4.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Donald Holmes">
+                  <img th:src="@{/assets/images/profile/user-4.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Donald Holmes">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Design</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">Why Figma is
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">Why Figma is
                     selling to Adobe for $20
                     billion</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3495,16 +3516,16 @@
             <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
-                  <a href="../main/blog-detail.html">
-                    <img src="../assets/images/blog/blog-img1.jpg" class="card-img-top" alt="modernize-img">
+                  <a th:href="@{/main/blog-detail.html}">
+                    <img th:src="@{/assets/images/blog/blog-img1.jpg}" class="card-img-top" alt="modernize-img">
                   </a>
                   <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
                     min Read</span>
-                  <img src="../assets/images/profile/user-6.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eric Douglas">
+                  <img th:src="@{/assets/images/profile/user-6.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eric Douglas">
                 </div>
                 <div class="card-body p-4">
                   <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Gadget</span>
-                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="../main/blog-detail.html">Garmins
+                  <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" th:href="@{/main/blog-detail.html}">Garmins
                     Instinct Crossover is a rugged
                     hybrid smartwatch</a>
                   <div class="d-flex align-items-center gap-4">
@@ -3814,7 +3835,7 @@
         <ul class="mb-0">
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img src="../assets/images/products/product-1.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img th:src="@{/assets/images/products/product-1.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
@@ -3835,7 +3856,7 @@
           </li>
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img src="../assets/images/products/product-2.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img th:src="@{/assets/images/products/product-2.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
@@ -3856,7 +3877,7 @@
           </li>
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img src="../assets/images/products/product-3.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img th:src="@{/assets/images/products/product-3.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
@@ -3889,19 +3910,19 @@
               <span class="text-dark fw-semibold fs-3">$6830</span>
             </div>
           </div>
-          <a href="../main/eco-checkout.html" class="btn btn-outline-primary w-100">Go to shopping cart</a>
+          <a th:href="@{/main/eco-checkout.html}" class="btn btn-outline-primary w-100">Go to shopping cart</a>
         </div>
       </div>
     </div>
   </div>
   <div class="dark-transparent sidebartoggler"></div>
   <!-- Import Js Files -->
-  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/libs/simplebar/dist/simplebar.min.js"></script>
-  <script src="../assets/js/theme/app.init.js"></script>
-  <script src="../assets/js/theme/theme.js"></script>
-  <script src="../assets/js/theme/app.min.js"></script>
-  <script src="../assets/js/theme/sidebarmenu.js"></script>
+  <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/assets/js/theme/app.init.js}"></script>
+  <script th:src="@{/assets/js/theme/theme.js}"></script>
+  <script th:src="@{/assets/js/theme/app.min.js}"></script>
+  <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
 
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
