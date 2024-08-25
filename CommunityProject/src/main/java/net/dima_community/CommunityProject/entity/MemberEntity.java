@@ -1,6 +1,8 @@
 package net.dima_community.CommunityProject.entity;
 
 import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.board.ReplyEntity;
 import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
 import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 import jakarta.persistence.CascadeType;
@@ -79,6 +81,16 @@ public class MemberEntity {
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@OrderBy("memberproject_seq asc")
 	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
+
+	// 1) Board
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("board_id")
+	private List<BoardEntity> jobBoardEntities;
+
+	// 3) Reply
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("create_date")
+	private List<ReplyEntity> replyEntities;
 
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()

@@ -78,31 +78,32 @@
         , success: function (resp) {
           let data = "";
           $.each(resp, function (index, item) {
+            console.log(item.title);
             data += `<div class="row">
                           <div data-draggable="true" class="card img-task">
                             <div class="card-body" style="padding: 10px;">
                               <div class="task-header">
                                 <div>
                                   <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;" text="${item.title}">
-                                    padding 0으로 해보새요!</h4>
+                              margin-bottom: 0;">
+                                    ${item.title}</h4>
                                 </div>
                                 <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1" text="${item.category}">Code</span>
+                                  <span class="badge text-bg-warning fs-1" >${item.category}</span>
                                 </div>
                               </div>
 
                               <div class="task-content">
                                 <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." text="${item.content}">
-                                  프론트 질문있습니다..
+                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." >
+                                ${item.content}
                                 </p>
                               </div>
                               <div class="task-body">
                                 <div class="task-bottom">
                                   <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" text="${item.createDate}">
-                                      <i class="ti ti-calendar fs-5"></i> 24 July
+                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                      <i class="ti ti-calendar fs-5"></i>${item.createDate}
                                     </span>
                                   </div>
 
@@ -124,31 +125,32 @@
         , method: "POST"
         , success: function (resp) {
           $.each(resp, function (key, value) {
+            console.log(key.content);
             data += `<div class="row">
                           <div data-draggable="true" class="card img-task">
                             <div class="card-body" style="padding: 10px;">
                               <div class="task-header">
                                 <div>
                                   <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;" text="${value.content}">
-                                    padding 0으로 해보새요!</h4>
+                              margin-bottom: 0;">${key}
+                                    </h4>
                                 </div>
                                 <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1" text="${key.category}">Code</span>
+                                  <span class="badge text-bg-warning fs-1" >${value.category}</span>
                                 </div>
                               </div>
 
                               <div class="task-content">
                                 <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." text="${key.content}">
-                                  프론트 질문있습니다..
+                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
+                                  ${value.title}
                                 </p>
                               </div>
                               <div class="task-body">
                                 <div class="task-bottom">
                                   <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" text="${key.createDate}">
-                                      <i class="ti ti-calendar fs-5"></i> 24 July
+                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                      <i class="ti ti-calendar fs-5"></i> ${value.createDate}
                                     </span>
                                   </div>
 
@@ -158,6 +160,7 @@
                           </div>
                         </div>`;
           })
+          $("#navpill-222").html(data);
         }
       })
 
@@ -370,26 +373,7 @@
       <div class="card overflow-hidden">
         <div class="card-body p-0">
           <img src="../../static/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
-          <div class="row align-items-center">
-            <div class="col-lg-4 order-lg-1 order-2">
-              <div class="d-flex align-items-center justify-content-around m-4">
-                <div class="text-center">
-                  <i class="ti ti-file-description fs-6 d-block mb-2"></i>
-                  <h4 class="mb-0 lh-1">938</h4>
-                  <p class="mb-0 ">Posts</p>
-                </div>
-                <div class="text-center">
-                  <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
-                  <h4 class="mb-0 lh-1">3,586</h4>
-                  <p class="mb-0 ">Followers</p>
-                </div>
-                <div class="text-center">
-                  <i class="ti ti-user-check fs-6 d-block mb-2"></i>
-                  <h4 class="mb-0 lh-1">2,659</h4>
-                  <p class="mb-0 ">Following</p>
-                </div>
-              </div>
-            </div>
+          <div class="row" style="justify-content: flex-end;">
             <div class="col-lg-4 mt-n3 order-lg-2 order-1">
               <div class="mt-n5">
                 <div class="d-flex align-items-center justify-content-center mb-2">
@@ -746,7 +730,9 @@
                 </div>
               </div>
               <span style="margin: 10px; float: right;">
-                <a th:href="@{/memberpage/updatepage(memberId=${member.memberId})}">수정하기</a></span>
+                <a th:href="@{/memberpage/showpage(memberId=${member.memberId})}"
+                  class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">마이페이지로
+                  돌아가기</a></span>
 
 
             </div>
