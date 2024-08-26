@@ -1,5 +1,6 @@
 package net.dima_community.CommunityProject.dto;
 
+import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import lombok.ToString;
 public class MemberDTO {
 	private String memberId;
 	private String memberPw;
-	private Boolean memberEnabled;
+	private String memberEnabled;
 	private String memberRole;
 	private String memberName;
 	private String memberGroup;
@@ -26,27 +27,47 @@ public class MemberDTO {
 	private String memberEmail;
 	private String badge1;
 	private String badge2;
-	private String memberGit;
-	private String memberBlog;
-	private String memberResume;
-	
+	public String memberVerifyCode;
+
 	public static MemberDTO toDTO(MemberEntity memberEntity) {
 		return MemberDTO.builder()
-			.memberId(memberEntity.getMemberId())
-			.memberPw(memberEntity.getMemberPw())
-			.memberEnabled(memberEntity.getMemberEnabled())
-			.memberRole(memberEntity.getMemberRole())
-			.memberName(memberEntity.getMemberName())
-			.memberGroup(memberEntity.getMemberGroup())
-			.memberPhone(memberEntity.getMemberPhone())
-			.memberEmail(memberEntity.getMemberEmail())
-			.badge1(memberEntity.getBadge1())
-			.badge2(memberEntity.getBadge2())
-			.memberGit(memberEntity.getMemberGit())
-			.memberBlog(memberEntity.getMemberBlog())
-			.memberResume(memberEntity.getMemberResume())
-			.build();
+				.memberId(memberEntity.getMemberId())
+				.memberPw(memberEntity.getMemberPw())
+				.memberEnabled(memberEntity.getMemberEnabled())
+				.memberRole(memberEntity.getMemberRole())
+				.memberName(memberEntity.getMemberName())
+				.memberGroup(memberEntity.getMemberGroup())
+				.memberPhone(memberEntity.getMemberPhone())
+				.memberEmail(memberEntity.getMemberEmail())
+				.badge1(memberEntity.getBadge1())
+				.badge2(memberEntity.getBadge2())
+				.memberVerifyCode(memberEntity.getMemberVerifyCode())
+				.build();
 	}
 
+	public MemberDTO updateVerifyCode(String verifyCode) {
+		this.memberVerifyCode = verifyCode;
+		return this;
+	}
+
+	public MemberDTO setEncodedPassword(BCryptEncoderHolder bCryptEncoderHolder) {
+		this.memberPw = bCryptEncoderHolder.encodedPassword(this.getMemberPw());
+		return this;
+	}
+
+	public void enabledToYes() {
+		this.memberEnabled = Character.toString('Y');
+	}
+
+	public MemberDTO update(String memberName2, String memberEmail2) {
+		this.memberName = memberName2;
+		this.memberEmail = memberEmail2;
+		return this;
+	}
+
+	public MemberDTO updateVerificationCode(String generatedString) {
+		this.memberVerifyCode = generatedString;
+		return this;
+	};
 
 }

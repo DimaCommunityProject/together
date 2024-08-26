@@ -1,0 +1,16 @@
+package net.dima_community.CommunityProject.repository.chat;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+
+import net.dima_community.CommunityProject.entity.chat.ChatMessage;
+
+import java.util.List;
+
+public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
+
+    @Query(value="{ 'senderId': ?0 }", fields="{ 'roomId' : 1 }")
+    List<String> findDistinctRoomIdByUser(String userId);
+
+    List<ChatMessage> findByRoomId(String roomId);
+}

@@ -1,60 +1,211 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:src="http://www.thymeleaf.org/extras/spring-security"   
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
-    <!--fontawesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!--css  설정-->
-    <link rel="stylesheet" th:href="@{ /css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
-    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<meta charset="UTF-8">
+	<title>회원가입</title>
+	<!-- fontawesome 사용 CDN 설정 -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> -->
 
+	<!-- CSS 설정 -->
+	<link rel="stylesheet" th:href="@{/css/user.css}">
 
+	<script src="/script/libs/jquery-3.7.1.min.js"></script>
+	<script>
+		$(function () {
+			$("#memberId").on('keyup', checkId)
+			$("#memberPw").on('keyup', checkPw)
+			$("#memberPw2").on('keyup', pwDoubleCheck)
+			$("#memberPhone").on('keyup', checkPhone)
+			$("#sendEmail").on('click', function () {
+				let memberId = $("#memberId").val();
+				let memberPw = $("#memberPw").val();
+				let memberName = $("#memberName").val();
+				let memberGroup = $("#memberGroup").val();
+				let memberPhone = $("#memberPhone").val();
+				let memberEmail = $("#memberEmail").val();
+				let memberEnabled = $("#memberEnabled").val();
+				let memberRole = $("#memberRole").val();
+				$.ajax({
+					url: "/email/send",
+					method: "POST",
+					contentType: 'application/json',
+					data: JSON.stringify({
+						memberId: memberId, memberPw: memberPw, memberName: memberName
+						, memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail
+						, memberEnabled: memberEnabled, memberRole: memberRole
+					}),
+					success: function (resp) {
+						if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.")
+						else alert("메일을 성공적으로 전송했습니다.")
+					}
+				})
+			})
+			$("#verifyCode").on('click', function () {
+				if (!$("#termsCheckbox").is(':checked')) {
+					alert("약관 동의에 체크해주세요");
+					return;
+				}
+				let myVerifyCode = $("#myVerifyCode").val();
+				let myEmail = $("#memberEmail").val();
+				$.ajax({
+					url: "/email/verifyCode"
+					, method: "GET"
+					, data: { memberVerifyCode: myVerifyCode, memberEmail: myEmail }
+					, success: function (resp) {
+						if (!resp) alert("본인인증에 실패하였습니다. 다시한번 시도해주세요.")
+						else {
+							alert("본인인증에 성공했습니다. ");
+							$("#maintainJoinPage").text = "";
+							$("#closeJoinPage").prop('type', "submit");
+						}
+					}
+				})
+			})
+
+		});
+
+		function checkId() {
+			let id = $("#memberId").val();
+			if (id.trim().length < 8 || id.trim().length > 15) {
+				$("#checkId").css("color", "red");
+				$("#checkId").text("아이디는 8~15자리로 설정해주세요");
+				return;
+			}
+			if (id.trim().length >= 8 || id.trim().length <= 15) {
+				$.ajax({
+					url: "/member/checkDuplicate"
+					, data: { memberId: id }
+					, method: "GET"
+					, success: function (resp) {
+						if (!resp) {
+							$("#checkId").text = "이미 존재하는 ID 입니다."
+						}
+						$("#checkId").text = "사용 가능한 ID입니다."
+					}
+				})
+			}
+		};
+
+		function checkPw() {
+			let pw = $("#memberPw").val();
+			if (pw.trim().length < 8 || pw.trim().length > 15) {
+				$("#checkPw").css("color", "red");
+				$("#checkPw").text("비밀번호는 8~15자리로 설정해주세요.");
+			}
+			$("#checkPw").text("");
+		}
+
+		function pwDoubleCheck() {
+			let pw = $("#memberPw").val();
+			let pw2 = $("#memberPw2").val();
+			if (pw.trim() != pw2.trim()) {
+				$("#pwDoubleCheck").css("color", "red");
+				$("#pwDoubleCheck").text("비밀번호가 일치하지 않습니다.");
+			} else {
+				$("#pwDoubleCheck").css("color", "black");
+				$("#pwDoubleCheck").text("비밀번호가 일치합니다.");
+			}
+		}
+
+		function checkPhone() {
+			let phone = $("#memberPhone").val();
+			if (phone.trim().length != 13) {
+				$("#checkPhone").css("color", "red");
+				$("#checkPhone").text("전화번호는 '-'를 포함하여 13자리 입니다.");
+			} else {
+				$("#checkPhone").text("");
+			}
+		}
+
+		function checkEmail() {
+			let email = $("#memberEmail").val();
+			if (email === "") {
+				$("#checkEmail").html("이메일은 필수값입니다.<br>");
+			} else if (email.indexOf("@") === -1) {
+				$("#checkEmail").html("올바른 이메일 형식으로 입력해주세요.");
+			} else {
+				$("#checkEmail").html(null);
+			}
+
+		}
+
+	</script>
 </head>
+
 <body>
-    <div class="container">
-        <div class="logo">
-            <a th:href="@{/}"><img th:src="@{/images/festival.png}" alt="로고"></a>
-            <h2>회원가입</h2>
-        </div>
-    </div><!--container 끝-->
+	<div class="container">
+		<div class="logo">
+			<a th:href="@{/}"><img th:src="@{/images/logo.png}" alt="logo"></a>
+			<h2>회원 가입</h2>
+		</div>
+	</div> <!-- .container 끝 -->
 
-    <div class="content">
-        <form th:action="@{/member/joinProc}" method="POST">
-            <div class="section pointColor">
-                <div class="article">
-                    <ul>
-                        <li>
-                            <i class="fa-solid fa-id-card"></i>
-                            <input type="text" id="memberId" name="memberId" placeholder="ID">
-                            <br>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-lock"></i>
-                            <input type="password" name="memberPw" placeholder="Password">
-                            <br>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-user-tie"></i>
-                            <input type="text" name="memberName" placeholder="Name">
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-envelope-open-text"></i>
-                            <input type="email" name="memberEmail" placeholder="Email">
-                        </li>
-                    </ul>
+	<div class="content">
+		<form action="member/joinProc" method="get">
+			<div class="section pointColor">
+				<div class="article">
+					<ul>
+						<li>
+							<i class="fa-solid fa-fingerprint"></i>
+							<input type="text" name="memberId" id="memberId" placeholder="ID">
+							<span id="checkId"></span>
+						</li>
+						<li>
+							<i class="fa-solid fa-lock"></i>
+							<input type="password" name="memberPw" id="memberPw" placeholder="Password">
+							<span id="checkPw"></span>
 
-                    <div class="btns">
-                        <input type="submit" id="submitBtn" value="회원가입" class="btn btn-primary">
-                        <input type="reset" id="resetBtn" value="초기화" class="btn btn-secondary">
-                    </div>
+							<p>비밀번호 중복 체크</p>
+							<input type="password" name="memberPw2" id="memberPw2">
+							<span id="pwDoubleCheck"></span>
+						</li>
+						<li>
+							<i class="fa-solid fa-user"></i>
+							<input type="text" name="memberName" id="memberName" placeholder="실명으로 작성해주세요">
+						</li>
+						<li>
+							<select name="memberGroup" id="memberGroup">
+								<option value="1기">1기</option>
+								<option value="2기">2기</option>
+								<option value="3기">3기</option>
+								<option value="4기">4기</option>
+							</select>
+						</li>
+						<li>
+							<input type="text" name="mamberPhone" id="memberPhone"
+								placeholder="000-0000-0000 형식으로 작성해주세요">
+							<span id="checkPhone"></span>
+						</li>
+						<li>
+							<i class="fa-solid fa-envelope"></i>
+							<input type="email" name="memberEmail" id="memberEmail" placeholder="Email">
+							<span id="checkEmail"></span>
+						</li>
+						<input type="hidden" name="memberEnabled" id="memberEnabled" value="N">
+						<input type="hidden" name="memberRole" id="memberRole" value="USER">
+						<div class="agree-check">
+							<input type="checkbox" class="checkbox" id="termsCheckbox" />
+							이용약관 개인정보 수집 및 이용약관에 모두 동의합니다.
+						</div>
 
-                </div>
-            </div>
-        </form>
-    </div>
+						<li>
+							<input type="button" value="이메일로 본인인증" id="sendEmail">
+
+							<input type="text" value="인증번호를 입력해주세요" id="myVerifyCode" name="myVerifyCode">
+							<input type="button" value="인증하기" id="verifyCode">
+
+						</li>
+					</ul>
+
+					<input type="hidden" id="closeJoinPage" value="회원가입 완료하기">
+					<span id="maintainJoinPage">본인인증을 완료해 주세요.</span>
+				</div>
+			</div>
+		</form>
+
+	</div>
+
 </body>
+
 </html>
