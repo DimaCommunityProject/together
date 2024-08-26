@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "chatting_room_member")
 public class ChattingRoomMemberEntity {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatting_room_member_id")
     private Long id;
@@ -36,10 +37,10 @@ public class ChattingRoomMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatting_room_id", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference  // ChatRoom에서의 JsonManagedReference와 쌍을 이루는 어노테이션
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private MemberEntity member; 
+    private MemberEntity member;
 }

@@ -114,6 +114,29 @@ public class ChatRoomController {
         return chatRoomService.getChatRoomDetails(currentUserId);  // 채팅방의 ID와 이름을 반환하는 메서드
     }
     
+    @GetMapping("/getRoomMembers/{roomId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getRoomMembers(@PathVariable("roomId") Long roomId) {
+        try {
+            List<ChattingRoomMemberEntity> members = chattingRoomMemberRepository.findByChatRoomId(roomId);
+            List<Map<String, Object>> memberDetails = members.stream()
+                .map(member -> {
+                    Map<String, Object> details = new HashMap<>();
+                    details.put("memberId", member.getMember().getMemberId());
+                    details.put("name", member.getMember().getMemberName());
+                    details.put("status", "online");  // 실제 상태 값을 추가하거나 기본값 설정
+                    return details;
+                })
+                .collect(Collectors.toList());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("members", memberDetails);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
     /**
      * 특정 roomId에 해당하는 채팅방 하나의 정보를 반환 
      * @param roomId
@@ -121,10 +144,15 @@ public class ChatRoomController {
      */
     @GetMapping("/chat/room/{roomId}")
     public ResponseEntity<ChatRoom> getChatRoom(@PathVariable("roomId") Long roomId) {
+    	log.debug("Received request for ChatRoom with ID: {}", roomId);
+    	
         Optional<ChatRoom> chatRoomOptional = chatRoomService.findById(roomId);
         if (chatRoomOptional.isPresent()) {
-            return ResponseEntity.ok(chatRoomOptional.get());
+        	ChatRoom chatRoom = chatRoomOptional.get();
+            log.debug("Found ChatRoom: {}", chatRoom.getName());
+            return ResponseEntity.ok(chatRoom);
         } else {
+        	log.debug("ChatRoom with ID {} not found", roomId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }

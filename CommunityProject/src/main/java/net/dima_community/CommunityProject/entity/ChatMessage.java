@@ -20,6 +20,7 @@ public class ChatMessage {
     @Id
     private String id;
     private String senderId;
+    private String senderName; 
     private String content;
     private String timestamp;
     private boolean deleted;

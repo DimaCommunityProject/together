@@ -33,7 +33,7 @@ import org.springframework.amqp.core.TopicExchange;
 @RequiredArgsConstructor
 public class ChatRoomService {
 	
-    private final ChatRoomRepository chatRoomRepository;
+	private final ChatRoomRepository chatRoomRepository;
     private final ChattingRoomMemberRepository chattingRoomMemberRepository;
     private final MemberRepository memberRepository;
     private final RabbitAdmin rabbitAdmin;
@@ -42,35 +42,31 @@ public class ChatRoomService {
     public ChatRoom createChatRoom(String createdBy, String recipientId) {
     	String uniqueKey = Stream.of(createdBy, recipientId).sorted().collect(Collectors.joining("-"));
 
-        List<ChatRoom> existingRooms = chatRoomRepository.findByUniqueKey(uniqueKey);
+        return chatRoomRepository.findByUniqueKey(uniqueKey)
+            .orElseGet(() -> {
+                ChatRoom chatRoom = new ChatRoom();
+                chatRoom.setCreatedDate(LocalDateTime.now());
+                chatRoom.setDeleted(false);
+                chatRoom.setName(createdBy + "-" + recipientId);
+                chatRoom.setCreatedBy(createdBy);
+                chatRoom.setUniqueKey(uniqueKey);
 
-        if (!existingRooms.isEmpty()) {
-            return existingRooms.get(0); // 첫 번째 방을 반환
-        }
+                ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
+                addMemberToChatRoom(savedChatRoom.getId(), List.of(createdBy, recipientId));
 
-        // 새로운 채팅방 생성
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setCreatedDate(LocalDateTime.now());
-        chatRoom.setDeleted(false);
-        chatRoom.setName(createdBy + "-" + recipientId);
-        chatRoom.setCreatedBy(createdBy);
-        chatRoom.setUniqueKey(uniqueKey);
+                // 큐 이름 생성
+                String queueName = "chat.room." + savedChatRoom.getId();
 
-        ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
-        addMemberToChatRoom(savedChatRoom.getId(), List.of(createdBy, recipientId));
+                // 큐 생성
+                Queue queue = new Queue(queueName, true); // 내구성 있는 큐 생성
+                rabbitAdmin.declareQueue(queue);
 
-        // 큐 이름 생성
-        String queueName = "chat.room." + savedChatRoom.getId();
+                // 큐를 Exchange에 바인딩
+                Binding binding = BindingBuilder.bind(queue).to(new TopicExchange("chat.exchange")).with(queueName);
+                rabbitAdmin.declareBinding(binding);
 
-        // 큐 생성
-        Queue queue = new Queue(queueName, true); // 내구성 있는 큐 생성
-        rabbitAdmin.declareQueue(queue);
-
-        // 큐를 Exchange에 바인딩
-        Binding binding = BindingBuilder.bind(queue).to(new TopicExchange("chat.exchange")).with(queueName);
-        rabbitAdmin.declareBinding(binding);
-
-        return savedChatRoom;
+                return savedChatRoom;
+            });
     }
     
     @Transactional
@@ -80,33 +76,33 @@ public class ChatRoomService {
         }
 
         try {
+            // 기존 채팅방의 멤버 가져오기
             Long roomId = Long.parseLong(existingRoomId);
             List<String> existingMemberIds = chatRoomRepository.findMemberIdsByChatRoomId(roomId);
 
+            // 새로운 멤버들과 기존 멤버들을 합침
             List<String> allMemberIds = new ArrayList<>(existingMemberIds);
             allMemberIds.addAll(newMemberIds);
-            allMemberIds = allMemberIds.stream().distinct().collect(Collectors.toList());
+            allMemberIds = allMemberIds.stream().distinct().collect(Collectors.toList()); // 중복 제거
 
+            // 멤버들을 정렬하고 uniqueKey 생성
             allMemberIds.sort(String::compareTo);
             String uniqueKey = String.join("-", allMemberIds);
 
-            List<ChatRoom> existingRooms = chatRoomRepository.findByUniqueKey(uniqueKey);
-
-            if (!existingRooms.isEmpty()) {
-                return existingRooms.get(0); // 기존 방이 있을 경우 그 방을 반환
-            }
-
             // 새로운 방 생성
             ChatRoom newRoom = new ChatRoom();
-            newRoom.setName(uniqueKey);
+            newRoom.setName(uniqueKey); // 멤버들로 이름 생성
             newRoom.setCreatedDate(LocalDateTime.now());
             newRoom.setCreatedBy(currentUserId);
             newRoom.setUniqueKey(uniqueKey);
 
+            // 채팅방 저장
             ChatRoom savedChatRoom = chatRoomRepository.save(newRoom);
 
+            // 모든 멤버 추가
             addMemberToChatRoom(savedChatRoom.getId(), allMemberIds);
 
+            // 큐 이름 생성 및 바인딩
             String queueName = "chat.room." + savedChatRoom.getId();
             Queue queue = new Queue(queueName, true);
             rabbitAdmin.declareQueue(queue);
@@ -121,7 +117,7 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public void addMemberToChatRoom(Long chatRoomId, List<String> memberIds) {
+    public void addMemberToChatRoom(Long chatRoomId, List<String> memberIds) { // chatRoomId의 타입을 Long으로 변경
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
                 .orElseThrow(() -> new IllegalArgumentException("Chat room not found"));
 
@@ -130,11 +126,45 @@ public class ChatRoomService {
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
             ChattingRoomMemberEntity memberChattingRoom = new ChattingRoomMemberEntity();
-            memberChattingRoom.setChatRoom(chatRoom);
+            memberChattingRoom.setChatRoom(chatRoom); // chatRoomId 대신 chatRoom 객체를 설정
             memberChattingRoom.setMember(member);
             memberChattingRoom.setCreatedDate(LocalDateTime.now());
             memberChattingRoom.setDeleted(false);
             chattingRoomMemberRepository.save(memberChattingRoom);
         }
     }
+   
+    public List<Map<String, Object>> getChatRoomDetails(String userId) {
+        List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberId(userId)
+                                                          .stream()
+                                                          .map(member -> member.getChatRoom().getId())
+                                                          .collect(Collectors.toList());
+
+        return chatRoomRepository.findAllById(roomIds)
+            .stream()
+            .map(chatRoom -> {
+                Map<String, Object> roomDetails = new HashMap<>();
+                roomDetails.put("id", chatRoom.getId());
+                roomDetails.put("name", chatRoom.getName());
+                return roomDetails;
+            })
+            .collect(Collectors.toList());
+    }
+
+    public List<String> getChatRoomNames(String userId) {
+        // MySQL에서 멤버와 연결된 방을 조회
+        return chattingRoomMemberRepository.findByMember_MemberId(userId)
+                .stream()
+                .map(memberChattingRoom -> memberChattingRoom.getChatRoom().getName()) // getChatRoomId 대신 getChatRoom().getName() 사용
+                .collect(Collectors.toList());
+    }
+    
+    public Optional<ChatRoom> findById(Long roomId) {
+        return chatRoomRepository.findById(roomId);
+    }
+    
+    
+    
+   
+    
 }

@@ -165,6 +165,8 @@ $(document).ready(function () {
 			        console.error('Invalid message format:', message);
 			        return;
 			    }
+			    
+			    const senderName = message.senderName || message.senderId; // senderName을 우선 사용, 없으면 senderId 사용
 			
 			    // 메시지의 날짜와 시간을 포맷팅
 			    const messageDate = new Date(message.timestamp);
@@ -187,7 +189,7 @@ $(document).ready(function () {
 			    const messageClass = message.senderId === currentUserId ? 'my-message' : 'their-message';
 			
 			    // 메시지 출력
-			    const messageElement = `<div class="${messageClass}"><strong>${message.senderId}:</strong> ${message.content} <span class="time">${timeString}</span></div>`;
+			    const messageElement = `<div class="${messageClass}"><strong>${senderName}:</strong> ${message.content} <span class="time">${timeString}</span></div>`;
 			    $('#messageArea').append(messageElement);
 			}
 	        

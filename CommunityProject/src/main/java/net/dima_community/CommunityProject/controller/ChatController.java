@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.entity.ChatMessage;
 import net.dima_community.CommunityProject.service.ChatService;
+import net.dima_community.CommunityProject.service.MemberService;
 
 @Slf4j
 @Controller
@@ -26,7 +27,7 @@ import net.dima_community.CommunityProject.service.ChatService;
 public class ChatController {
 
     private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
-    
+    private final MemberService memberService;
     private final ChatService chatService;
     private final RabbitMessagingTemplate messagingTemplate;
     private final RabbitTemplate rabbitTemplate;
@@ -79,6 +80,10 @@ public class ChatController {
         try {
             message.setTimestamp(LocalDateTime.now().toString());
             message.setRoomId(chatRoomId);
+            
+            // senderName을 가져와서 메시지에 추가
+            String senderName = memberService.findByMemberId(message.getSenderId()).getMemberName();
+            message.setSenderName(senderName);
 
             // RabbitMQ로 메시지 전달
             String routingKey = "room." + chatRoomId;
