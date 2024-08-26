@@ -8,7 +8,7 @@
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> -->
 
 	<!-- CSS 설정 -->
-	<!-- <link rel="stylesheet" th:href="@{/css/user.css}"> -->
+	<link rel="stylesheet" th:href="@{/css/user.css}">
 
 	<script th:src="@{/static/script/jquery-3.7.1.min.js}"></script>
 	<script>
@@ -81,7 +81,7 @@
 						if (!resp) {
 							$("#checkId").text = "이미 존재하는 ID 입니다."
 						}
-						$("#checkId").text = "사용 가능한 입니다."
+						$("#checkId").text = "사용 가능한 ID입니다."
 					}
 				})
 			}

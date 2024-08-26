@@ -32,14 +32,15 @@ public class MemberController {
 	 */
 	@GetMapping("/member/join")
 	public String join() {
-		return "authentication-register2";
+		return "member/authentication-register2";
 	}
 
 	// ID 중복확인
-	@GetMapping("checkDuplicate")
+	@GetMapping("/member/checkDuplicate")
+	@ResponseBody
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberservice.findByIdThroughConn(memberId);
-
+		log.info("" + result);
 		return result;
 	}
 
