@@ -50,13 +50,15 @@ CREATE TABLE chatting_room_member (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 4. 제약 조건
-ALTER TABLE chatting_room_member 
-ADD CONSTRAINT FKjhhox3yk8o1u5p9q7ixudvhgl 
-FOREIGN KEY (chatting_room_id) REFERENCES chat_rooms (chatting_room_id);
 
-ALTER TABLE chatting_room_member 
-ADD CONSTRAINT FKatbj5qw57fkw5xheqf9hhgdn 
-FOREIGN KEY (member_id) REFERENCES member (member_id);
+ALTER TABLE chatting_room_member
+ADD CONSTRAINT utf8mb4_unicode_ci
+FOREIGN KEY(member_id) REFERENCES member(member_id);
+
+-- CHARSET과 COLLATION 확인 
+SHOW FUll COLUMNS FROM member WHERE Field = 'member_id';
+SHOW FULL COLUMNS FROM chatting_room_member WHERE Field = 'member_id';
+
 
 # data 조회
 select * from member;
@@ -64,7 +66,6 @@ select * from chat_rooms;
 select * from chatting_room_member;
 
 SELECT * FROM chatting_room_member WHERE member_id = 'aaaaa';
-
 
 # 테이블명 변경
 rename table chatting_room to chat_rooms;

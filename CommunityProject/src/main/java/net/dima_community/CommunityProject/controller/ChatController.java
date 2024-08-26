@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.entity.ChatMessage;
+import net.dima_community.CommunityProject.service.ChatRoomService;
 import net.dima_community.CommunityProject.service.ChatService;
 import net.dima_community.CommunityProject.service.MemberService;
 
@@ -29,8 +30,9 @@ public class ChatController {
     private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
     private final MemberService memberService;
     private final ChatService chatService;
-    private final RabbitMessagingTemplate messagingTemplate;
+    private final ChatRoomService chatRoomService;
     private final RabbitTemplate rabbitTemplate;
+    private final RabbitMessagingTemplate rabbitMessagingTemplate;
 
     /**
      * 대화 입장 시 알림 
@@ -45,7 +47,7 @@ public class ChatController {
         chat.setRoomId(chatRoomId);
 
         // 메시지 발송
-        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId, chat);
+        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "chat.room." + chatRoomId, chat);
     }
     
     // 채팅방 선택 시 큐에서 메시지 수신
@@ -86,13 +88,25 @@ public class ChatController {
             message.setSenderName(senderName);
 
             // RabbitMQ로 메시지 전달
-            String routingKey = "room." + chatRoomId;
+            String routingKey = "chat.room." + chatRoomId;
+            // 라우팅키값 확인
+            log.debug("Sending message to routing key: {}", routingKey);
             rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, routingKey, message);
 
             // 메시지를 MongoDB에 저장
             chatService.saveMessage(message);
 
             log.info("Sent message to room {}: {}", chatRoomId, message.getContent());
+            
+            // 메시지를 전송한 후 수신자들에게 새 채팅방 정보 알림
+            List<String> participantIds = chatRoomService.getParticipantIdsByRoomId(Long.valueOf(chatRoomId));
+            for (String participantId : participantIds) {
+                if (!participantId.equals(message.getSenderId())) {
+                    String queueName = "queue.user." + participantId;
+                    rabbitMessagingTemplate.convertAndSend(queueName, chatRoomService.getChatRoomById(Long.valueOf(chatRoomId)));
+                }
+            }
+            
         } catch (Exception e) {
             log.error("Error in sendMessage: ", e);
         }

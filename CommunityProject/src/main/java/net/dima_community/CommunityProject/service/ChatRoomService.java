@@ -10,7 +10,6 @@ import net.dima_community.CommunityProject.repository.jpa.ChattingRoomMemberRepo
 import net.dima_community.CommunityProject.repository.jpa.MemberRepository;
 
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +23,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.amqp.core.Queue;
+import org.hibernate.Hibernate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.TopicExchange;
+
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Service
@@ -37,6 +41,10 @@ public class ChatRoomService {
     private final ChattingRoomMemberRepository chattingRoomMemberRepository;
     private final MemberRepository memberRepository;
     private final RabbitAdmin rabbitAdmin;
+    
+    // 각 방마다 온라인 유저를 관리하는 Map
+    private final Map<Long, Set<String>> roomOnlineUsers = new ConcurrentHashMap<>();
+
 
     @Transactional
     public ChatRoom createChatRoom(String createdBy, String recipientId) {
@@ -134,6 +142,11 @@ public class ChatRoomService {
         }
     }
    
+    /**
+     * 특정 사용자가 참여하고 있는 채팅방의 id, name 조회 
+     * @param userId
+     * @return
+     */
     public List<Map<String, Object>> getChatRoomDetails(String userId) {
         List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberId(userId)
                                                           .stream()
@@ -150,18 +163,62 @@ public class ChatRoomService {
             })
             .collect(Collectors.toList());
     }
-
-    public List<String> getChatRoomNames(String userId) {
-        // MySQL에서 멤버와 연결된 방을 조회
-        return chattingRoomMemberRepository.findByMember_MemberId(userId)
-                .stream()
-                .map(memberChattingRoom -> memberChattingRoom.getChatRoom().getName()) // getChatRoomId 대신 getChatRoom().getName() 사용
-                .collect(Collectors.toList());
+    
+    /**
+     * 채팅방 ID를 통해 채팅방을 가져오는 메서드
+     *
+     * @param chatRoomId
+     * @return
+     */
+    public ChatRoom getChatRoomById(Long chatRoomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
+            .orElseThrow(() -> new IllegalArgumentException("Chat room not found with id: " + chatRoomId));
+        
+        // Lazy 초기화
+        Hibernate.initialize(chatRoom.getMemberIds());
+        
+        return chatRoom;
     }
     
-    public Optional<ChatRoom> findById(Long roomId) {
-        return chatRoomRepository.findById(roomId);
+    /**
+     * 특정 채팅방에 속한 회원 조회 
+     * @param chatRoomId
+     * @return
+     */
+    public List<String> getParticipantIdsByRoomId(Long chatRoomId) {
+        return chattingRoomMemberRepository.findByChatRoomId(chatRoomId)
+            .stream()
+            .map(member -> member.getMember().getMemberId())
+            .collect(Collectors.toList());
     }
+    
+    /**
+     * 채팅방에 접속한 멤버의 접속 상태 조회 
+     * @param roomId
+     * @param userId
+     */
+    public void addUserToRoom(Long roomId, String userId) {
+        roomOnlineUsers.computeIfAbsent(roomId, k -> ConcurrentHashMap.newKeySet()).add(userId);
+    }
+
+    public void removeUserFromRoom(Long roomId, String userId) {
+        Set<String> onlineUsers = roomOnlineUsers.get(roomId);
+        if (onlineUsers != null) {
+            onlineUsers.remove(userId);
+            if (onlineUsers.isEmpty()) {
+                roomOnlineUsers.remove(roomId);
+            }
+        }
+    }
+
+    public boolean isUserInRoom(Long roomId, String userId) {
+        return roomOnlineUsers.getOrDefault(roomId, ConcurrentHashMap.newKeySet()).contains(userId);
+    }
+
+    public Set<String> getUsersInRoom(Long roomId) {
+        return roomOnlineUsers.getOrDefault(roomId, ConcurrentHashMap.newKeySet());
+    }
+    
     
     
     

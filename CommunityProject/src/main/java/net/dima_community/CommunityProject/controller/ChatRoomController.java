@@ -7,8 +7,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +35,8 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     private final MemberService memberService;
     private final ChattingRoomMemberRepository chattingRoomMemberRepository;
-
+    private final RabbitMessagingTemplate rabbitMessagingTemplate;
+    
     /**
      * 대화상대 추가하기 위해 회원가입한 회원의 목록을 보여줌
      * 추후 검색으로 변경할 예정
@@ -90,15 +94,46 @@ public class ChatRoomController {
         String currentUserId = principal.getName();
         ChatRoom chatRoom = chatRoomService.createChatRoom(currentUserId, recipientId);
 
-        // 로그로 확인
-        log.info("Created Chat Room ID: {}", chatRoom.getId());
-        log.info("Created Chat Room Name: {}", chatRoom.getName());
+        // 새로운 채팅방 정보를 RabbitMQ 큐를 통해 수신자에게 전송
+        String recipientQueue = "queue.user." + recipientId;
+        String senderQueue = "queue.user." + currentUserId;
+        rabbitMessagingTemplate.convertAndSend(recipientQueue, chatRoom);
+        rabbitMessagingTemplate.convertAndSend(senderQueue, chatRoom);
 
         Map<String, Object> response = new HashMap<>();
         response.put("id", chatRoom.getId());
         response.put("name", chatRoom.getName());
 
         return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * 채팅 멤버 추가하여 그룹채팅 
+     *
+     * @param chatRoomId
+     * @param memberIds
+     */
+    @PostMapping("/createGroup")
+    @ResponseBody
+    public Map<String, Object> createGroupChat(@RequestBody CreateGroupRequest request) {
+        String currentUserId = request.getCurrentUserId();
+        String existingRoomId = request.getRoomId();
+        List<String> memberIds = request.getMemberIds();
+
+        // 새로운 방 생성
+        ChatRoom newRoom = chatRoomService.createGroupChat(currentUserId, existingRoomId, memberIds);
+
+        // 새로운 채팅방 정보를 모든 참여자에게 알림
+        for (String memberId : memberIds) {
+            String queueName = "queue.user." + memberId;
+            rabbitMessagingTemplate.convertAndSend(queueName, newRoom);
+        }
+        String senderQueue = "queue.user." + currentUserId;
+        rabbitMessagingTemplate.convertAndSend(senderQueue, newRoom);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("roomId", newRoom.getId());
+        return response;
     }
 
     /**
@@ -114,6 +149,11 @@ public class ChatRoomController {
         return chatRoomService.getChatRoomDetails(currentUserId);  // 채팅방의 ID와 이름을 반환하는 메서드
     }
     
+    /**
+     * 특정 채팅방의 멤버 목록과 상태를 반환  
+     * @param roomId
+     * @return
+     */
     @GetMapping("/getRoomMembers/{roomId}")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getRoomMembers(@PathVariable("roomId") Long roomId) {
@@ -122,9 +162,10 @@ public class ChatRoomController {
             List<Map<String, Object>> memberDetails = members.stream()
                 .map(member -> {
                     Map<String, Object> details = new HashMap<>();
-                    details.put("memberId", member.getMember().getMemberId());
+                    String memberId = member.getMember().getMemberId();
+                    details.put("memberId", memberId);
                     details.put("name", member.getMember().getMemberName());
-                    details.put("status", "online");  // 실제 상태 값을 추가하거나 기본값 설정
+                    details.put("status", chatRoomService.isUserInRoom(roomId, memberId) ? "online" : "offline");
                     return details;
                 })
                 .collect(Collectors.toList());
@@ -137,47 +178,8 @@ public class ChatRoomController {
         }
     }
     
-    /**
-     * 특정 roomId에 해당하는 채팅방 하나의 정보를 반환 
-     * @param roomId
-     * @return
-     */
-    @GetMapping("/chat/room/{roomId}")
-    public ResponseEntity<ChatRoom> getChatRoom(@PathVariable("roomId") Long roomId) {
-    	log.debug("Received request for ChatRoom with ID: {}", roomId);
-    	
-        Optional<ChatRoom> chatRoomOptional = chatRoomService.findById(roomId);
-        if (chatRoomOptional.isPresent()) {
-        	ChatRoom chatRoom = chatRoomOptional.get();
-            log.debug("Found ChatRoom: {}", chatRoom.getName());
-            return ResponseEntity.ok(chatRoom);
-        } else {
-        	log.debug("ChatRoom with ID {} not found", roomId);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
     
-    /**
-     * 채팅 멤버 추가하여 그룹채팅 
-     *
-     * @param chatRoomId
-     * @param memberIds
-     */
-    @PostMapping("/createGroup")
-    @ResponseBody
-    public Map<String, Object> createGroupChat(@RequestBody CreateGroupRequest request) {
-        String currentUserId = request.getCurrentUserId();
-        String existingRoomId = request.getRoomId();
-        List<String> memberIds = request.getMemberIds();
-        
-        // 새로운 방 생성
-        ChatRoom newRoom = chatRoomService.createGroupChat(currentUserId, existingRoomId, memberIds);
 
-        // 반환 값으로 새로운 방 ID 전송
-        Map<String, Object> response = new HashMap<>();
-        response.put("roomId", newRoom.getId());
-        return response;
-    } 
     
     
 }

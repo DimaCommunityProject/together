@@ -4,6 +4,7 @@ package net.dima_community.CommunityProject.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.entity.ChatMessage;
+import net.dima_community.CommunityProject.repository.jpa.ChattingRoomMemberRepository;
 import net.dima_community.CommunityProject.repository.mongo.ChatMessageRepository;
 
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * mongoDB에 저장하고 불러오는 서비스 
@@ -23,8 +25,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class ChatService {
 	
-
     private final ChatMessageRepository chatMessageRepository;
+    private final ChattingRoomMemberRepository chattingRoomMemberRepository;
+    
     
     public List<ChatMessage> getMessages(String roomId) {
         return chatMessageRepository.findByRoomId(roomId);
@@ -65,5 +68,6 @@ public class ChatService {
         return chatMessageRepository.findByRoomId(roomId);
     }
     
+
 	
 }

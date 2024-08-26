@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -25,12 +24,5 @@ public class ChatMessage {
     private String timestamp;
     private boolean deleted;
     private String roomId;
-    
-//      public enum MessageType {
-//      CHAT, JOIN, LEAVE
-//  }
 
 }
-
-
-
