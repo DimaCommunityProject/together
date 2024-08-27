@@ -94,10 +94,11 @@ public class ChatRoomController {
         String currentUserId = principal.getName();
         ChatRoom chatRoom = chatRoomService.createChatRoom(currentUserId, recipientId);
 
-        // 새로운 채팅방 정보를 RabbitMQ 큐를 통해 수신자에게 전송
-        String recipientQueue = "queue.user." + recipientId;
-        String senderQueue = "queue.user." + currentUserId;
-        rabbitMessagingTemplate.convertAndSend(recipientQueue, chatRoom);
+        String recipientQueue = "/user/" + recipientId + "/queue/newChatRoom";
+        String senderQueue = "/user/" + currentUserId + "/queue/newChatRoom";
+
+        // 채팅방 정보를 사용자 큐로 전송 (채팅방 생성 즉시 상대방에게 알림)
+        rabbitMessagingTemplate.convertAndSend(recipientQueue, chatRoom);  // 수신자가 상대방임을 명확히 함
         rabbitMessagingTemplate.convertAndSend(senderQueue, chatRoom);
 
         Map<String, Object> response = new HashMap<>();
@@ -125,10 +126,10 @@ public class ChatRoomController {
 
         // 새로운 채팅방 정보를 모든 참여자에게 알림
         for (String memberId : memberIds) {
-            String queueName = "queue.user." + memberId;
+            String queueName = "/user/" + memberId + "/queue/newChatRoom";
             rabbitMessagingTemplate.convertAndSend(queueName, newRoom);
         }
-        String senderQueue = "queue.user." + currentUserId;
+        String senderQueue = "/user/" + currentUserId + "/queue/newChatRoom";
         rabbitMessagingTemplate.convertAndSend(senderQueue, newRoom);
 
         Map<String, Object> response = new HashMap<>();
@@ -148,38 +149,5 @@ public class ChatRoomController {
         String currentUserId = principal.getName();
         return chatRoomService.getChatRoomDetails(currentUserId);  // 채팅방의 ID와 이름을 반환하는 메서드
     }
-    
-    /**
-     * 특정 채팅방의 멤버 목록과 상태를 반환  
-     * @param roomId
-     * @return
-     */
-    @GetMapping("/getRoomMembers/{roomId}")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> getRoomMembers(@PathVariable("roomId") Long roomId) {
-        try {
-            List<ChattingRoomMemberEntity> members = chattingRoomMemberRepository.findByChatRoomId(roomId);
-            List<Map<String, Object>> memberDetails = members.stream()
-                .map(member -> {
-                    Map<String, Object> details = new HashMap<>();
-                    String memberId = member.getMember().getMemberId();
-                    details.put("memberId", memberId);
-                    details.put("name", member.getMember().getMemberName());
-                    details.put("status", chatRoomService.isUserInRoom(roomId, memberId) ? "online" : "offline");
-                    return details;
-                })
-                .collect(Collectors.toList());
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("members", memberDetails);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-    
-    
-
-    
-    
+ 
 }

@@ -27,7 +27,7 @@ public class RabbitMQConfig {
      */
     @Bean
     public Queue queue() { 
-        return new Queue(CHAT_QUEUE_NAME, true); // true로 설정하여 durable하게 유지
+        return new Queue(CHAT_QUEUE_NAME, true, false, false); // true로 설정하여 durable하게 유지
     }
     
     /**
@@ -61,6 +61,7 @@ public class RabbitMQConfig {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jackson2JsonMessageConverter()); // 메시지 변환기 설정
+        factory.setAutoStartup(false); // 자동으로 시작하지 않도록 설정
         return factory;
     }
 

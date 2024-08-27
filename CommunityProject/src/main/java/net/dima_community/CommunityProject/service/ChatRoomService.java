@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -170,14 +171,14 @@ public class ChatRoomService {
      * @param chatRoomId
      * @return
      */
-    public ChatRoom getChatRoomById(Long chatRoomId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
-            .orElseThrow(() -> new IllegalArgumentException("Chat room not found with id: " + chatRoomId));
-        
-        // Lazy 초기화
-        Hibernate.initialize(chatRoom.getMemberIds());
-        
-        return chatRoom;
+    public ChatRoom getChatRoomById(Long roomId) {
+        try {
+            return chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new NoSuchElementException("Chat room not found"));
+        } catch (NoSuchElementException e) {
+            log.error("Failed to retrieve chat room ID: " + roomId, e);
+            throw e;  // 혹은 적절한 방식으로 예외를 처리
+        }
     }
     
     /**
