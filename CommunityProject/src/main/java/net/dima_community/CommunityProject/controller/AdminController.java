@@ -310,7 +310,7 @@ public class AdminController {
 		return "redirect:/admin/adminPageBoard";
 	}// end adminPageBoardDelete
 
-	/**
+	/**d
 	 * 신고 게시글 무시
 	 * 
 	 * @param reportId
