@@ -15,7 +15,7 @@ import net.dima_community.CommunityProject.common.port.VerifyRandomCodeHolder;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Controller
 @RequestMapping("/email")

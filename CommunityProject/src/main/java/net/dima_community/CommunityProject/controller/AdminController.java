@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.admin;
+package net.dima_community.CommunityProject.controller;
 
 import org.springframework.stereotype.Controller;
 

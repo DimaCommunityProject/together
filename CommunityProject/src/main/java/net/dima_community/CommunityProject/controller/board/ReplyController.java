@@ -14,7 +14,7 @@ import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 import net.dima_community.CommunityProject.service.member.BoardService;
 import net.dima_community.CommunityProject.service.member.ReplyService;
 import lombok.RequiredArgsConstructor;

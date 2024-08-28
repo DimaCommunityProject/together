@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
-import net.dima_community.CommunityProject.repository.MemberRepository;
+import net.dima_community.CommunityProject.repository.member.MemberRepository;
 import net.dima_community.CommunityProject.repository.board.BoardRepository;
 
 @Service

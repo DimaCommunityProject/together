@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.repository;
+package net.dima_community.CommunityProject.repository.member;
 
 import java.util.Optional;
 

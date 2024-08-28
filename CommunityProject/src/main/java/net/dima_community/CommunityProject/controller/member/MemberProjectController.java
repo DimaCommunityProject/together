@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 import net.dima_community.CommunityProject.service.member.MemberPageService;
 import net.dima_community.CommunityProject.service.member.MemberProjectService;
 

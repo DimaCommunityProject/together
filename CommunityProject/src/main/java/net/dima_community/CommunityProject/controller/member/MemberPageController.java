@@ -16,7 +16,7 @@ import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 import net.dima_community.CommunityProject.service.member.BoardService;
 import net.dima_community.CommunityProject.service.member.MemberPageService;
 import net.dima_community.CommunityProject.service.member.MemberProjectService;

@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.service;
+package net.dima_community.CommunityProject.service.member;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.repository.MemberRepository;
+import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 @Service
 @RequiredArgsConstructor

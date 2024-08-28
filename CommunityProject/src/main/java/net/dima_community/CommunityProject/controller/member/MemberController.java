@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.member;
 
 import java.util.Random;
 
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Controller
 @Slf4j
