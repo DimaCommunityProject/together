@@ -32,6 +32,7 @@ public class ReplyController {
     @PostMapping("/showReply")
     @ResponseBody
     public Map<String, BoardDTO> showReply(@RequestParam(name = "memberId") String memberId) {
+        log.info("showReply===========" + memberId);
         MemberDTO member = memberService.findById(memberId);
         List<ReplyDTO> replyList = ReplyService.findByMemberId(MemberEntity.toEntity(member));
         Map<String, BoardDTO> dataMap = new HashMap<>();

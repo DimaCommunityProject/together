@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
+// import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
@@ -85,15 +86,16 @@ public class MemberService {
 		return true;
 	}
 
+	@Transactional
 	public MemberDTO setEncodedPassword(MemberDTO memberDTO) {
 		memberDTO.setEncodedPassword(bCryptEncoderHolder);
 		return memberDTO;
-
 	}
 
 	public void approve(String id) {
 		MemberDTO memberDTO = findById(id);
 		memberDTO.enabledToYes();
+		log.info(memberDTO.toString());
 		memberRepository.save(MemberEntity.toEntity(memberDTO));
 	}
 
@@ -166,14 +168,14 @@ public class MemberService {
 		memberEntity.setMemberEmail(memberEmail);
 	}
 
-	// // 임시비번 암호화 후 업뎃
-	// public boolean PwUpdate(MemberDTO memberDTO) {
-	// String newPwUpdate = bCryptEncoderHolder.encode(memberDTO.getMemberPw()); //
-	// 임시비번 암호화
-	// memberDTO.setMemberPw(newPwUpdate);
-	// int result = memberRepository.PwUpdate(memberDTO.getMemberId(), newPwUpdate);
-	// // 업뎃
+	// 임시비번 암호화 후 업뎃
+	public boolean PwUpdate(MemberDTO memberDTO) {
+		// String newPwUpdate = bCryptEncoderHolder.encode(memberDTO.getMemberPw()); //
+		// 임시비번 암호화
+		// memberDTO.setMemberPw(newPwUpdate);
+		int result = memberRepository.PwUpdate(memberDTO.getMemberId(), memberDTO.getMemberPw());
+		// 업뎃
 
-	// return result > 0;
-	// }// end findmemId
-}
+		return result > 0;
+	}
+}// end findmemId

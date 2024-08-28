@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
-    <link rel="stylesheet" href="/static/assets/css/styles.css" />
-    <script th:src="@{/static/assets/js/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
     <script>
         $(function () {
             $("#submitBtn").on('click', submitBtn);
@@ -20,15 +20,19 @@
             $("#confirmId").html("");
             $("#confirmPw").html("");
             $("#errormessage").html("");
+            $("#warnId").hide();
+            $("#warnPw").hide();
 
             if (memberId.trim().length == 0) {
                 $("#confirmId").css("color", "red");
                 $("#confirmId").html("아이디를 입력하세요");
+                $("#warnId").show();
                 return;
             }
             if (memberPw.trim().length == 0) {
                 $("#confirmPw").css("color", "red");
                 $("#confirmPw").html("비밀번호를 입력하세요");
+                $("#warnPw").show();
                 return;
             }
             // 유효성 검사를 통과한 경우, 폼을 제출
@@ -40,7 +44,7 @@
 <body>
     <!-- 맨 위 로고 -->
     <div class="preloader">
-        <img src="/static/assets/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+        <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
     </div>
     <div id="main-wrapper" class="auth-customizer-none">
         <div
@@ -51,34 +55,40 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a th:href="@{/}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
-                                    <img src="/static/assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+                                    <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
                                 </a>
                                 <form th:action="@{/member/loginProc}" method="POST" id="loginForm">
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">UserID</label>
+                                        <label for="exampleInputEmail1" class="form-label">아이디</label>
                                         <input type="text" class="form-control" id="memberId" name="memberId"
                                             aria-describedby="emailHelp">
-                                        <span id="confirmId" style="font-size: 1em;"></span>
+                                        <img id="warnId" src="/static/images/ico_warning.png" alt="경고"
+                                            style="display: none; width: 15px; height: 15px;">
+                                        <span id="confirmId" style="font-size: 0.8em;"></span>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <label for="exampleInputPassword1" class="form-label">비밀번호</label>
                                         <input type="password" class="form-control" id="memberPw" name="memberPw">
-                                        <span id="confirmPw" style="font-size: 1em;"></span>
+                                        <img id="warnPw" src="/static/images/ico_warning.png" alt="경고"
+                                            style="display: none; width: 15px; height: 15px;">
+                                        <span id="confirmPw" style="font-size: 0.8em;"></span>
                                     </div>
                                     <!--에러 발생시 출력-->
                                     <th:block th:if="${error}">
-                                        <div th:text="${errMessage}" style="font-size: 0.8em; color:red;" id="errormessage"></div>
+                                        <div th:text="${errMessage}" style="font-size: 0.8em; color:red;"
+                                            id="errormessage"></div>
                                     </th:block>
 
                                     <div class="d-flex align-items-center justify-content-between mb-4">
-                                        <a class="text-primary fw-medium" th:href="@{/member/findId}">Forgot ID ?</a>
-                                        <a class="text-primary fw-medium" th:href="@{/member/findPw}">Forgot Password ?</a>
+                                        <a class="text-primary fw-medium" th:href="@{/member/findId}">아이디 찾기</a>
+                                        <a class="text-primary fw-medium" th:href="@{/member/findPw}">비밀번호 찾기</a>
                                     </div>
-                                    <input type="button" id="submitBtn" value="Sign In" class="btn btn-primary w-100 py-8 mb-4 rounded-2">
+                                    <input type="button" id="submitBtn" value="로그인 하기"
+                                        class="btn btn-primary w-100 py-8 mb-4 rounded-2">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-4 mb-0 fw-medium">New to DIMACommunity?</p>
-                                        <a class="text-primary fw-medium ms-2" th:href="@{/member/join}">Create an
-                                            account</a>
+                                        <p class="fs-4 mb-0 fw-medium">회원이 아니신가요?</p>
+                                        <a class="text-primary fw-medium ms-2" th:href="@{/member/join}">
+                                            회원가입</a>
                                     </div>
                                 </form>
                             </div>
@@ -88,11 +98,11 @@
             </div>
         </div>
         <!-- Import Js Files -->
-        <script src="/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/static/assets/libs/simplebar/dist/simplebar.min.js"></script>
-        <script src="/static/assets/js/theme/app.init.js"></script>
-        <script src="/static/assets/js/theme/theme.js"></script>
-        <script src="/static/assets/js/theme/app.min.js"></script>
+        <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+        <script src="/static/js/theme/app.init.js"></script>
+        <script src="/static/js/theme/theme.js"></script>
+        <script src="/static/js/theme/app.min.js"></script>
 </body>
 
 </html>

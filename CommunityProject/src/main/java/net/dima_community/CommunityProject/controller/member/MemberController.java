@@ -5,7 +5,6 @@ import java.util.Random;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,26 +24,42 @@ public class MemberController {
 	private final MemberService memberservice;
 	private final EmailSender emailSender;
 
+	// ===================== 회원가입 요청 페이지 =====================
+
 	/**
 	 * 회원가입을 위한 화면 요청
 	 * 
 	 * @return
 	 */
-	@GetMapping("/member/join")
+	@GetMapping("/member/authentication-register2")
 	public String join() {
 		return "member/authentication-register2";
 	}
 
-	// ID 중복확인
+	/**
+	 * ID 중복확인
+	 * 
+	 * @param memberId
+	 * @return
+	 */
 	@GetMapping("/member/checkDuplicate")
-	@ResponseBody
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberservice.findByIdThroughConn(memberId);
 		log.info("" + result);
 		return result;
 	}
 
-	// 로그인 화면 요청(사용자 이전 url 기억 필요)
+	// ===================== 로그인 =====================
+
+	/**
+	 * 로그인 화면 요청(사용자 이전 url 기억 필요)
+	 * 
+	 * @param request
+	 * @param error
+	 * @param errMessage
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/login")
 	public String login(
 			HttpServletRequest request, // 이전 url 가져오기
@@ -58,36 +73,53 @@ public class MemberController {
 		return "member/login";
 	}// end login
 
-	// 사용자 아이디 찾기 화면 요청
+	// ===================== 아이디 찾기 =====================
+
+	/**
+	 * 사용자 아이디 찾기 화면 요청
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/findId")
 	public String findId(
 			HttpServletRequest request, // 이전 url 가져오기
 			Model model) {
 		return "member/findId";
-	}
+	}// end findId
 
-	// 사용자 아이디 찾기 결과
+	/**
+	 * 사용자 아이디 찾기 결과
+	 * 
+	 * @param request
+	 * @param memberName
+	 * @param memberEmail
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/member/findIdResult")
 	@ResponseBody
 	public String findIdResult(
 			HttpServletRequest request,
 			@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail,
 			Model model) {
+
 		String result = memberservice.findmemId(memberName, memberEmail);
 		log.info("사용자 아이디 찾기 결과 : {}", result);
-
-		// if(result == null) {
-		// model.addAttribute("bool", false);
-		// model.addAttribute("message", "조회결과가 없습니다.");
-		// }
-		//
-		// model.addAttribute("bool", true);
-		// model.addAttribute("message", "회원님의 아이디는 " + result + "입니다.");
 
 		return result;
 	}// end findIdProc
 
-	// 사용자 비밀번호 찾기 화면 요청
+	// ===================== 비밀번호 찾기 =====================
+
+	/**
+	 * 사용자 비밀번호 찾기 화면 요청
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/findPw")
 	public String findPw(
 			HttpServletRequest request, // 이전 url 가져오기
@@ -95,7 +127,17 @@ public class MemberController {
 		return "member/findPw";
 	}
 
-	// 사용자 비밀번호 찾기 결과
+	/**
+	 * 사용자 비밀번호 찾기 결과
+	 * 
+	 * @param request
+	 * @param memberEmail
+	 * @param memberId
+	 * @param memberName
+	 * @param memberDTO
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/member/findPwResult")
 	@ResponseBody
 	public String findPwResult(
@@ -112,13 +154,8 @@ public class MemberController {
 			int search = memberservice.PwCheck(memberDTO); // 서비스 단에서 사용자 맞는지 확인
 
 			if (search == 0) {
-				// model.addAttribute("msg", "기입된 정보가 잘못되었습니다. 다시 입력해주세요.");
-				// return "member/findPwResult";
 				return "none";
 			}
-
-			// String newPw = RandomStringUtils.randomAlphanumeric(10); //대소문자, 숫자를 랜덤으로 생성
-			// =>
 
 			String newPw = new Random().ints(48, 123)
 					.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
@@ -141,19 +178,43 @@ public class MemberController {
 
 			log.info("이메일이 갔나요? : {}", result);
 
+			log.info("db에 업뎃하기 전 dto : {}", memberDTO.toString());
 			memberservice.setEncodedPassword(memberDTO); // 업뎃
-			// model.addAttribute("newPw", newPw); //사용자에게 보여줌
-			return newPw;
+
+			boolean bool = memberservice.PwUpdate(memberDTO);
+
+			// MemberEntity(memberId=가나다라마바사,
+			// memberPw=$2a$10$J8BYtFobveWi3SXGZN8nI.dhkIIfWt.x1GiU5MrPOSBR8pTyYEnUC,
+			// memberEnabled=null, memberRole=null, memberName=가나다라마바사,
+			// memberEmail=rnrdudghg3122@gmail.com, memberGroup=null, memberPhone=null,
+			// badge1=null, badge2=null, memberVerifyCode=null, memberPageEntity=null,
+			// memberProjectEntity=null)
+			// log.info("db에 업뎃하기 전 entity : {}", entity.toString());
+
+			// memberRepository.save(entity);
+			if (bool) {
+				return newPw;
+			} // 임시비번 잘 업뎃함
+			else {
+				return "false";
+			} // 임시비번 업뎃 실패
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// model.addAttribute("msg", "오류가 발생되었습니다.");
 			return "error";
 		}
-		// return "member/findPwResult";
 	}// end findPwProc
 
-	// 비밀번호 바꾸기 화면 요청
+	// ===================== 비밀번호 바꾸기 =====================
+
+	/**
+	 * 비밀번호 바꾸기 화면 요청
+	 * 
+	 * @param request
+	 * @param memberId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/member/changePw")
 	public String changePw(
 			HttpServletRequest request, @RequestParam("loginName") String memberId, Model model) {
@@ -161,10 +222,19 @@ public class MemberController {
 		return "member/changePw";
 	}// end changePw
 
-	// 비밀번호 바꾸기
+	/**
+	 * 비밀번호 바꾸기
+	 * 
+	 * @param request
+	 * @param newmemberPw
+	 * @param memberId
+	 * @param memberDTO
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/member/changePw")
 	@ResponseBody
-	public Boolean chagePwck(
+	public String chagePwck(
 			HttpServletRequest request, @RequestParam("newmemberPw") String newmemberPw,
 			@RequestParam("loginName") String memberId, MemberDTO memberDTO, Model model) {
 
@@ -177,18 +247,18 @@ public class MemberController {
 		log.info("새 비번 DTO 확인 : {}", memberDTO.toString());
 
 		try {
-			memberservice.setEncodedPassword(memberDTO); // 비번 업뎃
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
+			memberservice.setEncodedPassword(memberDTO); // 비번 암호화 후 dto 업뎃
+			boolean bool = memberservice.PwUpdate(memberDTO); // dto를 레파지토리에서 db로 업뎃
 
-	@PostMapping("/member/updateVerificationcode")
-	@ResponseBody
-	public Boolean updateVerificatiocCode(@RequestParam(name = "memberId") String memberId,
-			@RequestParam(name = "verificationCode") String verificationCode) {
-		boolean result = memberservice.updateEmailProcess(memberId, verificationCode);
-		return result;
-	}
+			if (bool) {
+				return "true";
+			} else {
+				return "false";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}// end chagePwck
 }// end class

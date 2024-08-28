@@ -69,5 +69,15 @@ public class MemberDTO {
 		this.memberVerifyCode = generatedString;
 		return this;
 	};
+	
+	//관리자페이지에 보여줄 회원
+	public MemberDTO(String memberName, String memberEmail, String memberGroup, String memberId, String memberEnabled) {
+		super();
+		this.memberName = memberName;
+		this.memberEmail = memberEmail;
+		this.memberGroup = memberGroup;
+		this.memberId = memberId;
+		this.memberEnabled = memberEnabled;
+	}
 
 }

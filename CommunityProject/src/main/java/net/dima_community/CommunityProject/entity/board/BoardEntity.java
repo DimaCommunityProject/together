@@ -27,8 +27,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
+import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.dto.board.BoardCategory;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -47,7 +47,6 @@ public class BoardEntity {
 
     // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
     @Column(name = "member_group", nullable = false)

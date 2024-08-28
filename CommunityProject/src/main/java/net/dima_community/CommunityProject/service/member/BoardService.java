@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
@@ -13,6 +14,7 @@ import net.dima_community.CommunityProject.repository.member.MemberRepository;
 import net.dima_community.CommunityProject.repository.board.BoardRepository;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class BoardService {
 
@@ -28,7 +30,9 @@ public class BoardService {
     }
 
     public BoardDTO findById(Long boardId) {
+        // log.info("+++++++++++++++++++++++++" + boardId);
         BoardEntity result = boardRepository.findById(boardId).get();
+        log.info(result.toString());
         return BoardDTO.toDTO(result, result.getMemberEntity().getMemberId());
     }
 

@@ -83,9 +83,10 @@ public class MemberEntity {
 	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
 
 	// 1) Board
-	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@OrderBy("board_id")
-	private List<BoardEntity> jobBoardEntities;
+	// @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch =
+	// FetchType.LAZY, orphanRemoval = true)
+	// @OrderBy("board_id")
+	// private List<BoardEntity> jobBoardEntities;
 
 	// 3) Reply
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)

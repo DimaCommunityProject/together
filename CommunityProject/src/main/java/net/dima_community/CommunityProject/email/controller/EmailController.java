@@ -1,6 +1,7 @@
 package net.dima_community.CommunityProject.email.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,9 +55,12 @@ public class EmailController {
         return result;
     }
 
-    @ResponseBody
+    //@ResponseBody
     @GetMapping("/approve")
-    public boolean approve(String id, String to) {
+    public String approve(
+    		@RequestParam(name="memberId") String id, @RequestParam(name="memberEmail") String to
+    		, Model model) {
+    	
         memberService.approve(id);
         Email email = Email.builder()
                 .to(to)
@@ -66,14 +70,17 @@ public class EmailController {
         try {
             emailSender.sendMail(email);
         } catch (Exception e) {
-            return false;
+        	model.addAttribute("error", true);
+            model.addAttribute("errMessage", "승인을 처리하지 못했습니다.");
+            return "admin/adminPage";  // 원래 페이지로 돌아가면서 오류 메시지 전달
         }
-        return true;
+        return "redirect:/admin/adminPage";
     }
 
-    @ResponseBody
+    //@ResponseBody
     @GetMapping("/refuse")
-    public boolean refuse(String id, String to) {
+    public String refuse(@RequestParam(name="memberId") String id, @RequestParam(name="memberEmail") String to
+    		, Model model) {
         Email email = Email.builder()
                 .to(to)
                 .title("디마 커뮤니티 회원가입 거절 메일입니다.")
@@ -84,9 +91,11 @@ public class EmailController {
         try {
             emailSender.sendMail(email);
         } catch (Exception e) {
-            return false;
+        	model.addAttribute("error", true);
+            model.addAttribute("errMessage", "승인을 처리하지 못했습니다.");
+            return "admin/adminPage";  // 원래 페이지로 돌아가면서 오류 메시지 전달
         }
-        return true;
+        return "redirect:/admin/adminPage";
 
     }
 
