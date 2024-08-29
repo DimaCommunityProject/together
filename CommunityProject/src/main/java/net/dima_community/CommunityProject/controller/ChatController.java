@@ -78,29 +78,27 @@ public class ChatController {
      * @param chat
      * @param chatRoomId
      */
-    @MessageMapping("/chat.message/{chatRoomId}")
-    @SendTo("/queue/chat.room.{chatRoomId}")
+    @MessageMapping("/chat.message/{chatRoomId}")@SendTo("/queue/chat.room.{chatRoomId}")
     public ChatMessage sendMessage(@DestinationVariable("chatRoomId") String chatRoomId, ChatMessage message) {
         log.info("sendMessage method called with chatRoomId: {} and message: {}", chatRoomId, message.getContent());
-        
         try {
             message.setTimestamp(LocalDateTime.now().toString());
             message.setRoomId(chatRoomId);
 
-            // RabbitMQ로 메시지 전달
-            String routingKey = "room." + chatRoomId;
-            rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, routingKey, message);
+                // RabbitMQ로 메시지 전달
+                String routingKey = "room." + chatRoomId;
+                rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, routingKey, message);
 
-            // 메시지를 MongoDB에 저장
-            chatService.saveMessage(message);
+                // 메시지를 MongoDB에 저장
+                chatService.saveMessage(message);
 
-            log.info("Sent message to room {}: {}", chatRoomId, message.getContent());
-        } catch (Exception e) {
-            log.error("Error in sendMessage: ", e);
+                log.info("Sent message to room {}: {}", chatRoomId, message.getContent());
+            } catch (Exception e) {
+                log.error("Error in sendMessage: ", e);
+            }
+
+            return message;
         }
-
-        return message;
-    }
 
     
     /**
@@ -108,21 +106,17 @@ public class ChatController {
      * @param roomId
      * @return
      */
-    @GetMapping("/chatRoom/getMessages/{roomId}")
-    @ResponseBody
-    public List<String> getMessages(@PathVariable("roomId") String roomId) {
-        // 채팅방에 연결된 큐 이름
+    @GetMapping("/chatRoom/getMessages/{roomId}")@ResponseBody
+    public List<ChatMessage> getMessages(@PathVariable("roomId") String roomId) {// 채팅방에 연결된 큐 이름
         String queueName = "chat.room." + roomId;
 
-        // 큐에서 메시지 수신
-        receiveMessagesFromQueue(queueName);
+            // 큐에서 메시지 수신
+            receiveMessagesFromQueue(queueName);
 
-        // MongoDB에서 저장된 메시지 가져오기
-        return chatService.getMessagesByRoomId(roomId)
-                .stream()
-                .map(ChatMessage::getContent)
-                .collect(Collectors.toList());
-    }
+            // MongoDB에서 저장된 메시지 가져오기
+            return chatService.getMessagesByRoomId(roomId);
+
+        }
     
     //==========================================================
     /**

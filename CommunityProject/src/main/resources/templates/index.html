@@ -29,8 +29,8 @@
                 <li sec:authorize="isAnonymous()"><a th:href="@{/member/login}">로그인</a></li>
 
                 <!--인증이 된 사람-->
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/member/logout}">[[${memberId}]]님, 로그아웃</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{api/chat/chatPage}">채팅하기</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/member/logout}">[[${memberId}]]님, 로그아웃</a></li>
             </ul>
         </div>
 
