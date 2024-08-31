@@ -16,6 +16,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class MemberDTO {
+	private Long memberNum;
 	private String memberId;
 	private String memberPw;
 	private Boolean memberEnabled;
@@ -32,6 +33,7 @@ public class MemberDTO {
 	
 	public static MemberDTO toDTO(MemberEntity memberEntity) {
 		return MemberDTO.builder()
+			.memberNum(memberEntity.getMemberNum())
 			.memberId(memberEntity.getMemberId())
 			.memberPw(memberEntity.getMemberPw())
 			.memberEnabled(memberEntity.getMemberEnabled())

@@ -47,17 +47,19 @@ public class ChatRoomController {
     @GetMapping("/chatPage")
     public String chatPage(Model model, Principal principal) {
         String currentUserId = principal.getName();
+        
 
         // 채팅방 목록 가져오기
         List<Map<String, Object>> roomDetails = chatRoomService.getChatRoomDetails(currentUserId);
         model.addAttribute("currentUserId", currentUserId);
         model.addAttribute("chatRooms", roomDetails);
+        
 
         // 회원 목록 추가
         List<MemberDTO> members = memberService.getAllMembers();
         model.addAttribute("members", members);
 
-        return "chat/chat";  // templates/chat/chat.html 파일을 렌더링
+        return "chat/app-chat";  // templates/chat/chat.html 파일을 렌더링
     }
 
     @GetMapping("/chatData")
@@ -68,7 +70,9 @@ public class ChatRoomController {
         // currentUserId를 사용하여 사용자 정보를 가져옵니다.
         MemberDTO currentUser = memberService.findByMemberId(currentUserId);
         String currentUserName = currentUser.getMemberName();  // 사용자 이름을 가져옵니다.
-
+        String currentUserRole = currentUser.getMemberRole(); 
+        Long currentUserIdNum = currentUser.getMemberNum();
+        
         // 채팅방 상세 정보 목록 가져오기
         List<Map<String, Object>> roomDetails = chatRoomService.getChatRoomDetails(currentUserId);
         List<MemberDTO> members = memberService.getAllMembers();
@@ -76,9 +80,11 @@ public class ChatRoomController {
         Map<String, Object> response = new HashMap<>();
         response.put("currentUserId", currentUserId);
         response.put("currentUserName", currentUserName); 
+        response.put("currentUserRole", currentUserRole); 
+        response.put("currentUserIdNum", currentUserIdNum);
         response.put("chatRooms", roomDetails);  // roomDetails를 반환
         response.put("members", members);
-
+        
         return response;
     }
 

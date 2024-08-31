@@ -8,6 +8,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -29,6 +31,10 @@ import lombok.ToString;
 @Table(name="Member")
 public class MemberEntity {
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL에서 AUTO_INCREMENT를 사용
+    @Column(name="id", nullable = false, unique = true)
+    private Long memberNum; 
+	
 	@Column(name="member_id", nullable = false, unique = true)
 	private String memberId; 
 	

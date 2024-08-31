@@ -15884,7 +15884,7 @@ html[data-layout=horizontal] .notification {
   top: 20px;
 }
 html[data-layout=horizontal] .body-wrapper {
-  padding-top: 70px;
+  padding-top: 0px /*70px;*/
 }
 html[data-layout=horizontal] .body-wrapper > .container-fluid, html[data-layout=horizontal] .body-wrapper > .container-sm, html[data-layout=horizontal] .body-wrapper > .container-md, html[data-layout=horizontal] .body-wrapper > .container-lg, html[data-layout=horizontal] .body-wrapper > .container-xl, html[data-layout=horizontal] .body-wrapper > .container-xxl {
   padding-top: 115px !important;

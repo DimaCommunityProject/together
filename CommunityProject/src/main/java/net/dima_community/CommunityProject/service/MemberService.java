@@ -26,7 +26,7 @@ public class MemberService {
 	 * @param memberDTO
 	 */
 	public boolean joinProc(MemberDTO memberDTO) {
-		boolean isExistUser = memberRepository.existsById(memberDTO.getMemberId());
+		boolean isExistUser = memberRepository.existsByMemberId(memberDTO.getMemberId());
 		
 		if(isExistUser) return false;	//존재하는 아이디이므로 가입실패
 		memberDTO.setMemberPw(bCryptPasswordEncoder.encode(memberDTO.getMemberPw()));	//아이디가 존재하지않으면 비번 꺼내서 암호화 시킴
