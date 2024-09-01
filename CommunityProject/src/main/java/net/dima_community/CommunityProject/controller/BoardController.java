@@ -63,8 +63,8 @@ public class BoardController {
                             @RequestParam(name = "searchWord", defaultValue = "") String searchWord ,
                             Model model) {        
         // Pageination
-        // category에 따른 게시글 DTO를 List 형태로 가져오기
         Page<BoardListDTO> list;
+        // category에 따른 게시글 DTO를 List 형태로 가져오기
         if (category == BoardCategory.activity || category == BoardCategory.recruit) {
             list = boardService.selectActivityOrRecruitBoards(category, pageable, searchWord);
         }else if(category == BoardCategory.group){
@@ -111,6 +111,29 @@ public class BoardController {
         return "redirect:/board/list"; // 게시글 목록 화면으로 
     }
 
+    /**
+     * ajax - 게시글 삭제 요청
+     * @param boardId
+     * @param category
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/board/deleteInDetail")
+    public String boardDeleteInDetail(@RequestParam(name = "boardId") Long boardId, 
+                            @RequestParam(name = "category") BoardCategory category,
+                            @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
+                            RedirectAttributes rttr) {
+
+        // boardId에 해당하는 게시글 삭제 
+        boardService.deleteOne(boardId);
+
+        // 카테고리, 검색어 (페이지?)
+        rttr.addAttribute("category", category);
+        rttr.addAttribute("searchWord", searchWord);
+
+        return "redirect:/board/list"; // 게시글 목록 화면으로 
+    }
+
 
 
     // ================== 게시글 생성 ===================
@@ -136,7 +159,7 @@ public class BoardController {
      * @return
      */
     @PostMapping("/board/write")
-    public String writeBoard(@ModelAttribute BoardDTO dto, Model model) {
+    public String writeBoard(@ModelAttribute BoardDTO dto, RedirectAttributes rttr) {
         log.info("========== 게시글 등록 카테고리 : "+dto.getCategory());
         // DEFAULT 값 세팅
         dto.setHitCount(0);
@@ -146,9 +169,9 @@ public class BoardController {
         // 전달받은 게시글 DTO를 Board 테이블에 삽입
         boardService.insertBoard(dto);
         
-        // 게시글 목록에 필요한 파라미터 값 세팅 후 model에 담기
-        model.addAttribute("category", dto.getCategory());
-        model.addAttribute("userGroup", dto.getMemberGroup());
+        // 게시글 목록에 필요한 파라미터 값 세팅 후 rttr에 담기
+        rttr.addAttribute("category", dto.getCategory());
+        rttr.addAttribute("userGroup", dto.getMemberGroup());
 
         return "redirect:/board/list";
     }
@@ -338,14 +361,14 @@ public class BoardController {
     @PostMapping("/board/update")
     public String postMethodName(@ModelAttribute BoardDTO boardDTO, 
                                 @RequestParam(name = "category") BoardCategory category,
-                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord, RedirectAttributes rttr) {
         // 전달받은 boardDTO로 기존 board 정보 수정 처리
         boardService.updateBoard(boardDTO);
         
-        model.addAttribute("board", boardDTO);
-        model.addAttribute("category", category);
-        model.addAttribute("searchWord", searchWord);
-        return "board/detail";
+        rttr.addAttribute("board", boardDTO);
+        rttr.addAttribute("category", category);
+        rttr.addAttribute("searchWord", searchWord);
+        return "redirect:/board/detail";
     }
     
     /**
