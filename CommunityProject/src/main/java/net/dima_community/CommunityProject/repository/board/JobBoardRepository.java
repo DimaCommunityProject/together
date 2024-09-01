@@ -25,16 +25,39 @@ public interface JobBoardRepository extends JpaRepository<JobBoardEntity, Long>{
                                                                                 Pageable pageable); 
 
         // 카테고리에 해당하는 (신고당하지 않은) BoardListDTOs 반환 (최신순)
-        @Query("SELECT new net.dima_community.CommunityProject.dto.board.combine.BoardListDTO(b.boardId, b.memberEntity.memberId, b.memberGroup, b.title, b.hitCount, b.likeCount, b.createDate, j.deadline, j.limitNumber, j.currentNumber) " +
-                "FROM JobBoardEntity j " +
-                "JOIN j.boardEntity b " +
-                "WHERE b.category = :category " +
-                "AND LOWER(b.title) LIKE LOWER(CONCAT('%', :searchWord, '%')) " +
-                "AND b.reported = false " +
-                "ORDER BY b.createDate DESC")
-        Page<BoardListDTO> findBoardListByCategoryAndTitleContainingAndReportedIsFalse(@Param("category") BoardCategory category, 
-                                                                                        @Param("searchWord") String searchWord, 
-                                                                                        Pageable pageable);
+        // @Query("SELECT new net.dima_community.CommunityProject.dto.board.combine.BoardListDTO(b.boardId, b.memberEntity.memberId, b.memberGroup, b.title, b.hitCount, b.likeCount, b.createDate, j.deadline, j.limitNumber, j.currentNumber) " +
+        //         "FROM JobBoardEntity j " +
+        //         "JOIN j.boardEntity b " +
+        //         "WHERE b.category = :category " +
+        //         "AND LOWER(b.title) LIKE LOWER(CONCAT('%', :searchWord, '%')) " +
+        //         "AND b.reported = false " +
+        //         "ORDER BY b.createDate DESC")
+        // Page<BoardListDTO> findBoardListByCategoryAndTitleContainingAndReportedIsFalse(@Param("category") BoardCategory category, 
+        //                                                                                 @Param("searchWord") String searchWord, 
+        //                                                                                 Pageable pageable);
 
+        // 카테고리에 해당하는 (신고당하지 않은) BoardListDTOs 반환 (최신순)
+        @Query("SELECT new net.dima_community.CommunityProject.dto.board.combine.BoardListDTO(" +
+        "b.boardId, " +
+        "b.memberEntity.memberId, " +
+        "b.memberGroup, " +
+        "b.title, " +
+        "b.hitCount, " +
+        "b.likeCount, " +
+        "b.replyCount, " +
+        "b.createDate, " +
+        "j.deadline, " +
+        "j.limitNumber, " +
+        "j.currentNumber) " +
+        "FROM BoardEntity b " +
+        "LEFT JOIN b.jobBoardEntity j " + // BoardEntity와 JobBoardEntity를 조인
+        "WHERE b.category = :category " +
+        "AND LOWER(b.title) LIKE LOWER(CONCAT('%', :searchWord, '%')) " +
+        "AND b.reported = false " +
+        "ORDER BY b.createDate DESC")
+        Page<BoardListDTO> findBoardListByCategoryAndTitleContainingAndReportedIsFalse(
+        @Param("category") BoardCategory category, 
+        @Param("searchWord") String searchWord, 
+        Pageable pageable);
 
 }
