@@ -111,30 +111,6 @@ public class BoardController {
         return "redirect:/board/list"; // 게시글 목록 화면으로 
     }
 
-    /**
-     * ajax - 게시글 삭제 요청
-     * @param boardId
-     * @param category
-     * @return
-     */
-    @ResponseBody
-    @GetMapping("/board/deleteInDetail")
-    public String boardDeleteInDetail(@RequestParam(name = "boardId") Long boardId, 
-                            @RequestParam(name = "category") BoardCategory category,
-                            @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
-                            RedirectAttributes rttr) {
-
-        // boardId에 해당하는 게시글 삭제 
-        boardService.deleteOne(boardId);
-
-        // 카테고리, 검색어 (페이지?)
-        rttr.addAttribute("category", category);
-        rttr.addAttribute("searchWord", searchWord);
-
-        return "redirect:/board/list"; // 게시글 목록 화면으로 
-    }
-
-
 
     // ================== 게시글 생성 ===================
     
