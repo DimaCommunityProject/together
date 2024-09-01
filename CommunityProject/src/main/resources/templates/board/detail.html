@@ -14,7 +14,9 @@
   <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
 
-  <title>Modernize Bootstrap Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+  <title>[[${board.title}]]</title>
 </head>
 
 <body class="link-sidebar">
@@ -36,13 +38,15 @@
                       <li class="breadcrumb-item">
                         <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
                       </li>
-                      <li class="breadcrumb-item" aria-current="page">Blog Detail</li>
+                      <li class="breadcrumb-item" aria-current="page">
+                        <a class="text-muted text-decoration-none" th:href="@{/board/list(category=${category})}">[[${category}]]</a>
+                      </li>
                     </ol>
                   </nav>
                 </div>
                 <div class="col-3">
                   <div class="text-center mb-n5">
-                    <img th:src="@{/assets/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                    <img th:src="@{/assets/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4"/>
                   </div>
                 </div>
               </div>
@@ -51,133 +55,105 @@
           <div class="card overflow-hidden">
             <div class="position-relative">
               <a href="javascript:void(0)">
-                <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="440">
+                <!-- 작성자 바로 위 배경이미지 -->
+                <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="300">
               </a>
-              <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2
-                min Read</span>
-              <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Esther Lindsey">
+              <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2 min Read</span>
+              <!-- 작성자 이미지 -->
+              <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
+              <!-- 작성자 ID 및 배지 -->
+
             </div>
+            
+            <!-- 게시글 작성자 수정/삭제 -->
+            <div>
+              <div style="margin-left: 95.5%;">
+                <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="ti ti-dots fs-7"></i>
+                </a>
+              </div>
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 2%;">
+                <div class="d-flex align-items-center justify-content-between">
+                  <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                    <li class="nav-item nav-icon-hover-bg rounded-circle">
+                      <a class="" th:href="@{/board/update(boardId=${board.boardId}, category=${category})}" style="text-align: center;">
+                        <i class="ti ti-edit"></i> edit
+                      </a>
+                    </li>
+                    <li class="nav-item nav-icon-hover-bg rounded-circle" style="padding-left: 5px;">
+                      <a class="" href="javascript:void(0)" style="text-align: center;">
+                        <i class="ti ti-trash-x" style="padding-right: 5px;"></i> delete
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             <div class="card-body p-4">
-              <span class="badge text-bg-light mt-3" th:value="${board.category}">Lifestyle</span>
-              <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}">Streaming video way before it was cool, go dark tomorrow</h2>
+              <span class="badge text-bg-light mt-3">[[${category}]]</span>
+              <!-- 게시글 제목 -->
+              <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
               <div class="d-flex align-items-center gap-4">
                 <div class="d-flex align-items-center gap-2">
-                  <i class="ti ti-eye text-dark fs-5"></i><p th:text="${board.hitCount}"></p> <!--조회수-->
+                  <!--조회수-->
+                  <i class="ti ti-eye text-dark fs-5"></i>[[${board.hitCount}]] 
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                  <i class="ti ti-message-2 text-dark fs-5"></i> 3 <!--댓글 수-->
+                  <!--댓글 수-->
+                  <i class="ti ti-message-2 text-dark fs-5"></i> [[${board.replyCount}]] 
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <!--좋아요 수-->
+                  <i class="ti ti-heart text-dark fs-5"></i> [[${board.likeCount}]] 
                 </div>
                 <div class="d-flex align-items-center fs-2 ms-auto">
-                  <i class="ti ti-point text-dark"></i>Sat, Jan 14 <p th:text="${board.createDate}"></p>
+                  <!--작성 날짜-->
+                  <i class="ti ti-point text-dark"></i> [[${#temporals.format(board.createDate, 'EEE, MMM dd')}]] 
                 </div>
               </div>
             </div>
             <div class="card-body border-top p-4">
-              <h2 class="fs-8 fw-semibold mb-3">Title of the paragraph</h2>
-              <p class="mb-3" th:text="${board.content}">
-                But you cannot figure out what it is or what it can do. MTA web directory is the simplest way in which
-                one can bid on a link, or a few links if they wish to do so. The link
-                directory on MTA displays all of the links it currently has, and does so in alphabetical order, which
-                makes it much easier for someone to find what they are looking for if it is
-                something specific and they do not want to go through all the other sites and links as well. It allows
-                you to start your bid at the bottom and slowly work your way to the top
-                of the list.
-              </p>
-              <p class="mb-3">
-                Gigure out what it is or what it can do. MTA web directory is the simplest way in which one can bid on a
-                link, or a few links if they wish to do so. The link directory on MTA
-                displays all of the links it currently has, and does so in alphabetical order, which makes it much
-                easier for someone to find what they are looking for if it is something
-                specific and they do not want to go through all the other sites and links as well. It allows you to
-                start your bid at the bottom and slowly work your way to the top of the
-              </p>
-              <p class="text-dark mb-0">
-                <strong>This is strong text.</strong>
-              </p>
-              <p class="mb-0">
-                <em>This is italic text.</em>
-              </p>
-              <div class="border-top mt-7 pt-7">
-                <h3 class="fw-semibold">Unorder list.</h3>
-                <ul class="my-3 ps-4 text-dark">
-                  <li class="d-flex align-items-center gap-2">
-                    <span class="p-1 text-bg-dark rounded-circle"></span>
-                    Gigure
-                    out what it is or
-                  </li>
-                  <li class="d-flex align-items-center gap-2">
-                    <span class="p-1 text-bg-dark rounded-circle"></span> The
-                    links
-                    it currently
-                  </li>
-                  <li class="d-flex align-items-center gap-2">
-                    <span class="p-1 text-bg-dark rounded-circle"></span> It
-                    allows
-                    you to start your bid
-                  </li>
-                  <li class="d-flex align-items-center gap-2">
-                    <span class="p-1 text-bg-dark rounded-circle"></span>
-                    Gigure
-                    out what it is or
-                  </li>
-                  <li class="d-flex align-items-center gap-2">
-                    <span class="p-1 text-bg-dark rounded-circle"></span> The
-                    links
-                    it currently
-                  </li>
-                  <li class="d-flex align-items-center gap-2">
-                    <span class="p-1 text-bg-dark rounded-circle"></span> It
-                    allows
-                    you to start your bid
-                  </li>
-                </ul>
-              </div>
-              <div class="border-top mt-7 pt-7">
-                <h3 class="fw-semibold">Order list.</h3>
-                <ol class="my-3 text-dark">
-                  <li>Gigure out what it is or</li>
-                  <li>The links it currently</li>
-                  <li>It allows you to start your bid</li>
-                  <li>Gigure out what it is or</li>
-                  <li>The links it currently</li>
-                  <li>It allows you to start your bid</li>
-                </ol>
-              </div>
-              <div class="border-top mt-7 pt-7">
-                <h3 class="fw-semibold mb-2">Quotes</h3>
-                <div class="p-3 bg-light rounded border-start border-2 border-primary">
-                  <h6 class="mb-0 fs-4 fw-semibold">
-                    <i class="ti ti-quote fs-7"></i>Life is short, Smile while you still
-                    have teeth!
-                  </h6>
-                </div>
-              </div>
+              <!-- 게시글 내용 -->
+              <p class="mb-3" th:utext="${board.content}"></p>
             </div>
           </div>
+          <!-- 댓글 -->
           <div class="card">
             <div class="card-body">
+              
+              <!-- 댓글 작성 -->
               <h4 class="mb-4 fw-semibold">Post Comments</h4>
               <form>
-                <textarea class="form-control mb-4" rows="5"></textarea>
-                <button class="btn btn-primary">Post Comment</button>
+                <input type="hidden" id="replyBoardId" th:value="${board.boardId}"> <!--댓글 작성 게시글 ID-->
+                <!-- <input type="hidden" id="replyWriter" th:value="${#authentication.name}"> -->
+                <input type="hidden" id="replyWriter" th:value="${doyeon}"> <!--댓글 작성자 ID-->
+                <textarea class="form-control mb-4" rows="5" id="replyContent"></textarea> <!--댓글 내용-->
+                <button class="btn btn-primary" id="replySubmit">Post Comment</button> <!-- 댓글 작성 버튼 -->
               </form>
+
               <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
                 <h4 class="mb-0">Comments</h4>
-                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">3</span>
+                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
               </div>
+
+              <!-- 댓글 목록 -->
               <div class="position-relative">
+                <!-- class="p-4 rounded-4 text-bg-light mb-3" 이거 반복하면 됨 -->
                 <div class="p-4 rounded-4 text-bg-light mb-3">
                   <div class="d-flex align-items-center gap-3">
                     <img th:src="@{/assets/images/profile/user-2.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
-                    <h6 class="mb-0 fs-4">Don Russell</h6>
+                    <!-- 댓글 작성자 ID-->
+                    <h6 class="mb-0 fs-4">Don Russell</h6> 
                     <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                   </div>
+                  <!-- 댓글 내용 -->
                   <p class="my-3">Es do ujurus nejson imju azgudpi toceztep ji cocicoci bosawrop korze ta.
                     Casetlu udumej umocu wanaro webmos ijafa ud muli amja softoj ma pijum.
                   </p>
                   <div class="d-flex align-items-center gap-2">
                     <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                      <i class="ti ti-arrow-back-up"></i>
+                      <i class="ti ti-arrow-back-up"></i> <!--대댓글 작성요청 버튼-->
                     </a>
                   </div>
                 </div>
