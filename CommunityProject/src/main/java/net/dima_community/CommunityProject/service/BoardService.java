@@ -277,7 +277,7 @@ public class BoardService {
             // JobBoardEntity 생성 및 저장
             JobBoardEntity jobBoardEntity = JobBoardEntity.builder()
                 .deadline(dto.getDeadline())
-                .limitNumber(dto.getLimitNumber())
+                .limitNumber(dto.getLimitNumber()) // DEFAULT : 0
                 .currentNumber(0) // DEFAULT : 0
                 .build();
             jobBoardEntity = jobBoardRepository.save(jobBoardEntity);  // JobBoardEntity 저장
