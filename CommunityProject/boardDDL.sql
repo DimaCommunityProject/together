@@ -62,6 +62,10 @@ CREATE TABLE board (
     FOREIGN KEY (job_board_id) REFERENCES job_board(job_board_id) -- job_board 테이블의 job_board_id를 FK로 참조
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- replyCount (댓글 수) 컬럼 추가
+ALTER TABLE board
+ADD COLUMN reply_count int DEFAULT 0;
+
 SELECT * FROM board;
 
 

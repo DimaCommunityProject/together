@@ -31,6 +31,7 @@ public class BoardDTO {
     private LocalDateTime updateDate;
     private int hitCount;
     private int likeCount;
+    private int replyCount;
     private MultipartFile uploadFile;
     private String originalFileName;
     private String savedFileName;
@@ -60,6 +61,7 @@ public class BoardDTO {
                 .updateDate(entity.getUpdateDate())
                 .hitCount(entity.getHitCount())
                 .likeCount(entity.getLikeCount())
+                .replyCount(entity.getReplyCount())
                 .originalFileName(entity.getOriginalFileName())
                 .savedFileName(entity.getSavedFileName())
                 .reported(entity.isReported())
@@ -86,6 +88,7 @@ public class BoardDTO {
                 .updateDate(entity.getUpdateDate())
                 .hitCount(entity.getHitCount())
                 .likeCount(entity.getLikeCount())
+                .replyCount(entity.getReplyCount())
                 .originalFileName(entity.getOriginalFileName())
                 .savedFileName(entity.getSavedFileName())
                 .reported(entity.isReported())

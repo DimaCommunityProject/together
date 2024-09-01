@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import net.dima_community.CommunityProject.entity.board.BoardEntity;
-import net.dima_community.CommunityProject.entity.board.JobBoardEntity;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -24,6 +22,7 @@ public class BoardListDTO { // 게시물 목록 화면에 필요한 속성들만
     private String title;
     private int hitCount;
     private int likeCount;
+    private int replyCount;
     private LocalDateTime createDate;
     // activity / recruit 
     private LocalDateTime deadline;

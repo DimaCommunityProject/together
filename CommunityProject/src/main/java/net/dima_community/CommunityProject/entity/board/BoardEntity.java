@@ -75,6 +75,9 @@ public class BoardEntity {
     @Column(name = "like_count")
     private int likeCount;
 
+    @Column(name = "reply_count")
+    private int replyCount;
+
     @Column(name = "original_file_name")
     private String originalFileName;
 
@@ -117,6 +120,7 @@ public class BoardEntity {
                 .updateDate(dto.getUpdateDate())
                 .hitCount(dto.getHitCount())
                 .likeCount(dto.getLikeCount())
+                .replyCount(dto.getReplyCount())
                 .originalFileName(dto.getOriginalFileName())
                 .savedFileName(dto.getSavedFileName())
                 .reported(dto.isReported())
