@@ -57,14 +57,11 @@ public class BoardController {
      * @return
      */
     @GetMapping("/board/list")
-    public String boardList(@RequestParam(name = "category") String ctgr,
+    public String boardList(@RequestParam(name = "category") BoardCategory category,
                             @RequestParam(name = "userGroup", defaultValue = "0") String userGroup, // 로그인한 사용자의 기수 (기본값 0)
                             @PageableDefault(page=1) Pageable pageable, // 페이징 해주는 객체, 요청한 페이지가 없으면 1로 세팅
                             @RequestParam(name = "searchWord", defaultValue = "") String searchWord ,
-                            Model model) {
-        // 카테고리 String -> enum 타입으로 변환
-        BoardCategory category = BoardCategory.valueOf(ctgr); 
-        
+                            Model model) {        
         // Pageination
         // category에 따른 게시글 DTO를 List 형태로 가져오기
         Page<BoardListDTO> list;
@@ -82,7 +79,7 @@ public class BoardController {
         PageNavigator navi = new PageNavigator(pageLimit, page, totalPages);
 
         model.addAttribute("list", list);
-        model.addAttribute("category", ctgr);
+        model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
         model.addAttribute("navi", navi);
 
@@ -140,7 +137,7 @@ public class BoardController {
      */
     @PostMapping("/board/write")
     public String writeBoard(@ModelAttribute BoardDTO dto, Model model) {
-        
+        log.info("========== 게시글 등록 카테고리 : "+dto.getCategory());
         // DEFAULT 값 세팅
         dto.setHitCount(0);
         dto.setLikeCount(0);
@@ -153,7 +150,7 @@ public class BoardController {
         model.addAttribute("category", dto.getCategory());
         model.addAttribute("userGroup", dto.getMemberGroup());
 
-        return "board/list";
+        return "redirect:/board/list";
     }
     
 
@@ -173,10 +170,11 @@ public class BoardController {
                             @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
                             Model model) {
         
-        // boardId에 해당하는 게시글 DTO 
-        BoardDTO board = boardService.selectOne(boardId);
         // 조회수 증가
         boardService.increaseHitCount(boardId);
+
+        // boardId에 해당하는 게시글 DTO 
+        BoardDTO board = boardService.selectOne(boardId);
 
         model.addAttribute("board", board);
         model.addAttribute("searchWord", searchWord);
@@ -321,28 +319,14 @@ public class BoardController {
         model.addAttribute("board", boardDTO);
         model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
+
+        if (category == BoardCategory.activity || category == BoardCategory.recruit) {
+            return "board/updateActivityOrRecruit";
+        }
         return "board/update";
     }
     
-    /**
-     * activity/recruit 게시글 수정 화면 요청
-     * @param boardId
-     * @param model
-     * @return
-     */
-    @GetMapping("/board/updateActivityOrRecruit")
-    public String updateActivityOrRecruitBoard(@RequestParam(name = "boardId") Long boardId, 
-                                                @RequestParam(name = "category") BoardCategory category,
-                                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
-        // 수정할 게시글 DTO
-        BoardDTO boardDTO = boardService.selectOne(boardId);
-        
-        model.addAttribute("board", boardDTO);
-        model.addAttribute("category", category);
-        model.addAttribute("searchWord", searchWord);
-        return "board/updateActivityOrRecruit";
-    }
-    
+
     /**
      * 게시글 수정 처리 요청
      * @param boardDTO

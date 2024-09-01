@@ -257,9 +257,6 @@ public class BoardService {
 
     // ======================== 게시글 생성 ========================
 
-    /**
-     * 전달받은 게시글 DTO를 Entity로 변환 후 Board DB에 저장하는 함수
-     */
     @Transactional
     public void insertBoard(BoardDTO dto) {
         // 게시글 작성자 데이터(부모테이블) 가져오기
@@ -274,37 +271,39 @@ public class BoardService {
 
         // 게시글 DTO -> 엔티티 변환 후 DB 저장
         BoardEntity boardEntity = boardRepository.save(BoardEntity.toEntity(dto, memberEntity));
-        
-        // activity/recruit 게시글인 경우 
-        if (dto.getCategory()==BoardCategory.activity || dto.getCategory()==BoardCategory.recruit) {
-            insertJobBoard(boardEntity, dto); // JobBoard DB 저장
+
+        // activity/recruit 게시글인 경우
+        if (dto.getCategory() == BoardCategory.activity || dto.getCategory() == BoardCategory.recruit) {
+            // JobBoardEntity 생성 및 저장
+            JobBoardEntity jobBoardEntity = JobBoardEntity.builder()
+                .deadline(dto.getDeadline())
+                .limitNumber(dto.getLimitNumber())
+                .currentNumber(0) // DEFAULT : 0
+                .build();
+            jobBoardEntity = jobBoardRepository.save(jobBoardEntity);  // JobBoardEntity 저장
+            
+            // BoardEntity 의 jobBoardEntity 값 세팅
+            boardEntity.setJobBoardEntity(jobBoardEntity);
+
+            // BoardEntity 다시 저장하여 JobBoardEntity와의 관계를 DB에 반영
+            boardRepository.save(boardEntity);
         }
-
     }
 
-    /**
-     * 전달받은 BoardDTO로 JobBoardEntity 생성 후 JobBoard DB에 저장하는 함수
-     * @param dto
-     * @return
-     */
-    public void insertJobBoard(BoardEntity boardEntity, BoardDTO boardDTO) {
-        // JobBoardEntity 생성
-        JobBoardEntity jobBoardEntity = JobBoardEntity.builder()
-                                                    .deadline(boardDTO.getDeadline())
-                                                    .limitNumber(boardDTO.getLimitNumber())
-                                                    .currentNumber(0) // DEFAULT : 0
-                                                    .build();
-        // JobBoardEntity 저장
-        JobBoardEntity savedJobBoardEntity = jobBoardRepository.save(jobBoardEntity);
-        // BoardEntity 의 jobBoardEntity 값 세팅
-        boardEntity.setJobBoardEntity(savedJobBoardEntity); 
-    }
 
 
     
     // ======================== 게시글 조회 ========================
 
-    
+    /**
+     * 전달받은 게시글의 조회수 증가시키는 함수
+     * @param boardId
+     */
+    @Transactional
+    public void increaseHitCount(Long boardId) {
+        BoardEntity boardEntity = selectBoardEntity(boardId); // boardEntity
+        boardEntity.setHitCount(boardEntity.getHitCount()+1); // 1 증가
+    }
 
     /**
      * 전달받은 boardId에 해당하는 게시글 DTO반환하는 함수 (job에 관련된 정보가 있는 경우는 해당 정보도 포함해 반환함)
@@ -327,15 +326,6 @@ public class BoardService {
         }
 
         return boardDTO;
-    }
-
-    /**
-     * 전달받은 게시글의 조회수 증가시키는 함수
-     * @param boardId
-     */
-    public void increaseHitCount(Long boardId) {
-        BoardEntity boardEntity = selectBoardEntity(boardId); // boardEntity
-        boardEntity.setHitCount(boardEntity.getHitCount()+1); // 1 증가
     }
 
 
