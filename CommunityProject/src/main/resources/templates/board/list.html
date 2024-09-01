@@ -13,6 +13,9 @@
   <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+
   <title>게시글 목록</title>
 </head>
 
@@ -3206,6 +3209,14 @@
 
       <div class="body-wrapper">
         <div class="container-fluid">
+
+          <!-- 게시글 작성 버튼 -->
+          <div style="text-align: right; margin-bottom:15px">
+            <a class="btn btn-primary" th:href="@{/board/write(category=${category})}">
+              <i class="ti ti-pencil-plus fs-5"></i>  Write
+            </a>
+          </div>
+
           <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
             <div class="card-body px-4 py-3">
               <div class="row align-items-center">
@@ -3217,7 +3228,9 @@
                       <li class="breadcrumb-item">
                         <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
                       </li>
-                      <li class="breadcrumb-item" aria-current="page">[[${category}]]</li>
+                      <li class="breadcrumb-item" aria-current="page">
+                        <a class="text-muted text-decoration-none" th:href="@{/board/list(category=${category})}">[[${category}]]</a>
+                      </li>
                     </ol>
                   </nav>
                 </div>
@@ -3267,42 +3280,50 @@
               </div>
             </div>
             <!-- class="col-md-6 col-lg-4" 이거를 반복시키면 될듯 -->
-            <div class="col-md-6 col-lg-4"> 
+            <div class="col-md-6 col-lg-4" th:each="board: ${list}"> 
               <div class="card blog blog-img-two position-relative overflow-hidden hover-img">
                 <div class="card-body position-relative">
                   <div class="d-flex flex-column justify-content-between h-100">
                     <div class="d-flex align-items-start justify-content-between">
-                      <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Francisco Quinn">
+                      <!-- 작성자 ID -->
+                      <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
                         <!-- 작성자 이미지 -->
                         <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
                       </div>
-                      <!-- 여기에 마감기한, 모집인원 넣으면 될듯 -->
-                      <span class="badge text-bg-primary fs-2 fw-semibold">Health</span>
+                      <!-- 마감기한 -->
+                      <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.deadline != null}">
+                        <span th:if="${board.dDay > 0}">D-[[${board.dDay}]]</span>
+                        <span th:if="${board.dDay == 0}">D-Day</span>
+                        <span th:if="${board.dDay &lt; 0}">마감</span>
+                      </span> 
+                      <!-- 모집인원 -->
+                      <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.limitNumber != null && board.dDay >= 0}">
+                        <i class="ti ti-user fs-5"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
+                      </span>
                     </div>
                     <div>
                       <!-- 게시글 제목 -->
-                      <a th:href="@{/main/blog-detail.html}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">Presented by Max
-                        Rushden with Barry Glendenning, Philippe Auclair</a>
+                      <a th:href="@{/board/detail(boardId=${board.boardId}, category=${category})}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">[[${board.title}]]</a>
                       <div class="d-flex align-items-center gap-4">
                         <!-- 조회수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                           <i class="ti ti-eye fs-5"></i>
-                          713
+                          [[${board.hitCount}]]
                         </div>
                         <!-- 댓글수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                           <i class="ti ti-message-2 fs-5"></i>
-                          3
+                          [[${board.replyCount}]]
                         </div>
                         <!-- 좋아요수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
-                          <i class="ti fa-solid fa-heart fs-5"></i>
-                          3
+                          <i class="ti ti-heart fs-5"></i>
+                          [[${board.likeCount}]]
                         </div>
                         <!-- 작성 날짜 -->
                         <div class="d-flex align-items-center gap-1 text-white fw-normal ms-auto">
                           <i class="ti ti-point"></i>
-                          <small>Wed, Jan 18</small>
+                          <small>[[${#temporals.format(board.createDate, 'EEE, MMM dd')}]]</small>
                         </div>
                       </div>
                     </div>
@@ -3310,7 +3331,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <!-- <div class="col-md-6 col-lg-4">
               <div class="card overflow-hidden hover-img">
                 <div class="position-relative">
                   <a th:href="@{/main/blog-detail.html}">
@@ -3541,7 +3562,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <nav aria-label="...">
             <ul class="pagination justify-content-center mb-0 mt-4">
