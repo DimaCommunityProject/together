@@ -22,7 +22,6 @@
 <body class="link-sidebar">
   <!-- model에 담겨온 것들 -->
   <input type="hidden" name="searchWord" th:value="${searchWord}">
-  <input type="hidden" name="navi" th:value="${navi}">
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -3210,11 +3209,24 @@
       <div class="body-wrapper">
         <div class="container-fluid">
 
-          <!-- 게시글 작성 버튼 -->
-          <div style="text-align: right; margin-bottom:15px">
-            <a class="btn btn-primary" th:href="@{/board/write(category=${category})}">
-              <i class="ti ti-pencil-plus fs-5"></i>  Write
-            </a>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <!-- 검색창  -->
+            <div class="search" style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
+              <form id="searchForm" th:action="@{/board/list}" style="display: flex; align-items: center; width: 100%;">
+                  <input type="hidden" name="page" id="requestPage" th:value="${page}">
+                  <input type="hidden" name="category" id="" th:value="${category}">
+                  <input type="text" class="form-control fs-3" name="searchWord" placeholder="검색어를 입력하세요" th:value="${searchWord}" style="width:40%;">
+                  <button type="submit" class="btn btn-secondary" style="margin-left: 10px;"> 
+                      <i class="ti ti-search fs-5"></i> 
+                  </button>
+              </form>
+          </div>
+            <!-- 게시글 작성 버튼 -->
+            <div>
+              <a class="btn btn-primary" th:href="@{/board/write(category=${category})}">
+                <i class="ti ti-pencil-plus fs-5"></i>  Write
+              </a>
+            </div>
           </div>
 
           <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
@@ -3297,7 +3309,7 @@
                         <span th:if="${board.dDay &lt; 0}">마감</span>
                       </span> 
                       <!-- 모집인원 -->
-                      <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.limitNumber != null && board.dDay >= 0}">
+                      <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.limitNumber != 0 && board.dDay >= 0}">
                         <i class="ti ti-user fs-5"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
                       </span>
                     </div>
@@ -3564,7 +3576,7 @@
               </div>
             </div> -->
           </div>
-          <nav aria-label="...">
+          <!-- <nav aria-label="...">
             <ul class="pagination justify-content-center mb-0 mt-4">
               <li class="page-item">
                 <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
@@ -3598,6 +3610,60 @@
                 </a>
               </li>
             </ul>
+          </nav> -->
+          <!-- 페이징 처리 -->
+          <nav class="pagination justify-content-center mb-4 mt-4">
+            <!-- 앞 그룹(<<) -->
+            <!-- 2번 그룹 이상의 위치를 보고 있을 때 -->
+            <th:block th:if="${navi.startPageGroup>1}">
+              <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" th:href="|javascript:pageFormSubmit(${navi.startPageGroup-1})|"><i class="ti ti-chevrons-left"></i></a>
+            </th:block>
+            <!-- 1번 그룹을 보고 있을 때는 링크가 생기면 안됨(앞그룹이 존재하지 않기 때문)-->
+            <th:block th:unless="${navi.startPageGroup>1}">
+              <span class="page-link border-0 text-dark round-32 d-flex align-items-center justify-content-center"><i class="ti ti-chevrons-left"></i></span>
+            </th:block>
+            
+            <!-- 앞 페이지(<) -->
+            <!-- 2페이지 이상의 페이지를 보고 있으면 링크 생김 -->
+            <th:block th:if="${navi.page>1}">
+              <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" th:href="|javascript:pageFormSubmit(${navi.page-1})|"><i class="ti ti-chevron-left"></i></a>
+            </th:block>
+            <!-- 1페이지 보고 있으면 링크 생기지 않음 -->
+            <th:block th:unless="${navi.page>1}">
+              <span class="page-link border-0 text-dark round-32 d-flex align-items-center justify-content-center"><i class="ti ti-chevron-left"></i></span>
+            </th:block>
+
+            <!-- 페이지 번호 출력 -->
+            <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+              <!-- 보고 있는 페이지가 요청한 페이지와 같을 때는 링크 안생김 -->
+              <span th:if="${count==navi.page}">
+                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-cente" th:href="|javascript:pageFormSubmit(${count})|"><b th:text="${count}"></b> </a>
+              </span>
+              <span th:unless="${count==navi.page}">
+                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-cente" th:href="|javascript:pageFormSubmit(${count})|" th:text="${count}"></a>
+              </span>
+            </span>
+
+            <!--뒤 페이지 (>)-->
+            <!--다음 페이지가 있을 때는 링크가 생기면 안됨-->
+            <th:block th:if="${navi.totalPages > (navi.page)}">
+                <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" th:href="|javascript:pageFormSubmit(${navi.page+1})|"><i class="ti ti-chevron-right"></i> </a>
+            </th:block>
+            <!--마지막 페이지라면 링크가 생기면 안됨-->
+            <th:block th:unless="${navi.totalPages > (navi.page)}">
+                <span class="page-link border-0 text-dark round-32 d-flex align-items-center justify-content-center" ><i class="ti ti-chevron-right"></i> </span>
+            </th:block>
+            
+            <!--뒤 그룹 (>>)-->
+            <!--다음 그룹이 아니라면 링크가 생겨야 함-->
+            <th:block th:if="${navi.currentGroup &lt; navi.totalGroupCount}">
+                <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" th:href="|javascript:pageFormSubmit(${navi.endPageGroup+1})|"><i class="ti ti-chevrons-right"></i> </a>
+            </th:block>
+            <!--마지막 그룹이라면 링크가 생기면 안됨-->
+            <th:block th:unless="${navi.currentGroup &lt; navi.totalGroupCount}">
+                <span class="page-link border-0 text-dark round-32 d-flex align-items-center justify-content-center" ><i class="ti ti-chevrons-right"></i> </span>
+            </th:block>
+
           </nav>
         </div>
       </div>
@@ -3947,6 +4013,14 @@
 
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+  <!-- 페이징 javascript -->
+  <script th:inline="javascript">
+    function pageFormSubmit(page){
+      document.getElementById("requestPage").value = page;
+      document.getElementById("searchForm").submit();
+    }
+  </script>
 </body>
 
 </html>
