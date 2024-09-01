@@ -17,9 +17,33 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
   <title>[[${board.title}]]</title>
+
+  <!-- JQuery -->
+  <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+  <script>
+    $(function() {
+      $("#deleteBoard").click(deleteBoard);
+    });
+
+    // 게시글 삭제 처리 함수
+    function deleteBoard (){
+      alert("정말 삭제하시겠습니까?");
+      var boardId = $("#boardId").val();
+      var category = $("#category").val();
+      $.ajax({
+        url:"/board/deleteInDetail",
+        method:"GET",
+        data:{'boardId' : boardId,'category': category}
+      });
+    }
+
+  </script>
+
 </head>
 
 <body class="link-sidebar">
+  <input type="hidden" id="boardId" th:value="${board.boardId}">
+  <input type="hidden" id="category" th:value="${category}">
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -72,7 +96,7 @@
                   <i class="ti ti-dots fs-7"></i>
                 </a>
               </div>
-              <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 2%;">
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 1%;">
                 <div class="d-flex align-items-center justify-content-between">
                   <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                     <li class="nav-item nav-icon-hover-bg rounded-circle">
@@ -81,7 +105,7 @@
                       </a>
                     </li>
                     <li class="nav-item nav-icon-hover-bg rounded-circle" style="padding-left: 5px;">
-                      <a class="" href="javascript:void(0)" style="text-align: center;">
+                      <a class="" id="deleteBoard" href="javascript:void(0)" style="text-align: center;">
                         <i class="ti ti-trash-x" style="padding-right: 5px;"></i> delete
                       </a>
                     </li>
