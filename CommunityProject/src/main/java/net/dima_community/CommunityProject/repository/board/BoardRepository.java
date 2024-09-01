@@ -30,6 +30,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
                 "b.title, " +
                 "b.hitCount, " +
                 "b.likeCount, " +
+                "b.replyCount, " +
                 "b.createDate, " +
                 "NULL, " +  // deadline
                 "0, " +      // limitNumber
@@ -44,6 +45,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
                                                                         @Param("searchWord") String searchWord, 
                                                                         Pageable pageRequest);
 
+        
         // 카테고리에 해당하는 (신고당하지 않은) 게시글 리스트 반환 (최신순)
         @Query("SELECT b FROM BoardEntity b WHERE " +
                 "b.category = :category AND " +
@@ -60,6 +62,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
                 "b.title, " +
                 "b.hitCount, " +
                 "b.likeCount, " +
+                "b.replyCount, " +
                 "b.createDate, " +
                 "NULL, " +  // deadline
                 "0, " +      // limitNumber
