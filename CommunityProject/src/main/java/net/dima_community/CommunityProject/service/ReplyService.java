@@ -167,11 +167,21 @@ public class ReplyService {
      * 해당 댓글 DTO를 Entity로 변환 후 DB에 저장하는 함수
      * @param replyDTO
      */
+    @Transactional
     public void createOne(ReplyDTO replyDTO) {
         BoardEntity boardEntity = selectBoardEntity(replyDTO.getBoardId());  // boardEntity
         MemberEntity memberEntity = selectMemberEntity(replyDTO.getMemberId()); // memberEntity
         ReplyEntity replyEntity = ReplyEntity.toEntity(replyDTO, boardEntity, memberEntity); // DTO -> Entity 변환
         replyRepository.save(replyEntity); // save to Reply
+        replyCountPlus(boardEntity); // Board의 replyCount 증가
+    }
+
+    /**
+     * boardEntity의 replyCount 1 증가시키는 함수
+     * @param boardEntity
+    */
+    public void replyCountPlus(BoardEntity boardEntity) {
+        boardEntity.setReplyCount(boardEntity.getReplyCount()+1);
     }
 
 
@@ -204,8 +214,26 @@ public class ReplyService {
      * 전달 받은 replyId에 해당하는 댓글 데이터 삭제하는 함수
      * @param replyId
      */
+    @Transactional
     public void deleteOne(Long replyId) {
-        replyRepository.deleteById(replyId);
+        replyRepository.deleteById(replyId); // delete from Reply
+        // BoardEntity의 replyCount 1 감소
+        ReplyEntity replyEntity = selectReplyEntity(replyId);
+        BoardEntity boardEntity = replyEntity.getBoardEntity();
+        replyCountMinus(boardEntity); 
+    }
+
+    /**
+     * boardEntity의 replyCount 1 감소시키는 함수
+     * @param boardEntity
+    */
+    public void replyCountMinus(BoardEntity boardEntity) {
+        int replyCount = boardEntity.getReplyCount();
+        if (replyCount - 1 == 0) {
+            boardEntity.setReplyCount(0);
+        } else {
+            boardEntity.setReplyCount(replyCount - 1);
+        }        
     }
     
     
