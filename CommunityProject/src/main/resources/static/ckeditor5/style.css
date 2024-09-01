@@ -43,7 +43,7 @@
 		height: 330px !important;
 	}
 }
-/* 내용 입력하려고 클릭했을 때 원래 작은 크기로 돌아와서 height 설벙해줌 */
+/* 내용 입력하려고 클릭했을 때 원래 작은 크기로 돌아와서 height 설정해줌 */
 .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable){
 	height: 330px !important;
 }
