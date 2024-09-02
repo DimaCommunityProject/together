@@ -1,6 +1,7 @@
 package net.dima_community.CommunityProject.service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -326,8 +327,14 @@ public class BoardService {
             boardDTO.setDeadline(jobBoardEntity.getDeadline());
             boardDTO.setLimitNumber(jobBoardEntity.getLimitNumber());
             boardDTO.setCurrentNumber(jobBoardEntity.getCurrentNumber());
+            // dDay 세팅
+            if (jobBoardEntity.getDeadline() != null) {
+                LocalDateTime now = LocalDateTime.now();
+                boardDTO.setDDay((int) ChronoUnit.DAYS.between(now.toLocalDate(), jobBoardEntity.getDeadline().toLocalDate()));
+            } else {
+                boardDTO.setDDay(-10000); // 또는 다른 기본값
+            }
         }
-
         return boardDTO;
     }
 
@@ -335,18 +342,18 @@ public class BoardService {
     /**
      * 전달받은 boardId에 해당하는 JobBoardEntity의 deadline과 현재시간을 비교해, deadline이 현재 시간보다 이전이면 true, 반대의 경우는 false를 반환하는 함수
      * @param boardId
-     * @return
+     * @return 마감 -> true / 아직 마감 전 or 당일 -> false
      */
     public boolean isDeadline(Long boardId) {
         JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardId); // 해당 jobBoardEntity
-        return jobBoardEntity.getDeadline().isAfter(LocalDateTime.now()) ? false : true; // deadline이 현재 시간보다 이전이면 true 반환
+        return jobBoardEntity.getDeadline().isAfter(LocalDateTime.now()) || jobBoardEntity.getDeadline().isEqual(LocalDateTime.now()) ? false : true; // deadline이 현재 시간보다 이전이면 true 반환
     }
     
     
     /**
      * 전달받은 boardId에 해당하는 JobBoardEntity의 limitNumber와 currentNumber를 비교해 limit수가 current수보다 작거나 같은 경우 true 반환 (큰 경우는 false 반환)하는 함수
      * @param boardId
-     * @return
+     * @return 모집인원 다 찼거나 초과한 경우-> true / 아직 모집 가능한 경우 ->false
      */
     public boolean isExceededLimitNumber(Long boardId) {
         JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardId); // 해당 jobBoardEntity

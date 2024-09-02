@@ -42,6 +42,7 @@ public class BoardDTO {
     private LocalDateTime deadline;
     private int limitNumber;
     private int currentNumber;
+    private int dDay;
 
     /**
      *  jobBoard 정보가 없는 게시글인 경우 DTO변환 함수
