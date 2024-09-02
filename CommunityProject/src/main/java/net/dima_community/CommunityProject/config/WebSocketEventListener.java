@@ -1,7 +1,8 @@
 package net.dima_community.CommunityProject.config;
 
 import lombok.RequiredArgsConstructor;
-import net.dima_community.CommunityProject.service.ChatRoomService;
+import net.dima_community.CommunityProject.service.chat.ChatRoomService;
+
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
