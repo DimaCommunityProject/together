@@ -183,7 +183,7 @@ public class BoardController {
     /**
      * ajax - activity/recruit 게시글인 경우 해당 게시글의 마감 여부 확인 요청
      * @param param
-     * @return
+     * @return 마감 O ->true / 마감 X -> false
      */
     @ResponseBody
     @GetMapping("/board/isDead")
