@@ -55,7 +55,7 @@ public class BoardListDTO { // 게시물 목록 화면에 필요한 속성들만
             LocalDateTime now = LocalDateTime.now();
             this.dDay = (int) ChronoUnit.DAYS.between(now.toLocalDate(), this.deadline.toLocalDate());
         } else {
-            this.dDay = 0; // 또는 다른 기본값
+            this.dDay = -10000; // 또는 다른 기본값
         }
     }
 
