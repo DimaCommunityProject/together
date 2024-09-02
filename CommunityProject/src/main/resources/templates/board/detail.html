@@ -3,6 +3,8 @@
 
 
 <head>
+  <title>[[${board.title}]]</title>
+
   <!-- Required meta tags -->
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,15 +16,15 @@
   <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
-
-  <title>[[${board.title}]]</title>
-
   <!-- JQuery -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
   <script>
     $(function() {
       $("#deleteBoard").click(deleteBoard);
+      $("#endBtn").click(endRecruit);
+      $("#recruitBtn").click(boardRecruit);
+      $("#submitRecruitBtn").click(submitRecruitForm);
+
     });
 
     // 게시글 삭제 처리 함수
@@ -32,13 +34,55 @@
       }
     }
 
+    // 모집 마감 알림 함수
+    function endRecruit() {
+      alert("인원 모집이 마감되었습니다.");
+    }
+
+    // 참여 처리 함수
+    function boardRecruit() {
+      // 참여여부 확인
+      var boardId = $("#boardId").val();
+      var memberId = $("#memberId").val();
+      $.ajax({
+        url:"/board/isRecruited",
+        method:"GET",
+        data:{"boardId":boardId, "memberId":memberId},
+        success : function (resp) {
+          // resp : true이면 이미 참여한 것임.
+          if(resp){ 
+            alert("이미 참여한 사용자입니다.");
+          }else{
+            // 모달창 값 채우기
+            $("#modalMemberId").val($("#memberId").val());
+            $("#modalBoardId").val($("#boardId").val());
+            $("#modalCategory").val($("#category").val());
+            $("#modalSearchWord").val($("#searchWord").val());
+            
+            // 모달창 열기
+            var recruitModal = new bootstrap.Modal(document.getElementById('recruitModal'));
+            recruitModal.show();
+          }       
+        }
+      });
+    }
+
+    // Recruit 폼 전송 함수
+    function submitRecruitForm() {
+      alert("참여 완료!");
+      $("#recruitForm").submit();
+    }
+
+
   </script>
 
 </head>
 
 <body class="link-sidebar">
   <input type="hidden" id="boardId" th:value="${board.boardId}">
-  <input type="hidden" id="category" th:value="${category}">
+  <input type="hidden" id="searchWord" th:value="${searchWord}">
+  <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
+  <input type="hidden" id="memberId" th:value="hs">
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -81,7 +125,6 @@
               <!-- 작성자 이미지 -->
               <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
               <!-- 작성자 ID 및 배지 -->
-
             </div>
             
             <!-- 게시글 작성자 수정/삭제 -->
@@ -117,23 +160,38 @@
 
             <div class="card-body p-4">
               <span class="badge text-bg-light mt-3">[[${category}]]</span>
-              <!-- 게시글 제목 -->
-              <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
               <div class="d-flex align-items-center gap-4">
-                <div class="d-flex align-items-center gap-2">
-                  <!--조회수-->
-                  <i class="ti ti-eye text-dark fs-5"></i>[[${board.hitCount}]] 
+                <!-- 게시글 제목 -->
+                <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
+                <!-- 인원 모집 -->
+                <div th:if="${board.limitNumber != 0}">
+                  <button id="endBtn" class="btn btn-primary" th:if="${board.currentNumber>=board.limitNumber}">
+                    <i class="ti ti-square-x fs-6"></i> 모집 마감
+                  </button>
+                  <button id="recruitBtn" class="btn btn-primary" th:unless="${board.currentNumber>=board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal">
+                    <i class="ti ti-user fs-6"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
+                  </button>
                 </div>
+              </div>
+              <div class="d-flex align-items-center gap-4">
+                <!--조회수-->
                 <div class="d-flex align-items-center gap-2">
-                  <!--댓글 수-->
-                  <i class="ti ti-message-2 text-dark fs-5"></i> [[${board.replyCount}]] 
+                  <i class="ti ti-eye text-dark fs-6"></i>[[${board.hitCount}]] 
                 </div>
+                <!--댓글 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <!--좋아요 수-->
-                  <i class="ti ti-heart text-dark fs-5"></i> [[${board.likeCount}]] 
+                  <i class="ti ti-message-2 text-dark fs-6"></i> [[${board.replyCount}]] 
                 </div>
-                <div class="d-flex align-items-center fs-2 ms-auto">
-                  <!--작성 날짜-->
+                <!--좋아요 수-->
+                <div class="d-flex align-items-center gap-2">
+                  <i class="ti ti-heart text-dark fs-6"></i> [[${board.likeCount}]] 
+                </div>
+                <!--신고 버튼-->
+                <div class="d-flex align-items-center gap-2">
+                  <button type="button" id="reportBtn" class="btn bg-danger-subtle text-danger">신고</button>
+                </div>
+                <!--작성 날짜-->
+                <div class="d-flex align-items-center fs-5 ms-auto">
                   <i class="ti ti-point text-dark"></i> [[${#temporals.format(board.createDate, 'EEE, MMM dd')}]] 
                 </div>
               </div>
@@ -230,11 +288,66 @@
         </div>
       </div>
 
-      <script>
-        function handleColorTheme(e) {
-          document.documentElement.setAttribute("data-color-theme", e);
-        }
-      </script>
+      <!-- Recruit Modal -->
+      <div class="modal fade" id="recruitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form class="form" th:action="@{/board/insertBoardRecruit}" method="POST" id="recruitForm">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h5 class="modal-title">Recruit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- Modal Body -->
+              <div class="modal-body">
+                <table class="table">
+                  <tr>
+                    <th>참여자 <span>*</span></th>
+                    <td><input type="text" name="memberId" id="modalMemberId" readonly></td>
+                  </tr>
+                  <tr>
+                    <th>기수 <span>*</span></th>
+                    <td><input type="text" name="memberGroup" id="modalMemberGroup" required></td>
+                  </tr>
+                  <tr>
+                    <th>전화번호 <span>*</span></th>
+                    <td><input type="text" name="memberPhone" id="modalMemberPhone" required></td>
+                  </tr>
+                  <tr>
+                    <th>이메일 <span>*</span></th>
+                    <td><input type="text" name="memberEmail" id="modalMemberEmail" required></td>
+                  </tr>
+                  <input type="hidden" name="boardId" id="modalBoardId">
+                  <input type="hidden" name="category" id="modalCategory">
+                  <input type="hidden" name="searchWord" id="modalSearchWord">
+                </table>
+              </div>
+              <!-- Modal Footer -->
+              <div class="modal-footer">
+                <button type="button" id="submitRecruitBtn" class="btn btn-primary">참여</button>
+                <button type="button" id="closeBtn" class="btn bg-danger-subtle text-danger ms-6" data-bs-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    
+    </div>
+
+    <script>
+      function handleColorTheme(e) {
+        document.documentElement.setAttribute("data-color-theme", e);
+      }
+
+      document.getElementById('recruitModal').addEventListener('hidden.bs.modal', function () {
+        document.body.classList.remove('modal-open');
+        document.querySelector('.modal-backdrop').remove();
+      });
+
+    </script>
+
+    <div>
       <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="icon ti ti-settings fs-7"></i>
       </button>
@@ -383,19 +496,18 @@
       </div>
     </div>
 
-    
-  </div>
-  <div class="dark-transparent sidebartoggler"></div>
-  <!-- Import Js Files -->
-  <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
-  <script th:src="@{/assets/js/theme/app.init.js}"></script>
-  <script th:src="@{/assets/js/theme/theme.js}"></script>
-  <script th:src="@{/assets/js/theme/app.min.js}"></script>
-  <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
-
-  <!-- solar icons -->
-  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <div class="dark-transparent sidebartoggler"></div>
+    <!-- Import Js Files -->
+    <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/assets/js/theme/app.init.js}"></script>
+    <script th:src="@{/assets/js/theme/theme.js}"></script>
+    <script th:src="@{/assets/js/theme/app.min.js}"></script>
+    <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
+    <!-- solar icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 </body>
 
 </html>

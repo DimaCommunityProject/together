@@ -136,7 +136,6 @@ public class BoardController {
      */
     @PostMapping("/board/write")
     public String writeBoard(@ModelAttribute BoardDTO dto, RedirectAttributes rttr) {
-        log.info("========== 게시글 등록 카테고리 : "+dto.getCategory());
         // DEFAULT 값 세팅
         dto.setHitCount(0);
         dto.setLikeCount(0);
@@ -165,13 +164,12 @@ public class BoardController {
      */
     @GetMapping("/board/detail")
     public String boardDetail(@RequestParam(name = "boardId") Long boardId, 
-                            @RequestParam(name = "category") BoardCategory category,
+                            @RequestParam(name = "category") String categoryString,
                             @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
                             Model model) {
+        // String -> Enum
+        BoardCategory category = BoardCategory.valueOf(categoryString);
         
-        // 조회수 증가
-        boardService.increaseHitCount(boardId);
-
         // boardId에 해당하는 게시글 DTO 
         BoardDTO board = boardService.selectOne(boardId);
 
@@ -278,27 +276,58 @@ public class BoardController {
      * @param param
      * @return 참여 성공 → true / 참여 실패(or 이미 참여한 경우) → false
      */
-    @ResponseBody
-    @GetMapping("/board/insertBoardRecruit")
-    public boolean insertJobBoardRecruit(@RequestParam(name = "boardId") Long boardId,
+    // @ResponseBody
+    // @GetMapping("/board/insertBoardRecruit")
+    // public boolean insertJobBoardRecruit(@RequestParam(name = "boardId") Long boardId,
+    //                             @RequestParam(name = "memberId") String memberId,
+    //                             @RequestParam(name = "memberGroup") String memberGroup,
+    //                             @RequestParam(name = "memberPhone") String memberPhone,
+    //                             @RequestParam(name = "memberEmail") String memberEmail) {
+    //     // 해당 게시글에 해당 사용자의 참여여부 확인
+    //     if(boardService.isRecruited(boardId, memberId)) return false; // 이미 참여함
+
+    //     // BoardRecruitDTO 생성
+    //     JobBoardRecruitDTO jobBoardRecruitDTO = new JobBoardRecruitDTO(null, boardId, memberId, memberGroup, memberPhone, memberEmail);
+    //     // DB에 저장
+    //     if(boardService.saveJobBoardRecruit(jobBoardRecruitDTO)!=null){
+    //         boardService.updateCurrentNumber(jobBoardRecruitDTO.getJobBoardId()); // jobBoardEntity의 currentNumber 변경 
+    //         return true;
+    //     }else{ 
+    //         return false; // DB 저장 실패
+    //     }
+    // }
+
+    @PostMapping("/board/insertBoardRecruit")
+    public String insertJobBoardRecruit(@RequestParam(name = "boardId") Long boardId,
                                 @RequestParam(name = "memberId") String memberId,
                                 @RequestParam(name = "memberGroup") String memberGroup,
                                 @RequestParam(name = "memberPhone") String memberPhone,
-                                @RequestParam(name = "memberEmail") String memberEmail) {
-        // 해당 게시글에 해당 사용자의 참여여부 확인
-        if(boardService.isRecruited(boardId, memberId)) return false; // 이미 참여함
+                                @RequestParam(name = "memberEmail") String memberEmail,
+                                @RequestParam(name = "category") String categoryString,
+                                @RequestParam(name = "searchWord") String searchWord,
+                                RedirectAttributes rttr) {
+        // String -> Enum
+        BoardCategory category = BoardCategory.valueOf(categoryString);
 
+        // BoardDTO -> jobBoardId 가져오기
+        Long jobBoardId = boardService.getJobBoardIdFromBoard(boardId);
+        log.info("==============저장할 jobBoardId : "+jobBoardId);
         // BoardRecruitDTO 생성
-        JobBoardRecruitDTO jobBoardRecruitDTO = new JobBoardRecruitDTO(null, boardId, memberId, memberGroup, memberPhone, memberEmail);
+        JobBoardRecruitDTO jobBoardRecruitDTO = new JobBoardRecruitDTO(null, jobBoardId, memberId, memberGroup, memberPhone, memberEmail);
         // DB에 저장
         if(boardService.saveJobBoardRecruit(jobBoardRecruitDTO)!=null){
-            boardService.updateCurrentNumber(boardId); // jobBoardEntity의 currentNumber 변경 
-            return true;
-        }else{ 
-            return false; // DB 저장 실패
+            // jobBoardEntity의 currentNumber 변경 
+            boardService.updateCurrentNumber(jobBoardId); 
         }
+
+        rttr.addAttribute("boardId", boardId);
+        rttr.addAttribute("category", category.name());
+        rttr.addAttribute("searchWord", searchWord);
+
+        return "redirect:/board/detail";
     }
 
+    
 
     // ===================== 게시글 수정 =====================
     
@@ -336,13 +365,16 @@ public class BoardController {
      */
     @PostMapping("/board/update")
     public String postMethodName(@ModelAttribute BoardDTO boardDTO, 
-                                @RequestParam(name = "category") BoardCategory category,
+                                @RequestParam(name = "category") String categoryString,
                                 @RequestParam(name = "searchWord", defaultValue = "") String searchWord, RedirectAttributes rttr) {
+        // String -> Enum
+        BoardCategory category = BoardCategory.valueOf(categoryString);
+
         // 전달받은 boardDTO로 기존 board 정보 수정 처리
         boardService.updateBoard(boardDTO);
         
-        rttr.addAttribute("board", boardDTO);
-        rttr.addAttribute("category", category);
+        rttr.addAttribute("boardId", boardDTO.getBoardId());
+        rttr.addAttribute("category", category.name());
         rttr.addAttribute("searchWord", searchWord);
         return "redirect:/board/detail";
     }

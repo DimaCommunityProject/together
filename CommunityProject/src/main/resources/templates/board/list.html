@@ -3216,11 +3216,11 @@
                   <input type="hidden" name="page" id="requestPage" th:value="${page}">
                   <input type="hidden" name="category" id="" th:value="${category}">
                   <input type="text" class="form-control fs-3" name="searchWord" placeholder="검색어를 입력하세요" th:value="${searchWord}" style="width:40%;">
-                  <button type="submit" class="btn btn-secondary" style="margin-left: 10px;"> 
+                  <button type="submit" class="btn btn-primary" style="margin-left: 10px;"> 
                       <i class="ti ti-search fs-5"></i> 
                   </button>
               </form>
-          </div>
+            </div>
             <!-- 게시글 작성 버튼 -->
             <div>
               <a class="btn btn-primary" th:href="@{/board/write(category=${category})}">
@@ -3259,7 +3259,7 @@
           
           <!-- 게시글 목록  -->
           <div class="row">
-            <div class="col-md-6 col-lg-8">
+            <!-- <div class="col-md-6 col-lg-8">
               <div class="card blog blog-img-one position-relative overflow-hidden hover-img">
                 <div class="card-body position-relative">
                   <div class="d-flex flex-column justify-content-between h-100">
@@ -3290,29 +3290,47 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- class="col-md-6 col-lg-4" 이거를 반복시키면 될듯 -->
             <div class="col-md-6 col-lg-4" th:each="board: ${list}"> 
               <div class="card blog blog-img-two position-relative overflow-hidden hover-img">
                 <div class="card-body position-relative">
                   <div class="d-flex flex-column justify-content-between h-100">
+
                     <div class="d-flex align-items-start justify-content-between">
                       <!-- 작성자 ID -->
                       <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
                         <!-- 작성자 이미지 -->
                         <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
                       </div>
-                      <!-- 마감기한 -->
-                      <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.deadline != null}">
-                        <span th:if="${board.dDay > 0}">D-[[${board.dDay}]]</span>
-                        <span th:if="${board.dDay == 0}">D-Day</span>
-                        <span th:if="${board.dDay &lt; 0}">마감</span>
-                      </span> 
+                      
                       <!-- 모집인원 -->
+                      <!-- <span class="badge text-bg-primary fs-3 fw-semibold d-flex align-items-center justify-content-center" style="margin-top: 2.4%;margin-left: 35%;" th:if="${board.limitNumber != 0 && board.dDay >= 0}">
+                        <i class="ti ti-user fs-5"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
+                      </span> -->
+                      
+                      <!-- 마감기한 -->
+                      <!-- <span class="badge text-bg-primary fs-2 fw-semibold" style="margin-top: 3%;" th:if="${board.deadline != null}">
+                        <span th:if="${board.dDay > 0}"><i class="ti ti-calendar-event fs-5"></i> D-[[${board.dDay}]]</span>
+                        <span th:if="${board.dDay == 0}"><i class="ti ti-calendar-event fs-5"></i> D-Day</span>
+                        <span th:if="${board.dDay &lt; 0}"><i class="ti ti-calendar-off fs-5"></i> 마감</span>
+                      </span> -->
+                      <!-- 마감기한 -->
+                      <span class="badge text-bg-primary fs-3 fw-semibold d-flex align-items-center justify-content-center" style="margin-top: 2%;" th:if="${board.deadline != null}">
+                        <span th:if="${board.dDay > 0}" class="d-flex align-items-center"><i class="ti ti-calendar-event fs-5 me-1"></i> D-[[${board.dDay}]]</span>
+                        <span th:if="${board.dDay == 0}" class="d-flex align-items-center"><i class="ti ti-calendar-event fs-5 me-1"></i> D-Day</span>
+                        <span th:if="${board.dDay &lt; 0}" class="d-flex align-items-center"><i class="ti ti-calendar-off fs-5 me-1"></i> 마감</span>
+                      </span>
+
+                    </div>
+
+                    <!--모집인원 -->
+                    <div class="d-flex align-items-start justify-content-between" style="margin-bottom: 49%; margin-left: 79.5%;"> 
                       <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.limitNumber != 0 && board.dDay >= 0}">
                         <i class="ti ti-user fs-5"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
                       </span>
                     </div>
+
                     <div>
                       <!-- 게시글 제목 -->
                       <a th:href="@{/board/detail(boardId=${board.boardId}, category=${category})}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">[[${board.title}]]</a>
@@ -3339,6 +3357,7 @@
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>

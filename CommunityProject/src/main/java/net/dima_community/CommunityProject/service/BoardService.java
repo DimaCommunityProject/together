@@ -300,7 +300,7 @@ public class BoardService {
      * @param boardId
      */
     @Transactional
-    public void increaseHitCount(Long boardId) {
+    private void increaseHitCount(Long boardId) {
         BoardEntity boardEntity = selectBoardEntity(boardId); // boardEntity
         boardEntity.setHitCount(boardEntity.getHitCount()+1); // 1 증가
     }
@@ -313,12 +313,15 @@ public class BoardService {
     public BoardDTO selectOne(Long boardId) {
         BoardEntity boardEntity = selectBoardEntity(boardId); // BoardEntity
         
+        // 조회수 증가
+        increaseHitCount(boardId);
+
         // Entity -> DTO로 변환
         BoardDTO boardDTO = BoardDTO.toDTO(boardEntity, boardEntity.getMemberEntity().getMemberId());
 
         // activity/recruit 게시글인 경우, JobBoardEntity 값을 가져와서 BoardDTO에서 관련 속성값을 세팅
         if (boardDTO.getCategory()==BoardCategory.activity || boardDTO.getCategory()==BoardCategory.recruit) {
-            JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardId); // JobBoardEntity
+            JobBoardEntity jobBoardEntity = boardEntity.getJobBoardEntity(); // JobBoardEntity
             // deadline, limitNumber, currentNumber 값 세팅
             boardDTO.setDeadline(jobBoardEntity.getDeadline());
             boardDTO.setLimitNumber(jobBoardEntity.getLimitNumber());
@@ -466,12 +469,12 @@ public class BoardService {
 
 
     /**
-     * 전달받은 boardId에 해당하는 jobBoardEntity의 currrentNumber 값을 1 증가시키는 함수
-     * @param boardId
+     * 전달받은 jobBoardId에 해당하는 jobBoardEntity의 currrentNumber 값을 1 증가시키는 함수
+     * @param jobBoardId
      */
     @Transactional
-    public void updateCurrentNumber(Long boardId) {
-        JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardId);
+    public void updateCurrentNumber(Long jobBoardId) {
+        JobBoardEntity jobBoardEntity = selectJobBoardEntity(jobBoardId);
         jobBoardEntity.setCurrentNumber(jobBoardEntity.getCurrentNumber()+1);
     }
 
@@ -558,6 +561,17 @@ public class BoardService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * boardId에 해당하는 boardEntity의 JobBoardEntity의 jobBoardId를 반환하는 함수
+     * @param boardId
+     * @return
+     */
+    public Long getJobBoardIdFromBoard(Long boardId) {
+        BoardEntity boardEntity = selectBoardEntity(boardId);
+        JobBoardEntity jobBoardEntity = boardEntity.getJobBoardEntity();
+        return jobBoardEntity.getJobBoardId();
     }
     
 
