@@ -47,6 +47,7 @@ public class BoardEntity {
 
     // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
     private MemberEntity memberEntity;
 
     @Column(name = "member_group", nullable = false)

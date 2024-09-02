@@ -284,7 +284,8 @@
     }
 
     function deleteProject() {
-      let btnId = $(this).attr('id').charAt($(this).attr('id').length - 1);
+      let btnId = $(this).attr('id').replace("delete", "");
+      console.log(btnId);
       $.ajax({
         url: "/memberproject/deleteproject"
         , data: { projectSeq: btnId }

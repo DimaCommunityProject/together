@@ -20,7 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+// import lombok.ToString;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+// @ToString
 @Builder
 
 @Entity
@@ -83,10 +83,9 @@ public class MemberEntity {
 	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
 
 	// 1) Board
-	// @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch =
-	// FetchType.LAZY, orphanRemoval = true)
-	// @OrderBy("board_id")
-	// private List<BoardEntity> jobBoardEntities;
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("board_id")
+	private List<BoardEntity> BoardEntities;
 
 	// 3) Reply
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)

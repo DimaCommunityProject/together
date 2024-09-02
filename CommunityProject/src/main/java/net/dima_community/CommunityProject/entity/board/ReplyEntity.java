@@ -16,7 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+// import lombok.ToString;
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
 
@@ -24,7 +24,7 @@ import net.dima_community.CommunityProject.entity.MemberEntity;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@ToString
+// @ToString
 @Builder
 @Entity
 @Table(name = "reply")
