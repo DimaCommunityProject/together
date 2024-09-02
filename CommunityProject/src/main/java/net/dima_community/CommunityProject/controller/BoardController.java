@@ -252,7 +252,7 @@ public class BoardController {
      */
     @PostMapping("/board/report")
     public String postMethodName(@ModelAttribute BoardReportDTO dto, 
-                                @RequestParam(name = "category") BoardCategory category,
+                                @RequestParam(name = "boardCategory") BoardCategory category,
                                 @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
                                 RedirectAttributes rttr) {
         
@@ -272,31 +272,17 @@ public class BoardController {
     // ===================== recruit 참여 =====================
     
     /**
-     * ajax - 게시글 참여 처리 요청
-     * @param param
-     * @return 참여 성공 → true / 참여 실패(or 이미 참여한 경우) → false
+     * 게시글 참여 처리 요청
+     * @param boardId
+     * @param memberId
+     * @param memberGroup
+     * @param memberPhone
+     * @param memberEmail
+     * @param categoryString
+     * @param searchWord
+     * @param rttr
+     * @return
      */
-    // @ResponseBody
-    // @GetMapping("/board/insertBoardRecruit")
-    // public boolean insertJobBoardRecruit(@RequestParam(name = "boardId") Long boardId,
-    //                             @RequestParam(name = "memberId") String memberId,
-    //                             @RequestParam(name = "memberGroup") String memberGroup,
-    //                             @RequestParam(name = "memberPhone") String memberPhone,
-    //                             @RequestParam(name = "memberEmail") String memberEmail) {
-    //     // 해당 게시글에 해당 사용자의 참여여부 확인
-    //     if(boardService.isRecruited(boardId, memberId)) return false; // 이미 참여함
-
-    //     // BoardRecruitDTO 생성
-    //     JobBoardRecruitDTO jobBoardRecruitDTO = new JobBoardRecruitDTO(null, boardId, memberId, memberGroup, memberPhone, memberEmail);
-    //     // DB에 저장
-    //     if(boardService.saveJobBoardRecruit(jobBoardRecruitDTO)!=null){
-    //         boardService.updateCurrentNumber(jobBoardRecruitDTO.getJobBoardId()); // jobBoardEntity의 currentNumber 변경 
-    //         return true;
-    //     }else{ 
-    //         return false; // DB 저장 실패
-    //     }
-    // }
-
     @PostMapping("/board/insertBoardRecruit")
     public String insertJobBoardRecruit(@RequestParam(name = "boardId") Long boardId,
                                 @RequestParam(name = "memberId") String memberId,

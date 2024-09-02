@@ -429,6 +429,7 @@ public class BoardService {
      * @param dto
      */
     public void insertJobBoardReported(BoardReportDTO dto) {
+        log.info("================= 게시글 신고 boardID : "+dto.getBoardId()+ " boareWriter : "+dto.getMemberId());
         BoardEntity boardEntity = selectBoardEntity(dto.getBoardId()); // boardEntity
         // 게시글 신고 DTO -> Entity 변환
         BoardReportEntity entity = BoardReportEntity.toEntity(dto, boardEntity);

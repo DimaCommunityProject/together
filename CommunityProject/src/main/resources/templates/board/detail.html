@@ -24,7 +24,9 @@
       $("#endBtn").click(endRecruit);
       $("#recruitBtn").click(boardRecruit);
       $("#submitRecruitBtn").click(submitRecruitForm);
-
+      $("#reportBtn").click(boardReport);
+      $("#submitReportBtn").click(submitReportForm);
+      
     });
 
     // 게시글 삭제 처리 함수
@@ -54,7 +56,7 @@
             alert("이미 참여한 사용자입니다.");
           }else{
             // 모달창 값 채우기
-            $("#modalMemberId").val($("#memberId").val());
+            $("#modalMemberId").val($("#currentUser").val());
             $("#modalBoardId").val($("#boardId").val());
             $("#modalCategory").val($("#category").val());
             $("#modalSearchWord").val($("#searchWord").val());
@@ -73,16 +75,36 @@
       $("#recruitForm").submit();
     }
 
+    //게시글 신고 버튼
+    function boardReport() {
+      // 모달창 값 채우기
+      $("#reportModalWriter").val($("#boardWriter").val());
+      $("#reportModalTitle").val($("#boardTitle").val());
+      $("#reportModalBoardId").val($("#boardId").val());
+      $("#reportModalCategory").val($("#category").val());
+      $("#reportModalSearchWord").val($("#searchWord").val());
+      
+      // 모달창 열기
+      var recruitModal = new bootstrap.Modal(document.getElementById('reportModal'));
+      recruitModal.show();
+    }
 
+    // Report 폼 전송 함수
+    function submitReportForm() {
+      alert("신고 완료!");
+      $("#reportForm").submit();
+    }
   </script>
 
 </head>
 
 <body class="link-sidebar">
   <input type="hidden" id="boardId" th:value="${board.boardId}">
+  <input type="hidden" id="boardTitle" th:value="${board.title}">
+  <input type="hidden" id="boardWriter" th:value="${board.memberId}">
   <input type="hidden" id="searchWord" th:value="${searchWord}">
   <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
-  <input type="hidden" id="memberId" th:value="hs">
+  <input type="hidden" id="currentUser" th:value="hs">
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -119,7 +141,7 @@
             <div class="position-relative">
               <a href="javascript:void(0)">
                 <!-- 작성자 바로 위 배경이미지 -->
-                <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="300">
+                <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="200">
               </a>
               <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2 min Read</span>
               <!-- 작성자 이미지 -->
@@ -188,7 +210,7 @@
                 </div>
                 <!--신고 버튼-->
                 <div class="d-flex align-items-center gap-2">
-                  <button type="button" id="reportBtn" class="btn bg-danger-subtle text-danger">신고</button>
+                  <button type="button" id="reportBtn" class="btn bg-danger-subtle text-danger" data-bs-toggle="modal" data-bs-target="#reportModal">신고</button>
                 </div>
                 <!--작성 날짜-->
                 <div class="d-flex align-items-center fs-5 ms-auto">
@@ -315,7 +337,7 @@
                   </tr>
                   <tr>
                     <th>이메일 <span>*</span></th>
-                    <td><input type="text" name="memberEmail" id="modalMemberEmail" required></td>
+                    <td><input type="email" name="memberEmail" id="modalMemberEmail" required></td>
                   </tr>
                   <input type="hidden" name="boardId" id="modalBoardId">
                   <input type="hidden" name="category" id="modalCategory">
@@ -332,6 +354,61 @@
         </div>
       </div>
 
+      <!-- Report Modal -->
+      <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form class="form" th:action="@{/board/report}" method="POST" id="reportForm">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h5 class="modal-title">Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- Modal Body -->
+              <div class="modal-body">
+                <table class="table">
+                  <tr>
+                    <th>신고 게시글 제목 <span>*</span></th>
+                    <td><input type="text"  id="reportModalTitle" readonly></td>
+                  </tr>
+                  <tr>
+                    <th>신고 게시글 작성자 <span>*</span></th>
+                    <td><input type="text"  name="memberId" id="reportModalWriter" readonly></td>
+                  </tr>
+                  <tr>
+                    <th>신고 카테고리 <span>*</span></th>
+                    <td>
+                      <select name="category" id="">
+                        <option value="IllegalContent">위법적인 내용</option>
+                        <option value="ViolentContent">폭력적인 내용</option>
+                        <option value="PrivacyViolation">사생활 침해</option>
+                        <option value="Spam">스팸</option>
+                        <option value="ETC">기타</option>
+                      </select>
+                    </td>
+                  </tr> 
+                  <tr>
+                    <th>신고사유 <span>*</span></th>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <textarea class="form-control" name="reason" id="modalContent" cols="30" rows="5" required></textarea>
+                    </td>
+                  </tr>
+                  <input type="hidden" name="boardId" id="reportModalBoardId">
+                  <input type="hidden" name="boardCategory" id="reportModalCategory">
+                  <input type="hidden" name="searchWord" id="reportModalSearchWord">
+                </table>
+              </div>
+              <!-- Modal Footer -->
+              <div class="modal-footer">
+                <button type="button" id="submitReportBtn" class="btn bg-danger-subtle text-danger ms-6">신고</button>
+                <!-- <button type="button" id="closeBtn" class="btn bg-danger-subtle text-danger ms-6" data-bs-dismiss="modal">Close</button> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     
     </div>
 
@@ -339,8 +416,13 @@
       function handleColorTheme(e) {
         document.documentElement.setAttribute("data-color-theme", e);
       }
-
+      // recruit 모달 닫기
       document.getElementById('recruitModal').addEventListener('hidden.bs.modal', function () {
+        document.body.classList.remove('modal-open');
+        document.querySelector('.modal-backdrop').remove();
+      });
+      // report 모달 닫기
+      document.getElementById('reportModal').addEventListener('hidden.bs.modal', function () {
         document.body.classList.remove('modal-open');
         document.querySelector('.modal-backdrop').remove();
       });
