@@ -43,7 +43,7 @@ public class ReplyController {
     /**
      * ajax - 게시글에 대한 댓글 목록 요청
      * @param boardId
-     * @param memberId
+     * @param memberId (로그인한 사용자)
      * @param model
      * @return
      */
@@ -64,7 +64,7 @@ public class ReplyController {
     /**
      * ajax - 댓글 등록 처리 요청
      * @param boardId
-     * @param memberId
+     * @param memberId (로그인한 사용자)
      * @param content
      * @return
      */
@@ -140,6 +140,18 @@ public class ReplyController {
                                     @RequestParam(name = "memberId")String memberId) {
         return replyService.toggleLikeOnReply(replyId, memberId);
     }
+
+    /**
+     * ajax - 입력받은 replyId에 해당하는 댓글의 좋아요 수 요청
+     * @param replyId
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/reply/getLikeCount")
+    public int getLikeCount(@RequestParam(name = "replyId")Long replyId) {
+        return replyService.getLikeCount(replyId);
+    }
+    
 
     // ================== 대댓글 작성 ==================
     

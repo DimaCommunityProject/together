@@ -18,7 +18,7 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity,Long>{
 
     // boardEntity에 해당하는 댓글들을 반환하는 메서드
     @Query("SELECT r FROM ReplyEntity r " +
-            "WHERE r.boardEntity =: boardEntity " +
+            "WHERE r.boardEntity = :boardEntity " +
             "ORDER BY r.createDate DESC")
     List<ReplyEntity> findByBoardEntity(@Param("boardEntity") BoardEntity boardEntity);
 }

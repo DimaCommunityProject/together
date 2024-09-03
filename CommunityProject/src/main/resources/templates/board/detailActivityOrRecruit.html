@@ -21,7 +21,7 @@
 
   <!-- 좋아요 css -->
   <style>
-    #heart:hover, #message:hover, .replyHeart:hover {
+    #heart:hover, #message:hover {
         /* background-color: #FFD2D2;  */ 
         background-color: #EBF5FF; /* 하늘 배경 */
         border-radius: 50%; /* 배경 둥글게 */
@@ -118,6 +118,22 @@
               <div class="d-flex align-items-center gap-4">
                 <!-- 게시글 제목 -->
                 <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
+                <!-- recruit -->
+                <div th:if="${board.limitNumber != 0}">
+                  <button id="endBtn" class="btn btn-primary" th:if="${board.currentNumber>=board.limitNumber}">
+                    <i class="ti ti-square-x fs-6"></i> 모집 마감
+                  </button>
+                  <!--참여 버튼-->
+                  <button id="recruitBtn" class="btn btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal" style="font-weight: bold;">
+                    <i class="ti ti-user fs-6"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
+                  </button>
+                </div>
+                <!--D-day-->
+                <div id="dDayBtn" class="btn btn-primary" th:if="${board.deadline!=null}" style="font-weight: bold;">
+                  <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-6"></i>  D-[[${board.dDay}]] </span> 
+                  <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-6"></i>  D-Day </span> 
+                  <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-6"></i>  마감</span> 
+                </div>
               </div>
               <div class="d-flex align-items-center gap-4">
                 <!--조회수-->
@@ -153,17 +169,16 @@
               
               <!-- 댓글 작성 -->
               <h4 class="mb-4 fw-semibold">Post Comments</h4>
-              <div>
-                <input type="hidden" id="replyBoard" th:value="${board.boardId}"> <!--댓글달 게시글 ID-->
+              <form>
                 <!-- <input type="hidden" id="replyWriter" th:value="${#authentication.name}"> -->
-                <input type="hidden" id="replyWriter" th:value="hs"> <!--댓글 작성자 ID-->
+                <input type="hidden" id="replyWriter" th:value="${hs}"> <!--댓글 작성자 ID-->
                 <textarea class="form-control mb-4" rows="5" id="replyContent"></textarea> <!--댓글 내용-->
                 <button class="btn btn-primary" id="replySubmit">Post Comment</button> <!-- 댓글 작성 버튼 -->
-              </div>
+              </form>
 
               <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
                 <h4 class="mb-0">Comments</h4>
-                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded" id="replyCount">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
+                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
               </div>
 
               <!-- 댓글 목록 -->
@@ -176,26 +191,19 @@
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
                       <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                      <div class="ms-auto d-flex align-items-center">
-                        <!-- 댓글 좋아요 -->
-                        <!-- <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
-                        <!-- <i th:if="${reply.likeCount>=0}" class="ti ti-hearts text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
-                        <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
-                        <i th:if="${reply.likeCount>0}" class="ti ti-hearts text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
-                        <span>[[${reply.likeCount}]]</span>
-                        /
+                      <!-- 댓글 좋아요 -->
+                      <div>
+                        <!-- <i class="ti ti-heart text-dark fs-6 replyHeart" data-member="${#authentication.name}"></i><span>[[${reply.likeCount}]]</span> -->
+                        <i class="ti ti-heart text-dark fs-6 replyHeart" data-member="${hs}" data-reply="${reply.replyId}"></i><span>[[${reply.likeCount}]]</span>
                       </div>
                     </div>
                     <!-- 댓글 내용 -->
                     <p class="my-3" th:text="${reply.content}"></p>
-                    <div>
-                      <input type="hidden" name="" class="childReplyParent" th:value="${reply.replyId}">
-                      <div class="d-flex align-items-center gap-2 childReplyForm" >
-                        <!--대댓글 작성요청 버튼-->
-                        <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                          <i class="ti ti-arrow-back-up"></i> 
-                        </a>
-                      </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <!--대댓글 작성요청 버튼-->
+                      <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+                        <i class="ti ti-arrow-back-up"></i> 
+                      </a>
                     </div>
                   </div>
                   <!-- 대댓글이 있는 경우 -->
@@ -511,7 +519,7 @@
     <div class="dark-transparent sidebartoggler"></div>
 
     <!-- boardDetail의 외부 JS파일 -->
-    <script th:src="@{/script/boardDetail.js}"></script>
+    <script th:src="@{/script/boardDetailActivityOrRecruit.js}"></script>
 
     <!-- Import Js Files -->
     <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>

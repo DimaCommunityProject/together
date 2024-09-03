@@ -153,7 +153,7 @@ public class ReplyService {
      */
     private void addChildReplies(ReplyDTO parentDTO, Map<Long, List<ReplyDTO>>replyTree){
         List<ReplyDTO> childReplies = replyTree.get(parentDTO.getReplyId());
-        if (childReplies.size() != 0) {
+        if (childReplies!=null) {
             parentDTO.setChildReplies(childReplies); // 대댓글 목록 세팅
             // for(ReplyDTO child : childReplies){
             //     addChildReplies(child, replyTree); // 재귀 호출 (대댓글의 댓글까지 구현하고자 하려면 사용!)
@@ -268,6 +268,16 @@ public class ReplyService {
         }
     }
 
+    /**
+     * replyId에 해당하는 reply의 likeCount 반환
+     * @param replyId
+     * @return
+     */
+    public int getLikeCount(Long replyId) {
+        ReplyEntity replyEntity = selectReplyEntity(replyId);
+        return replyEntity.getLikeCount();
+    }
+
     // ====================== 대댓글 =====================
 
     /**
@@ -278,4 +288,6 @@ public class ReplyService {
     public boolean existsParentReply(Long parentReplyId) {
         return replyRepository.existsById(parentReplyId);
     }
+
+    
 }
