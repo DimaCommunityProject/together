@@ -99,6 +99,8 @@ public class MemberService {
 
 	@Transactional
 	public void approve(String id) {
+		// findEntityById 매소드 하나 만듦!!
+		// findById와 findEntityById 구별해서 쓰기!!
 		MemberEntity memberEntity = findEntityById(id).get();
 		memberEntity.setMemberEnabled("Y");
 	}
