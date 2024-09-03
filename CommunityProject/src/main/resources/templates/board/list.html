@@ -3347,7 +3347,8 @@
                         </div>
                         <!-- 좋아요수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
-                          <i class="ti ti-heart fs-5"></i>
+                          <i class="ti ti-heart fs-5" th:if="${board.likeCount==0}"></i>
+                          <i class="ti ti-hearts fs-5" th:unless="${board.likeCount==0}"></i>
                           [[${board.likeCount}]]
                         </div>
                         <!-- 작성 날짜 -->

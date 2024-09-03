@@ -19,17 +19,20 @@
   <!-- JQuery -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 
-  <!-- board detail javascript file -->
-  <!-- <script th:src="@{/script/boardWrite.js}"></script> -->
-  <script>
+  <!-- boardDetail의 외부 JS파일 -->
+  <!-- <script th:src="@{/script/boardDetail.js}"></script> -->
+
+  <!-- <script>
     $(function() {
-        $("#deleteBoard").click(deleteBoard);
-        $("#endBtn").click(endRecruit);
-        $("#recruitBtn").click(boardRecruit);
-        $("#submitRecruitBtn").click(submitRecruitForm);
-        $("#reportBtn").click(boardReport);
-        $("#submitReportBtn").click(submitReportForm);
-        init();
+      $("#deleteBoard").click(deleteBoard);
+      $("#endBtn").click(endRecruit);
+      $("#recruitBtn").click(boardRecruit);
+      $("#submitRecruitBtn").click(submitRecruitForm);
+      $("#reportBtn").click(boardReport);
+      $("#submitReportBtn").click(submitReportForm);
+      $("#message").click(moveToReply);
+      $("#heart").click(heartToggle);
+      init();
     });
 
     // 게시글 삭제 처리 함수
@@ -46,9 +49,10 @@
 
     // 참여 처리 함수
     function boardRecruit() {
+        console.log("지금 참여버튼 눌렀어");
         // 참여여부 확인
         var boardId = $("#boardId").val();
-        var memberId = $("#memberId").val();
+        var memberId = $("#currentUser").val(); // 현재 로그인한 사용자
         $.ajax({
             url:"/board/isRecruited",
             method:"GET",
@@ -57,6 +61,8 @@
             // resp : true이면 이미 참여한 것임.
             if(resp){ 
                 alert("이미 참여한 사용자입니다.");
+                // 모달을 방지하기 위해 data-bs-toggle 및 data-bs-target 속성 제거
+                $("#recruitBtn").attr("data-bs-toggle", "").attr("data-bs-target", "");
             }else{
                 // 모달창 값 채우기
                 $("#modalMemberId").val($("#currentUser").val());
@@ -81,15 +87,15 @@
     //게시글 신고 버튼
     function boardReport() {
         // 모달창 값 채우기
-        $("#reportModalWriter").val($("#boardWriter").val());
+        $("#reportModalWriter").val($("#boardWriter").val()); // 게시글 작성자 
         $("#reportModalTitle").val($("#boardTitle").val());
         $("#reportModalBoardId").val($("#boardId").val());
         $("#reportModalCategory").val($("#category").val());
         $("#reportModalSearchWord").val($("#searchWord").val());
 
         // 모달창 열기
-        var recruitModal = new bootstrap.Modal(document.getElementById('reportModal'));
-        recruitModal.show();
+        var reportModal = new bootstrap.Modal(document.getElementById('reportModal'));
+        reportModal.show();
     }
 
     // Report 폼 전송 함수
@@ -98,14 +104,55 @@
         $("#reportForm").submit();
     }
 
+    // 댓글 부분으로 이동하는 함수
+    function moveToReply() {
+        var offset = $("#replyPart").offset(); //해당 위치 반환
+        $("html, body").animate({scrollTop: offset.top},150); // 선택한 위치로 이동. 두번째 인자는 0.4초를 의미한다.
+    }
+
+    // 좋아요 수 반환 함수
+    function getLikeCount() {
+        var boardId = $("#boardId").val();
+        $.ajax({
+            method:"GET",
+            url:"/board/getLikeCount",
+            data:{"boardId":boardId},
+            success: function (result) {
+                console.log("== 갱신된 좋아요 개수 : "+ result);
+                $("#likeCount").text(result);
+            }
+        });
+    }
+
+
+    // 좋아요 설정/해제 함수
+    function heartToggle() {
+        var boardId = $("#boardId").val();
+        var currentUser = $("#currentUser").val();
+        $.ajax({
+            method:"GET",
+            url:"/board/likeUpdate",
+            data:{"boardId":boardId,"memberId":currentUser},
+            success:function (result) {
+                if (result) {
+                    $("#heart").attr("class", "ti ti-heart-filled text-dark fs-6"); // 채워진 하트
+                }else{
+                    $("#heart").attr("class", "ti ti-heart text-dark fs-6"); // 빈 하트
+                }
+                getLikeCount(); // 좋아요 수 업데이트
+            }
+        });
+    }
+
 
 
     function init() {
         var category = $("#category").val();
         var boardId = $("#boardId").val();
+        var currentUser = $("#currentUser").val();
 
+        // activity/recruit 인 경우 마감 여부 확인 
         if (category=='activity'||category=='recruit') {
-            // activity/recruit 인 경우 마감 여부 확인 - deadline이 null인지 아닌지
             $.ajax({
                 method:"GET",
                 url:"/board/isDead",
@@ -124,11 +171,36 @@
             });        
         }
 
-
         // 현재 로그인한 사용자의 좋아요 여부
+        $.ajax({
+            method:"GET",
+            url:"/board/isLikeCount",
+            data:{"boardId":boardId, "memberId":currentUser},
+            success: function (result) {
+                if (result) {
+                    // 채워진 하트
+                    $("#heart").attr("class", "ti ti-heart-filled text-dark fs-6")
+                }else{
+                    // 빈 하트
+                    $("#heart").attr("class", "ti ti-heart text-dark fs-6")
+                }
+            }
+        });
 
     }
-  </script>
+  </script> -->
+
+
+  <!-- 좋아요 css -->
+  <style>
+    #heart:hover, #message:hover {
+        /* background-color: #FFD2D2;  */ 
+        background-color: #EBF5FF; /* 하늘 배경 */
+        border-radius: 50%; /* 배경 둥글게 */
+        transform: scale(1.09); /* 살짝 확대 */
+        cursor: pointer;
+    }
+  </style>
 
 </head>
 
@@ -136,7 +208,7 @@
   <input type="hidden" id="boardId" th:value="${board.boardId}">
   <input type="hidden" id="boardTitle" th:value="${board.title}">
   <input type="hidden" id="boardWriter" th:value="${board.memberId}">
-  <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
+  <!-- <input type="hidden" id="currentUser" th:value="${#authentication.name}"> -->
   <input type="hidden" id="currentUser" th:value="hs">
   <!-- Preloader -->
   <div class="preloader">
@@ -224,12 +296,12 @@
                     <i class="ti ti-square-x fs-6"></i> 모집 마감
                   </button>
                   <!--참여 버튼-->
-                  <button id="recruitBtn" class="btn btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal">
+                  <button id="recruitBtn" class="btn btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal" style="font-weight: bold;">
                     <i class="ti ti-user fs-6"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
                   </button>
                 </div>
                 <!--D-day-->
-                <button id="dDayBtn" class="btn btn-primary">
+                <button id="dDayBtn" class="btn btn-primary" style="font-weight: bold;">
                   <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-6"></i>  D-[[${board.dDay}]] </span> 
                   <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-6"></i>  D-Day </span> 
                   <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-6"></i>  마감</span> 
@@ -242,15 +314,15 @@
                 </div>
                 <!--댓글 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i class="ti ti-message-2 text-dark fs-6"></i> [[${board.replyCount}]] 
+                  <i id="message" class="ti ti-message-2 text-dark fs-6"></i> [[${board.replyCount}]] 
                 </div>
                 <!--좋아요 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i class="ti ti-heart text-dark fs-6"></i> [[${board.likeCount}]] 
+                  <i id="heart" class="ti ti-heart text-dark fs-6" style=""></i> <span id="likeCount">[[${board.likeCount}]]</span>  
                 </div>
                 <!--신고 버튼-->
                 <div class="d-flex align-items-center gap-2">
-                  <button type="button" id="reportBtn" class="btn bg-danger-subtle text-danger" data-bs-toggle="modal" data-bs-target="#reportModal">신고</button>
+                  <button type="button" id="reportBtn" class="btn bg-danger-subtle text-danger" data-bs-toggle="modal" data-bs-target="#reportModal" style="font-weight: bold;">신고</button>
                 </div>
                 <!--작성 날짜-->
                 <div class="d-flex align-items-center fs-5 ms-auto">
@@ -265,7 +337,7 @@
           </div>
           <!-- 댓글 -->
           <div class="card">
-            <div class="card-body">
+            <div class="card-body" id="replyPart">
               
               <!-- 댓글 작성 -->
               <h4 class="mb-4 fw-semibold">Post Comments</h4>
@@ -364,7 +436,7 @@
               <div class="modal-body">
                 <table class="table">
                   <tr>
-                    <th>참여자 <span>*</span></th>
+                    <th>Member ID <span>*</span></th>
                     <td><input type="text" name="memberId" id="modalMemberId" readonly></td>
                   </tr>
                   <tr>
@@ -618,6 +690,10 @@
     </div>
 
     <div class="dark-transparent sidebartoggler"></div>
+
+    <!-- boardDetail의 외부 JS파일 -->
+    <script th:src="@{/script/boardDetail.js}"></script>
+
     <!-- Import Js Files -->
     <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
@@ -625,10 +701,13 @@
     <script th:src="@{/assets/js/theme/theme.js}"></script>
     <script th:src="@{/assets/js/theme/app.min.js}"></script>
     <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
+    
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    
     <!-- Bootstrap JavaScript -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
-</body>
+
+  </body>
 
 </html>

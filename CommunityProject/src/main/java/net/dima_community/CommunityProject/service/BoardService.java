@@ -297,25 +297,16 @@ public class BoardService {
     // ======================== 게시글 조회 ========================
 
     /**
-     * 전달받은 게시글의 조회수 증가시키는 함수
-     * @param boardId
-     */
-    @Transactional
-    private void increaseHitCount(Long boardId) {
-        BoardEntity boardEntity = selectBoardEntity(boardId); // boardEntity
-        boardEntity.setHitCount(boardEntity.getHitCount()+1); // 1 증가
-    }
-
-    /**
      * 전달받은 boardId에 해당하는 게시글 DTO반환하는 함수 (job에 관련된 정보가 있는 경우는 해당 정보도 포함해 반환함)
      * @param boardId
      * @return
      */
+    @Transactional
     public BoardDTO selectOne(Long boardId) {
         BoardEntity boardEntity = selectBoardEntity(boardId); // BoardEntity
         
         // 조회수 증가
-        increaseHitCount(boardId);
+        boardEntity.setHitCount(boardEntity.getHitCount()+1); // 1 증가
 
         // Entity -> DTO로 변환
         BoardDTO boardDTO = BoardDTO.toDTO(boardEntity, boardEntity.getMemberEntity().getMemberId());
@@ -345,7 +336,8 @@ public class BoardService {
      * @return 마감 -> true / 아직 마감 전 or 당일 -> false
      */
     public boolean isDeadline(Long boardId) {
-        JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardId); // 해당 jobBoardEntity
+        BoardEntity boardEntity = selectBoardEntity(boardId);
+        JobBoardEntity jobBoardEntity = boardEntity.getJobBoardEntity(); // 해당 jobBoardEntity
         return jobBoardEntity.getDeadline().isAfter(LocalDateTime.now()) || jobBoardEntity.getDeadline().isEqual(LocalDateTime.now()) ? false : true; // deadline이 현재 시간보다 이전이면 true 반환
     }
     
@@ -356,7 +348,8 @@ public class BoardService {
      * @return 모집인원 다 찼거나 초과한 경우-> true / 아직 모집 가능한 경우 ->false
      */
     public boolean isExceededLimitNumber(Long boardId) {
-        JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardId); // 해당 jobBoardEntity
+        BoardEntity boardEntity = selectBoardEntity(boardId);
+        JobBoardEntity jobBoardEntity = boardEntity.getJobBoardEntity(); // 해당 jobBoardEntity
         return jobBoardEntity.getLimitNumber()<=jobBoardEntity.getCurrentNumber() ? true : false; // limit 수가 current 수보가 작나 같으면 true 반환
     }
 
