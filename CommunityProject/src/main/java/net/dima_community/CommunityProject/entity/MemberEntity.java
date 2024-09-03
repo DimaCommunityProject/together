@@ -85,7 +85,7 @@ public class MemberEntity {
 	// 1) Board
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@OrderBy("board_id")
-	private List<BoardEntity> BoardEntities;
+	private List<BoardEntity> BoardEntities = new ArrayList<BoardEntity>();
 
 	// 3) Reply
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)

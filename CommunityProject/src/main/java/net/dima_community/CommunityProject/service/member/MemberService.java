@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 // import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.description.ByteCodeElement.Member;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
@@ -68,6 +69,10 @@ public class MemberService {
 		// ResourceNotFoundException("Member", id));
 	}
 
+	public Optional<MemberEntity> findEntityById(String id) {
+		return memberRepository.findById(id);
+	}
+
 	public void saveMemberWithVerificationCode(MemberDTO memberDTO, String verifyCode) {
 		MemberDTO result = memberDTO.updateVerifyCode(verifyCode);
 		memberRepository.save(MemberEntity.toEntity(result));
@@ -92,11 +97,10 @@ public class MemberService {
 		return memberDTO;
 	}
 
+	@Transactional
 	public void approve(String id) {
-		MemberDTO memberDTO = findById(id);
-		memberDTO.enabledToYes();
-		log.info(memberDTO.toString());
-		memberRepository.save(MemberEntity.toEntity(memberDTO));
+		MemberEntity memberEntity = findEntityById(id).get();
+		memberEntity.setMemberEnabled("Y");
 	}
 
 	public MemberDTO updateMember(String memberId, String memberName, String memberEmail) {
