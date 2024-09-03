@@ -16,7 +16,7 @@ import net.dima_community.CommunityProject.common.port.VerifyRandomCodeHolder;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Controller
 @RequestMapping("/email")
@@ -97,6 +97,28 @@ public class EmailController {
         }
         return "redirect:/admin/adminPage";
 
+    }
+
+    @PostMapping("/resend")
+    @ResponseBody
+    public boolean resend(@RequestParam(name = "memberId") String memberId,
+            @RequestParam(name = "memberEmail") String newEmail) {
+
+        // log.info("resend 도착");
+        // MemberDTO member = memberService.findById(memberId);
+        // log.info("findById 완료");
+        String generatedString = verifyRandomCodeHolder.setRandomCode();
+        // verifyCode 업데이트
+        memberService.updateVerificationCode(memberId, generatedString);
+        log.info("service 완료");
+        Email email = Email.builder()
+                .to(newEmail)
+                .title("디마 커뮤니티 이메일 재설정 인증번호입니다")
+                .content("인증번호는 " + generatedString + " 입니다.")
+                .build();
+
+        boolean result = emailSender.sendMail(email);
+        return result;
     }
 
 }

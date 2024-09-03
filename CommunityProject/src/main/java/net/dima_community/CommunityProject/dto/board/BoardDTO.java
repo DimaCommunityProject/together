@@ -7,6 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import net.dima_community.CommunityProject.entity.board.BoardEntity;
+
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,13 +19,12 @@ import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
 @ToString
 @Builder
 public class BoardDTO {
-	private Long boardId;
+    private Long boardId;
     private String memberId;
     private String memberGroup;
     private BoardCategory category;
@@ -28,20 +32,27 @@ public class BoardDTO {
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-    private int hitCount;
-    private int likeCount;
+    private Integer hitCount;
+    private Integer likeCount;
     private MultipartFile uploadFile;
     private String originalFileName;
     private String savedFileName;
-    private boolean reported;
-    
+    private Integer reported;
+    private Long jobBoardId;
+
     // Job board specific fields
-//    private LocalDateTime deadline;
-//    private int limitNumber;
-//    private int currentNumber;
+    private LocalDateTime deadline;
+    private int limitNumber;
+    private int currentNumber;
 
-
-    public static BoardDTO toDTO(BoardEntity entity, String memberId){
+    /**
+     * jobBoard 정보가 없는 게시글인 경우 DTO변환 함수
+     * 
+     * @param entity
+     * @param memberId
+     * @return
+     */
+    public static BoardDTO toDTO(BoardEntity entity, String memberId) {
         return BoardDTO.builder()
                 .boardId(entity.getBoardId())
                 .memberId(memberId)
@@ -55,7 +66,7 @@ public class BoardDTO {
                 .likeCount(entity.getLikeCount())
                 .originalFileName(entity.getOriginalFileName())
                 .savedFileName(entity.getSavedFileName())
-                .reported(entity.isReported())
+                // .reported(entity.isReported())
                 .build();
     }
 

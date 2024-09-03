@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.service;
+package net.dima_community.CommunityProject.service.member;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+// import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
@@ -16,7 +17,7 @@ import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.repository.MemberRepository;
+import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -84,7 +85,7 @@ public class MemberService {
 		}
 		return true;
 	}
-	
+
 	@Transactional
 	public MemberDTO setEncodedPassword(MemberDTO memberDTO) {
 		memberDTO.setEncodedPassword(bCryptEncoderHolder);
@@ -94,6 +95,7 @@ public class MemberService {
 	public void approve(String id) {
 		MemberDTO memberDTO = findById(id);
 		memberDTO.enabledToYes();
+		log.info(memberDTO.toString());
 		memberRepository.save(MemberEntity.toEntity(memberDTO));
 	}
 
@@ -142,14 +144,38 @@ public class MemberService {
 		return pw;
 	}
 
+	@Transactional
+	public void updateVerificationCode(String memberId, String generatedString) {
+
+		MemberEntity originalMember = memberRepository.findById(memberId).get();
+		log.info(generatedString);
+		originalMember.setMemberVerifyCode(generatedString);
+	}
+
+	public boolean updateEmailProcess(String memberId, String verificationCode) {
+		MemberEntity memberEntity = memberRepository.findById(memberId).get();
+		if (memberEntity.getMemberVerifyCode().equals(verificationCode)) {
+			// 이메일 변경은 진짜 저장 버튼 누를 때!!!!!
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Transactional
+	public void updateEmail(String memberId, String memberEmail) {
+		MemberEntity memberEntity = memberRepository.findById(memberId).get();
+		memberEntity.setMemberEmail(memberEmail);
+	}
+
 	// 임시비번 암호화 후 업뎃
 	public boolean PwUpdate(MemberDTO memberDTO) {
-	// String newPwUpdate = bCryptEncoderHolder.encode(memberDTO.getMemberPw()); //
-	// 임시비번 암호화
-	// memberDTO.setMemberPw(newPwUpdate);
-	int result = memberRepository.PwUpdate(memberDTO.getMemberId(), memberDTO.getMemberPw());
-	// // 업뎃
+		// String newPwUpdate = bCryptEncoderHolder.encode(memberDTO.getMemberPw()); //
+		// 임시비번 암호화
+		// memberDTO.setMemberPw(newPwUpdate);
+		int result = memberRepository.PwUpdate(memberDTO.getMemberId(), memberDTO.getMemberPw());
+		// 업뎃
 
-	return result > 0;
-	}// end findmemId
-}
+		return result > 0;
+	}
+}// end findmemId

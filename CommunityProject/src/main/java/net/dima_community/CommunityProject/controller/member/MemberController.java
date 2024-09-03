@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.member;
 
 import java.util.Random;
 
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Controller
 @Slf4j
@@ -24,10 +24,8 @@ public class MemberController {
 	private final MemberService memberservice;
 	private final EmailSender emailSender;
 
-	
 	// ===================== 회원가입 요청 페이지 =====================
-	
-	
+
 	/**
 	 * 회원가입을 위한 화면 요청
 	 * 
@@ -40,21 +38,22 @@ public class MemberController {
 
 	/**
 	 * ID 중복확인
+	 * 
 	 * @param memberId
 	 * @return
 	 */
-	@GetMapping("checkDuplicate")
+	@GetMapping("/member/checkDuplicate")
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberservice.findByIdThroughConn(memberId);
-
+		log.info("" + result);
 		return result;
 	}
 
-	
-	// ===================== 로그인  =====================
-	
+	// ===================== 로그인 =====================
+
 	/**
 	 * 로그인 화면 요청(사용자 이전 url 기억 필요)
+	 * 
 	 * @param request
 	 * @param error
 	 * @param errMessage
@@ -74,14 +73,11 @@ public class MemberController {
 		return "member/login";
 	}// end login
 
-	
-	
-	
-	// ===================== 아이디 찾기  =====================
-	
+	// ===================== 아이디 찾기 =====================
 
 	/**
 	 * 사용자 아이디 찾기 화면 요청
+	 * 
 	 * @param request
 	 * @param model
 	 * @return
@@ -91,11 +87,11 @@ public class MemberController {
 			HttpServletRequest request, // 이전 url 가져오기
 			Model model) {
 		return "member/findId";
-	}//end findId
+	}// end findId
 
-	
 	/**
 	 * 사용자 아이디 찾기 결과
+	 * 
 	 * @param request
 	 * @param memberName
 	 * @param memberEmail
@@ -111,17 +107,15 @@ public class MemberController {
 
 		String result = memberservice.findmemId(memberName, memberEmail);
 		log.info("사용자 아이디 찾기 결과 : {}", result);
-	
+
 		return result;
 	}// end findIdProc
 
-	
-	
-	// ===================== 비밀번호 찾기  =====================
-	
-	
+	// ===================== 비밀번호 찾기 =====================
+
 	/**
 	 * 사용자 비밀번호 찾기 화면 요청
+	 * 
 	 * @param request
 	 * @param model
 	 * @return
@@ -135,6 +129,7 @@ public class MemberController {
 
 	/**
 	 * 사용자 비밀번호 찾기 결과
+	 * 
 	 * @param request
 	 * @param memberEmail
 	 * @param memberId
@@ -182,19 +177,27 @@ public class MemberController {
 			boolean result = emailSender.sendMail(email);
 
 			log.info("이메일이 갔나요? : {}", result);
-			
+
 			log.info("db에 업뎃하기 전 dto : {}", memberDTO.toString());
 			memberservice.setEncodedPassword(memberDTO); // 업뎃
-			
+
 			boolean bool = memberservice.PwUpdate(memberDTO);
-			
-			//MemberEntity(memberId=가나다라마바사, memberPw=$2a$10$J8BYtFobveWi3SXGZN8nI.dhkIIfWt.x1GiU5MrPOSBR8pTyYEnUC, memberEnabled=null, memberRole=null, memberName=가나다라마바사, memberEmail=rnrdudghg3122@gmail.com, memberGroup=null, memberPhone=null, badge1=null, badge2=null, memberVerifyCode=null, memberPageEntity=null, memberProjectEntity=null)
-			//log.info("db에 업뎃하기 전 entity : {}", entity.toString());
-			
-			
-//			memberRepository.save(entity);
-			if(bool) {return newPw;}	//임시비번 잘 업뎃함
-			else {return "false";}		//임시비번 업뎃 실패
+
+			// MemberEntity(memberId=가나다라마바사,
+			// memberPw=$2a$10$J8BYtFobveWi3SXGZN8nI.dhkIIfWt.x1GiU5MrPOSBR8pTyYEnUC,
+			// memberEnabled=null, memberRole=null, memberName=가나다라마바사,
+			// memberEmail=rnrdudghg3122@gmail.com, memberGroup=null, memberPhone=null,
+			// badge1=null, badge2=null, memberVerifyCode=null, memberPageEntity=null,
+			// memberProjectEntity=null)
+			// log.info("db에 업뎃하기 전 entity : {}", entity.toString());
+
+			// memberRepository.save(entity);
+			if (bool) {
+				return newPw;
+			} // 임시비번 잘 업뎃함
+			else {
+				return "false";
+			} // 임시비번 업뎃 실패
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,14 +205,11 @@ public class MemberController {
 		}
 	}// end findPwProc
 
-	
-	
-	
-	// ===================== 비밀번호 바꾸기  =====================
-	
-	
+	// ===================== 비밀번호 바꾸기 =====================
+
 	/**
 	 * 비밀번호 바꾸기 화면 요청
+	 * 
 	 * @param request
 	 * @param memberId
 	 * @param model
@@ -222,9 +222,9 @@ public class MemberController {
 		return "member/changePw";
 	}// end changePw
 
-	
 	/**
 	 * 비밀번호 바꾸기
+	 * 
 	 * @param request
 	 * @param newmemberPw
 	 * @param memberId
@@ -247,15 +247,18 @@ public class MemberController {
 		log.info("새 비번 DTO 확인 : {}", memberDTO.toString());
 
 		try {
-			memberservice.setEncodedPassword(memberDTO); 		// 비번 암호화 후 dto 업뎃
-			boolean bool = memberservice.PwUpdate(memberDTO);	// dto를 레파지토리에서 db로 업뎃 
-			
-			if(bool) {return "true";}				
-			else {return "false";}
-			
+			memberservice.setEncodedPassword(memberDTO); // 비번 암호화 후 dto 업뎃
+			boolean bool = memberservice.PwUpdate(memberDTO); // dto를 레파지토리에서 db로 업뎃
+
+			if (bool) {
+				return "true";
+			} else {
+				return "false";
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
-	}//end chagePwck
+	}// end chagePwck
 }// end class

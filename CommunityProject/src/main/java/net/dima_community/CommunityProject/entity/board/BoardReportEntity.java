@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,7 +26,7 @@ import net.dima_community.CommunityProject.dto.board.check.ReportCategory;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@ToString
+// @ToString
 @Builder
 @Entity
 @Table(name = "board_report")
@@ -35,7 +34,7 @@ public class BoardReportEntity {
     @Id
     @Column(name = "report_id")
     private Long reportId;
-    
+
     // FK
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
@@ -48,21 +47,21 @@ public class BoardReportEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     private ReportCategory category;
-    
+
     private String reason;
 
     @Column(name = "report_date")
     @CreationTimestamp
     private LocalDateTime reportDate;
 
-    public static BoardReportEntity toEntity (BoardReportDTO dto, BoardEntity boardEntity){
+    public static BoardReportEntity toEntity(BoardReportDTO dto, BoardEntity boardEntity) {
         return BoardReportEntity.builder()
-            .reportId(dto.getReportId())
-            .boardEntity(boardEntity)
-            .memberId(dto.getMemberId())
-            .category(dto.getCategory())
-            .reason(dto.getReason())
-            .reportDate(dto.getReportDate())
-            .build();
+                .reportId(dto.getReportId())
+                .boardEntity(boardEntity)
+                .memberId(dto.getMemberId())
+                .category(dto.getCategory())
+                .reason(dto.getReason())
+                .reportDate(dto.getReportDate())
+                .build();
     }
 }

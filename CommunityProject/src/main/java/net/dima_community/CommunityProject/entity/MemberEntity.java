@@ -1,6 +1,8 @@
 package net.dima_community.CommunityProject.entity;
 
 import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.board.ReplyEntity;
 import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
 import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 import jakarta.persistence.CascadeType;
@@ -8,21 +10,25 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+// import lombok.ToString;
+import java.util.List;
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+// @ToString
 @Builder
 
 @Entity
@@ -72,9 +78,19 @@ public class MemberEntity {
 	/*
 	 * MemberProject와 관계 설정
 	 */
-	@OneToOne(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@OrderBy("memberproject_seq asc")
-	private MemberProjectEntity memberProjectEntity;
+	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
+
+	// 1) Board
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("board_id")
+	private List<BoardEntity> BoardEntities;
+
+	// 3) Reply
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("create_date")
+	private List<ReplyEntity> replyEntities;
 
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()
@@ -91,4 +107,5 @@ public class MemberEntity {
 				.memberVerifyCode(memberDTO.getMemberVerifyCode())
 				.build();
 	}
+
 }

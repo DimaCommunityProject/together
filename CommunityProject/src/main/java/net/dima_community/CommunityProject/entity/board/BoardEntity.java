@@ -1,7 +1,7 @@
 package net.dima_community.CommunityProject.entity.board;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,17 +37,17 @@ import net.dima_community.CommunityProject.entity.MemberEntity;
 @ToString
 @Builder
 @Entity
-@Table(name="board")
+@Table(name = "board")
 public class BoardEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
     private Long boardId;
 
-    // FK
+    // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
     private MemberEntity memberEntity;
 
     @Column(name = "member_group", nullable = false)
@@ -55,13 +56,13 @@ public class BoardEntity {
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     private BoardCategory category;
-    
+
     @Column(name = "title", nullable = false)
     private String title;
-    
+
     @Column(name = "content", nullable = false)
     private String content;
-    
+
     @Column(name = "create_date")
     @CreationTimestamp
     private LocalDateTime createDate;
@@ -70,10 +71,10 @@ public class BoardEntity {
     private LocalDateTime updateDate;
 
     @Column(name = "hit_count")
-    private int hitCount;
+    private Integer hitCount;
 
     @Column(name = "like_count")
-    private int likeCount;
+    private Integer likeCount;
 
     @Column(name = "original_file_name")
     private String originalFileName;
@@ -81,28 +82,38 @@ public class BoardEntity {
     @Column(name = "saved_file_name")
     private String savedFileName;
 
-    @Column(name = "reported")
-    private boolean reported;
-
-    // 자식
-    // 1) JobBoardEntity
-//    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-//    private JobBoardEntity jobBoardEntity;
-    
-    // 2) BoardReport
+    // 2) Reply
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("report_date")
-    private List<BoardReportEntity> boardReportEntities;
-    
-    // 3) Like
-//    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-//    @OrderBy("member_id")
-//    private List<LikeEntity> likeEntities;
-    
+    @OrderBy("reply_id")
+    private List<ReplyEntity> replyEntity;
 
+    // @Column(name = "reported")
+    // private Integer reported;
 
+    // // FK (1:1)
+    // @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "job_board_id")
+    // private JobBoardEntity jobBoardEntity;
 
-    public static BoardEntity toEntity(BoardDTO dto, MemberEntity memberEntity){
+    // // 자식
+    // // 1) BoardReport
+    // @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch =
+    // FetchType.LAZY, orphanRemoval = true)
+    // private BoardReportEntity boardReportEntity;
+    // // 2) Like
+    // @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch =
+    // FetchType.LAZY, orphanRemoval = true)
+    // @OrderBy("member_id")
+    // private List<LikeEntity> likeEntities;
+
+    /**
+     * Entity 변환 함수 (jobBoardEntity 값은 null로 세팅)
+     * 
+     * @param dto
+     * @param memberEntity
+     * @return
+     */
+    public static BoardEntity toEntity(BoardDTO dto, MemberEntity memberEntity) {
         return BoardEntity.builder()
                 .boardId(dto.getBoardId())
                 .memberEntity(memberEntity)
@@ -116,7 +127,9 @@ public class BoardEntity {
                 .likeCount(dto.getLikeCount())
                 .originalFileName(dto.getOriginalFileName())
                 .savedFileName(dto.getSavedFileName())
-                .reported(dto.isReported())
+                // .reported(dto.isReported())
+                // .jobBoardEntity(null)
                 .build();
     }
+
 }

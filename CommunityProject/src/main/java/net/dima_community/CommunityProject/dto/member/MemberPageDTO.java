@@ -28,11 +28,13 @@ public class MemberPageDTO {
     public MemberPageDTO update(MemberPageDTO memberPage) {
         this.memberSelfInfo = memberPage.getMemberSelfInfo();
         this.memberInterest = memberPage.getMemberInterest();
-        this.memberSkill = memberPage.getMemberSkill();
         this.memberGit = memberPage.getMemberGit();
         this.memberBlog = memberPage.getMemberBlog();
-        this.memberResume = memberPage.getMemberResume();
+        return this;
+    }
 
+    public MemberPageDTO updateSkill(String memberSkill) {
+        this.memberSkill = memberSkill;
         return this;
     }
 }

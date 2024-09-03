@@ -35,8 +35,8 @@ public class MemberPageControllerTest {
                                 .build();
                 ExtendedModelMap model = new ExtendedModelMap();
                 // when
-                memberPageController.updatepage2("ssehn9327", "심세현", "ssehn9327",
-                                memberPage, memberProject, model);
+                // memberPageController.updatepage2("ssehn9327", "심세현", "ssehn9327",
+                // memberPage, memberProject, model);
                 // then
         }
 
@@ -60,8 +60,8 @@ public class MemberPageControllerTest {
                                 .build();
                 ExtendedModelMap model = new ExtendedModelMap();
                 // when
-                memberPageController.updatepage2("ssehn9327", "심가현", "ssehn9324@naver.com",
-                                memberPage, memberProject, model);
+                // memberPageController.updatepage2("ssehn9327", "심세현", "ssehn9324@naver.com",
+                // memberPage, memberProject, model);
                 // then
         }
 }

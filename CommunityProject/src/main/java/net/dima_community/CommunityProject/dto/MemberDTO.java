@@ -63,6 +63,11 @@ public class MemberDTO {
 		this.memberName = memberName2;
 		this.memberEmail = memberEmail2;
 		return this;
+	}
+
+	public MemberDTO updateVerificationCode(String generatedString) {
+		this.memberVerifyCode = generatedString;
+		return this;
 	};
 	
 	//관리자페이지에 보여줄 회원

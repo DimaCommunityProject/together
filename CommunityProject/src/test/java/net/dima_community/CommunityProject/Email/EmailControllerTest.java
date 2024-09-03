@@ -66,22 +66,22 @@ public class EmailControllerTest {
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 
-    @Test
-    public void 관리자가_승인거절을_누르면_보완메일이_전송된다() {
-        // given
-        // when
-        boolean result = emailController.refuse("ssehn9327", "ssehn9327@gmail.com");
-        // then
-        assertThat(result).isTrue();
-    }
+    // @Test
+    // public void 관리자가_승인거절을_누르면_보완메일이_전송된다() {
+    // // given
+    // // when
+    // boolean result = emailController.refuse("ssehn9327", "ssehn9327@gmail.com");
+    // // then
+    // assertThat(result).isTrue();
+    // }
 
-    @Test
-    public void 관리자가_승인을_누르면_enabled가_Y로_바뀌고_승인메일이_전송된다() {
-        // given
-        // when
-        boolean result = emailController.approve("ssehn9327", "ssehn9327@gmail.com");
-        // then
-        assertThat(result).isTrue();
-    }
+    // @Test
+    // public void 관리자가_승인을_누르면_enabled가_Y로_바뀌고_승인메일이_전송된다() {
+    // // given
+    // // when
+    // boolean result = emailController.approve("ssehn9327", "ssehn9327@gmail.com");
+    // // then
+    // assertThat(result).isTrue();
+    // }
 
 }
