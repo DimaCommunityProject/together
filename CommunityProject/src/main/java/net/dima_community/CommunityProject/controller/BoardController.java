@@ -177,9 +177,6 @@ public class BoardController {
         model.addAttribute("searchWord", searchWord);
         model.addAttribute("category", category);
 
-        if (category==BoardCategory.activity || category==BoardCategory.recruit) {
-            return "board/detailActivityOrRecruit";
-        }
         return "board/detail";
     }
 

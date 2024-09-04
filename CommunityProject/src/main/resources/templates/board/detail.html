@@ -16,12 +16,15 @@
   <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
 
+  <!-- Tabler icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
   <!-- JQuery -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 
   <!-- 좋아요 css -->
   <style>
-    #heart:hover, #message:hover, .replyHeart:hover {
+    #heart:hover, #message:hover{
         /* background-color: #FFD2D2;  */ 
         background-color: #EBF5FF; /* 하늘 배경 */
         border-radius: 50%; /* 배경 둥글게 */
@@ -118,6 +121,22 @@
               <div class="d-flex align-items-center gap-4">
                 <!-- 게시글 제목 -->
                 <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
+                <!-- recruit -->
+                <div th:if="${board.dDay>0 || board.limitNumber != 0}">
+                  <button id="endBtn" class="btn btn-primary" th:if="${board.currentNumber>=board.limitNumber}">
+                    <i class="ti ti-square-x fs-6"></i> 모집 마감
+                  </button>
+                  <!--참여 버튼-->
+                  <button id="recruitBtn" class="btn btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal" style="font-weight: bold;">
+                    <i class="ti ti-user fs-6"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
+                  </button>
+                </div>
+                <!--D-day-->
+                <div id="dDayBtn" class="btn btn-primary" th:if="${board.deadline!=null}" style="font-weight: bold;">
+                  <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-6"></i>  D-[[${board.dDay}]] </span> 
+                  <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-6"></i>  D-Day </span> 
+                  <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-6"></i>  마감</span> 
+                </div>
               </div>
               <div class="d-flex align-items-center gap-4">
                 <!--조회수-->
@@ -130,7 +149,9 @@
                 </div>
                 <!--좋아요 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i id="heart" class="ti ti-heart text-dark fs-6" style=""></i> <span id="likeCount">[[${board.likeCount}]]</span>  
+                  <i id="heart" th:if="${board.likeCount==0}" class="ti ti-heart text-dark fs-6"></i>  
+                  <i id="heart" th:unless="${board.likeCount==0}" class="ti ti-heart-filled text-dark fs-6"></i> 
+                  <span id="likeCount">[[${board.likeCount}]]</span>  
                 </div>
                 <!--신고 버튼-->
                 <div class="d-flex align-items-center gap-2">
@@ -163,7 +184,7 @@
 
               <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
                 <h4 class="mb-0">Comments</h4>
-                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded" id="replyCount">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
+                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
               </div>
 
               <!-- 댓글 목록 -->
@@ -176,20 +197,23 @@
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
                       <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                      <div class="ms-auto d-flex align-items-center">
+                      <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
                         <!-- 댓글 좋아요 -->
-                        <!-- <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
-                        <!-- <i th:if="${reply.likeCount>=0}" class="ti ti-hearts text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
-                        <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
-                        <i th:if="${reply.likeCount>0}" class="ti ti-hearts text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
-                        <span>[[${reply.likeCount}]]</span>
+                        <!-- <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId}"> -->
+                        <div class="btn btn-secondary ms-6 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}">
+                          <i th:if="${reply.likeCount == 0}" class="ti ti-thumb-up text-dark fs-5 " style="padding-right: 3px;"></i> 
+                          <i th:unless="${reply.likeCount == 0}" class="ti ti-thumb-up-filled text-dark fs-5 " style="padding-right: 3px;"></i> 
+                          <span>[[${reply.likeCount}]]</span>
+                        </div>
                       </div>
                     </div>
                     <!-- 댓글 내용 -->
                     <p class="my-3" th:text="${reply.content}"></p>
                     <div>
-                      <input type="hidden" name="" class="childReplyParent" th:value="${reply.replyId}">
-                      <div class="d-flex align-items-center gap-2 childReplyForm" >
+                      <!-- <div class="d-flex align-items-center gap-2 childReplyForm" th:data-parent="${reply.replyId}" th:data-user="${#authentication.name}"> -->
+                      <div class="d-flex align-items-center gap-2 childReplyForm">
+                        <!-- <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="${authentication.name}"></div> -->
+                        <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="doyeon"></div>
                         <!--대댓글 작성요청 버튼-->
                         <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
                           <i class="ti ti-arrow-back-up"></i> 
@@ -202,10 +226,10 @@
                     <div class="p-4 rounded-4 text-bg-light mb-3 ms-7" th:each="childReply : ${reply.childReplies}">
                       <div class="d-flex align-items-center gap-3">
                         <img th:src="@{/assets/images/profile/user-6.jpg}" alt="modernize-img" class="rounded-circle" width="40" height="40">
-                        <h6 class="mb-0 fs-4">Irene Hanson</h6>
+                        <h6 class="mb-0 fs-4" th:text="${childReply.memberId}">Irene Hanson</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                       </div>
-                      <p class="my-3">Uborofgic be rof lom sedge vapozi ohoinu nutremcuc ro ko atmeg anrov git ve vuj ki teb
+                      <p class="my-3" th:text="${childReply.content}">Uborofgic be rof lom sedge vapozi ohoinu nutremcuc ro ko atmeg anrov git ve vuj ki teb
                         or.
                         Lohi hafa faddegon horoz ebema kew idful ducam nev rol iga wikkobsu sucdu gud.
                       </p>

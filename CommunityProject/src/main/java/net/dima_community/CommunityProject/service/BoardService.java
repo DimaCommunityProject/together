@@ -112,7 +112,7 @@ public class BoardService {
      * @return FileDetails 객체
      */
     private FileDetails handleFileUpload(MultipartFile uploadFile) {
-        if (!uploadFile.isEmpty()) {
+        if (uploadFile != null) {
             String originalFileName = uploadFile.getOriginalFilename();
             String savedFileName = FileService.saveFile(uploadFile, uploadPath);
             return new FileDetails(originalFileName, savedFileName);
@@ -485,11 +485,11 @@ public class BoardService {
 
     @Transactional
     public void updateBoard(BoardDTO boardDTO) {
-        // 새롭게 업로드된 파일이 있는 경우 파일 저장 및 이름 추출
-        FileDetails newFileDetails = handleFileUpload(boardDTO.getUploadFile());
-
         // 수정된 내용과 비교를 위해 DB에서 데이터 가져옴
         BoardEntity boardEntity = selectBoardEntity(boardDTO.getBoardId());
+        
+        // 새롭게 업로드된 파일이 있는 경우 파일 저장 및 이름 추출
+        FileDetails newFileDetails = handleFileUpload(boardDTO.getUploadFile());
 
         // 기존 파일 처리 및 새로운 파일 저장
         handleExistingFile(boardEntity, newFileDetails);

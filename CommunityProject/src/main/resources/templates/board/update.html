@@ -23,10 +23,7 @@
   
   <!-- Ajax -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-  <!-- board write javascript file -->
-  <script th:src="@{/script/boardWrite.js}"></script>
-
-
+  
 </head>
 
 <body class="link-sidebar">
@@ -79,7 +76,7 @@
                     the form with form styling.
                   </p>
                 </div> -->
-                <form class="form-horizontal r-separator" id="writeForm" th:action="@{/board/update(category=${catrgory})}" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal r-separator" id="updateForm" th:action="@{/board/update}" method="post" enctype="multipart/form-data">
                   <div class="card-body">
                     <!-- <h5>Write</h5> -->
                     <div class="form-group mb-0">
@@ -113,8 +110,18 @@
                     <div class="form-group mb-0">
                       <div class="row align-items-center">
                         <label for="inputGroupFile01" class="col-3 text-end  col-form-label">Select File</label>
-                        <div class="col-9 border-start pb-2 pt-2">
-                          <div class="input-group">
+                        <div class="col-9 border-start pb-2 pt-2" id="filePart">
+                          <!-- 파일 존재하는 경우 -->
+                          <div th:if="${board.originalFileName != null}" class="input-group">
+                            <div class="input-group-prepend">
+                              <button class="btn bg-danger-subtle text-danger " id="fileDeleteBtn" type="button">
+                                  <i data-feather="trash-2" class="ti ti-trash fs-5"></i>
+                              </button>
+                            </div>                          
+                            <input type="text" class="form-control ms-1" placeholder="" aria-label="" aria-describedby="basic-addon1" readonly th:value="${board.originalFileName}">
+                          </div>
+                          <!-- 파일 존재하지 않으면 파일 선택할 수 있게 -->
+                          <div th:unless="${board.originalFileName != null}"  class="input-group">
                             <span class="input-group-text">Upload</span>
                             <div class="custom-file">
                               <input type="file" name="uploadFile" class="form-control" id="inputGroupFile01"/>
@@ -130,19 +137,20 @@
                         <div class="col-9 border-start pb-2 pt-2">
                           <!-- <input type="hidden" name="memberId" th:value="${#authentication.name}"> -->
                           <input type="hidden" name="memberId" value="doyeon">
+                          <input type="hidden" name="boardId" th:value="${board.boardId}">
                           <input type="hidden" id="memberGroup" name="memberGroup" > <!--ajax-->
-                          <input type="hidden" name="content"> <!--ckEditor에서 내용 읽어와서 value 채우기 (script에서 처리)-->
+                          <input type="hidden" name="content" id="content"> <!--ckEditor에서 내용 읽어와서 value 채우기 (script에서 처리)-->
+                          <input type="hidden" name="searchWord" th:value="${searchWord}">
                         </div>
                       </div>
                     </div>
                   </div>
-
                   <div class="card-body">
                     <!-- 초기화/전송/취소/ 버튼-->
                     <div class="form-group mb-0 text-end" style="padding-right:30px"> 
                       <button type="button" id="cancelBtn" class="btn bg-danger-subtle text-danger ms-6">취소</button>
                       <button type="button" id="resetBtn" class="btn bg-info-subtle text-info ms-6">초기화</button>               
-                      <button type="button" id="submitBtn" class="btn btn-primary" style="margin-left:12px">등록</button>
+                      <button type="button" id="submitBtn" class="btn btn-primary" style="margin-left:12px">수정</button>
                     </div>
                   </div>
                 </form>
@@ -154,6 +162,14 @@
           <!-- End Row -->
         </div>
       </div>
+
+      <!-- 수정 취소 버튼 클릭 시 board/detail로 돌아감 -->
+      <form th:action="@{/board/detail}" method="GET" id="backToDetail">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+        <input type="hidden" name="category" th:value="${category}">
+        <input type="hidden" name="searchWord" th:value="${searchWord}">
+      </form>
+
       <script>
         function handleColorTheme(e) {
           document.documentElement.setAttribute("data-color-theme", e);
@@ -323,6 +339,9 @@
 
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+  <!-- board write javascript file -->
+  <script th:src="@{/script/boardUpdate.js}"></script>
 
   <!-- CKEditor5 -->
   <script type="importmap">

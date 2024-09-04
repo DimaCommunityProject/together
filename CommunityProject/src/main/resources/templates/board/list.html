@@ -12,6 +12,9 @@
 
   <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+  
+  <!-- Tabler icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
   <title> 게시글 목록</title>
 </head>
@@ -3312,8 +3315,8 @@
                         </div>
                         <!-- 좋아요수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
-                          <i class="ti ti-heart fs-5" th:if="${board.likeCount == 0}"></i>
-                          <i class="ti ti-hearts fs-5" th:if="${board.likeCount>0}"></i>
+                          <i th:if="${board.likeCount == 0}" class="ti ti-heart fs-5" ></i>
+                          <i th:unless="${board.likeCount == 0}" class="ti ti-heart-filled fs-5" ></i>
                           [[${board.likeCount}]]
                         </div>
                         <!-- 작성 날짜 -->

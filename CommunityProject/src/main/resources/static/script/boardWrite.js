@@ -77,12 +77,7 @@ function resetLimitNumber(){
 
 // 게시글 등록 취소 (게시글 목록 요청)
 function cancelBoardWrite(){
-    var category = $("#inputText1").val();
-    $.ajax({
-        url:"/board/list",
-        data: {"category":category},
-        method : "GET"
-    });
+    $("#backToList").submit();
 }
 
 function init(){
@@ -99,6 +94,7 @@ function getMemberGroup() {
     success : function (result) {
         console.log( "memberGroup : " + result);
         $("#memberGroup").val(result);
+        $("#userGroup").val(result);
     }
     });
 }

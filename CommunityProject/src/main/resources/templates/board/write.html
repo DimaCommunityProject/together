@@ -153,6 +153,14 @@
           <!-- End Row -->
         </div>
       </div>
+
+      <!-- 등록 취소 버튼 클릭 시 board/list로 돌아감 -->
+      <form th:action="@{/board/list}" method="GET" id="backToList">
+        <input type="hidden" name="category" th:value="${category}">
+        <input type="hidden" name="userGroup" id="userGroup">
+        <input type="hidden" name="searchWord" th:value="${searchWord}">
+      </form>
+
       <script>
         function handleColorTheme(e) {
           document.documentElement.setAttribute("data-color-theme", e);

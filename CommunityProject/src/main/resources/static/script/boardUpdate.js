@@ -1,18 +1,19 @@
 $(function(){
-    $("#submitBtn").click(submitBoardWrite);
-    $("#resetBtn").click(resetBoardWrite);
-    $("#cancelBtn").click(cancelBoardWrite);
+    $("#submitBtn").click(submitBoardUpdate);
+    $("#resetBtn").click(resetBoardUpdate);
+    $("#cancelBtn").click(cancelBoardUpdate);
+    $("#fileDeleteBtn").click(deleteFile);
     init();
 });
 
-// 게시글 등록 처리 요청
-function submitBoardWrite(){
+// 게시글 수정 처리 요청
+function submitBoardUpdate(){
     // 유효성 검사
     if(!validTitle()) return;
     else if(!validContent()) return;
 
-    alert("게시글 등록!");
-    $("#writeForm").submit();
+    alert("게시글 수정!");
+    $("#updateForm").submit();
 }
 
 // 유효성 검사 - title
@@ -43,47 +44,29 @@ function validContent(){
 }
 
 // 게시글 등록 초기화 (제목, 내용, 파일)
-function resetBoardWrite(){
-    var category = $("#inputText1").val();
-    resetTitle();
-    resetCkeditor();
-    resetUploadFile();
-    if (category == "recruit" || category =="activity") {
-        resetDeadline();
-        resetLimitNumber();
-    }
+function resetBoardUpdate(){
+    window.location.reload(); // 새로고침
 }
 
-// Title 값 삭제
-function resetTitle(){
-    $("#inputText2").val('');
-}
-// ckeditor 값 삭제
-function resetCkeditor(){
-    window.editor.setData('');
-}
-// uploadFile 삭제
-function resetUploadFile(){
-    $("#inputGroupFile01").val('');
-}
-// deadline 초기화
-function resetDeadline(){
-    $("#deadline").val('');
-}
-// limitNumber 초기화
-function resetLimitNumber(){
-    $("#limitNumber").val('');
+// 게시글 수정 취소 (게시글 목록 요청)
+function cancelBoardUpdate(){
+    console.log("취소 버튼 눌렀어");
+    console.log($("#backToDetail"));
+    $("#backToDetail").submit(); // board/detail 요청 
 }
 
-// 게시글 등록 취소 (게시글 목록 요청)
-function cancelBoardWrite(){
-    var category = $("#inputText1").val();
-    $.ajax({
-        url:"/board/list",
-        data: {"category":category},
-        method : "GET"
-    });
+// 파일 삭제버튼 클릭 시 -> 파일 선택하는 태그 집어 넣기
+function deleteFile() {
+    var selectFileTag =
+    `<div class="input-group">
+        <span class="input-group-text">Upload</span>
+        <div class="custom-file">
+            <input type="file" name="uploadFile" class="form-control" id="inputGroupFile01"/>
+        </div>
+    </div>`;
+    $("#filePart").html(selectFileTag)
 }
+
 
 function init(){
     setCkEditor();
@@ -96,7 +79,7 @@ function setCkEditor(){
     editor.setData(content);
 }
 
-// memberGroup 가져오는 함구
+// memberGroup 가져오는 함수
 function getMemberGroup() {
     // memberGroup 가져오기
     var memberId = $("#memberId").val();
