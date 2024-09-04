@@ -1,10 +1,9 @@
 package net.dima_community.CommunityProject.entity;
 
-import net.dima_community.CommunityProject.dto.MemberDTO;
-import net.dima_community.CommunityProject.entity.board.BoardEntity;
-import net.dima_community.CommunityProject.entity.board.ReplyEntity;
-import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
-import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
+import java.util.ArrayList;
+// import lombok.ToString;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,15 +13,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-// import lombok.ToString;
-import java.util.List;
-import java.util.ArrayList;
+import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.board.ReplyEntity;
+import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
+import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor
