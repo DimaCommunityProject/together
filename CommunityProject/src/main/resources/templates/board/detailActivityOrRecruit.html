@@ -192,20 +192,22 @@
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
                       <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                      <div class="ms-auto d-flex align-items-center">
+                      <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
                         <!-- 댓글 좋아요 -->
-                        <!-- <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
-                        <!-- <i th:if="${reply.likeCount>=0}" class="ti ti-hearts text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
-                        <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
-                        <i th:if="${reply.likeCount>0}" class="ti ti-hearts text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
-                        <span>[[${reply.likeCount}]]</span>
+                        <div class="btn btn-secondary ms-6">
+                          <!-- <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
+                          <!-- <i th:if="${reply.likeCount>=0}" class="ti ti-hearts text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
+                          <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
+                          <i th:if="${reply.likeCount>0}" class="ti ti-hearts text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
+                          <span>[[${reply.likeCount}]]</span>
+                        </div>
                       </div>
                     </div>
                     <!-- 댓글 내용 -->
                     <p class="my-3" th:text="${reply.content}"></p>
                     <div>
-                      <input type="hidden" name="" class="childReplyParent" th:value="${reply.replyId}">
-                      <div class="d-flex align-items-center gap-2 childReplyForm" >
+                      <!-- <div class="d-flex align-items-center gap-2 childReplyForm" th:data-parent="${reply.replyId}" th:data-board="${board.boardId}" th:data-user="${#authentication.name}"> -->
+                      <div class="d-flex align-items-center gap-2 childReplyForm" th:data-parent="${reply.replyId}" th:data-user="doyeon">
                         <!--대댓글 작성요청 버튼-->
                         <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
                           <i class="ti ti-arrow-back-up"></i> 
@@ -218,10 +220,10 @@
                     <div class="p-4 rounded-4 text-bg-light mb-3 ms-7" th:each="childReply : ${reply.childReplies}">
                       <div class="d-flex align-items-center gap-3">
                         <img th:src="@{/assets/images/profile/user-6.jpg}" alt="modernize-img" class="rounded-circle" width="40" height="40">
-                        <h6 class="mb-0 fs-4">Irene Hanson</h6>
+                        <h6 class="mb-0 fs-4" th:text="${childReply.memberId}">Irene Hanson</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                       </div>
-                      <p class="my-3">Uborofgic be rof lom sedge vapozi ohoinu nutremcuc ro ko atmeg anrov git ve vuj ki teb
+                      <p class="my-3" th:text="${childReply.content}">Uborofgic be rof lom sedge vapozi ohoinu nutremcuc ro ko atmeg anrov git ve vuj ki teb
                         or.
                         Lohi hafa faddegon horoz ebema kew idful ducam nev rol iga wikkobsu sucdu gud.
                       </p>

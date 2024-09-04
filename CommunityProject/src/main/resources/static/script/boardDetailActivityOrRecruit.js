@@ -14,7 +14,7 @@ $(function() {
     $("#submitReportBtn").click(submitReportForm);
     
     // 모집
-    $("#recruitBtn").click(boardRecruit());
+    $("#recruitBtn").click(boardRecruit);
     $("#submitRecruitBtn").click(submitRecruitForm);
     
     // 댓글
@@ -24,7 +24,7 @@ $(function() {
     });
     $(".replyHeart").click(replyLikeToggle);
     $(".childReplyBtn").click(childReplyWrite);
-    $(".childReplySubmit").click(childReplySubmit);
+    
     init();
 });
 
@@ -232,23 +232,47 @@ function childReplyWrite(){
     var parentDiv = $(this).closest('.childReplyForm');
 
     var childReplyForm = `
-        <div>
+        <div style=" background-color: white; padding: 12px; border-radius: 2%; width: 100%; box-sizing: border-box;">
             <textarea class="form-control mb-4 childreplyContent" rows="3"></textarea> <!-- 대댓글 내용 -->
-            <button class="btn btn-primary childReplySubmit">대댓글 등록</button> <!-- 대댓글 작성 버튼 -->
+            <button class="btn bg-danger-subtle text-danger childReplySubmitCancel">취소</button> <!-- 대댓글 작성 취소 버튼 -->
+            <button class="btn btn-primary ms-6 childReplySubmit">대댓글 등록</button> <!-- 대댓글 작성 버튼 -->
         </div>`;
     
     // 상위 div에 HTML 삽입
     parentDiv.html(childReplyForm);
+    $(".childReplySubmit").click(childReplySubmit); // 대댓글 등록 요청
+    $(".childReplySubmitCancel").click(childReplySubmitCancel); // 대댓글 등록 취소
+}
+
+// 대댓글 등록 취소
+function childReplySubmitCancel(){
+    // 클릭된 요소의 상위 div를 찾기
+    var parentDiv = $(this).closest('.childReplyForm');
+
+    var childReplyForm = `
+        <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+            <i class="ti ti-arrow-back-up"></i> 
+        </a>`;
+    
+    // 상위 div에 HTML 삽입
+    parentDiv.html(childReplyForm);
+    $(".childReplyBtn").click(childReplyWrite); // 대댓글 등록 폼 요청
 }
 
 // 대댓글 등록 요청
 function childReplySubmit() {
+    console.log(this);
     var boardId = $("#boardId").val();
-    var parentReplyId = $(this).closest('.childReplyParent').val();
+    console.log("board 아이디 : "+boardId);
+    console.log($(this).closest('.childReplyForm')[0]);
+    var divTag = $(this).closest('.childReplyForm')[0];
+    var parentReplyId = divTag.data("parent");
     console.log("부모 댓글 아이디 : "+parentReplyId);
-    var currentUser = $("#currentUser").val();
-    var content = $(this).closest('.childreplyContent').val();
+    var currentUser = divTag.attr("data-user");
+    console.log("대댓글 작성자 아이디 : "+currentUser);
+    var content = $('.childreplyContent').val();
     console.log("대댓글 내용 : "+content);
+
     $.ajax({
         method:"GET",
         url:"/reply/createChild",
