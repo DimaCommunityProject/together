@@ -18,7 +18,7 @@ public class MainControler {
 			) {
 		if(loginUser != null)
 			model.addAttribute("loginName", loginUser.getUsername());
-		return "member/index";
+		return "main/main";
 
 	}
 }

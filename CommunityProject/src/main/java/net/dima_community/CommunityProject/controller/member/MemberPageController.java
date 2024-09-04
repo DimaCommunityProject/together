@@ -37,7 +37,7 @@ public class MemberPageController {
         // Object principal =
         // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // String username = ((UserDetails) principal).getUsername();
-
+    	
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
         MemberDTO member = memberService.findById(memberId);
         MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());
