@@ -21,7 +21,7 @@
 
   <!-- 좋아요 css -->
   <style>
-    #heart:hover, #message:hover {
+    #heart:hover, #message:hover, .replyHeart:hover{
         /* background-color: #FFD2D2;  */ 
         background-color: #EBF5FF; /* 하늘 배경 */
         border-radius: 50%; /* 배경 둥글게 */
@@ -119,7 +119,7 @@
                 <!-- 게시글 제목 -->
                 <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
                 <!-- recruit -->
-                <div th:if="${board.limitNumber != 0}">
+                <div th:if="${board.dDay>0 || board.limitNumber != 0}">
                   <button id="endBtn" class="btn btn-primary" th:if="${board.currentNumber>=board.limitNumber}">
                     <i class="ti ti-square-x fs-6"></i> 모집 마감
                   </button>
@@ -169,12 +169,13 @@
               
               <!-- 댓글 작성 -->
               <h4 class="mb-4 fw-semibold">Post Comments</h4>
-              <form>
+              <div>
+                <input type="hidden" id="replyBoard" th:value="${board.boardId}"> <!--댓글달 게시글 ID-->
                 <!-- <input type="hidden" id="replyWriter" th:value="${#authentication.name}"> -->
-                <input type="hidden" id="replyWriter" th:value="${hs}"> <!--댓글 작성자 ID-->
+                <input type="hidden" id="replyWriter" th:value="hs"> <!--댓글 작성자 ID-->
                 <textarea class="form-control mb-4" rows="5" id="replyContent"></textarea> <!--댓글 내용-->
                 <button class="btn btn-primary" id="replySubmit">Post Comment</button> <!-- 댓글 작성 버튼 -->
-              </form>
+              </div>
 
               <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
                 <h4 class="mb-0">Comments</h4>
@@ -191,19 +192,25 @@
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
                       <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                      <!-- 댓글 좋아요 -->
-                      <div>
-                        <!-- <i class="ti ti-heart text-dark fs-6 replyHeart" data-member="${#authentication.name}"></i><span>[[${reply.likeCount}]]</span> -->
-                        <i class="ti ti-heart text-dark fs-6 replyHeart" data-member="${hs}" data-reply="${reply.replyId}"></i><span>[[${reply.likeCount}]]</span>
+                      <div class="ms-auto d-flex align-items-center">
+                        <!-- 댓글 좋아요 -->
+                        <!-- <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
+                        <!-- <i th:if="${reply.likeCount>=0}" class="ti ti-hearts text-dark fs-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId></i><span>[[${reply.likeCount}]]</span> -->
+                        <i th:if="${reply.likeCount==0}" class="ti ti-heart text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
+                        <i th:if="${reply.likeCount>0}" class="ti ti-hearts text-dark fs-4 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}" style="padding-right: 3px;"></i> 
+                        <span>[[${reply.likeCount}]]</span>
                       </div>
                     </div>
                     <!-- 댓글 내용 -->
                     <p class="my-3" th:text="${reply.content}"></p>
-                    <div class="d-flex align-items-center gap-2">
-                      <!--대댓글 작성요청 버튼-->
-                      <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                        <i class="ti ti-arrow-back-up"></i> 
-                      </a>
+                    <div>
+                      <input type="hidden" name="" class="childReplyParent" th:value="${reply.replyId}">
+                      <div class="d-flex align-items-center gap-2 childReplyForm" >
+                        <!--대댓글 작성요청 버튼-->
+                        <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+                          <i class="ti ti-arrow-back-up"></i> 
+                        </a>
+                      </div>
                     </div>
                   </div>
                   <!-- 대댓글이 있는 경우 -->

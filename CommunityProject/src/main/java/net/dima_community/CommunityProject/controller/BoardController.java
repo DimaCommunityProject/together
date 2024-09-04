@@ -206,7 +206,7 @@ public class BoardController {
     @GetMapping("/board/isRecruited")
     public boolean jobBoardRecruitIsRecruited(@RequestParam(name = "boardId") Long boardId, @RequestParam(name = "memberId")String memberId){
         return boardService.isRecruited(boardId, memberId);
-    }
+    }    
     
 
     // ===================== 게시글 좋아요 ===================
