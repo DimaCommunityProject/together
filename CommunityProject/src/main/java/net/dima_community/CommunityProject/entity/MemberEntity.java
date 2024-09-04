@@ -65,6 +65,12 @@ public class MemberEntity {
 	@Column(name = "badge2")
 	private String badge2;
 
+	@Column(name = "original_file_name")
+	private String originalFileName;
+
+	@Column(name = "saved_file_name")
+	private String savedFileName;
+
 	@Column(name = "verificationcode")
 	private String memberVerifyCode;
 

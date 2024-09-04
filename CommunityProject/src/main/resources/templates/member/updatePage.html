@@ -46,6 +46,7 @@
         , data: { memberId: memberId }
         , method: "POST"
         , success: function (resp) {
+          // if (resp = null) { return; }
           $("div").remove(".projectComponent");
           let data = "";
           $.each(resp, function (index, item) {
@@ -557,155 +558,244 @@
                     <h5>Skill Set</h5>
                     <p th:text="${memberPage.memberSkill}" id="memberSkill" hidden></p>
                     <select id="skill" name="skill" class="select2 form-control" multiple="multiple">
-                      <div th:if="${memberPage.memberSkill.contains('JAVA')}">
+                      <option value="JAVA"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
+                        JAVA
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
                         <option value="JAVA" selected>JAVA</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('JAVA')}">
+                      <div th:unless="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
                         <option value="JAVA">JAVA</option>
-                      </div>
-                      <div th:if="${memberPage.memberSkill.contains('PYTHON')}">
+                      </div> -->
+                      <option value="PYTHON"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PYTHON')}">
+                        PYTHON
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PYTHON')}">
                         <option value="PYTHON" selected>PYTHON</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('PYTHON')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('PYTHON')}">
                         <option value="PYTHON">PYTHON</option>
-                      </div>
-                      <div th:if="${memberPage.memberSkill.contains('C')}">
+                      </div> -->
+                      <option value="C"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C')}">
+                        C
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C')}">
                         <option value="C" selected>C</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('C')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('C')}">
                         <option value="C">C</option>
-                      </div>
-                      <div th:if="${memberPage.memberSkill.contains('C++')}">
+                      </div> -->
+                      <option value="C++"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C++')}">
+                        C++
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C++')}">
                         <option value="C++" selected>C++</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('C++')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('C++')}">
                         <option value="C++">C++</option>
-                      </div>
-                      <div th:if="${memberPage.memberSkill.contains('C#')}">
+                      </div> -->
+                      <option value="C#"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C#')}">
+                        C#
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C#')}">
                         <option value="C#" selected>C#</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('C#')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('C#')}">
                         <option value="C#">C#</option>
-                      </div>
-                      <div th:if="${memberPage.memberSkill.contains('Javascript')}">
+                      </div> -->
+                      <option value="Javascript"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Javascript')}">
+                        Javascript
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Javascript')}">
                         <option value="Javascript" selected>Javascript</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('Javascript')}">
+                      <div
+                        th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Javascript')}">
                         <option value="Javascript">Javascript</option>
-                      </div>
-                      <div th:if="${memberPage.memberSkill.contains('React')}">
+                      </div> -->
+                      <option value="React"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('React')}">
+                        React
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('React')}">
                         <option value="React" selected>React</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('React')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('React')}">
                         <option value="React">React</option>
-                      </div>
-
-                      <div th:if="${memberPage.memberSkill.contains('HTML')}">
+                      </div> -->
+                      <option value="HTML"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('HTML')}">
+                        HTML
+                      </option>
+                      <!-- 
+                      <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('HTML')}">
                         <option value="HTML" selected>HTML</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('HTML')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('HTML')}">
                         <option value="HTML">HTML</option>
-                      </div>
-
-                      <div th:if="${memberPage.memberSkill.contains('Springboot')}">
+                      </div> -->
+                      <option value="Springboot"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Springboot')}">
+                        Springboot
+                      </option>
+                      <!-- <div
+                        th:if="${memberPage.memberSkill != null and memberPage.memberSkill != null and memberPage.memberSkill.contains('Springboot')}">
                         <option value="Springboot" selected>Springboot</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('Springboot')}">
+                      <div
+                        th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Springboot')}">
                         <option value="Springboot">Springboot</option>
-                      </div>
+                      </div> -->
 
-
-                      <div th:if="${memberPage.memberSkill.contains('jQuery')}">
+                      <option value="jQuery"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('jQuery')}">
+                        jQuery
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('jQuery')}">
                         <option value="jQuery" selected>jQuery</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('jQuery')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('jQuery')}">
                         <option value="jQuery">jQuery</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('CSS3')}">
+                      <option value="CSS3"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('CSS3')}">
+                        CSS3
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('CSS3')}">
                         <option value="CSS3" selected>CSS3</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('CSS3')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('CSS3')}">
                         <option value="CSS3">CSS3</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('Node.js')}">
+                      <option value="Node.js"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Node.js')}">
+                        Node.js
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Node.js')}">
                         <option value="Node.js" selected>Node.js</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('Node.js')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Node.js')}">
                         <option value="Node.js">Node.js</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('Oracle')}">
+                      <option value="Oracle"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Oracle')}">
+                        Oracle
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Oracle')}">
                         <option value="Oracle" selected>Oracle</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('Oracle')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Oracle')}">
                         <option value="Oracle">Oracle</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('MySQL')}">
+                      <option value="MySQL"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MySQL')}">
+                        MySQL
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MySQL')}">
                         <option value="MySQL" selected>MySQL</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('MySQL')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('MySQL')}">
                         <option value="MySQL">MySQL</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('MongoDB')}">
+                      <option value="MongoDB"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MongoDB')}">
+                        MongoDB
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MongoDB')}">
                         <option value="MongoDB" selected>MongoDB</option>
                       </div>
-                      <div th:unless="${memberPage.memberSkill.contains('MongoDB')}">
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('MongoDB')}">
                         <option value="MongoDB">MongoDB</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('MariaDB')}">
+                      <option value="MariaDB"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MariaDB')}">
+                        MariaDB
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MariaDB')}">
                         <option value="MariaDB" selected>MariaDB</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('MariaDB')}">
                         <option value="MariaDB">MariaDB</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('PostgreSQL')}">
+                      <option value="PostgreSQL"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PostgreSQL')}">
+                        PostgreSQL
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PostgreSQL')}">
                         <option value="PostgreSQL" selected>PostgreSQL</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('PostgreSQL')}">
                         <option value="PostgreSQL">PostgreSQL</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('JPA')}">
+                      <option value="JPA"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JPA')}">
+                        JPA
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JPA')}">
                         <option value="JPA" selected>JPA</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('JPA')}">
                         <option value="JPA">JPA</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('JSP')}">
+                      <option value="JSP"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JSP')}">
+                        JSP
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JSP')}">
                         <option value="JSP" selected>JSP</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('JSP')}">
                         <option value="JSP">JSP</option>
-                      </div>
+                      </div> -->
 
 
-                      <div th:if="${memberPage.memberSkill.contains('Linux')}">
+                      <option value="Linux"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Linux')}">
+                        Linux
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Linux')}">
                         <option value="Linux" selected>Linux</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('Linux')}">
                         <option value="Linux">Linux</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('Unity')}">
+                      <option value="Unity"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Unity')}">
+                        Unity
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Unity')}">
                         <option value="Unity" selected>Unity</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('Unity')}">
                         <option value="Unity">Unity</option>
-                      </div>
+                      </div> -->
 
-                      <div th:if="${memberPage.memberSkill.contains('Flutter')}">
+                      <option value="Flutter"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Flutter')}">
+                        Flutter
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Flutter')}">
                         <option value="Flutter" selected>Flutter</option>
                       </div>
                       <div th:unless="${memberPage.memberSkill.contains('Flutter')}">
                         <option value="Flutter">Flutter</option>
-                      </div>
+                      </div> -->
                     </select>
                     <div style="display: flex; justify-content: flex-end;">
                       <span hidden id="skillComplete"

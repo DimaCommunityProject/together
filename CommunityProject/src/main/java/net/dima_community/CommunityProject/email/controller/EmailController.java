@@ -52,15 +52,15 @@ public class EmailController {
     public boolean verifyCode(@RequestParam(name = "memberEmail") String to,
             @RequestParam(name = "memberVerifyCode") String code) {
         boolean result = memberService.verifyMemberByCode(to, code);
+        log.info("" + result);
         return result;
     }
 
-    //@ResponseBody
+    // @ResponseBody
     @GetMapping("/approve")
     public String approve(
-    		@RequestParam(name="memberId") String id, @RequestParam(name="memberEmail") String to
-    		, Model model) {
-    	
+            @RequestParam(name = "memberId") String id, @RequestParam(name = "memberEmail") String to, Model model) {
+
         memberService.approve(id);
         Email email = Email.builder()
                 .to(to)
@@ -70,17 +70,17 @@ public class EmailController {
         try {
             emailSender.sendMail(email);
         } catch (Exception e) {
-        	model.addAttribute("error", true);
+            model.addAttribute("error", true);
             model.addAttribute("errMessage", "승인을 처리하지 못했습니다.");
-            return "admin/adminPage";  // 원래 페이지로 돌아가면서 오류 메시지 전달
+            return "admin/adminPage"; // 원래 페이지로 돌아가면서 오류 메시지 전달
         }
         return "redirect:/admin/adminPage";
     }
 
-    //@ResponseBody
+    // @ResponseBody
     @GetMapping("/refuse")
-    public String refuse(@RequestParam(name="memberId") String id, @RequestParam(name="memberEmail") String to
-    		, Model model) {
+    public String refuse(@RequestParam(name = "memberId") String id, @RequestParam(name = "memberEmail") String to,
+            Model model) {
         Email email = Email.builder()
                 .to(to)
                 .title("디마 커뮤니티 회원가입 거절 메일입니다.")
@@ -91,9 +91,9 @@ public class EmailController {
         try {
             emailSender.sendMail(email);
         } catch (Exception e) {
-        	model.addAttribute("error", true);
+            model.addAttribute("error", true);
             model.addAttribute("errMessage", "승인을 처리하지 못했습니다.");
-            return "admin/adminPage";  // 원래 페이지로 돌아가면서 오류 메시지 전달
+            return "admin/adminPage"; // 원래 페이지로 돌아가면서 오류 메시지 전달
         }
         return "redirect:/admin/adminPage";
 

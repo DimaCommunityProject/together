@@ -3,6 +3,8 @@ package net.dima_community.CommunityProject.dto;
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.entity.MemberEntity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +29,9 @@ public class MemberDTO {
 	private String memberEmail;
 	private String badge1;
 	private String badge2;
+	private MultipartFile uploadFile;
+	private String originalFileName;
+	private String savedFileName;
 	public String memberVerifyCode;
 
 	public static MemberDTO toDTO(MemberEntity memberEntity) {
@@ -69,8 +74,8 @@ public class MemberDTO {
 		this.memberVerifyCode = generatedString;
 		return this;
 	};
-	
-	//관리자페이지에 보여줄 회원
+
+	// 관리자페이지에 보여줄 회원
 	public MemberDTO(String memberName, String memberEmail, String memberGroup, String memberId, String memberEnabled) {
 		super();
 		this.memberName = memberName;

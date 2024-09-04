@@ -38,39 +38,44 @@
         let BmemberPw = checkPw();
         let BmemberPhone = checkPhone();
         let BmemberEmail = checkEmail();
+        console.log(memberName, memberGroup, BmemberId, BmemberPw, BmemberPhone, BmemberEmail);
 
-        if ((memberName == "" | memberGroup == "") | (BmemberId | BmemberPw | BmemberPhone | BmemberEmail)) {
+        if ((memberName != "" & memberGroup != "") & (BmemberId & BmemberPw & BmemberPhone & BmemberEmail)) {
+
+          if (!$("#termsCheckbox").is(':checked')) {
+            alert("약관 동의에 체크해주세요");
+            return;
+          }
+
+          toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
+            progressBar: true,
+          });
+          $.ajax({
+            url: "/email/send",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({
+              memberId: memberId, memberPw: memberPw, memberName: memberName
+              , memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail
+              , memberEnabled: memberEnabled, memberRole: memberRole
+            }),
+            success: function (resp) {
+              if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.")
+              else alert("메일을 성공적으로 전송했습니다.")
+            }
+          })
+        } else {
           alert("가입 정보를 입력해 주세요");
           return;
         }
-        if (!$("#termsCheckbox").is(':checked')) {
-          alert("약관 동의에 체크해주세요");
-          return;
-        }
 
-        toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
-          progressBar: true,
-        });
-        $.ajax({
-          url: "/email/send",
-          method: "POST",
-          contentType: 'application/json',
-          data: JSON.stringify({
-            memberId: memberId, memberPw: memberPw, memberName: memberName
-            , memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail
-            , memberEnabled: memberEnabled, memberRole: memberRole
-          }),
-          success: function (resp) {
-            if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.")
-            else alert("메일을 성공적으로 전송했습니다.")
-          }
-        })
       })
 
 
       $("#verifyCode").on('click', function () {
         let myVerifyCode = $("#myVerifyCode").val();
         let myEmail = $("#memberEmail").val();
+        console.log(myVerifyCode, myEmail);
         $.ajax({
           url: "/email/verifyCode"
           , method: "GET"
@@ -85,6 +90,7 @@
           }
         })
       })
+
 
     });
 
@@ -108,15 +114,17 @@
               $("#checkId").addClass("bg-success-subtle");
               $("#checkId").text("이미 존재하는 ID 입니다.");
               return false;
+            } else {
+              $("#checkId").removeClass("text-danger");
+              $("#checkId").removeClass("bg-danger-subtle");
+              $("#checkId").addClass("text-success");
+              $("#checkId").addClass("bg-success-subtle");
+              $("#checkId").text("사용 가능한 ID 입니다.")
             }
-            $("#checkId").removeClass("text-danger");
-            $("#checkId").removeClass("bg-danger-subtle");
-            $("#checkId").addClass("text-success");
-            $("#checkId").addClass("bg-success-subtle");
-            $("#checkId").text("사용 가능한 ID 입니다.")
-            return true;
+
           }
         })
+        return true;
       }
     };
 
@@ -129,7 +137,7 @@
       } else {
         $("#memberPw2").attr('readonly', false)
         $("#checkPw").text("");
-        pwDoubleCheck;
+        return pwDoubleCheck();
       }
     }
 
@@ -271,6 +279,10 @@
                       class="badge fw-semibold py-1 bg-danger-subtle text-danger"></span>
                   </div>
                   <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label" id="uploadFile">프로필 사진</label>
+                    <input type="file" class="form-control">
+                  </div>
+                  <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" name="memberEmail" id="memberEmail" class="form-control"
                       aria-describedby="emailHelp">
@@ -293,6 +305,7 @@
                       <input type="button" value="인증하기" id="verifyCode" class="btn btn-primary mt-4 emailVerify">
                     </span>
                   </div>
+
                   <!-- <a href="../main/authentication-login.html" class="btn btn-primary w-100 py-8 mb-4 rounded-2">Sign
                     Up</a> -->
                   <div class="d-flex align-items-center">
