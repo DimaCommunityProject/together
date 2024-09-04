@@ -50,7 +50,7 @@ public class MemberEntity {
 	@Column(name = "member_name", nullable = false)
 	private String memberName;
 
-	@Column(name = "member_email", nullable = false, unique = true)
+	@Column(name = "member_email", nullable = false)
 	private String memberEmail;
 
 	@Column(name = "member_group", nullable = false)
@@ -64,6 +64,12 @@ public class MemberEntity {
 
 	@Column(name = "badge2")
 	private String badge2;
+
+	@Column(name = "original_file_name")
+	private String originalFileName;
+
+	@Column(name = "saved_file_name")
+	private String savedFileName;
 
 	@Column(name = "verificationcode")
 	private String memberVerifyCode;

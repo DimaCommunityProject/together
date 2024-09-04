@@ -16,17 +16,14 @@
 
   <!-- Ajax -->
   <script src="/js/jquery-3.7.1.min.js"></script>
-	
-	<script>
+  <script>
     $(function () {
-      $("#memberId").on('keyup', checkId);
-      $("#memberPw").on('keyup', checkPw);
-      $("#memberPw2").on('keyup', pwDoubleCheck);
-      $("#memberPhone").on('keyup', checkPhone);
-      $("#memberEmail").on('keyup', checkEmail);
-
-      // 이메일 전송 버튼 클릭 시
-      $("#sendEmail").on('click', async function () {
+      $("#memberId").on('keyup', checkId)
+      $("#memberPw").on('keyup', checkPw)
+      $("#memberPw2").on('keyup', pwDoubleCheck)
+      $("#memberPhone").on('keyup', checkPhone)
+      $("#memberEmail").on('keyup', checkEmail)
+      $("#sendEmail").on('click', function () {
 
         let memberId = $("#memberId").val();
         let memberPw = $("#memberPw").val();
@@ -36,153 +33,161 @@
         let memberEmail = $("#memberEmail").val();
         let memberEnabled = $("#memberEnabled").val();
         let memberRole = $("#memberRole").val();
-        
-        console.log("Check Values: ", memberId, memberPw, memberName, memberGroup, memberPhone, memberEmail);
-        
-        // 비동기 함수의 결과를 기다리기 위해 await 사용
-        let BmemberId = await checkId();
+
+        let BmemberId = checkId();
         let BmemberPw = checkPw();
         let BmemberPhone = checkPhone();
         let BmemberEmail = checkEmail();
-        
-        console.log("Validations - ID:", BmemberId, "PW:", BmemberPw, "Phone:", BmemberPhone, "Email:", BmemberEmail);
+        console.log(memberName, memberGroup, BmemberId, BmemberPw, BmemberPhone, BmemberEmail);
 
-        if (memberName == "" || memberGroup == "" || !BmemberId || !BmemberPw || !BmemberPhone || !BmemberEmail) {
+        if ((memberName != "" & memberGroup != "") & (BmemberId & BmemberPw & BmemberPhone & BmemberEmail)) {
+
+          if (!$("#termsCheckbox").is(':checked')) {
+            alert("약관 동의에 체크해주세요");
+            return;
+          }
+
+          toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
+            progressBar: true,
+          });
+          $.ajax({
+            url: "/email/send",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({
+              memberId: memberId, memberPw: memberPw, memberName: memberName
+              , memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail
+              , memberEnabled: memberEnabled, memberRole: memberRole
+            }),
+            success: function (resp) {
+              if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.")
+              else alert("메일을 성공적으로 전송했습니다.")
+            }
+          })
+        } else {
           alert("가입 정보를 입력해 주세요");
           return;
         }
-        if (!$("#termsCheckbox").is(':checked')) {
-          alert("약관 동의에 체크해주세요");
-          return;
-        }
 
-        toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
-          progressBar: true,
-        });
+      })
 
-        $.ajax({
-          url: "/email/send",
-          method: "POST",
-          contentType: 'application/json',
-          data: JSON.stringify({
-            memberId: memberId, memberPw: memberPw, memberName: memberName,
-            memberGroup: memberGroup, memberPhone: memberPhone, memberEmail: memberEmail,
-            memberEnabled: memberEnabled, memberRole: memberRole
-          }),
-          success: function (resp) {
-            if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.");
-            else alert("메일을 성공적으로 전송했습니다.");
-          }
-        });
-      });
 
-      // 이메일 인증 코드 확인
       $("#verifyCode").on('click', function () {
         let myVerifyCode = $("#myVerifyCode").val();
         let myEmail = $("#memberEmail").val();
-        
+        console.log(myVerifyCode, myEmail);
         $.ajax({
-          url: "/email/verifyCode",
-          method: "GET",
-          data: { memberVerifyCode: myVerifyCode, memberEmail: myEmail },
-          success: function (resp) {
-            if (!resp) {
-              alert("본인인증에 실패하였습니다. 다시한번 시도해주세요.");
-            } else {
-              alert("본인인증에 성공했습니다.");
+          url: "/email/verifyCode"
+          , method: "GET"
+          , data: { memberVerifyCode: myVerifyCode, memberEmail: myEmail }
+          , success: function (resp) {
+            if (!resp) alert("본인인증에 실패하였습니다. 다시한번 시도해주세요.")
+            else {
+              alert("본인인증에 성공했습니다. ");
               $("#maintainJoinPage").text("");
               $("#closeJoinPage").prop('hidden', false);
             }
           }
-        });
-      });
+        })
+      })
 
-      // 비동기 함수 (아이디 중복 확인)
-      async function checkId() {
-        let id = $("#memberId").val();
-        if (id.trim().length < 8 || id.trim().length > 15) {
-          $("#checkId").text("아이디는 8~15자리로 설정해주세요");
-          return false;
-        } else {
-          try {
-            let response = await $.ajax({
-              url: "/member/checkDuplicate",
-              data: { memberId: id },
-              method: "GET"
-            });
-            if (!response) {
+
+    });
+
+    function checkId() {
+      let id = $("#memberId").val();
+      if (id.trim().length < 8 || id.trim().length > 15) {
+        $("#checkId").text("아이디는 8~15자리로 설정해주세요");
+        return false;
+      }
+      if (id.trim().length >= 8 || id.trim().length <= 15) {
+        $.ajax({
+          url: "/member/checkDuplicate"
+          , data: { memberId: id }
+          , method: "GET"
+          , success: function (resp) {
+            console.log(resp);
+            if (!resp) {
               $("#checkId").removeClass("text-success");
+              $("#checkId").removeClass("bg-danger-subtle");
               $("#checkId").addClass("text-danger");
+              $("#checkId").addClass("bg-success-subtle");
               $("#checkId").text("이미 존재하는 ID 입니다.");
               return false;
             } else {
               $("#checkId").removeClass("text-danger");
+              $("#checkId").removeClass("bg-danger-subtle");
               $("#checkId").addClass("text-success");
-              $("#checkId").text("사용 가능한 ID 입니다.");
-              return true;
+              $("#checkId").addClass("bg-success-subtle");
+              $("#checkId").text("사용 가능한 ID 입니다.")
             }
-          } catch (error) {
-            console.error("AJAX 요청 오류:", error);
-            return false;
+
           }
-        }
+        })
+        return true;
+      }
+    };
+
+    function checkPw() {
+      let pw = $("#memberPw").val();
+      if (pw.trim().length < 8 || pw.trim().length > 15) {
+        $("#memberPw2").attr('readonly', true)
+        $("#checkPw").text("비밀번호는 8~15자리로 설정해주세요.")
+        return false;
+      } else {
+        $("#memberPw2").attr('readonly', false)
+        $("#checkPw").text("");
+        return pwDoubleCheck();
+      }
+    }
+
+    function pwDoubleCheck() {
+      let pw = $("#memberPw").val();
+      let pw2 = $("#memberPw2").val();
+      if (pw.trim() != pw2.trim()) {
+        $("#pwDoubleCheck").removeClass("text-success");
+        $("#pwDoubleCheck").removeClass("bg-success-subtle");
+        $("#pwDoubleCheck").addClass("text-danger");
+        $("#pwDoubleCheck").addClass("bg-danger-subtle");
+        $("#pwDoubleCheck").text("비밀번호가 일치하지 않습니다.");
+        return false;
+      } else {
+        $("#pwDoubleCheck").removeClass("text-danger");
+        $("#pwDoubleCheck").removeClass("bg-danger-subtle");
+        $("#pwDoubleCheck").addClass("text-success");
+        $("#pwDoubleCheck").addClass("bg-success-subtle");
+        $("#pwDoubleCheck").text("비밀번호가 일치합니다.");
+        return true;
+      }
+    }
+
+    function checkPhone() {
+      let phone = $("#memberPhone").val();
+      if (phone.trim().length != 13) {
+        $("#checkPhone").text("전화번호는 '-'를 포함하여 13자리 입니다.");
+        return false;
+      } else {
+        $("#checkPhone").text("");
+        return true;
+      }
+    }
+
+    function checkEmail() {
+      let email = $("#memberEmail").val();
+      if (email === "") {
+        $("#checkEmail").html("이메일은 필수값입니다.<br>");
+        return false;
+      } else if (email.indexOf("@") === -1) {
+        $("#checkEmail").html("올바른 이메일 형식으로 입력해주세요.");
+        return false;
+      } else {
+        $("#checkEmail").html(null);
+        return true;
       }
 
-      function checkPw() {
-        let pw = $("#memberPw").val();
-        if (pw.trim().length < 8 || pw.trim().length > 15) {
-          $("#memberPw2").attr('readonly', true);
-          $("#checkPw").text("비밀번호는 8~15자리로 설정해주세요.");
-          return false;
-        } else {
-          $("#memberPw2").attr('readonly', false);
-          $("#checkPw").text("");
-          return pwDoubleCheck();
-        }
-      }
+    }
 
-      function pwDoubleCheck() {
-        let pw = $("#memberPw").val();
-        let pw2 = $("#memberPw2").val();
-        if (pw.trim() != pw2.trim()) {
-          $("#pwDoubleCheck").removeClass("text-success");
-          $("#pwDoubleCheck").addClass("text-danger");
-          $("#pwDoubleCheck").text("비밀번호가 일치하지 않습니다.");
-          return false;
-        } else {
-          $("#pwDoubleCheck").removeClass("text-danger");
-          $("#pwDoubleCheck").addClass("text-success");
-          $("#pwDoubleCheck").text("비밀번호가 일치합니다.");
-          return true;
-        }
-      }
-
-      function checkPhone() {
-        let phone = $("#memberPhone").val();
-        if (phone.trim().length != 13) {
-          $("#checkPhone").text("전화번호는 '-'를 포함하여 13자리 입니다.");
-          return false;
-        } else {
-          $("#checkPhone").text("");
-          return true;
-        }
-      }
-
-      function checkEmail() {
-        let email = $("#memberEmail").val();
-        if (email === "") {
-          $("#checkEmail").html("이메일은 필수값입니다.<br>");
-          return false;
-        } else if (email.indexOf("@") === -1) {
-          $("#checkEmail").html("올바른 이메일 형식으로 입력해주세요.");
-          return false;
-        } else {
-          $("#checkEmail").html(null);
-          return true;
-        }
-      }
-    });
-</script>
+  </script>
 
   <title>Modernize Bootstrap Admin</title>
 </head>
@@ -200,7 +205,7 @@
           <div class="col-md-8 col-lg-6 col-xxl-3 auth-card">
             <div class="card mb-0">
               <div class="card-body">
-                <a href="../main/index.html" class="text-nowrap logo-img text-center d-block mb-5 w-100">
+                <a href="/" class="text-nowrap logo-img text-center d-block mb-5 w-100">
                   <!-- <img src="../images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
                   <img src="../images/logos/light-logo.svg" class="light-logo" alt="Logo-light" /> -->
                   <p for="exampleInputEmail1" class="form-label">디마 커뮤니티</p>
@@ -274,6 +279,10 @@
                       class="badge fw-semibold py-1 bg-danger-subtle text-danger"></span>
                   </div>
                   <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label" id="uploadFile">프로필 사진</label>
+                    <input type="file" class="form-control">
+                  </div>
+                  <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" name="memberEmail" id="memberEmail" class="form-control"
                       aria-describedby="emailHelp">
@@ -296,6 +305,7 @@
                       <input type="button" value="인증하기" id="verifyCode" class="btn btn-primary mt-4 emailVerify">
                     </span>
                   </div>
+
                   <!-- <a href="../main/authentication-login.html" class="btn btn-primary w-100 py-8 mb-4 rounded-2">Sign
                     Up</a> -->
                   <div class="d-flex align-items-center">
@@ -528,6 +538,7 @@
   <script src="../../js/plugins/toastr-init.js"></script>
 
   <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
 </html>

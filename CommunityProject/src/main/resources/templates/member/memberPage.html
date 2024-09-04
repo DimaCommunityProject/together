@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
-  xmlns:th="http://www.thymeleaf.org">
+  xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <!-- Required meta tags -->
@@ -9,16 +10,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png" href="../../static/images/logos/favicon.png" />
+  <link rel="shortcut icon" th:href="@{/images/logos/favicon.png}">
 
   <!-- Core Css -->
-  <link rel="stylesheet" href="../../static/css/styles.css" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 
   <title>Modernize Bootstrap Admin</title>
-  <link rel="stylesheet" href="../../static/libs/select2/dist/css/select2.min.css">
-
-  <title>Modernize Bootstrap Admin</title>
-  <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+  <script th:src="@{/libs/jquery-3.7.1.min.js}"></script>
+  <script th:src="@{/libs/jquery-ui/dist/jquery-ui.min.js}"></script>
   <script>
     $(function () {
       var skillItem = $("#skillItem").text();
@@ -154,7 +153,7 @@
             </div>
             <div class="col-3">
               <div class="text-center mb-n5">
-                <img src="../../static/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+                <img src="../../images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
               </div>
             </div>
           </div>
@@ -162,7 +161,7 @@
       </div>
       <div class="card overflow-hidden">
         <div class="card-body p-0">
-          <img src="../../static/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
+          <img src="../../images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
           <div class="row" style="justify-content: flex-end;">
             <!-- <div class="col-lg-4 order-lg-1 order-2">
               <div class="d-flex align-items-center justify-content-around m-4">
@@ -187,10 +186,9 @@
               <div class="mt-n5">
                 <div class="d-flex align-items-center justify-content-center mb-2">
                   <div class="d-flex align-items-center justify-content-center round-110">
-                    <div
-                      class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
-                      <img src="../../static/images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
-                    </div>
+                    <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+					  <img th:src="@{/images/profile/{memberName}.jpg(memberName=${member.memberName})}" alt="modernize-img" class="w-100 h-100">
+					</div>
                   </div>
                 </div>
                 <div class="text-center">
@@ -206,10 +204,10 @@
               <ul
                 class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
                 <li>
-                  <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
-                    href=`chat?memberId=${member.memberId}` width="30" height="30">
-                    <i class="ti ti-message-chatbot"></i>
-                  </a>
+					<a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
+					   th:href="@{/api/chat/chatPage}" width="30" height="30">
+					   <i class="ti ti-message-chatbot"></i>
+					</a>
                 </li>
                 <li>
                   <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
@@ -353,21 +351,22 @@
             </div>
           </div>
           <!-- Import Js Files -->
-          <script src="../../static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-          <script src="../../static/libs/simplebar/dist/simplebar.min.js"></script>
-          <script src="../../static/js/theme/app.init.js"></script>
-          <script src="../../static/js/theme/theme.js"></script>
-          <script src="../../static/js/theme/app.min.js"></script>
-          <script src="../../static/js/theme/sidebarmenu.js"></script>
-
-          <script src="../../static/js/vendor.min.js"></script>
-          <!-- solar icons -->
-          <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+          
+        <!-- <script th:src="@{/js/vendor.min.js}"></script> -->
+		<!-- Import Js Files -->
+		<script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+		<script th:src="@{/js/theme/app.horizontal.init.js}"></script>
+		<script th:src="@{/js/theme/theme.js}"></script>
+		<script th:src="@{/js/theme/app.init.js}"></script>
+		<script th:src="@{/js/theme/app.min.js}"></script>
+<!-- 		<script th:src="@{/js/theme/sidebarmenu.js}"></script>
+ -->	
           <!-- This Page JS -->
-          <script src="../../static/libs/select2/dist/js/select2.full.min.js"></script>
-          <script src="../../static/libs/select2/dist/js/select2.min.js"></script>
-          <script src="../../static/js/forms/select2.init.js"></script>
-          <script src="../../static/js/apps/kanban.js"></script>
+          <script th:src="@{/libs/select2/dist/js/select2.full.min.js}"></script>
+          <script th:src="@{/libs/select2/dist/js/select2.min.js}"></script>
+          <script th:src="@{/js/forms/select2.init.js}"></script>
+          <script th:src="@{/js/apps/kanban.js}"></script>
 </body>
 
 </html>

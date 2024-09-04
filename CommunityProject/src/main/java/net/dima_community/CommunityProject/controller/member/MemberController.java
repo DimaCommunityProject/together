@@ -34,7 +34,7 @@ public class MemberController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/member/authentication-register2")
+	@GetMapping("/member/join")
 	public String join() {
 		return "member/authentication-register2";
 	}

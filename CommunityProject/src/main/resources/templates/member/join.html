@@ -10,7 +10,7 @@
 	<!-- CSS 설정 -->
 	<link rel="stylesheet" th:href="@{/css/user.css}">
 
-	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/static/script/jquery-3.7.1.min.js}"></script>
 	<script>
 		$(function () {
 			$("#memberId").on('keyup', checkId)
@@ -196,6 +196,7 @@
 							<input type="button" value="인증하기" id="verifyCode">
 
 						</li>
+
 					</ul>
 
 					<input type="hidden" id="closeJoinPage" value="회원가입 완료하기">

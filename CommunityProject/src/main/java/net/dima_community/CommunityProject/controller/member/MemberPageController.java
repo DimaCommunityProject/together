@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
@@ -41,11 +42,15 @@ public class MemberPageController {
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
         MemberDTO member = memberService.findById(memberId);
         MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());
-        List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(member.getMemberId());
+        try {
+            List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(member.getMemberId());
+            model.addAttribute("memberProject", memberProject);
+        } catch (Exception e) {
+
+        }
 
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);
-        model.addAttribute("memberProject", memberProject);
 
         return "member/memberPage";
     }
@@ -66,8 +71,13 @@ public class MemberPageController {
     @PostMapping("/showproject")
     @ResponseBody
     public List<MemberProjectDTO> showproject(@RequestParam(name = "memberId") String memberId) {
-        List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(memberId);
-        return memberProject;
+        try {
+            List<MemberProjectDTO> memberProject = memberProjectService.findByUsername(memberId);
+            return memberProject;
+        } catch (ResourceNotFoundException e) {
+            return null;
+        }
+
     }
 
     @PostMapping("/updatePage")

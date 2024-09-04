@@ -20,7 +20,7 @@ public class MemberPageService {
     public MemberPageDTO findByUsername(String memberId) {
         Optional<MemberPageDTO> result = memberPageRepository.findByUsername(memberId);
         if (result == null | !result.isPresent()) {
-            throw new ResourceNotFoundException("Member", memberId);
+            throw new ResourceNotFoundException("MemberPage", memberId);
         }
         return result.get();
         // return memberPageRepository.findByUsername(memberId)

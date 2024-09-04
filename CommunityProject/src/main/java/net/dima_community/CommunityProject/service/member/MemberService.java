@@ -17,7 +17,9 @@ import net.dima_community.CommunityProject.common.exception.ResourceNotFoundExce
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
 import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.repository.member.MemberPageRepository;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 @Service
@@ -25,7 +27,7 @@ import net.dima_community.CommunityProject.repository.member.MemberRepository;
 @Slf4j
 public class MemberService {
 	private final MemberRepository memberRepository;
-
+	private final MemberPageRepository memberPageRepository;
 	public final BCryptEncoderHolder bCryptEncoderHolder;
 	public final DBConnector dbConnector;
 
@@ -89,18 +91,22 @@ public class MemberService {
 	        memberRepository.save(MemberEntity.toEntity(memberDTO));
 	    }
 
-	public boolean verifyMemberByCode(String to, String code) {
-		Optional<MemberEntity> result = memberRepository.findByMemberEmail(to);
-		if (result == null || !result.isPresent()) {
-			throw new ResourceNotFoundException("Member", to);
+		public boolean verifyMemberByCode(String to, String code) {
+			Optional<MemberEntity> result = memberRepository.findByMemberEmail(to);
+			if (result == null || !result.isPresent()) {
+				throw new ResourceNotFoundException("Member", to);
+			}
+			MemberDTO member = MemberDTO.toDTO(result.get());
+			log.info(member.getMemberVerifyCode() + code);
+			if (!code.trim().equals(member.getMemberVerifyCode())) {
+				// memberRepository.delete(member);
+				return false;
+			} else {
+				memberPageRepository.save(member, MemberPageDTO.builder().memberId(member.getMemberId()).build());
+				return true;
+			}
+
 		}
-		MemberDTO member = MemberDTO.toDTO(result.get());
-		if (!code.equals(member.getMemberVerifyCode())) {
-			// memberRepository.delete(member);
-			return false;
-		}
-		return true;
-	}
 
 	@Transactional
 	public MemberDTO setEncodedPassword(MemberDTO memberDTO) {

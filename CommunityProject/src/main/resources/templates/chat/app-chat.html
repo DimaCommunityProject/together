@@ -215,7 +215,7 @@
 													</a>
 												</div>
 												<div class="d-grid py-4 px-7 pt-8">
-													<a href="../horizontal/authentication-login.html"
+													<a th:href="@{/member/logout}"
 														class="btn btn-outline-primary">Log Out</a>
 												</div>
 											</div>
@@ -341,7 +341,7 @@
 																Settings</span>
 														</div>
 														<div class="d-grid py-4 px-7 pt-8">
-															<a href="../horizontal/authentication-login.html"
+															<a th:href="@{/member/logout}"
 																class="btn btn-outline-primary">Log Out</a>
 														</div>
 													</a>
@@ -974,7 +974,7 @@
 												<!-- 로그아웃 -->
 												<li><a
 													class="dropdown-item d-flex align-items-center gap-2"
-													href="javascript:void(0)"> <span> <i
+													th:href="@{/member/logout}"> <span> <i
 															class="ti ti-login fs-4"></i>
 													</span>Sign Out
 												</a></li>
