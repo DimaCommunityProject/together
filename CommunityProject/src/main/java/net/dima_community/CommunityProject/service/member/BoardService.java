@@ -30,9 +30,7 @@ public class BoardService {
     }
 
     public BoardDTO findById(Long boardId) {
-        // log.info("+++++++++++++++++++++++++" + boardId);
         BoardEntity result = boardRepository.findById(boardId).get();
-        log.info(result.toString());
         return BoardDTO.toDTO(result, result.getMemberEntity().getMemberId());
     }
 

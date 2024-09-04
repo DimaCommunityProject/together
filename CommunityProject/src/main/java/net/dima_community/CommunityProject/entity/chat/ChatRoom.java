@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,7 +26,7 @@ public class ChatRoom {
     private LocalDateTime createdDate;
 
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private Integer deleted=0;
 
     @Column(name = "deleted_date")
     private LocalDateTime deletedDate;
@@ -49,5 +50,5 @@ public class ChatRoom {
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<ChattingRoomMemberEntity> chattingRoomMembers;
+    private List<ChattingRoomMemberEntity> chattingRoomMembers = new ArrayList<>();
 }

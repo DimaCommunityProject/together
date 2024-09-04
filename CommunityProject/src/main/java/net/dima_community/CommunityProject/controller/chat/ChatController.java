@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dima_community.CommunityProject.dto.chat.ChatRoomDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
 import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRepository;
+import net.dima_community.CommunityProject.service.chat.ChatRoomService;
 import net.dima_community.CommunityProject.service.chat.ChatService;
 import net.dima_community.CommunityProject.service.member.MemberService;
 
@@ -35,7 +37,7 @@ import net.dima_community.CommunityProject.service.member.MemberService;
 public class ChatController {
 
     private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
-    private final MemberService memberService;
+    private final ChatRoomService chatRoomService;
     private final ChatService chatService;
     private final ChattingRoomMemberRepository chattingRoomMemberRepository;
     private final RabbitTemplate rabbitTemplate;
@@ -54,7 +56,7 @@ public class ChatController {
     @SendTo("/queue/chat.room.{chatRoomId}")
     public ChatMessage enterRoom(@DestinationVariable("chatRoomId") String chatRoomId, ChatMessage message) {
         try {
-            String senderName = memberService.findByMemberId(message.getSenderId()).getMemberName();
+            String senderName = chatRoomService.findByMemberId(message.getSenderId()).getMemberName();
             message.setSenderName(senderName);
             message.setTimestamp(LocalDateTime.now().toString());
             message.setRoomId(chatRoomId);
@@ -86,7 +88,7 @@ public class ChatController {
     @SendTo("/queue/chat.room.{chatRoomId}")
     public ChatMessage exitRoom(@DestinationVariable("chatRoomId") String chatRoomId, ChatMessage message) {
         try {
-            String senderName = memberService.findByMemberId(message.getSenderId()).getMemberName();
+            String senderName = chatRoomService.findByMemberId(message.getSenderId()).getMemberName();
             message.setSenderName(senderName);
             message.setTimestamp(LocalDateTime.now().toString());
             message.setRoomId(chatRoomId);
@@ -173,27 +175,23 @@ public class ChatController {
      */
     @MessageMapping("/chat.message/{chatRoomId}")
     @SendTo("/queue/chat.room.{chatRoomId}")
-    public ChatMessage sendMessage(@DestinationVariable("chatRoomId") String chatRoomId, ChatMessage message) {
+    public ChatMessage sendMessage(
+            @DestinationVariable("chatRoomId") String chatRoomId, 
+            ChatMessage message) {  
         log.info("sendMessage method called with chatRoomId: {} and message: {}", chatRoomId, message.getContent());
-        
+
         try {
             message.setTimestamp(LocalDateTime.now().toString());
             message.setRoomId(chatRoomId);
-            
-            // senderName을 가져와서 메시지에 추가
-            String senderName = memberService.findByMemberId(message.getSenderId()).getMemberName();
-            message.setSenderName(senderName);
 
+            // senderName을 ChatRoomDTO에서 가져옴
+            String senderName = message.getSenderName(); // 또는 다른 필드에서 가져옴
+            message.setSenderName(senderName);
 
             // 메시지를 MongoDB에 저장
             chatService.saveMessage(message);
-            
-            // RabbitMQ로 메시지 전송
-//            rabbitTemplate.convertAndSend("exchangeName", "routingKey", message);
-
 
             log.info("Sent message to room {}: {}", chatRoomId, message.getContent());
-            
         } catch (Exception e) {
             log.error("Error in sendMessage: ", e);
         }

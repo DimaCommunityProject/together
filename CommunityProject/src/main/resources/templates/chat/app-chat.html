@@ -1,446 +1,1217 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="horizontal" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<html lang="ko" dir="ltr" data-bs-theme="light"
+	data-color-theme="Blue_Theme" data-layout="horizontal"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Required meta tags -->
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Dima Community Chat</title>
+<title>Dima Community Chat</title>
 
- <!-- Favicon icon-->
-  <link rel="shortcut icon" th:href="@{/images/logos/favicon.png}">
+<!-- Favicon icon-->
+<link rel="shortcut icon" th:href="@{/images/logos/favicon.png}">
 
-  <!-- Core Css -->
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
+<!-- Core Css -->
+<link rel="stylesheet" th:href="@{/css/styles.css}">
 
-  <!-- External Libraries -->
-    <script th:src="@{/libs/jquery-3.7.1.min.js}"></script>
-	<script th:src="@{/libs/sockjs.min.js}"></script>
-	<script th:src="@{/libs/stomp.min.js}"></script>
-	<script th:src="@{/libs/axios.min.js}"></script>
+<!-- External Libraries -->
+<script th:src="@{/libs/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/libs/sockjs.min.js}"></script>
+<script th:src="@{/libs/stomp.min.js}"></script>
+<script th:src="@{/libs/axios.min.js}"></script>
 </head>
 
-<body class="link-sidebar" >
-  <!-- Preloader -->
-  <div class="preloader">
-    <img src="/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
-  </div>
-  <div id="main-wrapper">
-    <!-- Sidebar Start -->
-    <aside class="left-sidebar with-vertical">
-      <div><!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="../index.html" class="text-nowrap logo-img">
-            <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
-            <img th:src="@{/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
-          </a>
-          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
-            <i class="ti ti-x"></i>
-          </a>
-        </div>
+<body class="link-sidebar">
+	<!-- Preloader -->
+	<div class="preloader">
+		<img src="/images/logos/favicon.png" alt="loader"
+			class="lds-ripple img-fluid" />
+	</div>
+	<div id="main-wrapper">
+		<!-- Sidebar Start -->
+		<aside class="left-sidebar with-vertical">
+			<div>
+				<!-- ---------------------------------- -->
+				<!-- Start Vertical Layout Sidebar -->
+				<!-- ---------------------------------- -->
+				<div
+					class="brand-logo d-flex align-items-center justify-content-between">
+					<a href="/" class="text-nowrap logo-img"> <img
+						th:src="@{/images/logos/dark-logo.svg}" class="dark-logo"
+						alt="Logo-Dark" /> <img th:src="@{/images/logos/light-logo.svg}"
+						class="light-logo" alt="Logo-light" />
+					</a> <a href="javascript:void(0)"
+						class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+						<i class="ti ti-x"></i>
+					</a>
+				</div>
 
 
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
-          <ul id="sidebarnav">
-            <!-- ---------------------------------- -->
-            <!-- Home -->
-            <!-- ---------------------------------- -->
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Home</span>
-            </li>
-            <!-- ---------------------------------- -->
-            <!-- Dashboard -->
-            <!-- ---------------------------------- -->
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="" id="get-url" aria-expanded="false">
-                <span>
-                  <i class="ti ti-aperture"></i>
-                </span>
-                <span class="hide-menu">Modern</span>
-              </a>
-            </li>
-            
-          </ul>
-        </nav>
+				<nav class="sidebar-nav scroll-sidebar" data-simplebar>
+					<ul id="sidebarnav">
+						<!-- ---------------------------------- -->
+						<!-- Home -->
+						<!-- ---------------------------------- -->
+						<li class="nav-small-cap"><i
+							class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+							class="hide-menu">Home</span></li>
+						<!-- ---------------------------------- -->
+						<!-- Dashboard -->
+						<!-- ---------------------------------- -->
+						<li class="sidebar-item"><a class="sidebar-link" href=""
+							id="get-url" aria-expanded="false"> <span> <i
+									class="ti ti-aperture"></i>
+							</span> <span class="hide-menu">Modern</span>
+						</a></li>
 
-        <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
-          <div class="hstack gap-3">
-            <div class="john-img">
-              <img id="userProfileImage" class="rounded-circle" width="40" height="40" alt="modernize-img" />
-            </div>
-            <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold" th:text="${currentUserName}">User Name</h6>
-              <span class="fs-2" th:text="${currentUserRole}">Designer</span>
-            </div>
-            <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-              <i class="ti ti-power fs-6"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </aside>
-    <!--  Sidebar End -->
+					</ul>
+				</nav>
 
-    <div class="page-wrapper">
-    <!--  Header Start -->
-    <header class="topbar">
-        <div class="with-vertical">
-            <!-- ---------------------------------- -->
-            <!-- Start Vertical Layout Header -->
-            <!-- ---------------------------------- -->
-            <nav class="navbar navbar-expand-lg p-0">
-                <ul class="navbar-nav">
-                    <li class="nav-item nav-icon-hover-bg rounded-circle ms-n2">
-                        <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-lg-flex">
-                        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <i class="ti ti-search"></i>
-                        </a>
-                    </li>
-                </ul>
+				<div
+					class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
+					<div class="hstack gap-3">
+						<div class="john-img">
+							<img id="" class="rounded-circle userProfileImage" width="40"
+								height="40" alt="modernize-img" />
+						</div>
+						<div class="john-title">
+							<h6 class="mb-0 fs-4 fw-semibold" th:text="${currentUserName}">User
+								Name</h6>
+							<span class="fs-2" th:text="${currentUserRole}">Designer</span>
+						</div>
+						<button class="border-0 bg-transparent text-primary ms-auto"
+							tabindex="0" type="button" aria-label="logout"
+							data-bs-toggle="tooltip" data-bs-placement="top"
+							data-bs-title="logout">
+							<i class="ti ti-power fs-6"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</aside>
+		<!--  Sidebar End -->
 
-                <ul class="navbar-nav quick-links d-none d-lg-flex align-items-center">
-                    <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-block mx-0">
-                        <a class="nav-link" href="javascript:void(0)">Apps</a>
-                    </li>
-                    <li class="nav-item dropdown-hover d-none d-lg-block">
-                        <a class="nav-link" href="">Chat</a>
-                    </li>
-                </ul>
+		<div class="page-wrapper">
+			<!--  Header Start -->
+			<header class="topbar">
+				<div class="with-vertical">
+					<!-- ---------------------------------- -->
+					<!-- Start Vertical Layout Header -->
+					<!-- ---------------------------------- -->
+					<nav class="navbar navbar-expand-lg p-0">
+						<ul class="navbar-nav">
+							<li class="nav-item nav-icon-hover-bg rounded-circle ms-n2">
+								<a class="nav-link sidebartoggler" id="headerCollapse"
+								href="javascript:void(0)"> <i class="ti ti-menu-2"></i>
+							</a>
+							</li>
+							<li
+								class="nav-item nav-icon-hover-bg rounded-circle d-none d-lg-flex">
+								<a class="nav-link" href="javascript:void(0)"
+								data-bs-toggle="modal" data-bs-target="#exampleModal"> <i
+									class="ti ti-search"></i>
+							</a>
+							</li>
+						</ul>
 
-                <div class="d-block d-lg-none py-4">
-                    <a href="../horizontal/index.html" class="text-nowrap logo-img">
-                        <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
-                    </a>
-                </div>
-                <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="ti ti-dots fs-7"></i>
-                </a>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <a href="javascript:void(0)" class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-flex d-lg-none align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar" aria-controls="offcanvasWithBothOptions">
-                            <i class="ti ti-align-justified fs-7"></i>
-                        </a>
-                        <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-                            <!-- ------------------------------- -->
-                            <!-- start notification Dropdown -->
-                            <!-- ------------------------------- -->
-                            <li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
-                                <a class="nav-link position-relative" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                                    <i class="ti ti-bell-ringing"></i>
-                                    <div class="notification bg-primary rounded-circle"></div>
-                                </a>
-                            </li>
-                            <!-- ------------------------------- -->
-                            <!-- end notification Dropdown -->
-                            <!-- ------------------------------- -->
+						<ul
+							class="navbar-nav quick-links d-none d-lg-flex align-items-center">
+							<li
+								class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-block mx-0">
+								<a class="nav-link" href="javascript:void(0)">Apps</a>
+							</li>
+							<li class="nav-item dropdown-hover d-none d-lg-block"><a
+								class="nav-link" href="">Chat</a></li>
+						</ul>
 
-                            <!-- ------------------------------- -->
-                            <!-- start profile Dropdown -->
-                            <!-- ------------------------------- -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-profile-img">
-                                            <img id="userProfileImage" class="rounded-circle" width="35" height="35" alt="modernize-img" />
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
-                                    <div class="profile-dropdown position-relative" data-simplebar>
-                                        <div class="py-3 px-7 pb-0">
-                                            <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
-                                        </div>
-                                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                                            <img id="userProfileImage" class="rounded-circle" width="80" height="80" alt="modernize-img" />
-                                            <div class="ms-3">
-                                                <h5 class="mb-1 fs-3">Mathew Anderson</h5>
-                                                <span class="mb-1 d-block">Designer</span>
-                                                <p class="mb-0 d-flex align-items-center gap-2">
-                                                    <i class="ti ti-mail fs-4"></i> info@modernize.com
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="message-body">
-                                            <a href="../horizontal/page-user-profile.html" class="py-8 px-7 mt-8 d-flex align-items-center">
-                                                <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                                                    <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
-                                                </span>
-                                                <div class="w-100 ps-3">
-                                                    <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
-                                                    <span class="fs-2 d-block text-body-secondary">Account Settings</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- ------------------------------- -->
-                            <!-- end profile Dropdown -->
-                            <!-- ------------------------------- -->
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!--  Header End -->
-        
-      <div class="body-wrapper">
-    <div class="container-fluid">
-        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
-            <div class="card-body px-4 py-3">
-                <div class="row align-items-center">
-                    <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Chat</h4>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a class="text-muted text-decoration-none" href="../horizontal/index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item" aria-current="page">Chat</li>
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="col-3">
-                        <div class="text-center mb-n5">
-                            <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+						<div class="d-block d-lg-none py-4">
+							<a href="/" class="text-nowrap logo-img">
+								<img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo"
+								alt="Logo-Dark" />
+							</a>
+						</div>
+						<a
+							class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0"
+							href="javascript:void(0)" data-bs-toggle="collapse"
+							data-bs-target="#navbarNav" aria-controls="navbarNav"
+							aria-expanded="false" aria-label="Toggle navigation"> <i
+							class="ti ti-dots fs-7"></i>
+						</a>
+						<div class="collapse navbar-collapse justify-content-end"
+							id="navbarNav">
+							<div class="d-flex align-items-center justify-content-between">
+								<a href="javascript:void(0)"
+									class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-flex d-lg-none align-items-center justify-content-center"
+									type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#mobilenavbar"
+									aria-controls="offcanvasWithBothOptions"> <i
+									class="ti ti-align-justified fs-7"></i>
+								</a>
+								<ul
+									class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+									<!-- ------------------------------- -->
+									<!-- start notification Dropdown -->
+									<!-- ------------------------------- -->
+									<li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
+										<a class="nav-link position-relative"
+										href="javascript:void(0)" id="drop2" aria-expanded="false">
+											<i class="ti ti-bell-ringing"></i>
+											<div class="notification bg-primary rounded-circle"></div>
+									</a>
+									</li>
+									<!-- ------------------------------- -->
+									<!-- end notification Dropdown -->
+									<!-- ------------------------------- -->
 
-        <div class="card overflow-hidden chat-application">
-            <div class="d-flex align-items-center justify-content-between gap-6 m-3 d-lg-none">
-                <button class="btn btn-primary d-flex" type="button" data-bs-toggle="offcanvas" data-bs-target="#chat-sidebar" aria-controls="chat-sidebar">
-                    <i class="ti ti-menu-2 fs-5"></i>
-                </button>
-                <form class="position-relative w-100">
-                    <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
-                    <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                </form>
-            </div>
-            <div class="d-flex">
-                <div class="w-30 d-none d-lg-block border-end user-chat-box">
-                    <div class="px-4 pt-9 pb-6">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div class="d-flex align-items-center">
-                                <!-- 로그인한 회원 프로필 -->
-                                <div class="position-relative">
-                                    <img id="userProfileImage" alt="user1" width="54" height="54" class="rounded-circle" />
-                                    <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                                        <span class="visually-hidden">New alerts</span>
-                                    </span>
-                                </div>
-                                <div class="ms-3">
-                                    <h6 id="userName" class="fw-semibold mb-2">User Name</h6>
-                                    <p id="userRole" class="mb-0 fs-2">User ID</p>
-                                </div>
-                            </div>
-                            <div class="dropdown">
-                                <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="ti ti-dots-vertical"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- 마이페이지 -->
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" href="javascript:void(0)">
-                                            <span>
-                                                <i class="ti ti-settings fs-4"></i>
-                                            </span>Setting
-                                        </a>
-                                    </li>
-                                    <!-- 로그아웃 -->
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
-                                            <span>
-                                                <i class="ti ti-login fs-4"></i>
-                                            </span>Sign Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+									<!-- ------------------------------- -->
+									<!-- start profile Dropdown -->
+									<!-- ------------------------------- -->
+									<li class="nav-item dropdown"><a class="nav-link pe-0"
+										href="javascript:void(0)" id="drop1" aria-expanded="false">
+											<div class="d-flex align-items-center">
+												<div class="user-profile-img">
+													<img id="" class="rounded-circle userProfileImage"
+														width="35" height="35" alt="modernize-img" />
+												</div>
+											</div>
+									</a>
+										<div
+											class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+											aria-labelledby="drop1">
+											<div class="profile-dropdown position-relative"
+												data-simplebar>
+												<div class="py-3 px-7 pb-0">
+													<h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
+												</div>
+												<div
+													class="d-flex align-items-center py-9 mx-7 border-bottom">
+													<img id="" class="rounded-circle userProfileImage"
+														width="80" height="80" alt="modernize-img" />
+													<div class="ms-3">
+														<h5 class="mb-1 fs-3 userName">Mathew Anderson</h5>
+														<span class="mb-1 d-block userRole">Designer</span>
+														<p class="mb-0 d-flex align-items-center gap-2">
+															<i class="ti ti-mail fs-4 userEmail"></i>
+															info@modernize.com
+														</p>
+													</div>
+												</div>
+												<div class="message-body">
+													<a th:href="@{/memberpage/showpage(memberId=${currentUserId})}"
+														class="py-8 px-7 mt-8 d-flex align-items-center"> <span
+														class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
+															<img th:src="@{/images/svgs/icon-account.svg}"
+															alt="modernize-img" width="24" height="24" />
+													</span>
+														<div class="w-100 ps-3">
+															<h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
+															<span class="fs-2 d-block text-body-secondary">Account
+																Settings</span>
+														</div>
+													</a>
+												</div>
+												<div class="d-grid py-4 px-7 pt-8">
+													<a href="../horizontal/authentication-login.html"
+														class="btn btn-outline-primary">Log Out</a>
+												</div>
+											</div>
+										</div></li>
+									<!-- ------------------------------- -->
+									<!-- end profile Dropdown -->
+									<!-- ------------------------------- -->
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
+				<div class="app-header with-horizontal">
+					<nav class="navbar navbar-expand-xl container-fluid p-0">
+						<ul class="navbar-nav align-items-center">
+							<li
+								class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+								<a class="nav-link sidebartoggler" id="sidebarCollapse"
+								href="javascript:void(0)"> <i class="ti ti-menu-2"></i>
+							</a>
+							</li>
+							<li class="nav-item d-none d-xl-block"><a href="/"
+								class="text-nowrap nav-link"> <img
+									src="../../images/logos/dark-logo.svg" class="dark-logo"
+									width="180" alt="modernize-img" />
+							</a></li>
+						</ul>
+						<ul
+							class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+							<!-- ------------------------------- -->
+							<!-- start apps Dropdown -->
+							<!-- ------------------------------- -->
+							<li
+								class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+								<div class="hover-dd">
+									<a class="nav-link" href="javascript:void(0)">Apps</a>
+							</li>
+							<!-- ------------------------------- -->
+							<!-- end apps Dropdown -->
+							<!-- ------------------------------- -->
+							<li class="nav-item dropdown-hover d-none d-lg-block"><a
+								class="nav-link" href="../horizontal/app-chat.html">Chat</a></li>
+						</ul>
+						<div class="d-block d-xl-none">
+							<a href="/" class="text-nowrap nav-link"> <img
+								src="../../images/logos/dark-logo.svg" width="180"
+								alt="modernize-img" />
+							</a>
+						</div>
+						<a
+							class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0"
+							href="javascript:void(0)" data-bs-toggle="collapse"
+							data-bs-target="#navbarNav" aria-controls="navbarNav"
+							aria-expanded="false" aria-label="Toggle navigation"> <span
+							class="p-2"> <i class="ti ti-dots fs-7"></i>
+						</span>
+						</a>
+						<div class="collapse navbar-collapse justify-content-end"
+							id="navbarNav">
+							<div
+								class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+								<a href="javascript:void(0)"
+									class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+									type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#mobilenavbar"
+									aria-controls="offcanvasWithBothOptions"> <i
+									class="ti ti-align-justified fs-7"></i>
+								</a>
+								<ul
+									class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
 
-                        <!-- 대화 상대 선택 및 시작 -->
-                        <div class="d-flex align-items-center mb-4">
-                            <select class="select2 form-control" id="recipientSelect">
-                                <option value="" disabled selected>대화 상대를 선택하세요</option>
-                                <option th:each="member : ${members}" th:value="${member.memberId}" th:text="${member.memberName}"></option>
-                            </select>
-                            <button id="startChat" class="btn btn-primary hstack gap-6 ms-2">
-                                <i class="ti ti-circle-plus ms-1 fs-5"></i>
-                            </button>
-                        </div>
-                    </div>
+									<!-- ------------------------------- -->
+									<!-- start notification Dropdown -->
+									<!-- ------------------------------- -->
+									<li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
+										<a class="nav-link position-relative"
+										href="javascript:void(0)" id="drop2" aria-expanded="false">
+											<i class="ti ti-bell-ringing"></i>
+											<div class="notification bg-primary rounded-circle"></div>
+									</a>
 
-                    <form class="position-relative mb-4">
-                        <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
-                        <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                    </form>
+									</li>
+									<li class="nav-item dropdown"><a class="nav-link pe-0"
+										href="javascript:void(0)" id="drop1" aria-expanded="false">
+											<div class="d-flex align-items-center">
+												<div class="user-profile-img">
+													<img alt="" class="rounded-circle userProfileImage"
+														width="35" height="35" />
+												</div>
+											</div>
+									</a>
+										<div
+											class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+											aria-labelledby="drop1">
+											<div class="profile-dropdown position-relative"
+												data-simplebar>
+												<div class="py-3 px-7 pb-0">
+													<h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
+												</div>
+												<div
+													class="d-flex align-items-center py-9 mx-7 border-bottom">
+													<img class="rounded-circle userProfileImage" width="80"
+														height="80" alt="${currentUserName}" />
+													<div class="ms-3">
+														<h5 id="" class="mb-1 fs-3 userName userName">userName</h5>
+														<span id="" class="mb-1 d-block userRole">userRole</span>
+														<p class="mb-0 d-flex align-items-center gap-2">
+															<i id="" class="ti ti-mail fs-4 userEmail">
+																currentUserEmail</i>
+														</p>
+													</div>
+												</div>
+												<div class="message-body">
+													<a th:href="@{/memberpage/showpage(memberId=${currentUserId})}"
+														class="py-8 px-7 mt-8 d-flex align-items-center"> <span
+														class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
+															<img src="../../images/svgs/icon-account.svg"
+															alt="modernize-img" width="24" height="24" />
+													</span>
+														<div class="w-100 ps-3">
+															<h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
+															<span class="fs-2 d-block text-body-secondary">Account
+																Settings</span>
+														</div>
+														<div class="d-grid py-4 px-7 pt-8">
+															<a href="../horizontal/authentication-login.html"
+																class="btn btn-outline-primary">Log Out</a>
+														</div>
+													</a>
+												</div>
+											</div>
+										</div></li>
+									<!-- ------------------------------- -->
+									<!-- end profile Dropdown -->
+									<!-- ------------------------------- -->
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
 
-                    <div class="app-chat" id="chatList">
-                        <ul class="chat-users mb-0 mh-n100" data-simplebar>
-                            <!-- 1 채팅방 -->
-                            <li th:each="room : ${chatRooms}" th:data-room-id="${room.id}" th:text="${room.name}">
-                                <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
-                                    <div class="d-flex align-items-center">
-                                        <span class="position-relative">
-                                            <img id="userProfileImage" alt="user1" width="48" height="48" class="rounded-circle" />
-                                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                                                <span class="visually-hidden">New alerts</span>
-                                            </span>
-                                        </span>
-                                        <div class="ms-3 d-inline-block w-75">
-                                            <h6 class="mb-1 fw-semibold chat-title" th:text="${room.name}">
-                                                Room Name
-                                            </h6>
-                                            <span class="fs-3 text-truncate text-body-color d-block">You: Yesterdy was great...</span>
-                                        </div>
-                                    </div>
-                                    <p class="fs-2 mb-0 text-muted">15 mins</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+			</header>
+			<!--  Header End -->
 
-                <div class="w-70 w-xs-100 chat-container">
-                    <div class="chat-box-inner-part h-100">
-                        <div class="chat-not-selected h-100 d-none">
-                            <div class="d-flex align-items-center justify-content-center h-100 p-5">
-                                <div class="text-center">
-                                    <span class="text-primary">
-                                        <i class="ti ti-message-dots fs-10"></i>
-                                    </span>
-                                    <h6 class="mt-2">Open chat from the list</h6>
-                                </div>
-                            </div>
-                        </div>
+			<aside class="left-sidebar with-horizontal">
+				<!-- Sidebar scroll-->
+				<div>
+					<!-- Sidebar navigation-->
+					<nav id="sidebarnavh"
+						class="sidebar-nav scroll-sidebar container-fluid">
+						<ul id="sidebarnav">
+							<!-- ============================= -->
+							<!-- Home -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">Home</span></li>
+							<!-- =================== -->
+							<!-- Dashboard -->
+							<!-- =================== -->
+							<li class="sidebar-item"><a class="sidebar-link has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span>
+										<i class="ti ti-home-2"></i>
+								</span> <span class="hide-menu">Dashboard</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="/" class="sidebar-link"> <i
+											class="ti ti-aperture"></i> <span class="hide-menu">Modern</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/index2.html" class="sidebar-link"> <i
+											class="ti ti-shopping-cart"></i> <span class="hide-menu">eCommerce</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/index3.html" class="sidebar-link"> <i
+											class="ti ti-currency-dollar"></i> <span class="hide-menu">NFT</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/index4.html" class="sidebar-link"> <i
+											class="ti ti-cpu"></i> <span class="hide-menu">Crypto</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/index5.html" class="sidebar-link"> <i
+											class="ti ti-activity-heartbeat"></i> <span class="hide-menu">General</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/index6.html" class="sidebar-link"> <i
+											class="ti ti-playlist"></i> <span class="hide-menu">Music</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- Apps -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">Apps</span></li>
+							<li class="sidebar-item"><a
+								class="sidebar-link two-column has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span>
+										<i class="ti ti-archive"></i>
+								</span> <span class="hide-menu">Apps</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="../horizontal/app-calendar.html" class="sidebar-link">
+											<i class="ti ti-calendar"></i> <span class="hide-menu">Calendar</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/app-kanban.html" class="sidebar-link">
+											<i class="ti ti-layout-kanban"></i> <span class="hide-menu">Kanban</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/app-chat.html" class="sidebar-link"> <i
+											class="ti ti-message-dots"></i> <span class="hide-menu">Chat</span>
+									</a></li>
+									<li class="sidebar-item"><a class="sidebar-link"
+										href="../horizontal/app-email.html" aria-expanded="false">
+											<span> <i class="ti ti-mail"></i>
+										</span> <span class="hide-menu">Email</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/app-contact.html" class="sidebar-link">
+											<i class="ti ti-phone"></i> <span class="hide-menu">Contact
+												Table</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/app-contact2.html" class="sidebar-link">
+											<i class="ti ti-list-details"></i> <span class="hide-menu">Contact
+												List</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/app-notes.html" class="sidebar-link">
+											<i class="ti ti-notes"></i> <span class="hide-menu">Notes</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/app-invoice.html" class="sidebar-link">
+											<i class="ti ti-file-text"></i> <span class="hide-menu">Invoice</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/page-user-profile.html"
+										class="sidebar-link"> <i class="ti ti-user-circle"></i> <span
+											class="hide-menu">User Profile</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/blog-posts.html" class="sidebar-link">
+											<i class="ti ti-article"></i> <span class="hide-menu">Posts</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/blog-detail.html" class="sidebar-link">
+											<i class="ti ti-details"></i> <span class="hide-menu">Detail</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/eco-shop.html" class="sidebar-link"> <i
+											class="ti ti-shopping-cart"></i> <span class="hide-menu">Shop</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/eco-shop-detail.html" class="sidebar-link">
+											<i class="ti ti-basket"></i> <span class="hide-menu">Shop
+												Detail</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/eco-product-list.html"
+										class="sidebar-link"> <i class="ti ti-list-check"></i> <span
+											class="hide-menu">List</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/eco-checkout.html" class="sidebar-link">
+											<i class="ti ti-brand-shopee"></i> <span class="hide-menu">Checkout</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- PAGES -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">PAGES</span></li>
+							<li class="sidebar-item"><a class="sidebar-link has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span>
+										<i class="ti ti-notebook"></i>
+								</span> <span class="hide-menu">Pages</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="../horizontal/page-faq.html" class="sidebar-link"> <i
+											class="ti ti-help"></i> <span class="hide-menu">FAQ</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/page-account-settings.html"
+										class="sidebar-link"> <i class="ti ti-user-circle"></i> <span
+											class="hide-menu">Account Setting</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/page-pricing.html" class="sidebar-link">
+											<i class="ti ti-currency-dollar"></i> <span class="hide-menu">Pricing</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/widgets-cards.html" class="sidebar-link">
+											<i class="ti ti-cards"></i> <span class="hide-menu">Card</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/widgets-banners.html" class="sidebar-link">
+											<i class="ti ti-ad"></i> <span class="hide-menu">Banner</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/widgets-charts.html" class="sidebar-link">
+											<i class="ti ti-chart-bar"></i> <span class="hide-menu">Charts</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="/" class="sidebar-link"> <i
+											class="ti ti-app-window"></i> <span class="hide-menu">Landing
+												Page</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- UI -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">UI</span></li>
+							<!-- =================== -->
+							<!-- UI Elements -->
+							<!-- =================== -->
+							<li class="sidebar-item mega-dropdown"><a
+								class="sidebar-link has-arrow" href="javascript:void(0)"
+								aria-expanded="false"> <span class="rounded-3"> <i
+										class="ti ti-layout-grid"></i>
+								</span> <span class="hide-menu">UI</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-accordian.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Accordian</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-badge.html" class="sidebar-link"> <i
+											class="ti ti-circle"></i> <span class="hide-menu">Badge</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-buttons.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Buttons</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-dropdowns.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Dropdowns</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-modals.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Modals</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-tab.html" class="sidebar-link"> <i
+											class="ti ti-circle"></i> <span class="hide-menu">Tab</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-tooltip-popover.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Tooltip & Popover</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-notification.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Alerts</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-progressbar.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Progressbar</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-pagination.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Pagination</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-typography.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Typography</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-bootstrap-ui.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Bootstrap
+												UI</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-breadcrumb.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Breadcrumb</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-offcanvas.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Offcanvas</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-lists.html" class="sidebar-link"> <i
+											class="ti ti-circle"></i> <span class="hide-menu">Lists</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-grid.html" class="sidebar-link"> <i
+											class="ti ti-circle"></i> <span class="hide-menu">Grid</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-carousel.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Carousel</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-scrollspy.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Scrollspy</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-spinner.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Spinner</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/ui-link.html" class="sidebar-link"> <i
+											class="ti ti-circle"></i> <span class="hide-menu">Link</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- Forms -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">Forms</span></li>
+							<!-- =================== -->
+							<!-- Forms -->
+							<!-- =================== -->
+							<li class="sidebar-item"><a
+								class="sidebar-link two-column has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span
+									class="rounded-3"> <i class="ti ti-file-text"></i>
+								</span> <span class="hide-menu">Forms</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<!-- form elements -->
+									<li class="sidebar-item"><a
+										href="../horizontal/form-inputs.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Forms
+												Input</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-input-groups.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Input Groups</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-input-grid.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Input
+												Grid</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-checkbox-radio.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Checkbox & Radios</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-bootstrap-switch.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Bootstrap Switch</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-select2.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Select2</span>
+									</a></li>
+									<!-- form inputs -->
+									<li class="sidebar-item"><a
+										href="../horizontal/form-basic.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Basic
+												Form</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-vertical.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Form
+												Vertical</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-horizontal.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Form
+												Horizontal</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-actions.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Form
+												Actions</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-row-separator.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Row Separator</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-bordered.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Form
+												Bordered</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/form-detail.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Form
+												Detail</span>
+									</a></li>
+									<!-- form wizard -->
+									<li class="sidebar-item"><a
+										href="../horizontal/form-wizard.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Form
+												Wizard</span>
+									</a></li>
+									<!-- Quill Editor -->
+									<li class="sidebar-item"><a
+										href="../horizontal/form-editor-quill.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Quill Editor</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- Tables -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">Tables</span></li>
+							<!-- =================== -->
+							<!-- Bootstrap Table -->
+							<!-- =================== -->
+							<li class="sidebar-item"><a class="sidebar-link has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span
+									class="rounded-3"> <i class="ti ti-layout-sidebar"></i>
+								</span> <span class="hide-menu">Tables</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="../horizontal/table-basic.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Basic
+												Table</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/table-dark-basic.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Dark Basic Table</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/table-sizing.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Sizing
+												Table</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/table-layout-coloured.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Coloured Table</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/table-datatable-basic.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Basic Initialisation</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/table-datatable-api.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">API</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/table-datatable-advanced.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Advanced Initialisation</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- Charts -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">Charts</span></li>
+							<!-- =================== -->
+							<!-- Apex Chart -->
+							<!-- =================== -->
+							<li class="sidebar-item"><a class="sidebar-link has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span
+									class="rounded-3"> <i class="ti ti-chart-pie"></i>
+								</span> <span class="hide-menu">Charts</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="../horizontal/chart-apex-line.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Line
+												Chart</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/chart-apex-area.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Area
+												Chart</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/chart-apex-bar.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Bar
+												Chart</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/chart-apex-pie.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Pie
+												Chart</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/chart-apex-radial.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Radial Chart</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/chart-apex-radar.html"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Radar Chart</span>
+									</a></li>
+								</ul></li>
+							<!-- ============================= -->
+							<!-- Icons -->
+							<!-- ============================= -->
+							<li class="nav-small-cap"><i
+								class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+								class="hide-menu">Icons</span></li>
+							<!-- =================== -->
+							<!-- Tabler Icon -->
+							<!-- =================== -->
+							<li class="sidebar-item"><a class="sidebar-link has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span
+									class="rounded-3"> <i class="ti ti-archive"></i>
+								</span> <span class="hide-menu">Icon</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a
+										href="../horizontal/icon-tabler.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Tabler
+												Icon</span>
+									</a></li>
+									<li class="sidebar-item"><a
+										href="../horizontal/icon-solar.html" class="sidebar-link">
+											<i class="ti ti-circle"></i> <span class="hide-menu">Solar
+												Icon</span>
+									</a></li>
+								</ul></li>
+							<!-- multi level -->
+							<li class="sidebar-item"><a class="sidebar-link has-arrow"
+								href="javascript:void(0)" aria-expanded="false"> <span
+									class="rounded-3"> <iconify-icon
+											icon="solar:airbuds-case-minimalistic-line-duotone"
+											class="ti"></iconify-icon>
+								</span> <span class="hide-menu">Multi DD</span>
+							</a>
+								<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item"><a href="/"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Documentation</span>
+									</a></li>
+									<li class="sidebar-item"><a href="javascript:void(0)"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Page 1</span>
+									</a></li>
+									<li class="sidebar-item"><a href="javascript:void(0)"
+										class="sidebar-link has-arrow"> <i class="ti ti-circle"></i>
+											<span class="hide-menu">Page 2</span>
+									</a>
+										<ul aria-expanded="false" class="collapse second-level">
+											<li class="sidebar-item"><a href="javascript:void(0)"
+												class="sidebar-link"> <i class="ti ti-circle"></i> <span
+													class="hide-menu">Page 2.1</span>
+											</a></li>
+											<li class="sidebar-item"><a href="javascript:void(0)"
+												class="sidebar-link"> <i class="ti ti-circle"></i> <span
+													class="hide-menu">Page 2.2</span>
+											</a></li>
+											<li class="sidebar-item"><a href="javascript:void(0)"
+												class="sidebar-link"> <i class="ti ti-circle"></i> <span
+													class="hide-menu">Page 2.3</span>
+											</a></li>
+										</ul></li>
+									<li class="sidebar-item"><a href="javascript:void(0)"
+										class="sidebar-link"> <i class="ti ti-circle"></i> <span
+											class="hide-menu">Page 3</span>
+									</a></li>
+								</ul></li>
+						</ul>
+					</nav>
+					<!-- End Sidebar navigation -->
+				</div>
+				<!-- End Sidebar scroll-->
 
-                        <div class="chatting-box d-block">
-                            <div class="p-9 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
-                                <div class="hstack gap-3 current-chat-user-name">
-                                    <div class="position-relative">
-                                        <img id="userProfileImage" alt="user1" width="48" height="48" class="rounded-circle" />
-                                        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                                            <span class="visually-hidden">New alerts</span>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-1 name fw-semibold"></h6>
-                                        <p class="mb-0">Away</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex parent-chat-box app-chat-right">
-                                <div class="chat-box w-xs-100">
-                                    <div class="chat-box-inner p-9" data-simplebar id="messageArea">
-                                        <!-- 메시지 영역 -->
-                                    </div>
-                                    <div class="px-9 py-6 border-top chat-send-message-footer">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center gap-2 w-85">
-                                                <a class="position-relative nav-icon-hover z-index-5" href="javascript:void(0)">
-                                                    <i class="ti ti-mood-smile text-dark bg-hover-primary fs-7"></i>
-                                                </a>
-                                                <input type="text" class="form-control message-type-box text-muted border-0 p-0 ms-2" id="messageInput" placeholder="Type a Message" />
-                                            </div>
-                                            <button id="sendButton" class="btn btn-primary">전송</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas offcanvas-start user-chat-box chat-offcanvas" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Chats</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="px-4 pt-9 pb-6">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <div class="d-flex align-items-center">
-                            <div class="position-relative">
-                                <img id="userProfileImage" alt="user1" width="54" height="54" class="rounded-circle" />
-                                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                                    <span class="visually-hidden">New alerts</span>
-                                </span>
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="fw-semibold mb-2">Mathew Anderson</h6>
-                                <p class="mb-0 fs-2">Designer</p>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ti ti-dots-vertical"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" href="javascript:void(0)">
-                                        <span><i class="ti ti-settings fs-4"></i></span>Setting
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
-                                        <span><i class="ti ti-login fs-4"></i></span>Sign Out
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <form class="position-relative mb-4">
-                        <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
-                        <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                    </form>
-                </div>
-                <div class="app-chat">
-                    <ul class="chat-users mh-n100" data-simplebar>
-                        <li th:each="room : ${chatRooms}">
-                            <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
-                                <div class="d-flex align-items-center">
-                                    <span class="position-relative">
-                                        <img id="userProfileImage" alt="user1" width="48" height="48" class="rounded-circle" />
-                                        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                                            <span class="visually-hidden">New alerts</span>
-                                        </span>
-                                    </span>
-                                    <div class="ms-3 d-inline-block w-75">
-                                        <h6 class="mb-1 fw-semibold chat-title" data-username="James Anderson">
-                                            Michell Flintoff
-                                        </h6>
-                                        <span class="fs-3 text-truncate text-body-color d-block">You: Yesterdy was great...</span>
-                                    </div>
-                                </div>
-                                <p class="fs-2 mb-0 text-muted">15 mins</p>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+			</aside>
 
-<!-- Additional JS Scripts -->
 
+			<div class="body-wrapper">
+				<div class="container-fluid">
+					<div
+						class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+						<div class="card-body px-4 py-3">
+							<div class="row align-items-center">
+								<div class="col-9">
+									<h4 class="fw-semibold mb-8">Chat</h4>
+									<nav aria-label="breadcrumb">
+										<ol class="breadcrumb">
+											<li class="breadcrumb-item"><a
+												class="text-muted text-decoration-none"
+												href="/">Home</a></li>
+											<li class="breadcrumb-item" aria-current="page">Chat</li>
+										</ol>
+									</nav>
+								</div>
+								<div class="col-3">
+									<div class="text-center mb-n5">
+										<img th:src="@{/images/breadcrumb/ChatBc.png}"
+											alt="modernize-img" class="img-fluid mb-n4" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card overflow-hidden chat-application">
+						<div
+							class="d-flex align-items-center justify-content-between gap-6 m-3 d-lg-none">
+							<button class="btn btn-primary d-flex" type="button"
+								data-bs-toggle="offcanvas" data-bs-target="#chat-sidebar"
+								aria-controls="chat-sidebar">
+								<i class="ti ti-menu-2 fs-5"></i>
+							</button>
+							<form class="position-relative w-100">
+								<input type="text" class="form-control search-chat py-2 ps-5"
+									id="text-srh" placeholder="Search Contact" /> <i
+									class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+							</form>
+						</div>
+						<div class="d-flex">
+							<div class="w-30 d-none d-lg-block border-end user-chat-box">
+								<div class="px-4 pt-9 pb-6">
+									<div
+										class="d-flex align-items-center justify-content-between mb-3">
+										<div class="d-flex align-items-center">
+											<!-- 로그인한 회원 프로필 -->
+											<div class="position-relative">
+												<img id="" alt="user1" width="54"
+													height="54" class="rounded-circle userProfileImage" /> <span
+													class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+													<span class="visually-hidden">New alerts</span>
+												</span>
+											</div>
+											<div class="ms-3">
+												<h6 id="userName" class="fw-semibold mb-2 userName">User
+													Name</h6>
+												<p id="userId" class="mb-0 fs-2 userId">User ID</p>
+											</div>
+										</div>
+										<div class="dropdown">
+											<a class="text-dark fs-6 nav-icon-hover"
+												href="javascript:void(0)" role="button"
+												data-bs-toggle="dropdown" aria-expanded="false"> <i
+												class="ti ti-dots-vertical"></i>
+											</a>
+											<ul class="dropdown-menu">
+												<!-- 마이페이지 -->
+												<li><a
+													class="dropdown-item d-flex align-items-center gap-2 border-bottom"
+													th:href="@{/memberpage/showpage(memberId=${currentUserId})}"> <span> <i
+															class="ti ti-settings fs-4"></i>
+													</span>Setting
+												</a></li>
+												<!-- 로그아웃 -->
+												<li><a
+													class="dropdown-item d-flex align-items-center gap-2"
+													href="javascript:void(0)"> <span> <i
+															class="ti ti-login fs-4"></i>
+													</span>Sign Out
+												</a></li>
+											</ul>
+										</div>
+									</div>
+
+									<!-- 대화 상대 선택 및 시작 -->
+									<div class="d-flex align-items-center mb-4">
+										<select class="select2 form-control" id="recipientSelect">
+											<option value="" disabled selected>대화 상대를 선택하세요</option>
+											<option th:each="member : ${members}"
+												th:value="${member.memberId}" th:text="${member.memberName}"></option>
+										</select>
+										<button id="startChat"
+											class="btn btn-primary hstack gap-6 ms-2">
+											<i class="ti ti-circle-plus ms-1 fs-5"></i>
+										</button>
+									</div>
+								</div>
+
+								<form class="position-relative mb-4">
+									<input type="text" class="form-control search-chat py-2 ps-5"
+										id="text-srh" placeholder="Search Contact" /> <i
+										class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+								</form>
+
+								<div class="app-chat" >
+									<ul class="chat-users mb-0 mh-n100" id="chatList" data-simplebar>
+										<!-- 1 채팅방 -->
+										<li th:each="room : ${chatRooms}" th:text="${room.name}">
+											<a href="javascript:void(0)"
+											class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle"
+											id="chat_user_1" th:data-user-id="${room.id}">
+												
+												<div class="d-flex align-items-center">
+													<span class="position-relative"> <img
+														id="" alt="user1" width="48" height="48"
+														class="rounded-circle userProfileImage" /> <span
+														class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+															<span class="visually-hidden">New alerts</span>
+													</span>
+													</span>
+													<div class="ms-3 d-inline-block w-75">
+														<h6 class="mb-1 fw-semibold chat-title"
+															th:text="${room.name}">Room Name</h6>
+														<span class="fs-3 text-truncate text-body-color d-block">You:
+															Yesterdy was great...</span>
+													</div>
+												</div>
+												<p class="fs-2 mb-0 text-muted">15 mins</p>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="w-70 w-xs-100 chat-container">
+								<div class="chat-box-inner-part h-100">
+									<div class="chat-not-selected h-100">
+										<div
+											class="d-flex align-items-center justify-content-center h-100 p-5">
+											<div class="text-center">
+												<span class="text-primary"> <i
+													class="ti ti-message-dots fs-10"></i>
+												</span>
+												<h6 class="mt-2">Open chat from the list</h6>
+											</div>
+										</div>
+									</div>
+
+									<div class="chatting-box d-block">
+										<div class="p-9 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
+											<div class="hstack gap-3 current-chat-user-name d-flex align-items-center">
+												<div class="position-relative">
+													<div id="chatPartnerImages"
+														class="d-flex align-items-center">
+														<!-- 프로필 이미지가 동적으로 추가될 부분 -->
+													</div>
+												</div>
+												<div>
+													<h6 id="chatPartnerName" class="mb-1 name fw-semibold"></h6>
+													
+												</div>
+											</div>
+											<div class="dropdown">
+												<a class="text-dark fs-6 nav-icon-hover"
+													href="javascript:void(0)" role="button"
+													data-bs-toggle="dropdown" aria-expanded="false"> <i
+													class="ti ti-dots-vertical"></i>
+												</a>
+												<ul class="dropdown-menu">
+													<li><a
+														class="dropdown-item d-flex align-items-center gap-2 border-bottom inviteButton"
+														href="javascript:void(0)"> <span> <i
+																class="ti ti-settings fs-4"></i>
+														</span>대화 상대 초대
+													</a></li>
+													<!-- 로그아웃 -->
+													<li><a
+														class="dropdown-item d-flex align-items-center gap-2 leaveButton"
+														href="javascript:void(0)" > <span> <i
+																class="ti ti-login fs-4"></i>
+														</span>나가기
+													</a></li>
+												</ul>
+											</div>
+
+											<!-- 초대 모달 -->
+											<div id="inviteModal" class="modal" tabindex="-1"
+												role="dialog">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title">대화 상대 초대</h5>
+															<button type="button" class="btn-close"
+																data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<select id="inviteMembersSelect" multiple
+																class="form-control">
+																<!-- 여기에서 회원 목록이 동적으로 추가됩니다 -->
+															</select>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary"
+																id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
+															<button type="button" class="btn btn-primary"
+																id="confirmInviteButton">선택하기</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="d-flex parent-chat-box app-chat-right">
+											<div class="chat-box w-xs-100">
+												<div class="chat-box-inner p-9" data-simplebar
+													id="messageArea">
+													<!-- 메시지 영역 -->
+												</div>
+												<div class="px-9 py-6 border-top chat-send-message-footer">
+													<div
+														class="d-flex align-items-center justify-content-between">
+														<div class="d-flex align-items-center gap-2 w-85">
+															<a class="position-relative nav-icon-hover z-index-5"
+																href="javascript:void(0)"> <i
+																class="ti ti-mood-smile text-dark bg-hover-primary fs-7"></i>
+															</a> <input type="text"
+																class="form-control message-type-box text-muted border-0 p-0 ms-2"
+																id="messageInput" placeholder="Type a Message" />
+														</div>
+														<button id="sendButton" class="btn btn-primary">전송</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div
+								class="offcanvas offcanvas-start user-chat-box chat-offcanvas"
+								tabindex="-1" id="chat-sidebar"
+								aria-labelledby="offcanvasExampleLabel">
+								<div class="offcanvas-header">
+									<h5 class="offcanvas-title" id="offcanvasExampleLabel">Chats</h5>
+									<button type="button" class="btn-close"
+										data-bs-dismiss="offcanvas" aria-label="Close"></button>
+								</div>
+								<div class="px-4 pt-9 pb-6">
+									<div
+										class="d-flex align-items-center justify-content-between mb-3">
+										<div class="d-flex align-items-center">
+											<!-- 로그인한 회원 프로필 -->
+			                                <div class="position-relative">
+			                                    <img alt="${currentUserName}" class="rounded-circle userProfileImage"width="54" height="54"  />
+			                                    <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+			                                        <span class="visually-hidden">New alerts</span>
+			                                    </span>
+			                                </div>
+			                                <div class="ms-3">
+			                                    <h6 id="" class="fw-semibold mb-2 userName">User Name</h6>
+			                                    <p id="userId" class="mb-0 fs-2 userId">User ID</p>
+			                                </div>
+		                                </div>
+										<div class="dropdown">
+											<a class="text-dark fs-6 nav-icon-hover"
+												href="javascript:void(0)" role="button"
+												data-bs-toggle="dropdown" aria-expanded="false"> <i
+												class="ti ti-dots-vertical"></i>
+											</a>
+											<ul class="dropdown-menu">
+												<li><a
+													class="dropdown-item d-flex align-items-center gap-2 border-bottom"
+													href="javascript:void(0)"> <span><i
+															class="ti ti-settings fs-4"></i></span>Setting
+												</a></li>
+												<li><a
+													class="dropdown-item d-flex align-items-center gap-2"
+													href="javascript:void(0)"> <span><i
+															class="ti ti-login fs-4"></i></span>Sign Out
+												</a></li>
+											</ul>
+										</div>
+									</div>
+									<form class="position-relative mb-4">
+										<input type="text" class="form-control search-chat py-2 ps-5"
+											id="text-srh" placeholder="Search Contact" /> <i
+											class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+									</form>
+									<div class="app-chat" id="chatList">
+				                        <ul class="chat-users mb-0 mh-n100" data-simplebar>
+				                            <!-- 1 채팅방 -->
+				                            <li th:each="room : ${chatRooms}"  >
+				                                <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" th:text="${room.name}" th:data-room-id="${room.id}">
+				                                    
+				                                </a>
+				                            </li>
+				                        </ul>
+				                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dark-transparent sidebartoggler"></div>
+
+		<!-- Additional JS Scripts -->
 <script>
 $(document).ready(function () {
     let stompClient = null;
     let currentChatRoomId = null;
-    let currentDate = null;
+    let currentUserId = $('.userId').text().trim();
+    let currentUserName = $('.userName').text().trim();
+    let lastMessageTime = null;
+    let lastSenderId = null;
+
 
     // 초기 데이터 로드
     function loadInitialData() {
@@ -449,17 +1220,20 @@ $(document).ready(function () {
             method: 'GET',
             success: function(response) {
                 console.log("Received data:", response);  
-                console.log("UserID:", response.currentUserId);
+                currentUserId = response.currentUserId.trim(); // 현재 사용자 ID를 전역 변수에 저장
+                console.log("UserID:", currentUserId);
 	            console.log("Name:", response.currentUserName);
-	            console.log("ID:", response.currentUserIdNum);
-                
-                $('#userName').text(response.currentUserName);
-                $('#userId').text(response.currentUserId);
-                $('#userRole').text(response.currentUserRole);
-                $('#userIdNum').text(response.currentUserIdNum);
+
+	         	// 사용자 정보 설정
+	         	currentUserName = response.currentUserName;
+                $('.userName').text(response.currentUserName);
+                $('.userId').text(currentUserId);
+                $('.userRole').text(response.currentUserRole);
+                $('.userEmail').text(response.currentUserEmail);
+	            $('.userProfileImage').attr('src', `../../images/profile/${response.currentUserName}.jpg`);
 
                 // 채팅방 목록 로드
-                updateChatRooms(response.chatRooms, response.currentUserIdNum);
+                updateChatRooms(response.chatRooms);
 
                 // 대화 상대 목록 로드
                 updateRecipientSelect(response.members);
@@ -470,52 +1244,135 @@ $(document).ready(function () {
         });
     }
 
-    // 채팅방 목록 업데이트
+    function fetchChatRoomMembers(roomId) {
+        return $.ajax({
+            url: `/getRoomMembers/${roomId}`,
+            method: 'GET',
+            dataType: 'json'
+        });
+    }
+
     function updateChatRooms(chatRooms) {
         $('#chatList').empty();
+
         chatRooms.forEach(function(room) {
+            console.log("Room ID:", room.id);  // Room ID 출력
+
+            let imagesHtml = '';
+            let memberNames = ''; // 멤버 이름을 저장할 변수
+
+            // room.members 배열이 있는지 확인
+            if (Array.isArray(room.members)) {
+                room.members.forEach(function(member, index) {
+                    // deleted 값이 0인 멤버만 표시
+                    if (member.deleted === 0) {
+                        console.log("Member ID:", member.memberId);  // Member ID 출력
+                        console.log("Member Name:", member.memberName);  // Member Name 출력
+                        console.log("Deleted Status:", member.deleted);  // Deleted Status 출력
+
+                        // 상태에 따라 클래스 결정 (이 부분은 데이터에서 `status`가 없어서 임의로 'offline' 설정)
+                        const badgeClass = 'bg-light'; 
+
+                        imagesHtml += `
+                            <span class="position-relative">
+                                <img src="../../images/profile/${encodeURIComponent(member.memberName)}.jpg" alt="${member.memberName}" width="48" height="48" class="rounded-circle ms-1" />
+                                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
+                                    <span class="visually-hidden">New alerts</span>
+                                </span>
+                            </span>
+                        `;
+
+                        // 멤버 이름을 연결 (마지막 멤버 뒤에 쉼표 추가하지 않음)
+                        memberNames += member.memberName + (index < room.members.length - 1 ? ', ' : '');
+                    }
+                });
+            } else {
+                console.error('Members is not defined or not an array for room: ' + room.id);
+            }
+
+            // 멤버 이름들을 채팅방 제목으로 사용
             const roomHtml = `
                 <li>
                     <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" data-room-id="${room.id}">
                         <div class="d-flex align-items-center">
-                            <span class="position-relative">
-                                <img src="/images/profiles/user-${room.id}.jpg" alt="${room.name}" width="48" height="48" class="rounded-circle" />
-                                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                                    <span class="visually-hidden">New alerts</span>
-                                </span>
-                            </span>
+                            ${imagesHtml}
                             <div class="ms-3 d-inline-block w-75">
-                                <h6 class="mb-1 fw-semibold chat-title" data-username="${room.name}">
-                                    ${room.name}
+                                <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
+                                    ${memberNames} <!-- 멤버 이름들을 표시 -->
                                 </h6>
                             </div>
                         </div>
                     </a>
-                </li>`;
+                </li>
+            `;
             $('#chatList').append(roomHtml);
+            registerChatRoomClickEvent();
         });
-        registerChatRoomClickEvent();
     }
 
     // 대화 상대 목록 업데이트
-    function updateRecipientSelect(members) {
-        $('#recipientSelect').empty();
-        members.forEach(function(member) {
-            $('#recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
-        });
-    }
+ 	function updateRecipientSelect(members) {
+	    $('#recipientSelect').empty(); // 기존 선택 항목 초기화
+	    
+	    members.forEach(function(member) {
+	        if (member.memberId !== currentUserId) { // 로그인한 사용자와 다른 사용자만 선택 항목에 추가
+	            $('#recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
+	        }
+	    });
+	} 
 
-    // 채팅방 클릭 이벤트 등록
-    function registerChatRoomClickEvent() {
-        $('.chat-user').off('click').on('click', function () {
-            const selectedRoomId = $(this).data('room-id');
-            if (selectedRoomId) {
-                joinChatRoom(selectedRoomId);
-            } else {
-                console.error('Invalid room ID:', selectedRoomId);
-            }
-        });
-    }
+	// 채팅방 클릭 이벤트 등록
+	function registerChatRoomClickEvent() {
+	    $('.chat-user').off('click').on('click', function () {
+	        const selectedRoomId = $(this).data('room-id');
+	        if (selectedRoomId) {
+	        	// 채팅방 선택 시 chat-not-selected 클래스에 d-none 추가
+	            $('.chat-not-selected').addClass('d-none');
+	        	
+	            // 채팅방 멤버를 가져와서 UI 업데이트
+	            fetchChatRoomMembers(selectedRoomId).then(function(response) {
+	                const members = response.members;
+	                let imagesHtml = '';
+	                let namesHtml = '';
+	
+	                if (Array.isArray(members)) {
+	                    members.forEach(function(member) {
+	                        // 상태에 따라 클래스 결정
+	                        const badgeClass = member.status === 'online' ? 'bg-success' : 'bg-light';
+	
+	                        imagesHtml += `
+	                            <span class="position-relative">
+	                                <img src="../../images/profile/${encodeURIComponent(member.name)}.jpg" alt="${member.name}" width="48" height="48" class="rounded-circle ms-1" />
+	                                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
+	                                    <span class="visually-hidden">New alerts</span>
+	                                </span>
+	                            </span>
+	                        `;
+	
+	                        // 이름 추가
+	                        namesHtml += `${member.name}, `;
+	                    });
+	
+	                    // 마지막 쉼표와 공백 제거
+	                    namesHtml = namesHtml.slice(0, -2);
+	                } else {
+	                    console.error('Members is not defined or not an array for room: ' + selectedRoomId);
+	                }
+	
+	                // 채팅룸 멤버 프로필 사진과 이름을 UI에 업데이트
+	                $('#chatPartnerImages').html(imagesHtml);
+	                $('#chatPartnerName').text(namesHtml);
+	
+	                // 채팅방 참여 (기존 기능 유지)
+	                joinChatRoom(selectedRoomId);
+	            }).fail(function() {
+	                console.error('Failed to fetch members for room: ' + selectedRoomId);
+	            });
+	        } else {
+	            console.error('Invalid room ID:', selectedRoomId);
+	        }
+	    });
+	}
 
     // STOMP 연결 및 구독 설정
     function connect() {
@@ -524,9 +1381,8 @@ $(document).ready(function () {
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            const userId = $('#userId').text();
 
-            stompClient.subscribe(`/user/${userId}/queue/newChatRoom`, function (messageOutput) {
+            stompClient.subscribe(`/user/${currentUserId}/queue/newChatRoom`, function (messageOutput) {
                 const chatRoom = JSON.parse(messageOutput.body);
                 updateChatRooms([chatRoom]);
             });
@@ -538,59 +1394,59 @@ $(document).ready(function () {
     }
 
     $('#startChat').click(function () {
-	    const recipientId = $('#recipientSelect').val();  // 선택한 상대방의 ID
-	    if (recipientId) {
-	        axios.post('/api/chat/start', `recipientId=${encodeURIComponent(recipientId)}`, {
-	            headers: {
-	                'Content-Type': 'application/x-www-form-urlencoded'
-	            }
-	        })
-	        .then(response => {
-	            currentChatRoomId = response.data.id;
-	            if (currentChatRoomId) {
-	                joinChatRoom(currentChatRoomId);
-	                loadInitialData();  // 전체 초기 데이터 로드, 채팅방 목록 갱신 포함
+        const recipientId = $('#recipientSelect').val();  // 선택한 상대방의 ID
+        if (recipientId) {
+            axios.post('/api/chat/start', `recipientId=${encodeURIComponent(recipientId)}`, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                const chatRoomId = response.data.id; // 서버에서 반환된 채팅방 ID
+                if (chatRoomId) {
+                    joinChatRoom(chatRoomId); // 해당 채팅방으로 연결
+                    loadInitialData();  // 전체 초기 데이터 로드, 채팅방 목록 갱신 포함
 
-	                // 상대방에게 새로운 채팅방 정보를 알림
-	                stompClient.send(`/user/${recipientId}/queue/newChatRoom`, {}, JSON.stringify({ roomId: currentChatRoomId }));
-	            } else {
-	                console.error('Failed to retrieve chat room ID.');
-	            }
-	        })
-	        .catch(error => {
-	            console.error('Error starting chat room:', error);
-	        });
-	    } else {
-	        console.error('Recipient ID is not selected.');
-	    }
-	});
-
-    // 채팅방 참여 및 메시지 수신 설정
-    function joinChatRoom(roomId) {
-        if (stompClient && roomId) {
-            if (currentChatRoomId) {
-                stompClient.unsubscribe(`sub-${currentChatRoomId}`);
-            }
-
-            currentChatRoomId = roomId;
-            currentDate = null;
-
-            const queue = `/queue/chat.room.${roomId}`;
-            stompClient.subscribe(queue, function (messageOutput) {
-                const message = JSON.parse(messageOutput.body);
-                showMessage(message);
-            }, { id: `sub-${roomId}` });
-
-            loadChatMessages(roomId);
-
-            const enterMessage = {
-                senderId: $('#userId').text(),
-                chatRoomId: roomId,
-                content: ''
-            };
-            stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
+                    // 상대방에게 새로운 채팅방 정보를 알림
+                    stompClient.send(`/user/${recipientId}/queue/newChatRoom`, {}, JSON.stringify({ roomId: chatRoomId }));
+                } else {
+                    console.error('Failed to retrieve chat room ID.');
+                }
+            })
+            .catch(error => {
+                console.error('Error starting chat room:', error);
+            });
+        } else {
+            console.error('Recipient ID is not selected.');
         }
-    }
+    });
+
+ 	// 채팅방 참여 및 메시지 수신 설정
+	function joinChatRoom(roomId) {
+	    if (stompClient && roomId) {
+	        if (currentChatRoomId) {
+	            stompClient.unsubscribe(`sub-${currentChatRoomId}`);
+	        }
+	
+	        currentChatRoomId = roomId;
+	        currentDate = null;
+	
+	        const queue = `/queue/chat.room.${roomId}`;
+	        stompClient.subscribe(queue, function (messageOutput) {
+	            const message = JSON.parse(messageOutput.body);
+	            showMessage(message);
+	        }, { id: `sub-${roomId}` });
+	
+	        loadChatMessages(roomId);
+	
+	        const enterMessage = {
+	            senderId: currentUserId,  // 전역 변수로 설정한 사용자 ID 사용
+	            chatRoomId: roomId,
+	            content: ''
+	        };
+	        stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
+	    }
+	}
 
     // 메시지 로드
     function loadChatMessages(roomId) {
@@ -600,79 +1456,206 @@ $(document).ready(function () {
                 response.data.forEach(message => {
                     showMessage(message);
                 });
+                
+             // 모든 메시지를 로드한 후 스크롤을 최하단으로 이동
+                scrollToBottom();
             })
             .catch(error => {
                 console.error('Error loading messages:', error);
             });
     }
-
-    // 메시지 표시
-    function showMessage(message) {
-        const currentUserId = $('#userId').text();
-        const messageDate = new Date(message.timestamp);
-        const hours = messageDate.getHours().toString().padStart(2, '0');
-        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
-        const timeString = `${hours}:${minutes}`;
-
-        const messageHtml = message.senderId === currentUserId ? `
-            <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
-                <div class="text-end">
-                    <div class="p-2 bg-info-subtle text-dark rounded-1 d-inline-block fs-3">
-                        ${message.content}
-                    </div>
-                    <div class="text-muted fs-2">${timeString}</div>
-                </div>
-            </div>` : `
-            <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
-                <img id="userProfileImage" alt="${message.senderName}" width="40" height="40" class="rounded-circle" />
-                <div>
-                    <h6 class="fs-2 text-muted">${message.senderName}</h6>
-                    <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
-                        ${message.content}
-                    </div>
-                    <div class="text-muted fs-2">${timeString}</div>
-                </div>
-            </div>`;
-        
-        $('#messageArea').append(messageHtml);
+    
+ 	// 스크롤을 최하단으로 이동시키는 함수
+    function scrollToBottom() {
+        const chatBox = document.querySelector('.chat-box-inner');
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
+    
+    // 메시지 표시 
+    function showMessage(message) {
+	    console.log("Received message:", message);  // 메시지 객체 전체를 출력
+	    const senderId = message.senderId.trim();  // 메시지를 보낸 사용자의 ID를 가져옴
+	    const messageDate = new Date(message.timestamp);
+	    const hours = messageDate.getHours().toString().padStart(2, '0');
+	    const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+	    const timeString = `${hours}:${minutes}`;
+	
+	    console.log("Sender Name:", message.senderName);  // senderName을 확인
+	
+	    let messageHtml;
+	
+	    if (senderId === currentUserId) {
+	        // 로그인한 사용자가 보낸 메시지 (오른쪽 정렬)
+	        messageHtml = `
+	            <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
+	                <div class="text-end">
+	                    <div class="p-2 bg-info-subtle text-dark rounded-1 d-inline-block fs-3">
+	                        ${message.content}
+	                    </div>
+	                    <div class="text-muted fs-2">${timeString}</div>
+	                </div>
+	            </div>`;
+	    } else {
+	        // 다른 사용자가 보낸 메시지 (왼쪽 정렬)
+	        messageHtml = `
+	            <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+	                <img src="../../images/profile/${encodeURIComponent(message.senderName)}.jpg" alt="${message.senderName}" width="40" height="40" class="rounded-circle userProfileImage" />
+	                <div>
+	                    <h6 class="fs-2 text-muted">${message.senderName}</h6>
+	                    <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
+	                        ${message.content}
+	                    </div>
+	                    <div class="text-muted fs-2">${timeString}</div>
+	                </div>
+	            </div>`;
+	    }
+	
+	    $('#messageArea').append(messageHtml);
+	    
+	 // 메시지가 추가된 후 스크롤을 최하단으로 이동
+	    scrollToBottom();
+	}
 
-    // 메시지 전송
+    // 메시지 전송 
     $('#sendButton').click(function () {
-        const content = $('#messageInput').val();
-        if (content && stompClient && currentChatRoomId) {
-            const message = {
-                chatRoomId: currentChatRoomId,
-                senderId: $('#userId').text(),
-                content: content,
-                timestamp: new Date().toISOString()
+	    const content = $('#messageInput').val();
+	    if (content && stompClient && currentChatRoomId) {
+	        const message = {
+	            chatRoomId: currentChatRoomId,
+	            senderId: currentUserId,
+	            senderName: currentUserName,  
+	            content: content,
+	            timestamp: new Date().toISOString()
+	        };
+	        stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
+	        $('#messageInput').val('');
+	    }
+	});
+    
+    $('.inviteButton').click(function () {
+        // 모달을 표시
+        $('#inviteModal').modal('show');
+
+        // 전체 멤버 목록 가져오기
+        const allMembers = $('#recipientSelect option').map(function () {
+            return {
+                memberId: $(this).val(),
+                memberName: $(this).text()
             };
-            stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
-            $('#messageInput').val('');
+        }).get();
+
+        // 현재 채팅방에 속한 멤버 가져오기
+        axios.get(`/api/chat/getRoomMembers/${currentChatRoomId}`)
+            .then(response => {
+                const existingMemberIds = new Set(response.data.members.map(member => member.memberId));
+
+                // 현재 채팅방에 속하지 않은 멤버들만 필터링
+                const availableMembers = allMembers.filter(member => !existingMemberIds.has(member.memberId));
+
+                // 멤버 목록을 모달에 표시
+                const membersSelect = $('#inviteMembersSelect');
+                membersSelect.empty(); // 기존 목록 초기화
+                availableMembers.forEach(member => {
+                    membersSelect.append(`<option value="${member.memberId}">${member.memberName}</option>`);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading existing members:', error);
+            });
+    });
+    
+    // 선택한 멤버들을 그룹에 초대
+    $('#confirmInviteButton').click(function () {
+        const selectedMembers = $('#inviteMembersSelect').val();
+
+        if (selectedMembers.length > 0 && currentUserId) {
+            axios.post('/api/chat/createGroup', {
+                roomId: currentChatRoomId,
+                memberIds: selectedMembers,
+                currentUserId: currentUserId  // currentUserId를 요청에 포함
+                
+            })
+            .then(response => {
+                const newRoomId = response.data.roomId;
+                if (newRoomId) {
+                    // 새로운 방으로 이동
+                    joinChatRoom(newRoomId);  
+                    // 채팅방 목록 새로고침
+                    loadInitialData();  // loadChatRooms 대신 사용
+
+                    // 새로운 채팅방 정보를 다른 유저들에게 실시간으로 알림
+                    stompClient.send(`/app/chat.newRoom`, {}, JSON.stringify({ roomId: newRoomId }));
+                } else {
+                    console.error('Failed to create a new group chat.');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating group chat:', error);
+            })
+            .finally(() => {
+                $('#inviteModal').modal('hide');  // 모달 숨기기
+            });
+        } else {
+            alert('멤버를 선택하세요.');
         }
     });
+
+
+    // 모달에서 선택 취소
+    $('#cancelInviteButton').click(function () {
+        $('#inviteModal').modal('hide');
+    });
+    
+    $('.leaveButton').click(function () {
+        const roomId = currentChatRoomId;
+
+        if (roomId) {
+            axios.post('/api/chat/leaveRoom', `roomId=${encodeURIComponent(roomId)}`, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                // 방 나가기가 성공적으로 처리되었을 때 UI 업데이트
+                alert("방을 나갔습니다.");
+
+                // 채팅방 UI에서 방 제거
+                $(`[data-room-id="${roomId}"]`).remove();
+
+                // 방 목록이 더 이상 없을 경우, 빈 화면 또는 다른 처리를 할 수 있음
+                const remainingRooms = $('#chatList .chat-user');
+                if (remainingRooms.length === 0) {
+                    $('.chat-not-selected').removeClass('d-none');
+                    $('.parent-chat-box').addClass('d-none');
+                }
+            })
+            .catch(error => {
+                console.error('Error leaving the room:', error.response.data);  // 오류 세부 정보 출력
+            });
+        }
+    });
+    
+    
 
     // 초기 데이터 및 STOMP 연결 설정
     loadInitialData();
     connect();
 });
 </script>
-      
-    </div>
-  </div>
-  <div class="dark-transparent sidebartoggler"></div>
-    <script th:src="@{/js/vendor.min.js}"></script>
-  <!-- Import Js Files -->
-  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
-  <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
-  <script th:src="@{/js/theme/theme.js}"></script>
-  <script th:src="@{/js/theme/app.min.js}"></script>
-  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
-  <!-- solar icons -->
-  
-  <script th:src="@{/js/apps/chat.js}"></script>
+
+		<script th:src="@{/js/vendor.min.js}"></script>
+		<!-- Import Js Files -->
+		<script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+		<script th:src="@{/js/theme/app.horizontal.init.js}"></script>
+		<script th:src="@{/js/theme/theme.js}"></script>
+		<script th:src="@{/js/theme/app.min.js}"></script>
+		<script th:src="@{/js/theme/sidebarmenu.js}"></script>
+
+		<!-- solar icons -->
+
+		<script th:src="@{/js/apps/chat.js}"></script>
 </body>
 
 </html>

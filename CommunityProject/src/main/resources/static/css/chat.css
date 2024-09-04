@@ -25,6 +25,17 @@
     background-color: #f0f0f0;
 }
 
+.app-chat {
+    overflow-y: auto; /* 수직 스크롤 추가 */
+    overflow-x: hidden; /* 수평 스크롤 숨김 */
+}
+
+.chat-box{
+	overflow-y: auto; /* 수직 스크롤 추가 */
+    overflow-x: hidden; 
+}
+
+
 #messageArea {
     flex: 1;
     overflow-y: auto;

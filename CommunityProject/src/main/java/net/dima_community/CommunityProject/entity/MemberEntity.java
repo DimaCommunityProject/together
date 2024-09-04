@@ -9,8 +9,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -22,7 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+// import lombok.ToString;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -30,16 +28,13 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+// @ToString
 @Builder
 
 @Entity
 @Table(name = "Member")
 public class MemberEntity {
 	@Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL에서 AUTO_INCREMENT를 사용
-//    @Column(name="id", nullable = false, unique = true)
-//    private Long memberNum; 
 	@Column(name = "member_id")
 	private String memberId;
 
@@ -55,7 +50,7 @@ public class MemberEntity {
 	@Column(name = "member_name", nullable = false)
 	private String memberName;
 
-	@Column(name = "member_email", nullable = false)
+	@Column(name = "member_email", nullable = false, unique = true)
 	private String memberEmail;
 
 	@Column(name = "member_group", nullable = false)
@@ -88,10 +83,9 @@ public class MemberEntity {
 	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
 
 	// 1) Board
-	// @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch =
-	// FetchType.LAZY, orphanRemoval = true)
-	// @OrderBy("board_id")
-	// private List<BoardEntity> jobBoardEntities;
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("board_id")
+	private List<BoardEntity> BoardEntities = new ArrayList<BoardEntity>();
 
 	// 3) Reply
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)

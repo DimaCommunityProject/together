@@ -42,7 +42,7 @@ CREATE TABLE chat_rooms (
 CREATE TABLE chatting_room_member (
     chatting_room_member_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     created_date DATETIME(6),
-    deleted BIT NOT NULL,
+    deleted  int nOT NULL,
     deleted_date DATETIME(6),
     last_modified_date DATETIME(6),
 	chatting_room_id BIGINT,
@@ -71,17 +71,21 @@ alter table member drop primary key;
 SHOW FUll COLUMNS FROM member WHERE Field = 'member_id';
 SHOW FULL COLUMNS FROM chatting_room_member WHERE Field = 'member_id';
 
+
 SHOW CREATE TABLE chatting_room_member;
 
 # data 조회
 select * from member;
+select * from memberpage;
 select * from chat_rooms;
 select * from chatting_room_member;
 
+# 특정 값 조회 
 SELECT * FROM chatting_room_member WHERE member_id = 'aaaaa';
+SELECT * FROM memberpage WHERE member_id = 'inyoung123';
 
 # 테이블명 변경
 rename table chatting_room to chat_rooms;
 
 describe member;
-describe member_chatting_room;
+describe chatting_room_member;

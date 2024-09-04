@@ -2,7 +2,9 @@ package net.dima_community.CommunityProject.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
 import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
 import net.dima_community.CommunityProject.repository.chat.ChatRoomRepository;
@@ -10,6 +12,7 @@ import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRep
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,11 +54,14 @@ public class ChatRoomService {
     public ChatRoom createChatRoom(String createdBy, String recipientId) {
     	String uniqueKey = Stream.of(createdBy, recipientId).sorted().collect(Collectors.joining("-"));
 
+    	// 먼저 해당 고유 키로 채팅방이 존재하는지 확인
+        Optional<ChatRoom> existingChatRoom = chatRoomRepository.findByUniqueKey(uniqueKey);
+        
         return chatRoomRepository.findByUniqueKey(uniqueKey)
             .orElseGet(() -> {
                 ChatRoom chatRoom = new ChatRoom();
                 chatRoom.setCreatedDate(LocalDateTime.now());
-                chatRoom.setDeleted(false);
+                chatRoom.setDeleted(0);
                 chatRoom.setName(createdBy + "-" + recipientId);
                 chatRoom.setCreatedBy(createdBy);
                 chatRoom.setUniqueKey(uniqueKey);
@@ -104,6 +110,7 @@ public class ChatRoomService {
             newRoom.setCreatedDate(LocalDateTime.now());
             newRoom.setCreatedBy(currentUserId);
             newRoom.setUniqueKey(uniqueKey);
+            newRoom.setDeleted(0); 
 
             // 채팅방 저장
             ChatRoom savedChatRoom = chatRoomRepository.save(newRoom);
@@ -138,10 +145,43 @@ public class ChatRoomService {
             memberChattingRoom.setChatRoom(chatRoom); // chatRoomId 대신 chatRoom 객체를 설정
             memberChattingRoom.setMember(member);
             memberChattingRoom.setCreatedDate(LocalDateTime.now());
-            memberChattingRoom.setDeleted(false);
+            memberChattingRoom.setDeleted(0);
             chattingRoomMemberRepository.save(memberChattingRoom);
         }
     }
+    
+    /**
+	 * MemberDTO를 반환하는 메소드 추가
+	 * @param memberId
+	 * @return MemberDTO
+	 */
+	public MemberDTO findByMemberId(String memberId) {
+	    Optional<MemberEntity> entity = memberRepository.findByMemberId(memberId);
+	    if (entity.isPresent()) {
+	        return MemberDTO.toDTO(entity.get());  // MemberEntity를 MemberDTO로 변환
+	    } else {
+	        throw new UsernameNotFoundException("User not found with id: " + memberId);
+	    }
+	}
+
+	/**
+	 *  해당 roomId의 전체 회원 조회 (delted 상태 포함)
+	 */
+	public List<MemberDTO> getAllMembers() {
+        return memberRepository.findAll().stream()
+                .map(MemberDTO::toDTO)
+                .collect(Collectors.toList());
+    }
+
+	/**
+	 * 해당 roomId의 나가지 않은 회원 조회 (delted 상태 제외 )
+	 * @param roomId
+	 * @return
+	 */
+    public List<ChattingRoomMemberEntity> getActiveMembers(Long roomId) {
+        return chattingRoomMemberRepository.findActiveMembersByChatRoomId(roomId);
+    }
+	
    
     /**
      * 특정 사용자가 참여하고 있는 채팅방의 id, name 조회 
@@ -149,20 +189,36 @@ public class ChatRoomService {
      * @return
      */
     public List<Map<String, Object>> getChatRoomDetails(String userId) {
-        List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberId(userId)
-                                                          .stream()
-                                                          .map(member -> member.getChatRoom().getId())
-                                                          .collect(Collectors.toList());
+        // 현재 사용자가 속한 채팅방 목록을 조회 (deleted 상태 확인)
+        List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberIdAndDeleted(userId, 0)
+                .stream()
+                .map(member -> member.getChatRoom().getId())
+                .collect(Collectors.toList());
 
+        // 각 채팅방의 정보를 가져오고, 각 멤버의 deleted 상태를 포함하여 반환
         return chatRoomRepository.findAllById(roomIds)
-            .stream()
-            .map(chatRoom -> {
-                Map<String, Object> roomDetails = new HashMap<>();
-                roomDetails.put("id", chatRoom.getId());
-                roomDetails.put("name", chatRoom.getName());
-                return roomDetails;
-            })
-            .collect(Collectors.toList());
+                .stream()
+                .map(chatRoom -> {
+                    Map<String, Object> roomDetails = new HashMap<>();
+                    roomDetails.put("id", chatRoom.getId());
+                    roomDetails.put("name", chatRoom.getName());
+
+                    // 각 채팅방의 멤버 중 deleted 상태 확인
+                    List<Map<String, Object>> membersInfo = chatRoom.getChattingRoomMembers()
+                            .stream()
+                            .map(member -> {
+                                Map<String, Object> memberInfo = new HashMap<>();
+                                memberInfo.put("memberId", member.getMember().getMemberId());
+                                memberInfo.put("memberName", member.getMember().getMemberName());
+                                memberInfo.put("deleted", member.getDeleted()); // deleted 상태 포함
+                                return memberInfo;
+                            })
+                            .collect(Collectors.toList());
+
+                    roomDetails.put("members", membersInfo); // 멤버 정보를 roomDetails에 추가
+                    return roomDetails;
+                })
+                .collect(Collectors.toList());
     }
     
     /**
@@ -221,8 +277,6 @@ public class ChatRoomService {
     }
     
     
-    
-    
-   
+
     
 }

@@ -4,17 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 // import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.description.ByteCodeElement.Member;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
@@ -71,10 +69,25 @@ public class MemberService {
 		// ResourceNotFoundException("Member", id));
 	}
 
+	public Optional<MemberEntity> findEntityById(String id) {
+		return memberRepository.findById(id);
+	}
+
 	public void saveMemberWithVerificationCode(MemberDTO memberDTO, String verifyCode) {
 		MemberDTO result = memberDTO.updateVerifyCode(verifyCode);
 		memberRepository.save(MemberEntity.toEntity(result));
 	}
+	
+	// 이메일 중복 확인
+		public void registerMember(MemberDTO memberDTO) {
+	        
+	        if (memberRepository.existsByMemberEmail(memberDTO.getMemberEmail())) {
+	            throw new IllegalArgumentException("이미 가입된 이메일 주소입니다.");
+	        }
+
+	        // 비밀번호 암호화 등 기타 처리 후 저장
+	        memberRepository.save(MemberEntity.toEntity(memberDTO));
+	    }
 
 	public boolean verifyMemberByCode(String to, String code) {
 		Optional<MemberEntity> result = memberRepository.findByMemberEmail(to);
@@ -95,11 +108,12 @@ public class MemberService {
 		return memberDTO;
 	}
 
+	@Transactional
 	public void approve(String id) {
-		MemberDTO memberDTO = findById(id);
-		memberDTO.enabledToYes();
-		log.info(memberDTO.toString());
-		memberRepository.save(MemberEntity.toEntity(memberDTO));
+		// findEntityById 매소드 하나 만듦!!
+		// findById와 findEntityById 구별해서 쓰기!!
+		MemberEntity memberEntity = findEntityById(id).get();
+		memberEntity.setMemberEnabled("Y");
 	}
 
 	public MemberDTO updateMember(String memberId, String memberName, String memberEmail) {
@@ -114,6 +128,8 @@ public class MemberService {
 		memberRepository.save(MemberEntity.toEntity(updatedMember));
 		return updatedMember;
 	}
+	
+	
 
 	/**
 	 * 사용자 아이디 찾기
@@ -138,20 +154,6 @@ public class MemberService {
 	// log.info("사용자 확인 레퍼지토리에서 찾아옴 : {}", pw);
 	// return pw;
 	// }
-	
-	/**
-	 * MemberDTO를 반환하는 메소드 추가
-	 * @param memberId
-	 * @return MemberDTO
-	 */
-	public MemberDTO findByMemberId(String memberId) {
-	    Optional<MemberEntity> entity = memberRepository.findByMemberId(memberId);
-	    if (entity.isPresent()) {
-	        return MemberDTO.toDTO(entity.get());  // MemberEntity를 MemberDTO로 변환
-	    } else {
-	        throw new UsernameNotFoundException("User not found with id: " + memberId);
-	    }
-	}
 
 	public int PwCheck(MemberDTO memberDTO) {
 
@@ -195,14 +197,4 @@ public class MemberService {
 
 		return result > 0;
 	}
-	
-	/**
-	 * 전체 회원 조회 
-	 */
-	
-	public List<MemberDTO> getAllMembers() {
-        return memberRepository.findAll().stream()
-                .map(MemberDTO::toDTO)
-                .collect(Collectors.toList());
-    }
 }// end findmemId

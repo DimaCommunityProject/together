@@ -38,4 +38,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 	List<MemberEntity> findByMemberEnabled(String enabled);
 
     Optional<MemberEntity> findByMemberEmail(String to);
+    
+    //memberService에서 회원가입 시 이메일 중복 확인 
+    boolean existsByMemberEmail(String memberEmail);
 }
