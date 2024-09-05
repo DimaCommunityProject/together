@@ -47,7 +47,7 @@ public class MemberController {
 	public String joinProc(@ModelAttribute MemberDTO memberDTO) {
 		log.info(memberDTO.toString());
 		memberservice.saveMember(memberDTO);
-		return "";
+		return "main/main";
 	}
 
 	/**

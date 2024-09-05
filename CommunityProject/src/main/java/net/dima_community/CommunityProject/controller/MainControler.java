@@ -4,12 +4,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.LoginMemberDetails;
 
 @Controller
-@Slf4j
 public class MainControler {
 	
 	@GetMapping({"","/"})
@@ -19,7 +18,7 @@ public class MainControler {
 			) {
 		if(loginUser != null)
 			model.addAttribute("loginName", loginUser.getUsername());
-		return "index";
+		return "main/main";
 
 	}
 }
