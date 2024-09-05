@@ -1,6 +1,7 @@
 package net.dima_community.CommunityProject.repository.chat;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,7 @@ public interface ChattingRoomMemberRepository extends JpaRepository<ChattingRoom
  // 특정 사용자가 속한 모든 채팅방의 멤버 정보 중 deleted가 0인 것만 가져오기
     List<ChattingRoomMemberEntity> findByMember_MemberIdAndDeleted(String memberId, int deleted);
 
+    // 채팅방 나가기 버튼 클릭 시 delted = 1 로 수정 
+    Optional<ChattingRoomMemberEntity> findByChatRoom_IdAndMember_MemberId(Long chatRoomId, String memberId);
     
 }

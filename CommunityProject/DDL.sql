@@ -4,9 +4,17 @@ USE dima;
 # 기존 table 삭제
 
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- member data 삭제 
 DROP TABLE IF EXISTS member;
+drop table if exists member_verify_code;
+drop table if exists memberpage;
+drop table if exists memberproject;
+
+-- chat data 삭제 
 DROP TABLE IF EXISTS chat_rooms;
 DROP TABLE IF EXISTS chatting_room_member;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- 1. Member 테이블 생성
@@ -74,15 +82,20 @@ SHOW FULL COLUMNS FROM chatting_room_member WHERE Field = 'member_id';
 
 SHOW CREATE TABLE chatting_room_member;
 
-# data 조회
+# member data 조회
 select * from member;
 select * from memberpage;
+select * from member_verify_code;
+select * from memberproject;
+
+# chat data 조회
 select * from chat_rooms;
 select * from chatting_room_member;
 
 # 특정 값 조회 
 SELECT * FROM chatting_room_member WHERE member_id = 'aaaaa';
 SELECT * FROM memberpage WHERE member_id = 'inyoung123';
+ALTER TABLE MEMBER_VERIFY_CODE ADD CONSTRAINT UNIQUE(member_id);
 
 # 테이블명 변경
 rename table chatting_room to chat_rooms;

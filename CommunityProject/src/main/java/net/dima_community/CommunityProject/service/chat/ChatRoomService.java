@@ -275,6 +275,17 @@ public class ChatRoomService {
     public Set<String> getUsersInRoom(Long roomId) {
         return roomOnlineUsers.getOrDefault(roomId, ConcurrentHashMap.newKeySet());
     }
+
+    public boolean leaveChatRoom(Long roomId, String userId) {
+        Optional<ChattingRoomMemberEntity> chatRoomMember = chattingRoomMemberRepository.findByChatRoom_IdAndMember_MemberId(roomId, userId);
+        if (chatRoomMember.isPresent()) {
+            ChattingRoomMemberEntity member = chatRoomMember.get();
+            member.setDeleted(1); // 'deleted' 필드를 1로 설정
+            chattingRoomMemberRepository.save(member); // 업데이트된 상태 저장
+            return true;
+        }
+        return false;
+    }
     
     
 

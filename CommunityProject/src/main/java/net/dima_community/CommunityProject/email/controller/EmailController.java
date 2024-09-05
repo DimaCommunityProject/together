@@ -53,9 +53,13 @@ public class EmailController {
                 .title("디마 회원가입 본인인증")
                 .content("인증번호는 " + generatedString + " 입니다.")
                 .build();
-
+       try {
         boolean result = emailSender.sendMail(email);
         return result;
+       }catch (Exception e) {
+    	    log.error("오류 발생: {}", e.getMessage());
+    	    return false; // 또는 더 구체적인 응답 처리
+    	}
     }
 
     @ResponseBody

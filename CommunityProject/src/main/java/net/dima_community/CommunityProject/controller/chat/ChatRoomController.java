@@ -217,5 +217,21 @@ public class ChatRoomController {
         }
     }
     
+    /**
+     * 채팅방 나가기 
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    @PostMapping("/leaveRoom")
+    public ResponseEntity<?> leaveRoom(@RequestParam("roomId") Long roomId, @RequestParam("userId") String userId) {
+        boolean result = chatRoomService.leaveChatRoom(roomId, userId);
+        if (result) {
+            return ResponseEntity.ok("User left the room successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error leaving the room.");
+        }
+    }
+    
     
 }

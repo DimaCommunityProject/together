@@ -1607,31 +1607,29 @@ $(document).ready(function () {
     });
     
     $('.leaveButton').click(function () {
-        const roomId = currentChatRoomId;
+        const roomId = currentChatRoomId;  // 현재 채팅방 ID 가져오기
+        const userId = currentUserId;  // 현재 사용자 ID 가져오기
 
-        if (roomId) {
-            axios.post('/api/chat/leaveRoom', `roomId=${encodeURIComponent(roomId)}`, {
+        if (roomId && userId) {
+            axios.post('/api/chat/leaveRoom', 
+            `roomId=${encodeURIComponent(roomId)}&userId=${encodeURIComponent(userId)}`, 
+            {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
             .then(response => {
-                // 방 나가기가 성공적으로 처리되었을 때 UI 업데이트
-                alert("방을 나갔습니다.");
-
-                // 채팅방 UI에서 방 제거
-                $(`[data-room-id="${roomId}"]`).remove();
-
-                // 방 목록이 더 이상 없을 경우, 빈 화면 또는 다른 처리를 할 수 있음
-                const remainingRooms = $('#chatList .chat-user');
-                if (remainingRooms.length === 0) {
-                    $('.chat-not-selected').removeClass('d-none');
-                    $('.parent-chat-box').addClass('d-none');
-                }
+            	console.log(response.data);  // 성공적인 응답 출력
+                // UI에서 해당 채팅방을 리스트에서 제거
+                $(`.chat-user[data-room-id="${roomId}"]`).remove();
+                // 선택된 채팅방 초기화 (옵션)
+                currentChatRoomId = null;
             })
             .catch(error => {
-                console.error('Error leaving the room:', error.response.data);  // 오류 세부 정보 출력
+                console.error('Error leaving the room:', error);
             });
+        } else {
+            console.error('Invalid room ID or user ID.');
         }
     });
     
