@@ -16,7 +16,7 @@ $(function() {
     // 모집
     $("#recruitBtn").click(boardRecruit);
     $("#submitRecruitBtn").click(submitRecruitForm);
-    
+
     // 댓글
     $("#replySubmit").click(function(event) {
         event.preventDefault(); // 기본 폼 제출 방지
@@ -24,7 +24,7 @@ $(function() {
     });
     $(".replyHeart").click(replyLikeToggle);
     $(".childReplyBtn").click(childReplyWrite);
-    
+
     init();
 });
 

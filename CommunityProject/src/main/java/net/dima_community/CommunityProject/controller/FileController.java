@@ -22,7 +22,7 @@ import net.dima_community.CommunityProject.service.BoardService;
 @Controller
 @RequiredArgsConstructor
 public class FileController {
-    private static BoardService boardService;
+    private final BoardService boardService;
 
     // 첨부 파일 경로 요청
     @Value("${spring.servlet.multipart.location}")

@@ -106,19 +106,38 @@
                         </div>
                       </div>
                     </div>
+                    <!-- 첨부 파일 -->
                     <div class="form-group mb-0">
                       <div class="row align-items-center">
                         <label for="inputGroupFile01" class="col-3 text-end  col-form-label">Select File</label>
                         <div class="col-9 border-start pb-2 pt-2" id="filePart">
                           <!-- 파일 존재하는 경우 -->
-                          <div th:if="${board.originalFileName != null}" class="input-group">
+                          <!-- <div th:if="${board.originalFileName != null}" class="input-group">
                             <div class="input-group-prepend">
                               <button class="btn bg-danger-subtle text-danger " id="fileDeleteBtn" type="button">
                                   <i data-feather="trash-2" class="ti ti-trash fs-5"></i>
                               </button>
                             </div>                          
                             <input type="text" class="form-control ms-1"  aria-describedby="basic-addon1" readonly th:value="${board.originalFileName}">
+                          </div> -->
+                          <div th:if="${board.originalFileName != null}" class="input-group" style="position: relative;">
+                            <div class="input-group-prepend">
+                                <button class="btn bg-danger-subtle text-danger" id="fileDeleteBtn" type="button">
+                                    <i data-feather="trash-2" class="ti ti-trash fs-5"></i>
+                                </button>
+                            </div>
+                            <!-- Input 필드 -->
+                            <div style="position: relative;">
+                              <input type="text" class="form-control ms-1" aria-describedby="basic-addon1" readonly
+                                  style="padding-left: 150px; padding-right: 100px;"> <!-- 왼쪽과 오른쪽 여유 공간 확보 -->
+                              <!-- 링크가 input 안에 있는 것처럼 보이게 만들기 위한 a 태그 -->
+                              <a th:href="@{/download(boardId=${board.boardId})}" 
+                                style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background-color: transparent; padding: 6px; text-decoration: none; z-index: 1;">
+                                [[${board.originalFileName}]]
+                              </a>
                           </div>
+                        </div>
+                        
                           <!-- 파일 존재하지 않으면 파일 선택할 수 있게 -->
                           <div th:unless="${board.originalFileName != null}"  class="input-group">
                             <span class="input-group-text">Upload</span>

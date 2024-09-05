@@ -163,15 +163,36 @@
                 </div>
               </div>
             </div>
+            <!-- 게시글 내용 -->
             <div class="card-body border-top p-4">
-              <!-- 게시글 내용 -->
               <p class="mb-3" th:utext="${board.content}"></p>
             </div>
+            <!-- 첨부파일 -->
+            <div class="card-body border-top p-4" th:if="${board.originalFileName != null}">
+              <!-- <div class="input-group">
+                <span class="input-group-text" id="attachedFileImg"><i class="ti ti-download"></i></span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                <a th:href="@{/download(boardId=${board.boardId})}">[[${board.originalFileName}]]</a>
+              </div>-->
+              <div class="input-group">
+                <span class="input-group-text" id="attachedFileImg">
+                    <i class="ti ti-download"></i>
+                </span>
+                <input type="text" class="form-control" id="attachedFile" aria-label="Username"
+                      aria-describedby="basic-addon1" readonly style="padding-left: 150px; padding-right: 80px;">
+                <!-- 가상의 a 태그를 input 위에 배치 -->
+                <a th:href="@{/download(boardId=${board.boardId})}" 
+                  style="position: absolute; left: 52px; top: 50%; transform: translateY(-50%); padding: 6px; border-radius: 4px; text-decoration: none;">
+                  [[${board.originalFileName}]]
+                </a>
+              </div>
+            
+            </div> 
           </div>
+          
           <!-- 댓글 -->
           <div class="card">
             <div class="card-body" id="replyPart">
-              
               <!-- 댓글 작성 -->
               <h4 class="mb-4 fw-semibold">Post Comments</h4>
               <div>
