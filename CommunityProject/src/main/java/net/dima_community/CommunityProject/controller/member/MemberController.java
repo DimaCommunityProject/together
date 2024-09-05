@@ -5,6 +5,7 @@ import java.util.Random;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +34,20 @@ public class MemberController {
 	 */
 	@GetMapping("/member/join")
 	public String join() {
-		return "member/authentication-register2";
+		return "member/join";
+	}
+
+	/**
+	 * 회원가입 처리
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	@PostMapping("/member/join")
+	public String joinProc(@ModelAttribute MemberDTO memberDTO) {
+		log.info(memberDTO.toString());
+		memberservice.saveMember(memberDTO);
+		return "";
 	}
 
 	/**

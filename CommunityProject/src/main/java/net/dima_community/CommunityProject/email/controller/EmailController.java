@@ -3,11 +3,17 @@ package net.dima_community.CommunityProject.email.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +23,7 @@ import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
 import net.dima_community.CommunityProject.service.member.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberVerifyCodeService;
 
 @Controller
 @RequestMapping("/email")
@@ -27,18 +34,22 @@ public class EmailController {
     private final EmailSender emailSender;
     private final VerifyRandomCodeHolder verifyRandomCodeHolder;
     private final MemberService memberService;
+    private final MemberVerifyCodeService memberVerifyCodeService;
 
     @ResponseBody
     @PostMapping("/send")
-    public boolean send(@RequestBody MemberDTO member) throws MessagingException {
-        MemberDTO newMember = memberService.setEncodedPassword(member);
+    public boolean send(@RequestParam(name = "memberId") String memberId,
+            @RequestParam(name = "memberEmail") String memberEmail) {
+
+        // MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
         String generatedString = verifyRandomCodeHolder.setRandomCode();
-        log.info(newMember.toString());
+        memberVerifyCodeService.insert(memberId, generatedString);
 
         // member 가저장..
-        memberService.saveMemberWithVerificationCode(newMember, generatedString);
+        // memberService.saveMemberWithVerificationCode(newMember, uploadFile,
+        // generatedString);
         Email email = Email.builder()
-                .to(newMember.getMemberEmail())
+                .to(memberEmail)
                 .title("디마 회원가입 본인인증")
                 .content("인증번호는 " + generatedString + " 입니다.")
                 .build();
@@ -49,9 +60,9 @@ public class EmailController {
 
     @ResponseBody
     @GetMapping("/verifyCode")
-    public boolean verifyCode(@RequestParam(name = "memberEmail") String to,
+    public boolean verifyCode(@RequestParam(name = "memberId") String memberId,
             @RequestParam(name = "memberVerifyCode") String code) {
-        boolean result = memberService.verifyMemberByCode(to, code);
+        boolean result = memberVerifyCodeService.verifyMemberByCode(memberId, code);
         log.info("" + result);
         return result;
     }

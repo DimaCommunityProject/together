@@ -5,6 +5,7 @@ import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
 import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
 import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
+import net.dima_community.CommunityProject.entity.member.MemberVerifyCodeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,9 +72,6 @@ public class MemberEntity {
 	@Column(name = "saved_file_name")
 	private String savedFileName;
 
-	@Column(name = "verificationcode")
-	private String memberVerifyCode;
-
 	/*
 	 * MemberPage와 관계 설정
 	 */
@@ -110,7 +108,8 @@ public class MemberEntity {
 				.memberPhone(memberDTO.getMemberPhone())
 				.badge1(memberDTO.getBadge1())
 				.badge2(memberDTO.getBadge2())
-				.memberVerifyCode(memberDTO.getMemberVerifyCode())
+				.originalFileName(memberDTO.getOriginalFileName())
+				.savedFileName(memberDTO.getSavedFileName())
 				.build();
 	}
 

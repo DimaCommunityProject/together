@@ -6,16 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 // import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.description.ByteCodeElement.Member;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
+import net.dima_community.CommunityProject.common.util.FileService;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.entity.MemberEntity;
@@ -30,6 +32,9 @@ public class MemberService {
 	private final MemberPageRepository memberPageRepository;
 	public final BCryptEncoderHolder bCryptEncoderHolder;
 	public final DBConnector dbConnector;
+	// 첨부 파일 경로 요청
+	@Value("${spring.servlet.multipart.location}")
+	String uploadPath;
 
 	/**
 	 * 회원가입
@@ -75,10 +80,12 @@ public class MemberService {
 		return memberRepository.findById(id);
 	}
 
-	public void saveMemberWithVerificationCode(MemberDTO memberDTO, String verifyCode) {
-		MemberDTO result = memberDTO.updateVerifyCode(verifyCode);
-		memberRepository.save(MemberEntity.toEntity(result));
-	}
+	// public void saveMemberWithVerificationCode(MemberDTO memberDTO, MultipartFile
+	// uploadFile, String verifyCode) {
+	//
+	// MemberDTO result = memberDTO.updateVerifyCode(verifyCode);
+	// memberRepository.save(MemberEntity.toEntity(result));
+	// }
 
 	public boolean verifyMemberByCode(String to, String code) {
 		Optional<MemberEntity> result = memberRepository.findByMemberEmail(to);
@@ -86,15 +93,16 @@ public class MemberService {
 			throw new ResourceNotFoundException("Member", to);
 		}
 		MemberDTO member = MemberDTO.toDTO(result.get());
-		log.info(member.getMemberVerifyCode() + code);
-		if (!code.trim().equals(member.getMemberVerifyCode())) {
-			// memberRepository.delete(member);
-			return false;
-		} else {
-			memberPageRepository.save(member, MemberPageDTO.builder().memberId(member.getMemberId()).build());
-			return true;
-		}
-
+		// log.info(member.getMemberVerifyCode() + code);
+		// if (!code.trim().equals(member.getMemberVerifyCode())) {
+		// // memberRepository.delete(member);
+		// return false;
+		// } else {
+		// memberPageRepository.save(member,
+		// MemberPageDTO.builder().memberId(member.getMemberId()).build());
+		// return true;
+		// }
+		return true;
 	}
 
 	@Transactional
@@ -161,18 +169,18 @@ public class MemberService {
 
 		MemberEntity originalMember = memberRepository.findById(memberId).get();
 		log.info(generatedString);
-		originalMember.setMemberVerifyCode(generatedString);
+		// originalMember.setMemberVerifyCode(generatedString);
 	}
 
-	public boolean updateEmailProcess(String memberId, String verificationCode) {
-		MemberEntity memberEntity = memberRepository.findById(memberId).get();
-		if (memberEntity.getMemberVerifyCode().equals(verificationCode)) {
-			// 이메일 변경은 진짜 저장 버튼 누를 때!!!!!
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// public boolean updateEmailProcess(String memberId, String verificationCode) {
+	// MemberEntity memberEntity = memberRepository.findById(memberId).get();
+	// if (memberEntity.getMemberVerifyCode().equals(verificationCode)) {
+	// // 이메일 변경은 진짜 저장 버튼 누를 때!!!!!
+	// return true;
+	// } else {
+	// return false;
+	// }
+	// }
 
 	@Transactional
 	public void updateEmail(String memberId, String memberEmail) {
@@ -190,4 +198,54 @@ public class MemberService {
 
 		return result > 0;
 	}
+
+	// ======================== 프로필 사진 관련 ========================
+
+	/**
+	 * originalFileName, savedFileName을 멤버변수로 가지고 있는 객체
+	 */
+	private static class FileDetails {
+		private final String originalFileName;
+		private final String savedFileName;
+
+		public FileDetails(String originalFileName, String savedFileName) {
+			this.originalFileName = originalFileName;
+			this.savedFileName = savedFileName;
+		}
+
+		public String getOriginalFileName() {
+			return originalFileName;
+		}
+
+		public String getSavedFileName() {
+			return savedFileName;
+		}
+	}
+
+	/**
+	 * uploadFile이 null이 아닌 경우 첨부파일을 저장하고, 원본파일명과 저장파일명이 담긴 FileDetails 객체 반환하는 함수
+	 * 
+	 * @param uploadFile
+	 * @return FileDetails 객체
+	 */
+	private FileDetails handleFileUpload(MultipartFile uploadFile) {
+		if (!uploadFile.isEmpty()) {
+			String originalFileName = uploadFile.getOriginalFilename();
+			String savedFileName = FileService.saveFile(uploadFile, uploadPath);
+			return new FileDetails(originalFileName, savedFileName);
+		}
+		return null;
+	}
+
+	public void saveMember(MemberDTO memberDTO) {
+		// 첨부파일이 있는 경우 파일 저장 후 DTO의 파일명 세팅
+		memberDTO.setUploadFile(memberDTO.getUploadFile());
+		FileDetails fileDetails = handleFileUpload(memberDTO.getUploadFile());
+		if (fileDetails != null) {
+			memberDTO.setOriginalFileName(fileDetails.getOriginalFileName());
+			memberDTO.setSavedFileName(fileDetails.getSavedFileName());
+		}
+		memberRepository.save(MemberEntity.toEntity(memberDTO));
+	}
+
 }// end findmemId

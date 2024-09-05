@@ -32,7 +32,6 @@ public class MemberDTO {
 	private MultipartFile uploadFile;
 	private String originalFileName;
 	private String savedFileName;
-	public String memberVerifyCode;
 
 	public static MemberDTO toDTO(MemberEntity memberEntity) {
 		return MemberDTO.builder()
@@ -46,14 +45,15 @@ public class MemberDTO {
 				.memberEmail(memberEntity.getMemberEmail())
 				.badge1(memberEntity.getBadge1())
 				.badge2(memberEntity.getBadge2())
-				.memberVerifyCode(memberEntity.getMemberVerifyCode())
+				.originalFileName(memberEntity.getOriginalFileName())
+				.savedFileName(memberEntity.getSavedFileName())
 				.build();
 	}
 
-	public MemberDTO updateVerifyCode(String verifyCode) {
-		this.memberVerifyCode = verifyCode;
-		return this;
-	}
+	// public MemberDTO updateVerifyCode(String verifyCode) {
+	// this.memberVerifyCode = verifyCode;
+	// return this;
+	// }
 
 	public MemberDTO setEncodedPassword(BCryptEncoderHolder bCryptEncoderHolder) {
 		this.memberPw = bCryptEncoderHolder.encodedPassword(this.getMemberPw());
@@ -70,10 +70,10 @@ public class MemberDTO {
 		return this;
 	}
 
-	public MemberDTO updateVerificationCode(String generatedString) {
-		this.memberVerifyCode = generatedString;
-		return this;
-	};
+	// public MemberDTO updateVerificationCode(String generatedString) {
+	// this.memberVerifyCode = generatedString;
+	// return this;
+	// };
 
 	// 관리자페이지에 보여줄 회원
 	public MemberDTO(String memberName, String memberEmail, String memberGroup, String memberId, String memberEnabled) {
