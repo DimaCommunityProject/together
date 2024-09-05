@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>공지사항 상세 페이지</title>
-    <link rel="stylesheet" href="/static/css/styles.css" />
-    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <style>
         .title-container {
             display: flex;
@@ -53,9 +53,9 @@
     <form class="form-horizontal r-separator">
         <!-- 공지사항 작성 시작 -->
         <div class="title-container">
-            <img src="/static/images/note.png" alt="첨부파일">
+            <img src="/images/note.png" alt="첨부파일">
             공지사항 상세 페이지
-            <img src="/static/images/note.png" alt="첨부파일">
+            <img src="/images/note.png" alt="첨부파일">
         </div>
         <div class="card-body text-bg-light">
             <input type="hidden" name="reportId" th:value="${boardReport.reportId}">
@@ -117,12 +117,12 @@
 
     </form>
     <!-- Import Js Files -->
-    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/static/js/theme/app.init.js"></script>
-    <script src="/static/js/theme/theme.js"></script>
-    <script src="/static/js/theme/app.min.js"></script>
-    <script src="/static/js/theme/sidebarmenu.js"></script>
+    <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/simplebar/dist/simplebar.min.js"></script>
+    <script src="/js/theme/app.init.js"></script>
+    <script src="/js/theme/theme.js"></script>
+    <script src="/js/theme/app.min.js"></script>
+    <script src="/js/theme/sidebarmenu.js"></script>
 
     <!-- solar icons -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
