@@ -1,0 +1,26 @@
+@charset "UTF-8";
+@import "main.css";
+
+/* **************************************
+	글쓰기 화면
+**************************************** */
+div.content td {
+	text-align :left;
+	width : 800px;
+}
+
+div.content td input[type="text"]{
+	width : 500px;
+}
+
+div.content td textarea{
+	width : 750px;
+	height: 200px;
+}
+
+
+
+
+
+
+
