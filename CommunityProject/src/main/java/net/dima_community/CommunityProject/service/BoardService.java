@@ -112,12 +112,13 @@ public class BoardService {
      * @return FileDetails 객체
      */
     private FileDetails handleFileUpload(MultipartFile uploadFile) {
-        if (uploadFile != null) {
+        if (uploadFile != null && !uploadFile.isEmpty()) {
             String originalFileName = uploadFile.getOriginalFilename();
             String savedFileName = FileService.saveFile(uploadFile, uploadPath);
             return new FileDetails(originalFileName, savedFileName);
+        }else {
+            return null;
         }
-        return null;
     }
 
 
@@ -483,8 +484,13 @@ public class BoardService {
 
     // ======================== 게시글 수정 ========================
 
+    /**
+     * 기존의 board를 수정된 내용이 담긴 boardDTO의 내용으로 변경하는 함수
+     * @param boardDTO
+     * @param deleteOriginalFile yes -> 기존 파일 삭제 
+     */
     @Transactional
-    public void updateBoard(BoardDTO boardDTO) {
+    public void updateBoard(BoardDTO boardDTO, String deleteOriginalFile) {
         // 수정된 내용과 비교를 위해 DB에서 데이터 가져옴
         BoardEntity boardEntity = selectBoardEntity(boardDTO.getBoardId());
         
@@ -492,7 +498,7 @@ public class BoardService {
         FileDetails newFileDetails = handleFileUpload(boardDTO.getUploadFile());
 
         // 기존 파일 처리 및 새로운 파일 저장
-        handleExistingFile(boardEntity, newFileDetails);
+        handleExistingFile(boardEntity, newFileDetails, deleteOriginalFile);
 
         // Board 수정 (제목, 내용, 수정날짜)
         updateBoardContent(boardEntity, boardDTO);
@@ -508,22 +514,21 @@ public class BoardService {
 
     /**
      * 게시글 수정 시, 
-     * 기존 파일 존재 AND 새로운 파일 존재 → 기존 파일 삭제 후 새로운 파일 저장 , 
-     * 기존 파일 부재 AND 새로운 파일 존재 → 새로운 파일 저장 
+     * (기존 파일 존재 AND 새로운 파일 존재) OR (deleteOriginalFile == yes) → 기존 파일 삭제, 
+     * 새로운 파일 존재 → 새로운 파일 저장 
      */
-    private void handleExistingFile(BoardEntity boardEntity, FileDetails newFileDetails) {
+    private void handleExistingFile(BoardEntity boardEntity, FileDetails newFileDetails, String deleteOriginalFile) {
         String oldSavedFileName = boardEntity.getSavedFileName();
 
-        if (oldSavedFileName != null && newFileDetails != null) {
+        if ("yes".equals(deleteOriginalFile) || (boardEntity.getSavedFileName() != null && newFileDetails!=null)) {
             // 기존 파일 삭제
             String fullPath = uploadPath + "/" + oldSavedFileName;
             FileService.deleteFile(fullPath);
+            boardEntity.setSavedFileName(null);
+            boardEntity.setOriginalFileName(null);
+        }
 
-            // 새로운 파일 정보 업데이트
-            boardEntity.setOriginalFileName(newFileDetails.getOriginalFileName());
-            boardEntity.setSavedFileName(newFileDetails.getSavedFileName());
-
-        } else if (newFileDetails != null) {
+        if (newFileDetails != null) {
             // 기존 파일은 없고, 새롭게 업로드된 파일이 있는 경우
             boardEntity.setOriginalFileName(newFileDetails.getOriginalFileName());
             boardEntity.setSavedFileName(newFileDetails.getSavedFileName());

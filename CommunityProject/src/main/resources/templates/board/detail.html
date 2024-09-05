@@ -273,19 +273,19 @@
                 <table class="table">
                   <tr>
                     <th>Member ID <span>*</span></th>
-                    <td><input type="text" name="memberId" id="modalMemberId" readonly></td>
+                    <td><input type="text" class="form-control" name="memberId" id="modalMemberId" readonly></td>
                   </tr>
                   <tr>
                     <th>기수 <span>*</span></th>
-                    <td><input type="text" name="memberGroup" id="modalMemberGroup" required></td>
+                    <td><input type="text" class="form-control" name="memberGroup" id="modalMemberGroup" required></td>
                   </tr>
                   <tr>
                     <th>전화번호 <span>*</span></th>
-                    <td><input type="text" name="memberPhone" id="modalMemberPhone" required></td>
+                    <td><input type="text" class="form-control" name="memberPhone" id="modalMemberPhone" required></td>
                   </tr>
                   <tr>
                     <th>이메일 <span>*</span></th>
-                    <td><input type="email" name="memberEmail" id="modalMemberEmail" required></td>
+                    <td><input type="email" class="form-control" name="memberEmail" id="modalMemberEmail" required></td>
                   </tr>
                   <input type="hidden" name="boardId" id="modalBoardId">
                   <input type="hidden" name="category" id="modalCategory">
@@ -317,16 +317,16 @@
                 <table class="table">
                   <tr>
                     <th>신고 게시글 제목 <span>*</span></th>
-                    <td><input type="text"  id="reportModalTitle" readonly></td>
+                    <td><input type="text" class="form-control"  id="reportModalTitle" readonly></td>
                   </tr>
                   <tr>
                     <th>신고 게시글 작성자 <span>*</span></th>
-                    <td><input type="text"  name="memberId" id="reportModalWriter" readonly></td>
+                    <td><input type="text" class="form-control"  name="memberId" id="reportModalWriter" readonly></td>
                   </tr>
                   <tr>
                     <th>신고 카테고리 <span>*</span></th>
                     <td>
-                      <select name="category" id="">
+                      <select name="category" id="" class="form-select ">
                         <option value="IllegalContent">위법적인 내용</option>
                         <option value="ViolentContent">폭력적인 내용</option>
                         <option value="PrivacyViolation">사생활 침해</option>

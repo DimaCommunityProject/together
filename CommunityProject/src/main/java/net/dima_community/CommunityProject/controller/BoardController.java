@@ -1,5 +1,7 @@
 package net.dima_community.CommunityProject.controller;
 
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -335,6 +337,12 @@ public class BoardController {
         model.addAttribute("searchWord", searchWord);
 
         if (category == BoardCategory.activity || category == BoardCategory.recruit) {
+            // formattedDeadline 생성 후 model에 담기 (설정된 deadline 표시를 위해)
+            if (boardDTO.getDeadline() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                String formattedDeadline = boardDTO.getDeadline().format(formatter);
+                model.addAttribute("formattedDeadline", formattedDeadline);
+            }
             return "board/updateActivityOrRecruit";
         }
         return "board/update";
@@ -351,13 +359,14 @@ public class BoardController {
      */
     @PostMapping("/board/update")
     public String postMethodName(@ModelAttribute BoardDTO boardDTO, 
-                                @RequestParam(name = "category") String categoryString,
+                                @RequestParam(name = "receivedCategory") String categoryString,
+                                @RequestParam(name = "deleteOriginalFile") String deleteOriginalFile,
                                 @RequestParam(name = "searchWord", defaultValue = "") String searchWord, RedirectAttributes rttr) {
         // String -> Enum
         BoardCategory category = BoardCategory.valueOf(categoryString);
 
         // 전달받은 boardDTO로 기존 board 정보 수정 처리
-        boardService.updateBoard(boardDTO);
+        boardService.updateBoard(boardDTO,deleteOriginalFile);
         
         rttr.addAttribute("boardId", boardDTO.getBoardId());
         rttr.addAttribute("category", category.name());

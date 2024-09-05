@@ -11,6 +11,14 @@ function submitBoardUpdate(){
     // 유효성 검사
     if(!validTitle()) return;
     else if(!validContent()) return;
+    else if(!validLimitNumber()) return;
+
+    if ($("#inputGroupFile01")[0].files.length>0) {
+        console.log("파일 존재 ");
+        console.log(($("#inputGroupFile01")[0]));
+    }else{
+        console.log("파일 존재하지 않음");
+    }
 
     alert("게시글 수정!");
     $("#updateForm").submit();
@@ -24,8 +32,7 @@ function validTitle(){
         // $("#validTitle").text("제목을 입력하세요")
         $("#inputText2").select();
         return false;
-    }
-    return true;
+    }else return true;
 }
 
 // 유효성 검사 - content
@@ -41,6 +48,16 @@ function validContent(){
         $("#content").val(content); // content에 값 채워넣기
         return true;
     }
+}
+
+// 유효성 검사 - limitNumber
+function validLimitNumber() {
+    var limitNumber = $("#limitNumber").val(); // limitNumber 가져오기
+    var currentNumber = $("#currentNumber").val(); // currentNumber 가져오기
+    if (limitNumber<currentNumber) {
+        alert("모집 예정 인원수가 현재 모집된 수("+currentNumber+ "명)보다 많아야 합니다.");
+        return false;
+    }else return true;
 }
 
 // 게시글 등록 초기화 (제목, 내용, 파일)
@@ -64,7 +81,8 @@ function deleteFile() {
             <input type="file" name="uploadFile" class="form-control" id="inputGroupFile01"/>
         </div>
     </div>`;
-    $("#filePart").html(selectFileTag)
+    $("#filePart").html(selectFileTag);
+    $("#deleteOriginalFile").val("yes");
 }
 
 

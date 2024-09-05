@@ -42,7 +42,7 @@
             <div class="card-body px-4 py-3">
               <div class="row align-items-center">
                 <div class="col-9">
-                  <h4 class="fw-semibold mb-8"> 게시글 등록 </h4> <!-- 제목-->
+                  <h4 class="fw-semibold mb-8"> 게시글 수정 </h4> 
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
@@ -83,7 +83,7 @@
                       <div class="row align-items-center">
                         <label for="inputText1" class="col-3 text-end  col-form-label">Category</label>
                         <div class="col-9 border-start pb-2 pt-2">
-                          <input type="text" name="category" class="form-control" id="inputText1" th:value="${category}" readonly/>
+                          <input type="text" name="category" class="form-control" id="inputText1" th:value="${category}" disabled style="font-weight: 800;"/>
                         </div>
                       </div>
                     </div>
@@ -103,7 +103,6 @@
                           <div class="editor-container editor-container_classic-editor" id="editor-container">
                             <div class="editor-container__editor"><div id="editor"></div></div>
                           </div>
-                          <!-- <input type="email" class="form-control" id="inputEmail1" placeholder="Email Here" />  -->
                         </div>
                       </div>
                     </div>
@@ -118,7 +117,7 @@
                                   <i data-feather="trash-2" class="ti ti-trash fs-5"></i>
                               </button>
                             </div>                          
-                            <input type="text" class="form-control ms-1" placeholder="" aria-label="" aria-describedby="basic-addon1" readonly th:value="${board.originalFileName}">
+                            <input type="text" class="form-control ms-1"  aria-describedby="basic-addon1" readonly th:value="${board.originalFileName}">
                           </div>
                           <!-- 파일 존재하지 않으면 파일 선택할 수 있게 -->
                           <div th:unless="${board.originalFileName != null}"  class="input-group">
@@ -133,7 +132,6 @@
                     <!--submit을 위한 필수 값-->
                     <div class="form-group mb-0 text-end"> 
                       <div class="row align-items-center">
-                        <label for="inputGroupFile01" class="col-3 text-end  col-form-label"></label>
                         <div class="col-9 border-start pb-2 pt-2">
                           <!-- <input type="hidden" name="memberId" th:value="${#authentication.name}"> -->
                           <input type="hidden" name="memberId" value="doyeon">
@@ -141,6 +139,8 @@
                           <input type="hidden" id="memberGroup" name="memberGroup" > <!--ajax-->
                           <input type="hidden" name="content" id="content"> <!--ckEditor에서 내용 읽어와서 value 채우기 (script에서 처리)-->
                           <input type="hidden" name="searchWord" th:value="${searchWord}">
+                          <input type="hidden" name="receivedCategory" th:value="${category}">
+                          <input type="hidden" name="deleteOriginalFile" id="deleteOriginalFile" value="no">
                         </div>
                       </div>
                     </div>
