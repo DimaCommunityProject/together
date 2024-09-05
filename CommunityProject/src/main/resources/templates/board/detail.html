@@ -145,7 +145,7 @@
                 </div>
                 <!--댓글 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i id="message" class="ti ti-message-2 text-dark fs-6"></i> [[${board.replyCount}]] 
+                  <i id="message" class="ti ti-message-2 text-dark fs-6"></i> <span class="replyCount">[[${board.replyCount}]]</span>  
                 </div>
                 <!--좋아요 수-->
                 <div class="d-flex align-items-center gap-2">
@@ -205,7 +205,7 @@
 
               <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
                 <h4 class="mb-0">Comments</h4>
-                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
+                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded replyCount">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
               </div>
 
               <!-- 댓글 목록 -->
@@ -217,36 +217,56 @@
                       <img th:src="@{/assets/images/profile/user-2.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
-                      <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                      <!-- <span th:if="${reply.memberId==#authentication.name}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span> -->
+                      <span th:if="${reply.memberId=='hs'}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                       <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
-                        <!-- 댓글 좋아요 -->
-                        <!-- <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId}"> -->
-                        <div class="btn btn-secondary ms-6 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}">
-                          <i th:if="${reply.likeCount == 0}" class="ti ti-thumb-up text-dark fs-5 " style="padding-right: 3px;"></i> 
-                          <i th:unless="${reply.likeCount == 0}" class="ti ti-thumb-up-filled text-dark fs-5 " style="padding-right: 3px;"></i> 
-                          <span>[[${reply.likeCount}]]</span>
-                        </div>
+                        <!-- <th:block th:if="${reply.memberId==#authentication.name}"> -->
+                        <th:block th:if="${reply.memberId=='hs'}">
+                          <!-- 댓글 삭제 -->
+                          <div class="btn btn-sm bg-danger-subtle text-danger ms-6 replyDelete" th:data-reply="${reply.replyId}">
+                            <i class="ti ti-trash-x fs-5 " style="padding-right: 3px;"></i> 
+                            <span>delete</span>
+                          </div>
+                          <!-- 댓글 수정 -->
+                          <div class="btn btn-sm btn-primary ms-6 replyUpdateForm" th:data-reply="${reply.replyId}">
+                            <i class="ti ti-edit text-dark fs-5 " style="padding-right: 3px;"></i> 
+                            <span>edit</span>
+                          </div>
+                        </th:block>
+                        <!-- <th:block th:unless="${reply.memberId==#authentication.name}"> -->
+                        <th:block th:unless="${reply.memberId=='hs'}">
+                          <!-- 댓글 좋아요 -->
+                          <!-- <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId}"> -->
+                          <div class="btn btn-sm btn-secondary ms-6 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}">
+                            <i th:if="${reply.likeCount == 0}" class="ti ti-thumb-up text-dark fs-5 " style="padding-right: 3px;"></i> 
+                            <i th:unless="${reply.likeCount == 0}" class="ti ti-thumb-up-filled text-dark fs-5 " style="padding-right: 3px;"></i> 
+                            <span>[[${reply.likeCount}]]</span>
+                          </div>
+                        </th:block>
                       </div>
                     </div>
-                    <!-- 댓글 내용 -->
-                    <p class="my-3" th:text="${reply.content}"></p>
-                    <div>
-                      <!-- <div class="d-flex align-items-center gap-2 childReplyForm" th:data-parent="${reply.replyId}" th:data-user="${#authentication.name}"> -->
-                      <div class="d-flex align-items-center gap-2 childReplyForm">
-                        <!-- <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="${authentication.name}"></div> -->
-                        <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="doyeon"></div>
-                        <!--대댓글 작성요청 버튼-->
-                        <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                          <i class="ti ti-arrow-back-up"></i> 
-                        </a>
+                    <!-- 수정 요청 시 아래 부분 바꿀 예정 -->
+                    <div class="updateFormHere">
+                      <!-- 댓글 내용 -->
+                      <p class="my-3" th:text="${reply.content}"></p>
+                      <div>
+                        <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="hs"></div>
+                        <div class="d-flex align-items-center gap-2 childReplyForm">
+                          <!-- <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="${authentication.name}"></div> -->
+                          <!--대댓글 작성요청 버튼-->
+                          <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
+                            <i class="ti ti-arrow-back-up"></i> 
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- 대댓글이 있는 경우 -->
-                  <div th:if="${reply.childReplies!=null and !#lists.isEmpty(reply.childReplies)}">
+                  <!-- <div th:if="${reply.childReplies!=null and !#lists.isEmpty(reply.childReplies)}">
                     <div class="p-4 rounded-4 text-bg-light mb-3 ms-7" th:each="childReply : ${reply.childReplies}">
                       <div class="d-flex align-items-center gap-3">
                         <img th:src="@{/assets/images/profile/user-6.jpg}" alt="modernize-img" class="rounded-circle" width="40" height="40">
+                        
                         <h6 class="mb-0 fs-4" th:text="${childReply.memberId}">Irene Hanson</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                       </div>
@@ -255,24 +275,49 @@
                         Lohi hafa faddegon horoz ebema kew idful ducam nev rol iga wikkobsu sucdu gud.
                       </p>
                     </div>
+                  </div> -->
+                  <div th:if="${reply.childReplies!=null and !#lists.isEmpty(reply.childReplies)}">
+                    <div class="p-4 rounded-4 text-bg-light mb-3 ms-7" th:each="childReply : ${reply.childReplies}">
+                      <div class="d-flex align-items-center gap-3">
+                        <img th:src="@{/assets/images/profile/user-6.jpg}" alt="modernize-img" class="rounded-circle" width="40" height="40">
+                        <!-- 댓글 작성자 -->
+                        <h6 class="mb-0 fs-4">[[${childReply.memberId}]]</h6> 
+                        <!-- 로그인한 사용자와 댓글 작성자가 일치하는 경우만 동그라미 표시 -->
+                        <!-- <span th:if="${childReply.memberId==#authentication.name}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span> -->
+                        <span th:if="${childReply.memberId=='hs'}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                        <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
+                          <!-- <th:block th:if="${childReply.memberId==#authentication.name}"> -->
+                          <th:block th:if="${childReply.memberId=='hs'}">
+                              <!-- 댓글 삭제 -->
+                              <div class="btn btn-sm bg-danger-subtle text-danger ms-6 replyDelete" th:data-reply="${childReply.replyId}">
+                                  <i class="ti ti-trash-x fs-5 " style="padding-right: 3px;"></i> 
+                                  <span>delete</span>
+                              </div>
+                              <!-- 댓글 수정 -->
+                              <div class="btn btn-sm btn-primary ms-6 replyUpdateForm" th:data-reply="${childReply.replyId}">
+                                  <i class="ti ti-edit text-dark fs-5 " style="padding-right: 3px;"></i> 
+                                  <span>edit</span>
+                              </div>
+                          </th:block>
+                          <!-- <th:block th:unless="${childReply.memberId==#authentication.name}"> -->
+                          <th:block th:unless="${childReply.memberId=='hs'}">
+                              <!-- 댓글 좋아요 -->
+                              <!-- <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${childReply.replyId}"> -->
+                              <div class="btn btn-sm btn-secondary ms-6 replyHeart" th:data-member="hs" th:data-reply="${childReply.replyId}">
+                              <i th:if="${childReply.likeCount == 0}" class="ti ti-thumb-up text-dark fs-5 " style="padding-right: 3px;"></i> 
+                              <i th:unless="${childReply.likeCount == 0}" class="ti ti-thumb-up-filled text-dark fs-5 " style="padding-right: 3px;"></i> 
+                              <span>[[${reply.likeCount}]]</span>
+                              </div>
+                          </th:block>
+                        </div>
+                      </div>
+                      <!-- 댓글 수정 요청 시 아래 부분 바꿀 예정 -->
+                      <div class="updateFormHere">
+                        <p class="my-3" th:text="${childReply.content}"></p>
+                      </div>
+                    </div>
                   </div>
                 </th:block>
-                <div class="p-4 rounded-4 text-bg-light mb-3">
-                  <div class="d-flex align-items-center gap-3">
-                    <img th:src="@{/assets/images/profile/user-3.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
-                    <h6 class="mb-0 fs-4">Cordelia Potter</h6>
-                    <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                  </div>
-                  <p class="my-3">Huwso jewzehgu julriw niwgazep lewbob isujirmuz hemto pahop cewa zuhucze rinitba
-                    etdebluj.
-                    Obdevo bo fa siztes laobeir agoemugo rut sapaviw mulati do re dabelul wo tumnik wih mu.
-                  </p>
-                  <div class="d-flex align-items-center gap-2">
-                    <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                      <i class="ti ti-arrow-back-up"></i>
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

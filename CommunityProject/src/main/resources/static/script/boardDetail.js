@@ -22,8 +22,10 @@ $(function() {
         event.preventDefault(); // 기본 폼 제출 방지
         replySubmit(); // 댓글 등록 함수 호출
     });
-    $(".replyHeart").click(replyLikeToggle);
-    $(".childReplyBtn").click(childReplyWrite);
+    $(".replyHeart").click(replyLikeToggle); // 댓글 좋아요
+    $(".childReplyBtn").click(childReplyWrite); // 대댓글 작성
+    $(".replyDelete").click(replyDelete); // 댓글 삭제
+    $(".replyUpdateForm").click(replyUpdate); // 댓글 수정
 
     init();
 });
@@ -152,6 +154,8 @@ function getReplyList() {
             $(".replyHeart").click(replyLikeToggle);
             $(".childReplyBtn").click(childReplyWrite);
             $(".childReplySubmit").click(childReplySubmit);
+            $(".replyDelete").click(replyDelete); // 댓글 삭제
+            $(".replyUpdateForm").click(replyUpdate); // 댓글 수정
         }
     });
 }
@@ -159,12 +163,13 @@ function getReplyList() {
 // 게시글에 대한 댓글 수 가져오기
 function getReplyCount() {
     var boardId = $("#boardId").val();
+    console.log("boardId : "+boardId +"  댓글 수 가져올거야");
     $.ajax({
         method:"GET",
         url:"/reply/getReplyCount",
         data:{"boardId":boardId},
         success:function (result) {
-            $("#replyCount").text(result);
+            $(".replyCount").text(result);
         }
     });
 }
@@ -182,11 +187,80 @@ function replySubmit() {
         url:"/reply/create",
         data:{"boardId":boardId,"memberId":replyWriter,"content":replyContent},
         success:function () {
+            $("#replyContent").val(""); // 댓글 작성 폼 비우기
             getReplyList(); // 댓글 목록 불러오기
             getReplyCount(); // 댓글 수 업데이트
         }
     });
 }
+
+// 댓글 삭제
+function replyDelete() {
+    var replyId = $(this).attr("data-reply");
+    console.log("replyId : "+replyId+"인 댓글 삭제할거야");
+    
+    $.ajax({
+        url:"/replyl/delete",
+        method:"GET",
+        data:{"replyId": replyId},
+        success: function () {
+            getReplyList(); // 댓글 목록 가져오기
+            getReplyCount(); // 댓글 수 업데이트
+        }
+    })
+}
+
+// 댓글 수정폼 생성
+function replyUpdate() {
+    var replyId = $(this).attr("data-reply");
+    console.log("replyId : "+replyId+"인 댓글 수정할거야");
+    var updateFormHere = $(this).closest('.p-4').find('.updateFormHere');
+
+    // 원래 HTML 내용을 저장
+    var originalContentElement = updateFormHere.find('p'); // 기존 댓글 내용
+    var originalContent = updateFormHere.html();
+
+    // 수정 폼 생성
+    var updateForm = `
+        <div>
+            <textarea class="form-control mb-4 replyUpdateContent" rows="5"></textarea> <!--댓글 내용-->
+            <button class="btn bg-danger-subtle text-danger replyUpdateCancel">취소</button> <!-- 댓글 수정 취소 -->
+            <button class="btn btn-primary replyUpdateBtn">수정</button> <!-- 댓글 수정 버튼 -->
+        </div>
+    `;
+
+    // 수정 폼을 삽입
+    updateFormHere.html(updateForm);
+    
+    // 기존 내용 삽입
+    var originalReplyContent = originalContentElement.text();
+    console.log("기존 댓글 내용 : "+originalReplyContent);
+    updateFormHere.find(".replyUpdateContent").text(originalReplyContent);
+
+
+    // 댓글 수정 취소 버튼 클릭 이벤트
+    updateFormHere.find('.replyUpdateCancel').on('click', function () {
+        // 원래 내용을 다시 삽입
+        updateFormHere.html(originalContent);
+        $(".childReplyBtn").click(childReplyWrite);
+    });
+
+    // 댓글 수정 처리 버튼 클릭 이벤트
+    updateFormHere.find('.replyUpdateBtn').click(function () {
+        var updateContent = updateFormHere.find(".replyUpdateContent").val();
+        console.log("수정된 댓글 내용 : " + updateContent);
+        $.ajax({
+            url:"/reply/update",
+            method:"GET",
+            data:{"replyId": replyId, "content":updateContent},
+            success: function () {
+                getReplyList(); // 댓글 목록 가져오기
+                getReplyCount(); // 댓글 수 업데이트
+            }
+        });
+    });
+}
+
 
 
 // 댓글 좋아요
@@ -208,7 +282,6 @@ function replyLikeToggle() {
             }else{
                 target.find('i').attr('class',"ti ti-thumb-up text-dark fs-5");
             }
-
             getReplyLikeCount(target.closest('.replyHeart'), replyId); // 좋아요 수 반환
         }
     });
@@ -262,14 +335,14 @@ function childReplySubmitCancel(){
 // 대댓글 등록 요청
 function childReplySubmit() {
     // .closest() 메서드를 사용하여 가장 가까운 부모 요소 중 class가 'replyHeart'인 요소를 찾습니다.
-    var replyHeartDiv = $(this).closest('.p-4').find('.replyHeart');
+    var childReplyInfo = $(this).closest('.childReplyForm').siblings('.childReplyInfo');
     
-    // 'replyHeart' div에서 data 속성 값을 읽어옵니다.
-    var memberId = replyHeartDiv.data("member");
-    var replyId = replyHeartDiv.data("reply");
+    // 'childReplyInfo' div에서 data 속성 값을 읽어옵니다.
+    var replyId = childReplyInfo.attr("data-parent");
+    var memberId = childReplyInfo.attr("data-user");
     
-    console.log("댓글 작성자 ID : " + memberId);
     console.log("댓글 ID : " + replyId);
+    console.log("댓글 작성자 ID : " + memberId);
 
     var content = $(this).siblings('.childreplyContent').val(); // 대댓글 내용 읽기
     console.log("대댓글 내용 : " + content);

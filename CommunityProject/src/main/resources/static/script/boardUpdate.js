@@ -12,14 +12,8 @@ function submitBoardUpdate(){
     if(!validTitle()) return;
     else if(!validContent()) return;
     else if(!validLimitNumber()) return;
-
-    if ($("#inputGroupFile01")[0].files.length>0) {
-        console.log("파일 존재 ");
-        console.log(($("#inputGroupFile01")[0]));
-    }else{
-        console.log("파일 존재하지 않음");
-    }
-
+    console.log("deadline : "+$("#deadline").val());
+    console.log("limitNumber : "+$("#limitNumber").val());
     alert("게시글 수정!");
     $("#updateForm").submit();
 }

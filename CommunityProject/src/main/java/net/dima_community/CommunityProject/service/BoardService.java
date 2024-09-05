@@ -509,6 +509,8 @@ public class BoardService {
             JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardDTO.getBoardId()); 
             // JobBoard 수정 (마감기한, 모집인원)
             updateJobBoard(jobBoardEntity, boardDTO);
+            // 엔티티가 영속성 컨텍스트에 없으면 명시적으로 저장
+            jobBoardRepository.save(jobBoardEntity);
         }
     }
 

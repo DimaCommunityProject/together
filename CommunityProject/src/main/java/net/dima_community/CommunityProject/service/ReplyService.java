@@ -216,23 +216,33 @@ public class ReplyService {
      */
     @Transactional
     public void deleteOne(Long replyId) {
-        replyRepository.deleteById(replyId); // delete from Reply
-        // BoardEntity의 replyCount 1 감소
-        ReplyEntity replyEntity = selectReplyEntity(replyId);
-        BoardEntity boardEntity = replyEntity.getBoardEntity();
-        replyCountMinus(boardEntity); 
+        // 해당 댓글 엔티티
+        ReplyEntity replyEntity = selectReplyEntity(replyId); 
+        // 댓글이 등록된 BoardEntity
+        BoardEntity boardEntity = replyEntity.getBoardEntity(); 
+        // 전달받은 replyId에 해당하는 댓글 삭제
+        replyRepository.deleteById(replyId); 
+        // 자식 reply의 개수  
+        int totalReplyCount = replyRepository.countByReplyIdInParent(replyId);
+        // 자식 reply들 삭제
+        if(totalReplyCount>0){
+            replyRepository.deleteByParentReplyId(replyId);
+        }
+        // BoardEntity의 replyCount의 값 (totalReplyCount+1)만큼 감소
+        replyCountMinus(boardEntity, 1+totalReplyCount); 
     }
 
     /**
-     * boardEntity의 replyCount 1 감소시키는 함수
+     * boardEntity의 replyCount를 totalReplyCount만큼 감소시키는 함수
      * @param boardEntity
+     * @param totalReplyCount : 삭제된 댓글 및 대댓글 총 개수
     */
-    public void replyCountMinus(BoardEntity boardEntity) {
+    public void replyCountMinus(BoardEntity boardEntity, int totalReplyCount) {
         int replyCount = boardEntity.getReplyCount();
-        if (replyCount - 1 == 0) {
+        if (replyCount - totalReplyCount <= 0) {
             boardEntity.setReplyCount(0);
         } else {
-            boardEntity.setReplyCount(replyCount - 1);
+            boardEntity.setReplyCount(replyCount - totalReplyCount);
         }        
     }
     

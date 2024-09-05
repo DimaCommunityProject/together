@@ -26,7 +26,7 @@
   
 </head>
 
-<body class="link-sidebar">
+< class="link-sidebar">
   <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
   <input type="hidden" id="memberId" value="doyeon">
   <input type="hidden" id="boardContent" th:value="${board.content}">
@@ -102,14 +102,7 @@
                       <div class="row align-items-center">
                         <label for="inputText1" class="col-3 text-end  col-form-label">모집 인원</label>
                         <div class="col-7 border-start pb-2 pt-2">
-                          <!-- <input th:unless="${board.limitNumber==0}" type="number" name="limitNumber" class="form-control" id="limitNumber" min="0" th:value="${board.limitNumber}"/> -->
                           <div>
-                            <!-- <div class="col-md-4">
-                                <input type="text" class="form-control" id="currentNumber" th:value="${board.currentNumber+'  (현재 모집된 인원)'}" readonly> /
-                            </div>
-                            <div class="col-md-8">
-                                <input type="number" class="form-control" id="limitNumber" name="limitNumber" min="0" th:value="${board.limitNumber}">
-                            </div> -->
                             <div class="d-flex align-items-center">
                               <div class="col-md-4">
                                   <input type="text" class="form-control" id="currentNumber" th:value="${board.currentNumber+'  (현재 모집된 인원)'}" style="text-align: center;" disabled>
@@ -123,7 +116,6 @@
                         </div>
                       </div>
                     </div>
-                    
                     <!-- 게시글 제목 -->
                     <div class="form-group mb-0">
                       <div class="row align-items-center">
@@ -151,14 +143,6 @@
                         <label for="inputGroupFile01" class="col-3 text-end  col-form-label">Select File</label>
                         <div class="col-9 border-start pb-2 pt-2" id="filePart">
                           <!-- 파일 존재하는 경우 -->
-                          <!-- <div th:if="${board.originalFileName != null}" class="input-group">
-                            <div class="input-group-prepend">
-                              <button class="btn bg-danger-subtle text-danger " id="fileDeleteBtn" type="button">
-                                  <i data-feather="trash-2" class="ti ti-trash fs-5"></i>
-                              </button>
-                            </div>                          
-                            <input type="text" class="form-control ms-1"  aria-describedby="basic-addon1" readonly th:value="${board.originalFileName}">
-                          </div> -->
                           <div th:if="${board.originalFileName != null}" class="input-group" style="position: relative;">
                             <div class="input-group-prepend">
                                 <button class="btn bg-danger-subtle text-danger" id="fileDeleteBtn" type="button">
@@ -178,7 +162,7 @@
                         </div>
                         
                           <!-- 파일 존재하지 않으면 파일 선택할 수 있게 -->
-                          <div th:unless="${board.originalFileName != null}"  class="input-group">
+                          <div th:unless="${board.originalFileName != null}" class="input-group">
                             <span class="input-group-text">Upload</span>
                             <div class="custom-file">
                               <input type="file" name="uploadFile" class="form-control" id="inputGroupFile01"/>
@@ -203,218 +187,66 @@
                       </div>
                     </div>
                   </div>
+                  <div class="card-body">
+                    <!-- 초기화/전송/취소/ 버튼-->
+                    <div class="form-group mb-0 text-end" style="padding-right:30px"> 
+                      <button type="button" id="cancelBtn" class="btn bg-danger-subtle text-danger ms-6">취소</button>
+                      <button type="button" id="resetBtn" class="btn bg-info-subtle text-info ms-6">초기화</button>               
+                      <button type="button" id="submitBtn" class="btn btn-primary" style="margin-left:12px">수정</button>
+                    </div>
+                  </div>
                 </form>
-                <!-- 수정폼 끝 -->
               </div>
+              <!-- end Project Assinging -->
+              <div class="col-12" style="height:90px"></div>
             </div>
           </div>
           <!-- End Row -->
-    
-          <!-- 초기화/전송/취소/ 버튼-->
-          <div class="card-body">
-            <div class="form-group mb-0 text-end" style="padding-right:30px"> 
-              <button type="button" id="cancelBtn" class="btn bg-danger-subtle text-danger ms-6">취소</button>
-              <button type="button" id="resetBtn" class="btn bg-info-subtle text-info ms-6">초기화</button>               
-              <button type="button" id="submitBtn" class="btn btn-primary" style="margin-left:12px">수정</button>
-            </div>
-          </div>
-
-          <!-- end Project Assinging -->
-          <div class="col-12" style="height:90px"></div>
-
-          <!-- 수정 취소 버튼 클릭 시 board/detail로 돌아감 -->
-          <form th:action="@{/board/detail}" method="GET" id="backToDetail">
-            <input type="hidden" name="boardId" th:value="${board.boardId}">
-            <input type="hidden" name="category" th:value="${category}">
-            <input type="hidden" name="searchWord" th:value="${searchWord}">
-          </form>
-      
-          <script>
-            function handleColorTheme(e) {
-              document.documentElement.setAttribute("data-color-theme", e);
-            }
-          </script> 
-
-          <!-- Setting Button -->
-          <!-- <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-            <i class="icon ti ti-settings fs-7"></i>
-          </button> -->
-          
-          <!-- Setting -->
-          <!-- <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
-              <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
-                Settings
-              </h4>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body h-n80" data-simplebar>
-              <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
-
-              <div class="d-flex flex-row gap-3 customizer-box" role="group">
-                <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
-                  <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
-                </label>
-
-                <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
-                  <i class="icon ti ti-moon fs-7 me-2"></i>Dark
-                </label>
-              </div>
-
-              <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
-              <div class="d-flex flex-row gap-3 customizer-box" role="group">
-                <input type="radio" class="btn-check" name="direction-l" id="ltr-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary" for="ltr-layout">
-                  <i class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR
-                </label>
-
-                <input type="radio" class="btn-check" name="direction-l" id="rtl-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary" for="rtl-layout">
-                  <i class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL
-                </label>
-              </div>
-
-              <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
-
-              <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
-                <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">
-                  <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
-                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
-                  </div>
-                </label>
-
-                <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">
-                  <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
-                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
-                  </div>
-                </label>
-
-                <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">
-                  <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
-                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
-                  </div>
-                </label>
-
-                <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
-                  <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
-                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
-                  </div>
-                </label>
-
-                <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
-                  <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
-                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
-                  </div>
-                </label>
-
-                <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
-                  <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
-                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
-                  </div>
-                </label>
-              </div>
-
-              <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
-              <div class="d-flex flex-row gap-3 customizer-box" role="group">
-                <div>
-                  <input type="radio" class="btn-check" name="page-layout" id="vertical-layout" autocomplete="off" />
-                  <label class="btn p-9 btn-outline-primary" for="vertical-layout">
-                    <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical
-                  </label>
-                </div>
-                <div>
-                  <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout" autocomplete="off" />
-                  <label class="btn p-9 btn-outline-primary" for="horizontal-layout">
-                    <i class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal
-                  </label>
-                </div>
-              </div>
-
-              <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
-
-              <div class="d-flex flex-row gap-3 customizer-box" role="group">
-                <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary" for="boxed-layout">
-                  <i class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed
-                </label>
-
-                <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary" for="full-layout">
-                  <i class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full
-                </label>
-              </div>
-
-              <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
-              <div class="d-flex flex-row gap-3 customizer-box" role="group">
-                <a href="javascript:void(0)" class="fullsidebar">
-                  <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar" autocomplete="off" />
-                  <label class="btn p-9 btn-outline-primary" for="full-sidebar">
-                    <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
-                  </label>
-                </a>
-                <div>
-                  <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar" autocomplete="off" />
-                  <label class="btn p-9 btn-outline-primary" for="mini-sidebar">
-                    <i class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse
-                  </label>
-                </div>
-              </div>
-
-              <h6 class="mt-5 fw-semibold fs-4 mb-2">Card With</h6>
-
-              <div class="d-flex flex-row gap-3 customizer-box" role="group">
-                <input type="radio" class="btn-check" name="card-layout" id="card-with-border" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary" for="card-with-border">
-                  <i class="icon ti ti-border-outer fs-7 me-2"></i>Border
-                </label>
-
-                <input type="radio" class="btn-check" name="card-layout" id="card-without-border" autocomplete="off" />
-                <label class="btn p-9 btn-outline-primary" for="card-without-border">
-                  <i class="icon ti ti-border-none fs-7 me-2"></i>Shadow
-                </label>
-              </div>
-            </div>
-          </div> -->
-          <!--End Setting-->
-
+        </div>
       </div>
+    
+      <!-- 수정 취소 버튼 클릭 시 board/detail로 돌아감 -->
+      <form th:action="@{/board/detail}" method="GET" id="backToDetail">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+        <input type="hidden" name="category" th:value="${category}">
+        <input type="hidden" name="searchWord" th:value="${searchWord}">
+      </form>
+    
     </div>
-  </div>
 
-  <div class="dark-transparent sidebartoggler"></div>
-  <!-- Import Js Files -->
-  <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
-  <script th:src="@{/assets/js/theme/app.init.js}"></script>
-  <script th:src="@{/assets/js/theme/theme.js}"></script>
-  <script th:src="@{/assets/js/theme/app.min.js}"></script>
-  <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
+    <script>
+      function handleColorTheme(e) {
+        document.documentElement.setAttribute("data-color-theme", e);
+      }
+    </script> 
 
-  <!-- solar icons -->
-  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 
-  <!-- board update javascript file -->
-  <script th:src="@{/script/boardUpdate.js}"></script>
+    <div class="dark-transparent sidebartoggler"></div>
+    <!-- Import Js Files -->
+    <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/assets/js/theme/app.init.js}"></script>
+    <script th:src="@{/assets/js/theme/theme.js}"></script>
+    <script th:src="@{/assets/js/theme/app.min.js}"></script>
+    <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
 
-  <!-- CKEditor5 -->
-  <script type="importmap">
-  {
-    "imports": {
-      "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
-      "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+    <!-- solar icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+    <!-- board update javascript file -->
+    <script th:src="@{/script/boardUpdate.js}"></script>
+
+    <!-- CKEditor5 -->
+    <script type="importmap">
+    {
+      "imports": {
+        "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+        "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+      }
     }
-  }
-  </script>
-  <script type="module" th:src="@{/ckeditor5/main.js}"></script>
+    </script>
+    <script type="module" th:src="@{/ckeditor5/main.js}"></script>
 
-</body>
+  </body>
 
 </html>

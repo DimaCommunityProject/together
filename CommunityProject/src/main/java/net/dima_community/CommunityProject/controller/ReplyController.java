@@ -91,19 +91,16 @@ public class ReplyController {
     
     /**
      * ajax - 댓글 내용 수정 처리 요청
-     * @param boardId
-     * @param memberId
+     * @param replyId
      * @param content
      * @return
      */
     @ResponseBody
     @GetMapping("/reply/update")
-    public String replyUpdate(@RequestParam(name = "boardId") Long boardId,
-                                @RequestParam(name = "memberId") String memberId, 
+    public String replyUpdate(@RequestParam(name = "replyId") Long replyId, 
                                 @RequestParam(name = "content")String content) {
         ReplyDTO replyDTO = ReplyDTO.builder()
-                                    .boardId(boardId)
-                                    .memberId(memberId)
+                                    .replyId(replyId)
                                     .content(content)
                                     .updateDate(LocalDateTime.now())
                                     .build();
@@ -121,7 +118,7 @@ public class ReplyController {
      */
     @ResponseBody
     @GetMapping("/replyl/delete")
-    public String replyDelete(@RequestParam(name = "boardId") Long replyId) {
+    public String replyDelete(@RequestParam(name = "replyId") Long replyId) {
         replyService.deleteOne(replyId);
         return "";
     }
