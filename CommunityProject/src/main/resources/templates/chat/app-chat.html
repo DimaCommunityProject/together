@@ -1203,6 +1203,7 @@ $(document).ready(function () {
     let currnetChatUniqueKey = null;
     let currentUserId = $('.userId').text().trim();
     let currentUserName = $('.userName').text().trim();
+    let currentUniqueKey = null; 
 
     // 초기 데이터 로드
     function loadInitialData() {
@@ -1258,7 +1259,6 @@ $(document).ready(function () {
         let imagesHtml = '';
         let memberNames = '';
         let uniqueKey = room.uniqueKey; // uniqueKey 가져오기
-        console.log("uniqueKey", uniqueKey);
 
         if (Array.isArray(room.members)) {
             room.members.forEach(function (member, index) {
@@ -1273,9 +1273,11 @@ $(document).ready(function () {
 
         const roomHtml = `
             <li>
-                <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" data-room-id="${room.id}" data-unique-key="${uniqueKey}">
+                <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" 
+                	data-room-id="${room.id}" 
+                	data-unique-key="${uniqueKey}">
                     <div class="d-flex align-items-center">
-                        ${imagesHtml}
+                        ${imagesHtml} 
                         <div class="ms-3 d-inline-block w-75">
                             <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
                                 ${memberNames}
@@ -1304,26 +1306,7 @@ $(document).ready(function () {
 	    `;
 	}
 
-    // 채팅방 HTML 생성
-    function generateChatRoomHtml(roomId, imagesHtml, memberNames, uniqueKey) {
-	    return `
-	        <li>
-	            <a href="javascript:void(0)" 
-	               class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" 
-	               data-room-id="${roomId}" 
-	               data-unique-key="${uniqueKey}">
-	                <div class="d-flex align-items-center">
-	                    ${imagesHtml}
-	                    <div class="ms-3 d-inline-block w-75">
-	                        <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
-	                            ${memberNames}
-	                        </h6>
-	                    </div>
-	                </div>
-	            </a>
-	        </li>
-	    `;
-	}
+
 
     // 대화 상대 목록 업데이트
     function updateRecipientSelect(members) {
@@ -1523,6 +1506,11 @@ $(document).ready(function () {
             }
 
             currentChatRoomId = roomId;
+            
+         	// 선택된 채팅방에서 uniqueKey 가져오기
+            const selectedChatRoom = $(`.chat-user[data-room-id="${roomId}"]`);
+            currentUniqueKey = selectedChatRoom.data('unique-key'); 
+            console.log("Selected uniqueKey:", currentUniqueKey);
 
             // 새로운 채팅방 구독 설정
             stompClient.subscribe(`/queue/chat.room.${roomId}`, function (messageOutput) {
@@ -1596,47 +1584,53 @@ $(document).ready(function () {
         });
     }
     
- // inviteButton 클릭 시 uniqueKey 가져오기 및 처리
-    $('.inviteButton').click(function () {
-        // 현재 선택된 채팅방에서 uniqueKey 가져오기
-        const selectedChat = $(this).closest('.chat-user'); // 클릭된 버튼과 가장 가까운 .chat-user 요소를 선택
-        const uniqueKey = selectedChat.data('unique-key'); // data-unique-key에서 가져오기
-
-        if (!uniqueKey) {
-            console.error("UniqueKey is undefined.");
-            return;
-        }
-
-        console.log("Selected uniqueKey:", uniqueKey);
-
-        // uniqueKey를 쉼표로 구분하여 배열로 변환
-        const uniqueKeyMembers = uniqueKey.split(','); // 쉼표로 구분된 멤버 ID 배열
-
-        // 전체 멤버 목록 가져오기
-        const allMembers = $('#recipientSelect option').map(function () {
-            return {
-                memberId: $(this).val(),
-                memberName: $(this).text()
-            };
-        }).get();
-
-        // 현재 채팅방에 포함되지 않은 멤버들만 필터링
-        const availableMembers = allMembers.filter(member => !uniqueKeyMembers.includes(member.memberId));
-
-        // 멤버 목록을 모달에 표시
-        const membersCheckboxes = $('#inviteMembersCheckboxes');
-        membersCheckboxes.empty(); // 기존 목록 초기화
-        availableMembers.forEach(member => {
-            membersCheckboxes.append(`
-                <div class="form-check">
-                    <input class="form-check-input invite-member-checkbox" type="checkbox" value="${member.memberId}" id="member-${member.memberId}">
-                    <label class="form-check-label" for="member-${member.memberId}">
-                        ${member.memberName}
-                    </label>
-                </div>
-            `);
-        });
-    });
+ 	// 대화상대 초대 
+	$('.inviteButton').click(function () {
+	    // 현재 선택된 채팅방의 uniqueKey 가져오기
+	    if (!currentUniqueKey) {
+	        console.error("UniqueKey is undefined.");
+	        return;
+	    }
+	
+	    console.log("Selected uniqueKey:", currentUniqueKey);
+	
+	    // uniqueKey를 쉼표로 구분하여 배열로 변환
+	    const uniqueKeyMembers = currentUniqueKey.split(','); // 쉼표로 구분된 멤버 ID 배열
+	    
+	    console.log("uniqueKeyMembers", uniqueKeyMembers);
+	
+	    // 전체 멤버 목록 가져오기
+	    const allMembers = $('#recipientSelect option').map(function () {
+	        return {
+	            memberId: $(this).val(),
+	            memberName: $(this).text()
+	        };
+	    }).get();
+	    
+	    console.log("allMembers", allMembers);
+	
+	    // 현재 채팅방에 포함되지 않은 멤버들만 필터링
+	    const availableMembers = allMembers.filter(member => !uniqueKeyMembers.includes(member.memberId));
+	
+	    console.log("availableMembers", availableMembers);
+	    
+	    // 멤버 목록을 모달에 표시
+	    const membersCheckboxes = $('#inviteMembersCheckboxes');
+	    membersCheckboxes.empty(); // 기존 목록 초기화
+	    availableMembers.forEach(member => {
+	        membersCheckboxes.append(`
+	            <div class="form-check">
+	                <input class="form-check-input invite-member-checkbox" type="checkbox" value="${member.memberId}" id="member-${member.memberId}">
+	                <label class="form-check-label" for="member-${member.memberId}">
+	                    ${member.memberName}
+	                </label>
+	            </div>
+	        `);
+	    });
+	
+	    // 모달 표시
+	    $('#inviteModal').modal('show'); // Bootstrap 모달 표시
+	});
     
  	// 선택한 멤버들을 그룹에 초대
     $('#confirmInviteButton').click(function () {

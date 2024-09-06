@@ -87,6 +87,7 @@ select * from member;
 select * from memberpage;
 select * from member_verify_code;
 select * from memberproject;
+select * from adminnote;
 
 # chat data 조회
 select * from chat_rooms;

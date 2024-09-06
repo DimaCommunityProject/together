@@ -302,7 +302,7 @@ public class ChatRoomService {
                 .collect(Collectors.toList());
 
         // 새로운 유니크 키 생성
-        String newUniqueKey = String.join("-", remainingMemberIds);
+        String newUniqueKey = String.join(",", remainingMemberIds);
         chatRoom.setUniqueKey(newUniqueKey);
         
         // 변경 사항 저장
@@ -339,6 +339,15 @@ public class ChatRoomService {
             log.info("채팅방 ID: {} 의 모든 멤버가 deleted 상태이므로 해당 채팅방과 관련된 모든 데이터를 삭제하였습니다.", roomId);
         }
     }
+    
+    /**
+     * uniqueKey로 채팅방 찾기
+     * @param uniqueKey
+     * @return Optional<ChatRoom>
+     */
+    public Optional<ChatRoom> findChatRoomByUniqueKey(String uniqueKey) {
+        return chatRoomRepository.findByUniqueKey(uniqueKey);
+    }
 
     /**
      * 회원id로 이름 찾기 
@@ -361,13 +370,6 @@ public class ChatRoomService {
         return roomOnlineUsers.getOrDefault(roomId, new HashSet<>()).contains(userId);
     }
 
-    /**
-     * uniqueKey로 채팅방 찾기
-     * @param uniqueKey
-     * @return Optional<ChatRoom>
-     */
-    public Optional<ChatRoom> findChatRoomByUniqueKey(String uniqueKey) {
-        return chatRoomRepository.findByUniqueKey(uniqueKey);
-    }
+    
 
 }
