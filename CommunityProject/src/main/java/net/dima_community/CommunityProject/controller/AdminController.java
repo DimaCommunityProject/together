@@ -83,7 +83,7 @@ public class AdminController {
      * @param model
      * @return
      */
-    @GetMapping("/admin/adminPageNote")
+    @GetMapping("/member/adminPageNote")
     public String adminPageNotice(@PageableDefault(page = 1) Pageable pageable, Model model) {
         Page<AdminNoteDTO> dtoList = adminservice.selectNoteAll(pageable);
 
@@ -95,7 +95,7 @@ public class AdminController {
         model.addAttribute("list", dtoList);
         model.addAttribute("navi", navi);
 
-        return "admin/adminPageNote";
+        return "member/adminPageNote";
     }// end adminPageNotice
 
     /**
@@ -122,7 +122,7 @@ public class AdminController {
         log.info("첨부파일크기 : {}", adminNoteDTO.getUploadFile().getSize());
 
         Boolean savedDB = adminservice.insertAdminNote(adminNoteDTO); // db에 저장하고 옴
-        return "redirect:/admin/adminPageNote";
+        return "redirect:/member/adminPageNote";
     }// end adminPageWrite
 
     /**
@@ -133,14 +133,14 @@ public class AdminController {
      * @param session
      * @return
      */
-    @GetMapping("/admin/adminPageNoteDetail")
+    @GetMapping("/member/adminPageNoteDetail")
     public String adminPageDetail(@RequestParam(name = "adminNoteNum") Long adminNoteNum, Model model,
             HttpSession session) {
         AdminNoteDTO adminNoteDTO = adminservice.selectNoteOne(adminNoteNum);
         adminservice.incrementHitcount(adminNoteNum); // 조회수 증가
         model.addAttribute("adminNote", adminNoteDTO);
 
-        return "admin/adminPageNoteDetail";
+        return "member/adminPageNoteDetail";
     }// end adminPageDetail
 
     /**
@@ -179,7 +179,7 @@ public class AdminController {
 
         rttr.addAttribute("adminNoteNum", adminNoteDTO.getAdminNoteNum());
 
-        return "redirect:/admin/adminPageNoteDetail";
+        return "redirect:/member/adminPageNoteDetail";
     }// end adminPageNoteUpdate
 
     /**
@@ -244,7 +244,7 @@ public class AdminController {
 
         adminservice.delectNoteOne(adminNoteNum);
 
-        return "redirect:/admin/adminPageNote";
+        return "redirect:/member/adminPageNote";
     }// end adminPageNoteDelete
 
     // ===================== 관리자 신고 게시글 관리 페이지 =====================
