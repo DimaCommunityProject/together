@@ -48,7 +48,7 @@ public class MemberController {
 	      log.info(memberDTO.toString());
 	      MemberDTO newMember = memberservice.setEncodedPassword(memberDTO);
 	      memberservice.saveMember(newMember);
-	      return "main/main";
+	      return "/";
 	   }
 
 	/**

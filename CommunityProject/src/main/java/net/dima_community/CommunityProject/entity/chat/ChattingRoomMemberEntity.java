@@ -41,10 +41,18 @@ public class ChattingRoomMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatting_room_id", nullable = false)
-    @JsonBackReference  // ChatRoom에서의 JsonManagedReference와 쌍을 이루는 어노테이션
+    @JsonBackReference
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private MemberEntity member;
+
+    // 새로 추가된 생성자
+    public ChattingRoomMemberEntity(ChatRoom chatRoom, MemberEntity member, LocalDateTime createdDate, Integer deleted) {
+        this.chatRoom = chatRoom;
+        this.member = member;
+        this.createdDate = createdDate;
+        this.deleted = deleted;
+    }
 }

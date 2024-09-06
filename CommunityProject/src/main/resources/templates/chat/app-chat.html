@@ -954,7 +954,7 @@
 											<div class="ms-3">
 												<h6 id="userName" class="fw-semibold mb-2 userName">User
 													Name</h6>
-												<p id="userId" class="mb-0 fs-2 userId">User ID</p>
+												<p id="userId" class="mb-0 fs-2 userId" th:text="${currentUserId}"></p>
 											</div>
 										</div>
 										<div class="dropdown">
@@ -1021,12 +1021,10 @@
 													<div class="ms-3 d-inline-block w-75">
 														<h6 class="mb-1 fw-semibold chat-title"
 															th:text="${room.name}">Room Name</h6>
-														<span class="fs-3 text-truncate text-body-color d-block">You:
-															Yesterdy was great...</span>
 													</div>
 												</div>
-												<p class="fs-2 mb-0 text-muted">15 mins</p>
-										</a></li>
+											</a>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -1050,7 +1048,7 @@
 											<div class="hstack gap-3 current-chat-user-name d-flex align-items-center">
 												<div class="position-relative">
 													<div id="chatPartnerImages"
-														class="d-flex align-items-center">
+														class="d-flex align-items-center" >
 														<!-- 프로필 이미지가 동적으로 추가될 부분 -->
 													</div>
 												</div>
@@ -1083,29 +1081,24 @@
 											</div>
 
 											<!-- 초대 모달 -->
-											<div id="inviteModal" class="modal" tabindex="-1"
-												role="dialog">
-												<div class="modal-dialog" role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h5 class="modal-title">대화 상대 초대</h5>
-															<button type="button" class="btn-close"
-																data-bs-dismiss="modal" aria-label="Close"></button>
-														</div>
-														<div class="modal-body">
-															<select id="inviteMembersSelect" multiple
-																class="form-control">
-																<!-- 여기에서 회원 목록이 동적으로 추가됩니다 -->
-															</select>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary"
-																id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
-															<button type="button" class="btn btn-primary"
-																id="confirmInviteButton">선택하기</button>
-														</div>
-													</div>
-												</div>
+											<div id="inviteModal" class="modal" tabindex="-1" role="dialog">
+											    <div class="modal-dialog" role="document">
+											        <div class="modal-content">
+											            <div class="modal-header">
+											                <h5 class="modal-title">대화 상대 초대</h5>
+											                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											            </div>
+											            <div class="modal-body">
+											                <div id="inviteMembersCheckboxes" class="form-group">
+											                    <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
+											                </div>
+											            </div>
+											            <div class="modal-footer">
+											                <button type="button" class="btn btn-secondary" id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
+											                <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
+											            </div>
+											        </div>
+											    </div>
 											</div>
 										</div>
 										<div class="d-flex parent-chat-box app-chat-right">
@@ -1155,7 +1148,7 @@
 			                                </div>
 			                                <div class="ms-3">
 			                                    <h6 id="" class="fw-semibold mb-2 userName">User Name</h6>
-			                                    <p id="userId" class="mb-0 fs-2 userId">User ID</p>
+			                                    <p id="userId" class="mb-0 fs-2 userId"></p>
 			                                </div>
 		                                </div>
 										<div class="dropdown">
@@ -1207,192 +1200,273 @@
 $(document).ready(function () {
     let stompClient = null;
     let currentChatRoomId = null;
+    let currnetChatUniqueKey = null;
     let currentUserId = $('.userId').text().trim();
     let currentUserName = $('.userName').text().trim();
-    let lastMessageTime = null;
-    let lastSenderId = null;
-
 
     // 초기 데이터 로드
     function loadInitialData() {
         $.ajax({
             url: '/api/chat/chatData',
             method: 'GET',
-            success: function(response) {
-                console.log("Received data:", response);  
-                currentUserId = response.currentUserId.trim(); // 현재 사용자 ID를 전역 변수에 저장
-                console.log("UserID:", currentUserId);
-	            console.log("Name:", response.currentUserName);
-
-	         	// 사용자 정보 설정
-	         	currentUserName = response.currentUserName;
-                $('.userName').text(response.currentUserName);
-                $('.userId').text(currentUserId);
-                $('.userRole').text(response.currentUserRole);
-                $('.userEmail').text(response.currentUserEmail);
-	            $('.userProfileImage').attr('src', `../../images/profile/${response.currentUserName}.jpg`);
-
-                // 채팅방 목록 로드
-                updateChatRooms(response.chatRooms);
-
-                // 대화 상대 목록 로드
-                updateRecipientSelect(response.members);
-            },
-            error: function(error) {
+            success: handleInitialData,
+            error: function (error) {
                 console.error('Error loading initial data:', error);
             }
         });
     }
 
-    function fetchChatRoomMembers(roomId) {
-        return $.ajax({
-            url: `/getRoomMembers/${roomId}`,
-            method: 'GET',
-            dataType: 'json'
-        });
+ 	// 초기 데이터를 처리하는 함수
+    function handleInitialData(response) {
+        console.log("Received data:", response);
+
+        // 사용자 정보 설정
+        updateUserInfo(response.currentUser);
+
+        // 채팅방 목록 로드
+        updateChatRooms(response.chatRooms);
+
+        // 대화 상대 목록 로드
+        updateRecipientSelect(response.members);
     }
 
+ 	// 사용자 정보를 업데이트하는 함수
+    function updateUserInfo(currentUser) {
+        if (currentUser && currentUser.memberId) {
+            currentUserId = currentUser.memberId.trim();
+            currentUserName = currentUser.memberName;
+			
+            $('.userName').text(currentUser.memberName);
+            $('.userId').text(currentUser.memberId);
+            $('.userRole').text(currentUser.memberRole);
+            $('.userEmail').text(currentUser.memberEmail);
+            $('.userProfileImage').attr('src', `../../images/profile/${currentUser.memberName}.jpg`);
+        } else {
+            console.error("Invalid user data.");
+        }
+    }
+
+
+    // 채팅방 목록 업데이트
     function updateChatRooms(chatRooms) {
         $('#chatList').empty();
+        chatRooms.forEach(renderChatRoom);
+    }
 
-        chatRooms.forEach(function(room) {
-            console.log("Room ID:", room.id);  // Room ID 출력
+ // 채팅방 UI 렌더링
+    function renderChatRoom(room) {
+        let imagesHtml = '';
+        let memberNames = '';
+        let uniqueKey = room.uniqueKey; // uniqueKey 가져오기
+        console.log("uniqueKey", uniqueKey);
 
-            let imagesHtml = '';
-            let memberNames = ''; // 멤버 이름을 저장할 변수
+        if (Array.isArray(room.members)) {
+            room.members.forEach(function (member, index) {
+                if (member.deleted === 0) {
+                    imagesHtml += generateMemberImageHtml(member);
+                    memberNames += member.memberName + (index < room.members.length - 1 ? ', ' : '');
+                }
+            });
+        } else {
+            console.error('Members is not defined or not an array for room: ' + room.id);
+        }
 
-            // room.members 배열이 있는지 확인
-            if (Array.isArray(room.members)) {
-                room.members.forEach(function(member, index) {
-                    // deleted 값이 0인 멤버만 표시
-                    if (member.deleted === 0) {
-                        console.log("Member ID:", member.memberId);  // Member ID 출력
-                        console.log("Member Name:", member.memberName);  // Member Name 출력
-                        console.log("Deleted Status:", member.deleted);  // Deleted Status 출력
-
-                        // 상태에 따라 클래스 결정 (이 부분은 데이터에서 `status`가 없어서 임의로 'offline' 설정)
-                        const badgeClass = 'bg-light'; 
-
-                        imagesHtml += `
-                            <span class="position-relative">
-                                <img src="../../images/profile/${encodeURIComponent(member.memberName)}.jpg" alt="${member.memberName}" width="48" height="48" class="rounded-circle ms-1" />
-                                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
-                                    <span class="visually-hidden">New alerts</span>
-                                </span>
-                            </span>
-                        `;
-
-                        // 멤버 이름을 연결 (마지막 멤버 뒤에 쉼표 추가하지 않음)
-                        memberNames += member.memberName + (index < room.members.length - 1 ? ', ' : '');
-                    }
-                });
-            } else {
-                console.error('Members is not defined or not an array for room: ' + room.id);
-            }
-
-            // 멤버 이름들을 채팅방 제목으로 사용
-            const roomHtml = `
-                <li>
-                    <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" data-room-id="${room.id}">
-                        <div class="d-flex align-items-center">
-                            ${imagesHtml}
-                            <div class="ms-3 d-inline-block w-75">
-                                <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
-                                    ${memberNames} <!-- 멤버 이름들을 표시 -->
-                                </h6>
-                            </div>
+        const roomHtml = `
+            <li>
+                <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" data-room-id="${room.id}" data-unique-key="${uniqueKey}">
+                    <div class="d-flex align-items-center">
+                        ${imagesHtml}
+                        <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
+                                ${memberNames}
+                            </h6>
                         </div>
-                    </a>
-                </li>
-            `;
-            $('#chatList').append(roomHtml);
-            registerChatRoomClickEvent();
+                    </div>
+                </a>
+            </li>
+        `;
+        
+        $('#chatList').append(roomHtml);
+        registerChatRoomClickEvent(); // 클릭 이벤트 등록
+    }
+
+    // 멤버 이미지 HTML 생성
+    function generateMemberImageHtml(member) {
+	    const memberName = member.memberName || 'default'; // undefined 방지
+	    const badgeClass = member.isOnline ? 'bg-success' : 'bg-light';   // 상태에 따라 변경 가능
+	    return `
+	        <span class="position-relative">
+	            <img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />
+	            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
+	                <span class="visually-hidden">New alerts</span>
+	            </span>
+	        </span>
+	    `;
+	}
+
+    // 채팅방 HTML 생성
+    function generateChatRoomHtml(roomId, imagesHtml, memberNames, uniqueKey) {
+	    return `
+	        <li>
+	            <a href="javascript:void(0)" 
+	               class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" 
+	               data-room-id="${roomId}" 
+	               data-unique-key="${uniqueKey}">
+	                <div class="d-flex align-items-center">
+	                    ${imagesHtml}
+	                    <div class="ms-3 d-inline-block w-75">
+	                        <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
+	                            ${memberNames}
+	                        </h6>
+	                    </div>
+	                </div>
+	            </a>
+	        </li>
+	    `;
+	}
+
+    // 대화 상대 목록 업데이트
+    function updateRecipientSelect(members) {
+        $('#recipientSelect').empty();
+        members.forEach(function (member) {
+            if (member.memberId !== currentUserId) {
+                $('#recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
+            }
         });
     }
 
-    // 대화 상대 목록 업데이트
- 	function updateRecipientSelect(members) {
-	    $('#recipientSelect').empty(); // 기존 선택 항목 초기화
-	    
-	    members.forEach(function(member) {
-	        if (member.memberId !== currentUserId) { // 로그인한 사용자와 다른 사용자만 선택 항목에 추가
-	            $('#recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
-	        }
-	    });
-	} 
+ 	// 채팅방 클릭 이벤트 등록
+    function registerChatRoomClickEvent() {
+        $('.chat-user').off('click').on('click', function () {
+            const selectedRoomId = $(this).data('room-id');
+            if (selectedRoomId) {
+                $('.chat-not-selected').addClass('d-none');
+                joinChatRoom(selectedRoomId);
+            }
+        });
+    }
 
-	// 채팅방 클릭 이벤트 등록
-	function registerChatRoomClickEvent() {
-	    $('.chat-user').off('click').on('click', function () {
-	        const selectedRoomId = $(this).data('room-id');
-	        if (selectedRoomId) {
-	        	// 채팅방 선택 시 chat-not-selected 클래스에 d-none 추가
-	            $('.chat-not-selected').addClass('d-none');
-	        	
-	            // 채팅방 멤버를 가져와서 UI 업데이트
-	            fetchChatRoomMembers(selectedRoomId).then(function(response) {
-	                const members = response.members;
-	                let imagesHtml = '';
-	                let namesHtml = '';
-	
-	                if (Array.isArray(members)) {
-	                    members.forEach(function(member) {
-	                        // 상태에 따라 클래스 결정
-	                        const badgeClass = member.status === 'online' ? 'bg-success' : 'bg-light';
-	
-	                        imagesHtml += `
-	                            <span class="position-relative">
-	                                <img src="../../images/profile/${encodeURIComponent(member.name)}.jpg" alt="${member.name}" width="48" height="48" class="rounded-circle ms-1" />
-	                                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
-	                                    <span class="visually-hidden">New alerts</span>
-	                                </span>
-	                            </span>
-	                        `;
-	
-	                        // 이름 추가
-	                        namesHtml += `${member.name}, `;
-	                    });
-	
-	                    // 마지막 쉼표와 공백 제거
-	                    namesHtml = namesHtml.slice(0, -2);
-	                } else {
-	                    console.error('Members is not defined or not an array for room: ' + selectedRoomId);
-	                }
-	
-	                // 채팅룸 멤버 프로필 사진과 이름을 UI에 업데이트
-	                $('#chatPartnerImages').html(imagesHtml);
-	                $('#chatPartnerName').text(namesHtml);
-	
-	                // 채팅방 참여 (기존 기능 유지)
-	                joinChatRoom(selectedRoomId);
-	            }).fail(function() {
-	                console.error('Failed to fetch members for room: ' + selectedRoomId);
-	            });
-	        } else {
-	            console.error('Invalid room ID:', selectedRoomId);
+ 	// 채팅방 멤버 가져오기
+    function fetchChatRoomMembers(roomId) {
+	    return $.ajax({
+	        url: `/api/chat/getRoomMembers/${roomId}`,
+	        method: 'GET',
+	        dataType: 'json',
+	        success: function(response) {
+	            if (response && response.members) {
+	                console.log("Room members:", response.members);
+	            } else {
+	                console.error('Unexpected response format:', response);
+	            }
+	        },
+	        error: function(error) {
+	            console.error('Failed to fetch members for room: ' + roomId, error);
 	        }
 	    });
 	}
+ 	
+    // 채팅방 멤버 UI 업데이트
+    function updateChatPartnerUI(members) {
+	    let imagesHtml = '';
+	    let namesHtml = '';
+	
+	    if (Array.isArray(members)) {
+	        members.forEach(function (member) {
+	            const memberName = member.name || 'Unknown'; // 기본값 설정
+	            imagesHtml += generateMemberImageHtml(memberName);
+	            namesHtml += `${memberName}, `;
+	        });
+	
+	        namesHtml = namesHtml.slice(0, -2); // 마지막 쉼표 제거
+	    } else {
+	        console.error('Members is not defined or not an array');
+	    }
+	
+	    $('#chatPartnerImages').html(imagesHtml);
+	    $('#chatPartnerName').text(namesHtml);
+	}
 
-    // STOMP 연결 및 구독 설정
+ 	// STOMP 연결 및 구독 설정
     function connect() {
         const socket = new SockJS('/stomp/chat');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-
-            stompClient.subscribe(`/user/${currentUserId}/queue/newChatRoom`, function (messageOutput) {
-                const chatRoom = JSON.parse(messageOutput.body);
-                updateChatRooms([chatRoom]);
-            });
-
             if (currentChatRoomId) {
                 joinChatRoom(currentChatRoomId);
             }
+        }, function (error) {
+            console.log("WebSocket connection closed:", error);
         });
     }
+ 	
+    // 메시지 처리
+    function showMessage(message) {
+    	console.log(message);
+    	const senderId = message.senderId.trim();  // 메시지를 보낸 사용자의 ID를 가져옴
+	    const messageHtml = senderId === currentUserId
+	        ? generateSentMessageHtml(message) // 자신이 보낸 메시지
+	        : generateReceivedMessageHtml(message); // 다른 사용자가 보낸 메시지
+	
+	    // messageArea가 선택된 상태에서 메시지를 추가
+	    $('#messageArea').append(messageHtml);
+	    scrollToBottom(); // 메시지를 추가한 후 스크롤을 최하단으로 이동
+	}
+    
+    function generateSentMessageHtml(message) {
+        const messageDate = new Date(message.timestamp);
+        const hours = messageDate.getHours().toString().padStart(2, '0');
+        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}`;
+        return  `
+	        <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
+		        <div class="text-end">
+		            <div class="p-2 bg-info-subtle text-dark rounded-1 d-inline-block fs-3">
+		                ${message.content}
+		            </div>
+		            <div class="text-muted fs-2">${timeString}</div>
+		        </div>
+		    </div>
+	    `;
+    }
 
+    function generateReceivedMessageHtml(message) {
+        const messageDate = new Date(message.timestamp);
+        const hours = messageDate.getHours().toString().padStart(2, '0');
+        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}`;
+        return `
+	        <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+		        <img src="../../images/profile/${encodeURIComponent(message.senderName)}.jpg" alt="${message.senderName}" width="40" height="40" class="rounded-circle userProfileImage" />
+		        <div>
+		            <h6 class="fs-2 text-muted">${message.senderName}</h6>
+		            <div class="d-flex align-items-center">
+			            <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
+			                ${message.content}
+			            </div>
+			            <div class="text-muted ms-2 fs-2">${timeString}</div>
+		            </div>
+		        </div>
+		    </div>
+	    `;
+    }
+    
+   function leaveMessageHtml(message){
+	   leaveMessageHtml = `
+           <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+               <div class="p-2 text-danger d-inline-block text-dark fs-3">
+                   ${message.content}
+               </div>
+           </div>`;
+   }
+
+    // 스크롤을 최하단으로 이동시키는 함수
+    function scrollToBottom() {
+        const chatBox = document.querySelector('.chat-box-inner');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
     $('#startChat').click(function () {
         const recipientId = $('#recipientSelect').val();  // 선택한 상대방의 ID
         if (recipientId) {
@@ -1421,120 +1495,122 @@ $(document).ready(function () {
         }
     });
 
- 	// 채팅방 참여 및 메시지 수신 설정
-	function joinChatRoom(roomId) {
-	    if (stompClient && roomId) {
-	        if (currentChatRoomId) {
-	            stompClient.unsubscribe(`sub-${currentChatRoomId}`);
-	        }
-	
-	        currentChatRoomId = roomId;
-	        currentDate = null;
-	
-	        const queue = `/queue/chat.room.${roomId}`;
-	        stompClient.subscribe(queue, function (messageOutput) {
-	            const message = JSON.parse(messageOutput.body);
-	            showMessage(message);
-	        }, { id: `sub-${roomId}` });
-	
-	        loadChatMessages(roomId);
-	
-	        const enterMessage = {
-	            senderId: currentUserId,  // 전역 변수로 설정한 사용자 ID 사용
-	            chatRoomId: roomId,
-	            content: ''
-	        };
-	        stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
-	    }
-	}
-
-    // 메시지 로드
-    function loadChatMessages(roomId) {
-        axios.get(`/chatRoom/getMessages/${roomId}`)
-            .then(response => {
-                $('#messageArea').empty();
-                response.data.forEach(message => {
-                    showMessage(message);
-                });
-                
-             // 모든 메시지를 로드한 후 스크롤을 최하단으로 이동
-                scrollToBottom();
-            })
-            .catch(error => {
-                console.error('Error loading messages:', error);
-            });
-    }
-    
- 	// 스크롤을 최하단으로 이동시키는 함수
-    function scrollToBottom() {
-        const chatBox = document.querySelector('.chat-box-inner');
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-    
-    // 메시지 표시 
-    function showMessage(message) {
-	    console.log("Received message:", message);  // 메시지 객체 전체를 출력
-	    const senderId = message.senderId.trim();  // 메시지를 보낸 사용자의 ID를 가져옴
-	    const messageDate = new Date(message.timestamp);
-	    const hours = messageDate.getHours().toString().padStart(2, '0');
-	    const minutes = messageDate.getMinutes().toString().padStart(2, '0');
-	    const timeString = `${hours}:${minutes}`;
-	
-	    console.log("Sender Name:", message.senderName);  // senderName을 확인
-	
-	    let messageHtml;
-	
-	    if (senderId === currentUserId) {
-	        // 로그인한 사용자가 보낸 메시지 (오른쪽 정렬)
-	        messageHtml = `
-	            <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
-	                <div class="text-end">
-	                    <div class="p-2 bg-info-subtle text-dark rounded-1 d-inline-block fs-3">
-	                        ${message.content}
-	                    </div>
-	                    <div class="text-muted fs-2">${timeString}</div>
-	                </div>
-	            </div>`;
-	    } else {
-	        // 다른 사용자가 보낸 메시지 (왼쪽 정렬)
-	        messageHtml = `
-	            <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
-	                <img src="../../images/profile/${encodeURIComponent(message.senderName)}.jpg" alt="${message.senderName}" width="40" height="40" class="rounded-circle userProfileImage" />
-	                <div>
-	                    <h6 class="fs-2 text-muted">${message.senderName}</h6>
-	                    <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
-	                        ${message.content}
-	                    </div>
-	                    <div class="text-muted fs-2">${timeString}</div>
-	                </div>
-	            </div>`;
-	    }
-	
-	    $('#messageArea').append(messageHtml);
-	    
-	 // 메시지가 추가된 후 스크롤을 최하단으로 이동
-	    scrollToBottom();
-	}
-
-    // 메시지 전송 
     $('#sendButton').click(function () {
-	    const content = $('#messageInput').val();
-	    if (content && stompClient && currentChatRoomId) {
-	        const message = {
-	            chatRoomId: currentChatRoomId,
-	            senderId: currentUserId,
-	            senderName: currentUserName,  
-	            content: content,
-	            timestamp: new Date().toISOString()
-	        };
-	        stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
-	        $('#messageInput').val('');
-	    }
-	});
+        const content = $('#messageInput').val();
+        if (content && stompClient && currentChatRoomId) {
+            const message = {
+                chatRoomId: currentChatRoomId,
+                senderId: currentUserId,
+                senderName: currentUserName,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+
+            // 서버로 메시지 전송
+            stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
+            $('#messageInput').val(''); // 입력란 초기화
+        }
+    });
     
+    // 채팅방 입장 
+    function joinChatRoom(roomId) {
+        if (stompClient && roomId) {
+            if (currentChatRoomId) {
+                // 현재 채팅방에서 퇴장 메시지 전송
+                leaveChatRoom(currentChatRoomId);
+                // 이전 채팅방 구독 해제
+                stompClient.unsubscribe(`sub-${currentChatRoomId}`);
+            }
+
+            currentChatRoomId = roomId;
+
+            // 새로운 채팅방 구독 설정
+            stompClient.subscribe(`/queue/chat.room.${roomId}`, function (messageOutput) {
+                let message;
+                try {
+                    message = JSON.parse(messageOutput.body);
+                    console.log("Parsed message:", message);
+                } catch (e) {
+                    console.log("Received plain text message:", messageOutput.body);
+                    message = { content: messageOutput.body };
+                }
+                showMessage(message); // 실시간으로 도착한 메시지를 화면에 출력
+            }, { id: `sub-${roomId}` });
+
+            // **이전 메시지 로드**
+            loadChatMessages(roomId);
+
+            // 사용자 입장 메시지 전송
+            const enterMessage = {
+                senderId: currentUserId,
+                chatRoomId: roomId,
+                content: currentUserName + '님이 입장하셨습니다.'
+            };
+            stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
+        }
+    }
+
+    
+ 	// 채팅방에서 퇴장
+    function leaveChatRoom(roomId) {
+        if (stompClient && roomId) {
+            const exitMessage = {
+                senderId: currentUserId,
+                chatRoomId: roomId,
+                content: currentUserName + '님이 퇴장하셨습니다.'
+            };
+            stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
+        }
+    }
+ 	
+ 	// 페이지 벗어날 때 WebSocket 연결 끊기 및 퇴장 처리
+    function checkAndDisconnectSocket() {
+        if (stompClient) {
+            // 현재 방에서 퇴장 메시지 전송
+            leaveChatRoom(currentChatRoomId);
+
+            // WebSocket 연결 해제
+            stompClient.disconnect(function () {
+                console.log('Disconnected from WebSocket');
+            });
+        }
+    }
+    
+ 	// 이전 메시지 로드
+    function loadChatMessages(roomId) {
+        return $.ajax({
+            url: `/api/chat/getMessages/${roomId}`, // 서버에서 메시지를 가져오는 API 경로
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                console.log("Previous messages loaded:", response);
+                $('#messageArea').empty(); // 기존 메시지 삭제
+                response.forEach(function(message) {
+                    showMessage(message); // 각 메시지를 화면에 표시
+                });
+                scrollToBottom(); // 메시지 로드 후 스크롤을 최하단으로 이동
+            },
+            error: function(error) {
+                console.error('Error loading messages:', error);
+            }
+        });
+    }
+    
+ // inviteButton 클릭 시 uniqueKey 가져오기 및 처리
     $('.inviteButton').click(function () {
-        // 모달을 표시
-        $('#inviteModal').modal('show');
+        // 현재 선택된 채팅방에서 uniqueKey 가져오기
+        const selectedChat = $(this).closest('.chat-user'); // 클릭된 버튼과 가장 가까운 .chat-user 요소를 선택
+        const uniqueKey = selectedChat.data('unique-key'); // data-unique-key에서 가져오기
+
+        if (!uniqueKey) {
+            console.error("UniqueKey is undefined.");
+            return;
+        }
+
+        console.log("Selected uniqueKey:", uniqueKey);
+
+        // uniqueKey를 쉼표로 구분하여 배열로 변환
+        const uniqueKeyMembers = uniqueKey.split(','); // 쉼표로 구분된 멤버 ID 배열
 
         // 전체 멤버 목록 가져오기
         const allMembers = $('#recipientSelect option').map(function () {
@@ -1544,42 +1620,42 @@ $(document).ready(function () {
             };
         }).get();
 
-        // 현재 채팅방에 속한 멤버 가져오기
-        axios.get(`/api/chat/getRoomMembers/${currentChatRoomId}`)
-            .then(response => {
-                const existingMemberIds = new Set(response.data.members.map(member => member.memberId));
+        // 현재 채팅방에 포함되지 않은 멤버들만 필터링
+        const availableMembers = allMembers.filter(member => !uniqueKeyMembers.includes(member.memberId));
 
-                // 현재 채팅방에 속하지 않은 멤버들만 필터링
-                const availableMembers = allMembers.filter(member => !existingMemberIds.has(member.memberId));
-
-                // 멤버 목록을 모달에 표시
-                const membersSelect = $('#inviteMembersSelect');
-                membersSelect.empty(); // 기존 목록 초기화
-                availableMembers.forEach(member => {
-                    membersSelect.append(`<option value="${member.memberId}">${member.memberName}</option>`);
-                });
-            })
-            .catch(error => {
-                console.error('Error loading existing members:', error);
-            });
+        // 멤버 목록을 모달에 표시
+        const membersCheckboxes = $('#inviteMembersCheckboxes');
+        membersCheckboxes.empty(); // 기존 목록 초기화
+        availableMembers.forEach(member => {
+            membersCheckboxes.append(`
+                <div class="form-check">
+                    <input class="form-check-input invite-member-checkbox" type="checkbox" value="${member.memberId}" id="member-${member.memberId}">
+                    <label class="form-check-label" for="member-${member.memberId}">
+                        ${member.memberName}
+                    </label>
+                </div>
+            `);
+        });
     });
     
-    // 선택한 멤버들을 그룹에 초대
+ 	// 선택한 멤버들을 그룹에 초대
     $('#confirmInviteButton').click(function () {
-        const selectedMembers = $('#inviteMembersSelect').val();
+        // 체크박스에서 선택된 멤버들을 가져옵니다
+        const selectedMembers = $('.invite-member-checkbox:checked').map(function () {
+            return $(this).val();
+        }).get(); // 체크된 체크박스의 값을 배열로 반환
 
         if (selectedMembers.length > 0 && currentUserId) {
             axios.post('/api/chat/createGroup', {
                 roomId: currentChatRoomId,
                 memberIds: selectedMembers,
                 currentUserId: currentUserId  // currentUserId를 요청에 포함
-                
             })
             .then(response => {
                 const newRoomId = response.data.roomId;
                 if (newRoomId) {
                     // 새로운 방으로 이동
-                    joinChatRoom(newRoomId);  
+                    joinChatRoom(newRoomId);
                     // 채팅방 목록 새로고침
                     loadInitialData();  // loadChatRooms 대신 사용
 
@@ -1606,6 +1682,7 @@ $(document).ready(function () {
         $('#inviteModal').modal('hide');
     });
     
+ 	// 채팅룸 나가기 
     $('.leaveButton').click(function () {
         const roomId = currentChatRoomId;  // 현재 채팅방 ID 가져오기
         const userId = currentUserId;  // 현재 사용자 ID 가져오기
@@ -1619,11 +1696,19 @@ $(document).ready(function () {
                 }
             })
             .then(response => {
-            	console.log(response.data);  // 성공적인 응답 출력
+                console.log(response.data);  // 성공적인 응답 출력
+
                 // UI에서 해당 채팅방을 리스트에서 제거
-                $(`.chat-user[data-room-id="${roomId}"]`).remove();
-                // 선택된 채팅방 초기화 (옵션)
+                $(`.chat-user[data-room-id="${roomId}"]`).remove(); // 선택자 수정
+                
+                // chatPartnerImages에서 나간 사용자의 이미지 제거
+                $(`.chat-partner-img[data-user-id="${userId}"]`).remove(); // 선택자 수정
+                
+                // 현재 채팅방 ID 초기화
                 currentChatRoomId = null;
+                
+                // 채팅방이 선택되지 않은 상태를 표시 (d-none 삭제)
+                $('.chat-not-selected').removeClass('d-none');
             })
             .catch(error => {
                 console.error('Error leaving the room:', error);
@@ -1632,9 +1717,11 @@ $(document).ready(function () {
             console.error('Invalid room ID or user ID.');
         }
     });
-    
-    
 
+
+ 	// 페이지 벗어날 때 퇴장 처리 및 WebSocket 연결 종료
+    window.addEventListener('beforeunload', checkAndDisconnectSocket);
+ 
     // 초기 데이터 및 STOMP 연결 설정
     loadInitialData();
     connect();

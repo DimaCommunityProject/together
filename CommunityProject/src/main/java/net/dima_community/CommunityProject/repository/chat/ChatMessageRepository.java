@@ -12,8 +12,11 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessage, Stri
     @Query(value="{ 'senderId': ?0 }", fields="{ 'roomId' : 1 }")
     List<String> findDistinctRoomIdByUser(String userId);
 
-    List<ChatMessage> findByRoomId(String roomId);
+    List<ChatMessage> findByRoomId(Long roomId);
     
     // 특정 채팅방의 메시지 수를 세는 메소드
     long countByRoomId(String roomId);
+    
+ // MongoDB에서 roomId로 채팅 메시지 삭제
+    void deleteByRoomId(Long roomId);
 }

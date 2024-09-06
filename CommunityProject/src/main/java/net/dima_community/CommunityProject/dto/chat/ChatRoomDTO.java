@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
-import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

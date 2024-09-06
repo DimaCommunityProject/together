@@ -23,6 +23,6 @@ public class ChatMessage {
     private String content;
     private String timestamp;
     private int deleted;
-    private String roomId;
+    private Long roomId;
 
 }
