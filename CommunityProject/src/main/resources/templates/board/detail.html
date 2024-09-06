@@ -79,7 +79,6 @@
                 <!-- 작성자 바로 위 배경이미지 -->
                 <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="200">
               </a>
-              <!-- <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2 min Read</span> -->
               <!-- 작성자 이미지 -->
               <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
               <!-- 작성자 ID 및 배지 -->
@@ -127,15 +126,15 @@
                     <i class="ti ti-square-x fs-6"></i> 모집 마감
                   </button>
                   <!--참여 버튼-->
-                  <button id="recruitBtn" class="btn btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal" style="font-weight: bold;">
-                    <i class="ti ti-user fs-6"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
+                  <button id="recruitBtn" class="btn btn-sm btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal" style="font-weight: bold;">
+                    <i class="ti ti-user fs-4"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
                   </button>
                 </div>
                 <!--D-day-->
-                <div id="dDayBtn" class="btn btn-primary" th:if="${board.deadline!=null}" style="font-weight: bold;">
-                  <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-6"></i>  D-[[${board.dDay}]] </span> 
-                  <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-6"></i>  D-Day </span> 
-                  <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-6"></i>  마감</span> 
+                <div id="dDayBtn" class="btn btn-sm btn-primary" th:if="${board.deadline!=null}" style="font-weight: bold;">
+                  <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-4"></i>  D-[[${board.dDay}]] </span> 
+                  <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-4"></i>  D-Day </span> 
+                  <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-4"></i>  마감</span> 
                 </div>
               </div>
               <div class="d-flex align-items-center gap-4">
@@ -446,6 +445,8 @@
             backdrop.remove();
         }
       });
+      
+
     </script>
 
     <div>

@@ -399,10 +399,9 @@ function init() {
             if(resp){ //true이면 이미 참여한 사람임.
                 // 참여중이라는 것만 보여줌
                 $("#recruit").html(`
-                    <div class="btn btn-primary" style="font-weight: bold;">
-                        <i class="ti ti-confetti fs-6"></i> 참여중
+                    <div class="btn btn-sm btn-primary" style="font-weight: bold;">
+                        <i class="ti ti-confetti fs-4"></i> 참여중
                     </div>`);
-                $("#dDayBtn").hide();
             }    
         }
     });

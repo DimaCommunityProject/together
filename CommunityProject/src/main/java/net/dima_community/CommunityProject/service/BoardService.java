@@ -430,7 +430,6 @@ public class BoardService {
      * @param dto
      */
     public void insertJobBoardReported(BoardReportDTO dto) {
-        log.info("================= 게시글 신고 boardID : "+dto.getBoardId()+ " boareWriter : "+dto.getMemberId());
         BoardEntity boardEntity = selectBoardEntity(dto.getBoardId()); // boardEntity
         // 게시글 신고 DTO -> Entity 변환
         BoardReportEntity entity = BoardReportEntity.toEntity(dto, boardEntity);
@@ -502,15 +501,15 @@ public class BoardService {
 
         // Board 수정 (제목, 내용, 수정날짜)
         updateBoardContent(boardEntity, boardDTO);
-
         // activity/recruit 게시글인 경우 
-        if (boardDTO.getCategory()==BoardCategory.activity || boardDTO.getCategory()==BoardCategory.recruit) {
+        if (boardEntity.getCategory()==BoardCategory.activity || boardEntity.getCategory()==BoardCategory.recruit) {
             // 해당 데이터를 JobBoard DB에서 가져옴
-            JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardDTO.getBoardId()); 
+            JobBoardEntity jobBoardEntity = selectJobBoardEntity(boardEntity.getJobBoardEntity().getJobBoardId()); 
             // JobBoard 수정 (마감기한, 모집인원)
             updateJobBoard(jobBoardEntity, boardDTO);
             // 엔티티가 영속성 컨텍스트에 없으면 명시적으로 저장
-            jobBoardRepository.save(jobBoardEntity);
+            jobBoardRepository.save(jobBoardEntity); 
+        
         }
     }
 

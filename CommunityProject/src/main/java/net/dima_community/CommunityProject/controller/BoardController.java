@@ -299,7 +299,6 @@ public class BoardController {
 
         // BoardDTO -> jobBoardId 가져오기
         Long jobBoardId = boardService.getJobBoardIdFromBoard(boardId);
-        log.info("==============저장할 jobBoardId : "+jobBoardId);
         // BoardRecruitDTO 생성
         JobBoardRecruitDTO jobBoardRecruitDTO = new JobBoardRecruitDTO(null, jobBoardId, memberId, memberGroup, memberPhone, memberEmail);
         // DB에 저장
@@ -364,9 +363,6 @@ public class BoardController {
                                 @RequestParam(name = "searchWord", defaultValue = "") String searchWord, RedirectAttributes rttr) {
         // String -> Enum
         BoardCategory category = BoardCategory.valueOf(categoryString);
-        log.info("========= 정보 수정 칸트롤러야=========");
-        log.info("------------deadline : "+boardDTO.getDeadline());
-        log.info("------------limitNumber : "+boardDTO.getLimitNumber());
 
         // 전달받은 boardDTO로 기존 board 정보 수정 처리
         boardService.updateBoard(boardDTO,deleteOriginalFile);
