@@ -223,7 +223,7 @@ function replyUpdate() {
     // 수정 폼 생성
     var updateForm = `
         <div>
-            <textarea class="form-control mb-4 replyUpdateContent" rows="5"></textarea> <!--댓글 내용-->
+            <textarea class="form-control mb-4 ms-3 replyUpdateContent" rows="5"></textarea> <!--댓글 내용-->
             <button class="btn bg-danger-subtle text-danger replyUpdateCancel">취소</button> <!-- 댓글 수정 취소 -->
             <button class="btn btn-primary replyUpdateBtn">수정</button> <!-- 댓글 수정 버튼 -->
         </div>
@@ -389,6 +389,24 @@ function init() {
             }
         });        
     }
+
+    // 참여여부 확인
+    $.ajax({
+        url:"/board/isRecruited",
+        method:"GET",
+        data:{"boardId":boardId, "memberId":currentUser},
+        success : function (resp) {
+            if(resp){ //true이면 이미 참여한 사람임.
+                // 참여중이라는 것만 보여줌
+                $("#recruit").html(`
+                    <div class="btn btn-primary" style="font-weight: bold;">
+                        <i class="ti ti-confetti fs-6"></i> 참여중
+                    </div>`);
+                $("#dDayBtn").hide();
+            }    
+        }
+    });
+
     
     // 현재 로그인한 사용자의 좋아요 여부
     $.ajax({

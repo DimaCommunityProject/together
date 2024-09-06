@@ -79,7 +79,7 @@
                 <!-- 작성자 바로 위 배경이미지 -->
                 <img th:src="@{/assets/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="200">
               </a>
-              <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2 min Read</span>
+              <!-- <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2 min Read</span> -->
               <!-- 작성자 이미지 -->
               <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
               <!-- 작성자 ID 및 배지 -->
@@ -122,7 +122,7 @@
                 <!-- 게시글 제목 -->
                 <h2 class="fs-9 fw-semibold my-4" th:text="${board.title}"></h2>
                 <!-- recruit -->
-                <div th:if="${board.dDay>0 || board.limitNumber != 0}">
+                <div th:if="${board.dDay>0 || board.limitNumber != 0}" id="recruit">
                   <button id="endBtn" class="btn btn-primary" th:if="${board.currentNumber>=board.limitNumber}">
                     <i class="ti ti-square-x fs-6"></i> 모집 마감
                   </button>
@@ -155,7 +155,7 @@
                 </div>
                 <!--신고 버튼-->
                 <div class="d-flex align-items-center gap-2">
-                  <button type="button" id="reportBtn" class="btn bg-danger-subtle text-danger" data-bs-toggle="modal" data-bs-target="#reportModal" style="font-weight: bold;">신고</button>
+                  <button type="button" id="reportBtn" class="btn btn-sm bg-danger-subtle text-danger" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="ti ti-urgent fs-6" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고"></i></button>
                 </div>
                 <!--작성 날짜-->
                 <div class="d-flex align-items-center fs-5 ms-auto">
@@ -246,7 +246,7 @@
                       </div>
                     </div>
                     <!-- 수정 요청 시 아래 부분 바꿀 예정 -->
-                    <div class="updateFormHere">
+                    <div class="updateFormHere mt-3">
                       <!-- 댓글 내용 -->
                       <p class="my-3" th:text="${reply.content}"></p>
                       <div>
@@ -312,7 +312,7 @@
                         </div>
                       </div>
                       <!-- 댓글 수정 요청 시 아래 부분 바꿀 예정 -->
-                      <div class="updateFormHere">
+                      <div class="updateFormHere mt-3">
                         <p class="my-3" th:text="${childReply.content}"></p>
                       </div>
                     </div>
