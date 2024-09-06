@@ -60,7 +60,7 @@ public class BoardController {
      */
     @GetMapping("/board/list")
     public String boardList(@RequestParam(name = "category") BoardCategory category,
-                            @RequestParam(name = "userGroup", defaultValue = "0") String userGroup, // 로그인한 사용자의 기수 (기본값 0)
+                            @RequestParam(name = "userGroup", defaultValue = "3기") String userGroup, // 로그인한 사용자의 기수 (기본값 0)
                             @PageableDefault(page=1) Pageable pageable, // 페이징 해주는 객체, 요청한 페이지가 없으면 1로 세팅
                             @RequestParam(name = "searchWord", defaultValue = "") String searchWord ,
                             Model model) {        
@@ -83,6 +83,7 @@ public class BoardController {
         model.addAttribute("list", list);
         model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
+        model.addAttribute("userGroup", userGroup);
         model.addAttribute("navi", navi);
 
         return "board/list";

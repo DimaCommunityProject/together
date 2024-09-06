@@ -12,7 +12,8 @@ $(function() {
     // 신고
     $("#reportBtn").click(boardReport);
     $("#submitReportBtn").click(submitReportForm);
-    
+    $("#reportModalCloseBtn").click(reportModalClose);
+
     // 모집
     $("#recruitBtn").click(boardRecruit);
     $("#submitRecruitBtn").click(submitRecruitForm);
@@ -101,6 +102,11 @@ function submitReportForm() {
     $("#reportForm").submit();
 }
 
+// Report 모달 닫기 버튼 클릭 시 페이지 새로고침
+function reportModalClose() {
+    location.reload();
+}
+
 // 댓글 부분으로 이동하는 함수
 function moveToReply() {
     var offset = $("#replyPart").offset(); //해당 위치 반환
@@ -133,8 +139,14 @@ function heartToggle() {
         success:function (result) {
             if (result) {
                 $("#heart").attr("class", "ti ti-heart-filled text-dark fs-6"); // 채워진 하트
+                $("#heart").attr("data-bs-toggle", "tooltip"); 
+                $("#heart").attr("data-bs-placement", "top"); 
+                $("#heart").attr("data-bs-title", "좋아요"); 
             }else{
                 $("#heart").attr("class", "ti ti-heart text-dark fs-6"); // 빈 하트
+                $("#heart").attr("data-bs-toggle", "tooltip"); 
+                $("#heart").attr("data-bs-placement", "top"); 
+                $("#heart").attr("data-bs-title", "좋아요"); 
             }
             getLikeCount(); // 좋아요 수 업데이트
         }
@@ -222,10 +234,10 @@ function replyUpdate() {
 
     // 수정 폼 생성
     var updateForm = `
-        <div>
-            <textarea class="form-control mb-4 ms-3 replyUpdateContent" rows="5"></textarea> <!--댓글 내용-->
-            <button class="btn bg-danger-subtle text-danger replyUpdateCancel">취소</button> <!-- 댓글 수정 취소 -->
-            <button class="btn btn-primary replyUpdateBtn">수정</button> <!-- 댓글 수정 버튼 -->
+        <div style=" background-color: ; padding: 12px; border-radius: 2%; width: 100%; box-sizing: border-box;">
+            <textarea class="form-control mb-4 ms-3 replyUpdateContent" rows="3"></textarea> <!--댓글 내용-->
+            <button class="btn bg-danger-subtle text-danger ms-3 replyUpdateCancel">취소</button> <!-- 댓글 수정 취소 -->
+            <button class="btn btn-primary ms-2 replyUpdateBtn">수정</button> <!-- 댓글 수정 버튼 -->
         </div>
     `;
 
@@ -278,9 +290,9 @@ function replyLikeToggle() {
         data: { "replyId": replyId, "memberId": memberId },
         success: function(result) {
             if (result) {
-                target.find('i').attr('class',"ti ti-thumb-up-filled text-dark fs-5");
+                target.find('i').attr('class',"ti ti-thumb-up-filled text-light fs-5");
             }else{
-                target.find('i').attr('class',"ti ti-thumb-up text-dark fs-5");
+                target.find('i').attr('class',"ti ti-thumb-up text-light fs-5");
             }
             getReplyLikeCount(target.closest('.replyHeart'), replyId); // 좋아요 수 반환
         }
@@ -305,10 +317,10 @@ function childReplyWrite(){
     var parentDiv = $(this).closest('.childReplyForm');
 
     var childReplyForm = `
-        <div style=" background-color: white; padding: 12px; border-radius: 2%; width: 100%; box-sizing: border-box;">
+        <div style=" background-color: ; padding: 12px; border-radius: 2%; width: 100%; box-sizing: border-box;">
             <textarea class="form-control mb-4 childreplyContent" rows="3"></textarea> <!-- 대댓글 내용 -->
             <button class="btn bg-danger-subtle text-danger childReplySubmitCancel">취소</button> <!-- 대댓글 작성 취소 버튼 -->
-            <button class="btn btn-primary ms-6 childReplySubmit">대댓글 등록</button> <!-- 대댓글 작성 버튼 -->
+            <button class="btn btn-primary ms-6 childReplySubmit">등록</button> <!-- 대댓글 작성 버튼 -->
         </div>`;
     
     // 상위 div에 HTML 삽입

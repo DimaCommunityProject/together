@@ -3234,7 +3234,13 @@
               <div class="row align-items-center">
 
                 <div class="col-9">
-                  <h4 class="fw-semibold mb-8">[[${category}]] 게시글 목록 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'activity'}">대외활동 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'recruit'}">모집 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'code'}">코드 공유 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'group'}">[[${userGroup}]] 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'project'}">프로젝트 공유 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'free'}">자유 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'info'}">정보 게시판 </h4>
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
@@ -3295,13 +3301,13 @@
                     <!--모집인원 -->
                     <div class="d-flex align-items-start justify-content-between" style="margin-bottom: 49%; margin-left: 79.5%;"> 
                       <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.limitNumber != 0 && board.dDay >= 0}">
-                        <i class="ti ti-user fs-5"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
+                        <i class="ti ti-user fs-5 me-1"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
                       </span>
                     </div>
 
                     <div>
                       <!-- 게시글 제목 -->
-                      <a th:href="@{/board/detail(boardId=${board.boardId}, category=${category})}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">[[${board.title}]]</a>
+                      <a th:href="@{/board/detail(boardId=${board.boardId}, category=${category}, searchWord=${searchWord})}" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">[[${board.title}]]</a>
                       <div class="d-flex align-items-center gap-4">
                         <!-- 조회수 -->
                         <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
