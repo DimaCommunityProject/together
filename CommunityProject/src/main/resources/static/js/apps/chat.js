@@ -86,8 +86,8 @@ $(document).ready(function () {
 
  	// ========== 채팅방 리스트 UI 렌더링 ========== 
 	function renderChatRoom(room) {
-	    let imagesHtml = '';
-	    let memberNames = '';
+	    let imagesHtml = ''; // 미지 파일 가져오는거 
+	    let memberNames = ''; // 회원이름 가져오는거
 	    currentUniqueKey = room.uniqueKey; // uniqueKey 가져오기
 	
 	    // uniqueKey에서 멤버 이름을 쉼표로 분리
@@ -100,7 +100,7 @@ $(document).ready(function () {
 	    });
 	
 	    // 채팅방 HTML 생성
-	    const roomHtml = `
+	    const roomListHtml = `
 	        <li>
 	            <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" 
 	                data-room-id="${room.id}" 
@@ -117,7 +117,7 @@ $(document).ready(function () {
 	        </li>
 	    `;
 	    
-	    $('#chatList').append(roomHtml);
+	    $('#chatList').append(roomListHtml);
 	    registerChatRoomClickEvent(); // 클릭 이벤트 등록
 	}
 	
@@ -262,13 +262,19 @@ $(document).ready(function () {
     function updateChatPartnerUI(room) {
 	    let imagesHtml = '';
 	    let namesHtml = '';
+	    const badgeClass = 'bg-light';
 	
 	    // room.uniqueKey 값을 쉼표로 분리하여 멤버 이름 배열 생성
 	    const members = currentUniqueKey.split(','); // 쉼표로 구분된 이름 배열
 	
 	    // 멤버 이름과 이미지 생성
 	    members.forEach(function (memberName, index) {
-	        imagesHtml += `<img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />`
+	        imagesHtml += `
+	        <img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />
+	        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
+                <span class="visually-hidden">New alerts</span>
+            </span>
+	        `
 	        namesHtml += `${memberName}` + (index < members.length - 1 ? ', ' : ''); // 쉼표로 이름 구분
 	    });
 	
@@ -276,7 +282,6 @@ $(document).ready(function () {
 	    $('#chatPartnerImages').html(imagesHtml);  // 멤버 프로필 이미지 업데이트
 	    $('#chatPartnerName').text(namesHtml);  // 멤버 이름 목록 업데이트
 	}
-    
  	
     // 메시지창 처리
     function showMessage(message) {
