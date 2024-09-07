@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.entity.ChatMessage;
-import net.dima_community.CommunityProject.entity.ChattingRoomMemberEntity;
+import net.dima_community.CommunityProject.entity.chat.ChatMessage;
+import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
 import net.dima_community.CommunityProject.entity.MemberEntity;
-import net.dima_community.CommunityProject.repository.jpa.ChattingRoomMemberRepository;
-import net.dima_community.CommunityProject.service.ChatService;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRepository;
+import net.dima_community.CommunityProject.service.chat.ChatService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Slf4j
 @Controller
