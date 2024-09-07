@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.entity;
+package net.dima_community.CommunityProject.entity.member;
 
 import java.util.ArrayList;
 // import lombok.ToString;
@@ -18,11 +18,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
-import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
-import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor

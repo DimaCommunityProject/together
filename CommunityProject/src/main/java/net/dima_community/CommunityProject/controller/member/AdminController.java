@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.member;
 
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
@@ -25,10 +25,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.util.PageNavigator;
-import net.dima_community.CommunityProject.dto.AdminNoteDTO;
-import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardReportDTO;
-import net.dima_community.CommunityProject.service.AdminService;
+import net.dima_community.CommunityProject.dto.member.AdminNoteDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
+import net.dima_community.CommunityProject.service.member.AdminService;
 
 @Controller
 @Slf4j

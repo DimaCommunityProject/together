@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.service.member;
+package net.dima_community.CommunityProject.service.board;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 import net.dima_community.CommunityProject.repository.board.BoardRepository;
 

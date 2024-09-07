@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
-import net.dima_community.CommunityProject.service.member.BoardService;
+import net.dima_community.CommunityProject.service.board.BoardService;
 
 @Controller
 @RequestMapping("/board")

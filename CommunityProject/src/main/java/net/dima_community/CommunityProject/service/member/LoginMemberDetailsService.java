@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.LoginMemberDetails;
-import net.dima_community.CommunityProject.dto.MemberDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 @RequiredArgsConstructor

@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
+import net.dima_community.CommunityProject.service.board.BoardService;
+import net.dima_community.CommunityProject.service.board.ReplyService;
 import net.dima_community.CommunityProject.service.member.MemberService;
-import net.dima_community.CommunityProject.service.member.BoardService;
-import net.dima_community.CommunityProject.service.member.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
