@@ -2,11 +2,11 @@ package net.dima_community.CommunityProject.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.dto.MemberDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
 import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.chat.ChatMessageRepository;
 import net.dima_community.CommunityProject.repository.chat.ChatRoomRepository;
 import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRepository;

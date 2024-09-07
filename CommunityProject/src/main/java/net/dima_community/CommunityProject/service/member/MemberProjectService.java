@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
-import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
 import net.dima_community.CommunityProject.repository.member.MemberProjectRepository;

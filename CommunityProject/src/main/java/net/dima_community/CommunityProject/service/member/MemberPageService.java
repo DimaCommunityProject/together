@@ -5,8 +5,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.description.ByteCodeElement.Member;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
-import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.repository.member.MemberPageRepository;
 import net.dima_community.CommunityProject.service.member.MemberService;
@@ -33,11 +34,10 @@ public class MemberPageService {
         try {
             originalMemberPage = findByUsername(memberDTO.getMemberId());
         } catch (ResourceNotFoundException e) {
-            // 기존에 없으면 신규 저장
-            memberPageRepository.save(memberDTO, memberPage);
-            return memberPage;
+            // 없으면 에러 발생
+            throw new ResourceNotFoundException("MemberPage", memberId);
         }
-        // 있으면 업데이트 후 저장
+        // 업데이트 후 저장
         MemberPageDTO updatedMemberPage = originalMemberPage.update(memberPage);
         memberPageRepository.save(memberDTO, updatedMemberPage);
         return updatedMemberPage;
@@ -56,6 +56,13 @@ public class MemberPageService {
         memberPageRepository.save(member, updatedDTO);
         return true;
 
+    }
+
+    public void saveMemberPage(MemberDTO newMember) {
+        MemberPageDTO memberPageDTO = MemberPageDTO.builder()
+                .memberId(newMember.getMemberId())
+                .build();
+        memberPageRepository.save(newMember, memberPageDTO);
     }
 
 }
