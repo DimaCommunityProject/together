@@ -3,9 +3,9 @@ package net.dima_community.CommunityProject.email.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,13 +41,8 @@ public class EmailController {
     public boolean send(@RequestParam(name = "memberId") String memberId,
             @RequestParam(name = "memberEmail") String memberEmail) {
 
-        // MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
         String generatedString = verifyRandomCodeHolder.setRandomCode();
         memberVerifyCodeService.insert(memberId, generatedString);
-
-        // member 가저장..
-        // memberService.saveMemberWithVerificationCode(newMember, uploadFile,
-        // generatedString);
         Email email = Email.builder()
                 .to(memberEmail)
                 .title("디마 회원가입 본인인증")
@@ -115,12 +110,9 @@ public class EmailController {
     public boolean resend(@RequestParam(name = "memberId") String memberId,
             @RequestParam(name = "memberEmail") String newEmail) {
 
-        // log.info("resend 도착");
-        // MemberDTO member = memberService.findById(memberId);
-        // log.info("findById 완료");
         String generatedString = verifyRandomCodeHolder.setRandomCode();
         // verifyCode 업데이트
-        memberService.updateVerificationCode(memberId, generatedString);
+        memberVerifyCodeService.updateVerificationCode(memberId, generatedString);
         log.info("service 완료");
         Email email = Email.builder()
                 .to(newEmail)

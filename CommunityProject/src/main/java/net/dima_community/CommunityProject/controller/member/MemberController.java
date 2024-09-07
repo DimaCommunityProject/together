@@ -1,14 +1,25 @@
 package net.dima_community.CommunityProject.controller.member;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Random;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +27,16 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
+import net.dima_community.CommunityProject.service.member.MemberPageService;
 import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class MemberController {
-	private final MemberService memberservice;
+	private final MemberService memberService;
 	private final EmailSender emailSender;
+	private final MemberPageService memberPageService;
 
 	// ===================== 회원가입 요청 페이지 =====================
 
@@ -45,8 +58,9 @@ public class MemberController {
 	 */
 	@PostMapping("/member/join")
 	public String joinProc(@ModelAttribute MemberDTO memberDTO) {
-		log.info(memberDTO.toString());
-		memberservice.saveMember(memberDTO);
+		MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
+		memberService.saveMember(newMember);
+		memberPageService.saveMemberPage(newMember);
 		return "main/main";
 	}
 
@@ -59,7 +73,7 @@ public class MemberController {
 	@GetMapping("/member/checkDuplicate")
 	@ResponseBody
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
-		boolean result = memberservice.findByIdThroughConn(memberId);
+		boolean result = memberService.findByIdThroughConn(memberId);
 		log.info("" + result);
 		return result;
 	}
@@ -120,7 +134,7 @@ public class MemberController {
 			@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail,
 			Model model) {
 
-		String result = memberservice.findmemId(memberName, memberEmail);
+		String result = memberService.findmemId(memberName, memberEmail);
 		log.info("사용자 아이디 찾기 결과 : {}", result);
 
 		return result;
@@ -166,7 +180,7 @@ public class MemberController {
 
 			log.info("사용자 입력을 dto에 set함 : {}", memberDTO.toString());
 
-			int search = memberservice.PwCheck(memberDTO); // 서비스 단에서 사용자 맞는지 확인
+			int search = memberService.PwCheck(memberDTO); // 서비스 단에서 사용자 맞는지 확인
 
 			if (search == 0) {
 				return "none";
@@ -194,9 +208,9 @@ public class MemberController {
 			log.info("이메일이 갔나요? : {}", result);
 
 			log.info("db에 업뎃하기 전 dto : {}", memberDTO.toString());
-			memberservice.setEncodedPassword(memberDTO); // 업뎃
+			memberService.setEncodedPassword(memberDTO); // 업뎃
 
-			boolean bool = memberservice.PwUpdate(memberDTO);
+			boolean bool = memberService.PwUpdate(memberDTO);
 
 			// MemberEntity(memberId=가나다라마바사,
 			// memberPw=$2a$10$J8BYtFobveWi3SXGZN8nI.dhkIIfWt.x1GiU5MrPOSBR8pTyYEnUC,
@@ -262,8 +276,8 @@ public class MemberController {
 		log.info("새 비번 DTO 확인 : {}", memberDTO.toString());
 
 		try {
-			memberservice.setEncodedPassword(memberDTO); // 비번 암호화 후 dto 업뎃
-			boolean bool = memberservice.PwUpdate(memberDTO); // dto를 레파지토리에서 db로 업뎃
+			memberService.setEncodedPassword(memberDTO); // 비번 암호화 후 dto 업뎃
+			boolean bool = memberService.PwUpdate(memberDTO); // dto를 레파지토리에서 db로 업뎃
 
 			if (bool) {
 				return "true";
@@ -276,4 +290,50 @@ public class MemberController {
 			return "error";
 		}
 	}// end chagePwck
+
+	// 이미지 가져오기
+	@GetMapping("/member/showImageAtMain/{memberId}")
+	public ResponseEntity<Resource> showImageAtMain(@PathVariable(name = "memberId") String memberId)
+			throws MalformedURLException {
+		String fullPath = memberService.showImageAtMain(memberId);
+		try {
+			log.info(fullPath);
+			Resource resource = new UrlResource("file:" + fullPath);
+			if (!resource.exists() || !resource.isReadable()) {
+				return ResponseEntity.notFound().build(); // 파일이 없거나 읽을 수 없을 경우 404 처리
+			}
+
+			// 파일의 확장자를 보고 Content-Type 설정
+			String contentType = Files.probeContentType(Paths.get(fullPath));
+			if (contentType == null) {
+				contentType = "application/octet-stream"; // 기본 Content-Type
+			}
+
+			return ResponseEntity.ok()
+					.contentType(MediaType.parseMediaType(contentType)) // Content-Type 설정
+					.body(resource);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 예외 발생 시 500 에러 처리
+		}
+		// return new UrlResource("file:" + fullPath);
+	}
+
+	// ========= 이미지 변경
+	@PostMapping("/member/updateImage")
+	@ResponseBody
+	public boolean updateImage(@RequestParam("memberId") String memberId,
+			@RequestParam("newImage") MultipartFile newImage) {
+		Boolean result = memberService.updateImage(memberId, newImage);
+		return result;
+
+	}
+
+	// ============= 이미지 삭제
+	@PostMapping("/member/deleteImage")
+	@ResponseBody
+	public boolean deleteImage(@RequestParam("memberId") String memberId) {
+		Boolean result = memberService.deleteImage(memberId);
+		return result;
+	}
 }// end class

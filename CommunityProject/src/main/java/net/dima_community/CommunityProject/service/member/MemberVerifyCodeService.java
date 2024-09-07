@@ -36,4 +36,15 @@ public class MemberVerifyCodeService {
         else
             return true;
     }
+
+    public void updateVerificationCode(String memberId, String generatedString) {
+        Optional<MemberVerifyCodeEntity> entity = memberVerifyCodeRepository.findByMemberId(memberId);
+        if (entity.isPresent()) {
+            MemberVerifyCodeEntity getEntity = entity.get();
+            getEntity.setVerifyCode(generatedString);
+            memberVerifyCodeRepository.save(getEntity);
+        } else {
+            throw new ResourceNotFoundException("MemberVerifyCode", memberId);
+        }
+    }
 }

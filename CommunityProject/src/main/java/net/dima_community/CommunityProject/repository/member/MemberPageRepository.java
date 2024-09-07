@@ -9,6 +9,6 @@ public interface MemberPageRepository {
 
     Optional<MemberPageDTO> findByUsername(String memberId);
 
-    void save(MemberDTO updatedMember, MemberPageDTO updatedMemberPage);
+    void save(MemberDTO member, MemberPageDTO memberPage);
 
 }

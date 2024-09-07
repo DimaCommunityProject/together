@@ -1,5 +1,6 @@
 package net.dima_community.CommunityProject.service.member;
 
+import java.lang.reflect.Member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 // import jakarta.transaction.Transactional;
@@ -246,6 +249,52 @@ public class MemberService {
 			memberDTO.setSavedFileName(fileDetails.getSavedFileName());
 		}
 		memberRepository.save(MemberEntity.toEntity(memberDTO));
+	}
+
+	// 이미지 저장 경로 반환
+	public String getFileFullPath(String fileName) {
+		return uploadPath + "/" + fileName;
+	}
+
+	// ========== 프로필 사진 업데이트
+	@Transactional
+	public Boolean updateImage(String memberId, MultipartFile newImage) {
+		MemberEntity memberEntity = findEntityById(memberId).get();
+		log.info(memberEntity.toString());
+		// 기존에 첨부파일이 있다면 삭제
+		if (!(memberEntity.getOriginalFileName() == null)) {
+			FileService.deleteFile(getFileFullPath(memberEntity.getSavedFileName()));
+		}
+		FileDetails fileDetails = handleFileUpload(newImage);
+		memberEntity.setOriginalFileName(fileDetails.getOriginalFileName());
+		memberEntity.setSavedFileName(fileDetails.getSavedFileName());
+		memberRepository.save(memberEntity);
+		return true;
+
+	}
+
+	public String showImageAtMain(String memberId) {
+		MemberDTO memberDTO = findById(memberId);
+		if (memberDTO.getSavedFileName() == null) {
+			return getFileFullPath("user-1.jpg");
+		} else {
+			return getFileFullPath(memberDTO.getSavedFileName());
+		}
+	}
+
+	@Transactional
+	public Boolean deleteImage(String memberId) {
+		log.info(memberId);
+		MemberEntity memberEntity = findEntityById(memberId).get();
+		if (!(memberEntity.getOriginalFileName() == null)) {
+			FileService.deleteFile(getFileFullPath(memberEntity.getSavedFileName()));
+			memberEntity.setOriginalFileName(null);
+		}
+		if (!(memberEntity.getSavedFileName() == null)) {
+			memberEntity.setSavedFileName(null);
+		}
+		memberRepository.save(memberEntity);
+		return true;
 	}
 
 }// end findmemId
