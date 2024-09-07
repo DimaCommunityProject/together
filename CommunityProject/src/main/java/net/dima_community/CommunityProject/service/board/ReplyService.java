@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.service;
+package net.dima_community.CommunityProject.service.board;
 
 import java.util.Optional;
 import java.util.List;
@@ -15,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.LikeEntity;
-import net.dima_community.CommunityProject.entity.board.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.board.BoardRepository;
 import net.dima_community.CommunityProject.repository.board.LikeRepository;
 import net.dima_community.CommunityProject.repository.board.MemberRepository;
@@ -29,6 +29,20 @@ public class ReplyService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final LikeRepository likeRepository;
+
+    // ==================== 마이페이지 ======================
+    /**
+     * 전달받은 memberEntity가 작성한 댓글들 반환하는 함수
+     * @param memberEntity
+     * @return
+     */
+    public List<ReplyDTO> findByMemberId(MemberEntity memberEntity) {
+        List<ReplyEntity> result = replyRepository.findByMemberId(memberEntity);
+        return result.stream()
+                .map(entity -> ReplyDTO.toDTO(entity, entity.getBoardEntity().getBoardId(), memberEntity.getMemberId()))
+                .collect(Collectors.toList());
+
+    }
 
     // ====================== select 함수 ======================
     
@@ -72,32 +86,6 @@ public class ReplyService {
     }
 
     // ====================== 댓글 목록 =====================
-    
-    // /**
-    //  * boardId에 대한 댓글DTO 목록 반환 (likeByUser 세팅하는 로직 포함)
-    //  * @param boardId
-    //  * @param memberId
-    //  * @return
-    //  */
-    // public List<ReplyDTO> getList(Long boardId, String memberId) {
-    //     BoardEntity boardEntity = selectBoardEntity(boardId); // boardEntity
-    //     List<ReplyEntity> replyEntities = replyRepository.findByBoardEntity(boardEntity); // boardEntity의 댓글 목록 가져옴
-
-    //     return replyEntities.stream().map(reply ->{
-    //         boolean isLikeByUser = likeRepository.existsByReplyIdAndMemberId(reply.getReplyId(), memberId); // user의 좋아요 여부 
-    //         return ReplyDTO.builder()
-    //             .replyId(reply.getReplyId())
-    //             .boardId(reply.getBoardEntity().getBoardId())
-    //             .parentReplyId((reply.getParentReplyId()))
-    //             .memberId(reply.getMemberEntity().getMemberId())
-    //             .content(reply.getContent())
-    //             .createDate(reply.getCreateDate())
-    //             .updateDate(reply.getUpdateDate())
-    //             .likeCount(reply.getLikeCount())
-    //             .likeByUser(isLikeByUser)
-    //             .build();
-    //     }).collect(Collectors.toList());
-    // }
 
     /**
      * boardId에 대한 댓글DTO 목록 반환 (likeByUser, childReplies 세팅하는 로직 포함)

@@ -1,5 +1,7 @@
 package net.dima_community.CommunityProject.repository.board;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,9 +12,14 @@ import org.springframework.data.repository.query.Param;
 import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.dto.board.combine.BoardListDTO;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
+
+        // BoardEntity의 MemberEntity와 전달받은 memberEntity와 일치하는 게시글을 리스트로 반환
+        @Query("SELECT b FROM BoardEntity b WHERE b.memberEntity = :memberEntity")
+        List<BoardEntity> findByMemberId(@Param("memberEntity") MemberEntity memberEntity);
 
         // 카테고리가 group이고, 전달받은 memberGroup에 해당하는 (신고당하지 않은) 게시글 리스트 반환 (최신순)
         @Query("SELECT b FROM BoardEntity b WHERE " +

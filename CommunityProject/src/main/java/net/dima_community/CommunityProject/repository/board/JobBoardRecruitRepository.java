@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.JobBoardRecruitEntity;
-import net.dima_community.CommunityProject.entity.board.MemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 
 public interface JobBoardRecruitRepository extends JpaRepository<JobBoardRecruitEntity,Long> {

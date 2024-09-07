@@ -1,11 +1,11 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.member;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 
 import lombok.RequiredArgsConstructor;
-import net.dima_community.CommunityProject.entity.board.MemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.board.MemberRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;

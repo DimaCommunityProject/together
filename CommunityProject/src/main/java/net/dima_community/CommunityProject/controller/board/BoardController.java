@@ -1,5 +1,6 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.board;
 
+import java.util.List;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,7 @@ import net.dima_community.CommunityProject.dto.board.BoardReportDTO;
 import net.dima_community.CommunityProject.dto.board.JobBoardRecruitDTO;
 import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.dto.board.combine.BoardListDTO;
-import net.dima_community.CommunityProject.service.BoardService;
+import net.dima_community.CommunityProject.service.board.BoardService;
 import net.dima_community.CommunityProject.util.PageNavigator;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,20 @@ public class BoardController {
     // 페이지 당 글의 개수
     @Value("${user.board.pageLimit}")
     int pageLimit; // 한 페이지 당 게시글 개수 (9개)
+
+    // ============ 마이페이지 - 자신이 작성한 게시글 ============
+    
+    /**
+     * ajax - 마이페이지에서 memberId가 작성한 게시글 목록 반환 요청
+     * @param memberId
+     * @return
+     */
+    @PostMapping("/board/showBoard")
+    @ResponseBody
+    public List<BoardDTO> showBoard(@RequestParam(name = "memberId") String memberId) {
+        List<BoardDTO> result = boardService.findByUsername(memberId);
+        return result;
+    }
 
 
     // ======================== 게시글 목록 ========================

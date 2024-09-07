@@ -1,8 +1,10 @@
-package net.dima_community.CommunityProject.service;
+package net.dima_community.CommunityProject.service.board;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -26,7 +28,7 @@ import net.dima_community.CommunityProject.entity.board.BoardReportEntity;
 import net.dima_community.CommunityProject.entity.board.JobBoardEntity;
 import net.dima_community.CommunityProject.entity.board.JobBoardRecruitEntity;
 import net.dima_community.CommunityProject.entity.board.LikeEntity;
-import net.dima_community.CommunityProject.entity.board.MemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.board.BoardReportRepository;
 import net.dima_community.CommunityProject.repository.board.BoardRepository;
 import net.dima_community.CommunityProject.repository.board.JobBoardRecruitRepository;
@@ -55,6 +57,33 @@ public class BoardService {
     // 페이지 당 글의 개수
     @Value("${user.board.pageLimit}")
     int pageLimit; // 한 페이지 당 게시글 개수
+
+    // ===================== 마이페이지 =====================
+    
+    /**
+     * memberId가 작성한 게시글 리스트로 반환하는 함수
+     * @param memberId
+     * @return
+     */
+    public List<BoardDTO> findByUsername(String memberId) {
+        MemberEntity memberEntity = memberRepository.findById(memberId).get();
+        List<BoardDTO> result = boardRepository.findByMemberId(memberEntity).stream()
+                .map(entity -> BoardDTO.toDTO(entity, memberEntity.getMemberId()))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    /**
+     * boardId에 해당하는 게시글 DTO로 반환하는 함수
+     * @param boardId
+     * @return
+     */
+    public BoardDTO findById(Long boardId) {
+        BoardEntity result = boardRepository.findById(boardId).get();
+        return BoardDTO.toDTO(result, result.getMemberEntity().getMemberId());
+    }
+
+
 
     // ======================== select Entity =======================
 

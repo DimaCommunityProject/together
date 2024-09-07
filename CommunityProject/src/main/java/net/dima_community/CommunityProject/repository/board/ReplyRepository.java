@@ -10,9 +10,15 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 
 public interface ReplyRepository extends JpaRepository<ReplyEntity,Long>{
+
+    //Sehyun & Minseo
+    // 전달받은 member가 작성한 댓글들 반환
+    @Query("SELECT r FROM ReplyEntity r WHERE r.memberEntity = :memberEntity")
+    List<ReplyEntity> findByMemberId(@Param("memberEntity") MemberEntity memberEntity);
 
     // boardEntity에 해당하는 댓글의 개수를 반환하는 메서드
     @Query("SELECT COUNT(r) FROM ReplyEntity r WHERE r.boardEntity = :boardEntity")

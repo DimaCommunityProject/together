@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.dima_community.CommunityProject.dto.board.JobBoardRecruitDTO;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 @AllArgsConstructor
 @RequiredArgsConstructor

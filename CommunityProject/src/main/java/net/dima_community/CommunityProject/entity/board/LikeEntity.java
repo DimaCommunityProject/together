@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.dima_community.CommunityProject.dto.board.LikeDTO;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 @NoArgsConstructor
 @AllArgsConstructor

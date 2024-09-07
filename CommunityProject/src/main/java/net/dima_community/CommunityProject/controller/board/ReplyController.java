@@ -1,15 +1,22 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.board;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
+import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
-import net.dima_community.CommunityProject.service.ReplyService;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
+import net.dima_community.CommunityProject.service.board.BoardService;
+import net.dima_community.CommunityProject.service.board.ReplyService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +30,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequiredArgsConstructor
 public class ReplyController {
     private final ReplyService replyService;
+    private final BoardService boardService;
+    private final MemberService memberService;
 
+    // ============== 마이페이지 ================
+    /**
+     * ajax - 마이페이지에서 사용자가 작성한 댓글 목록 요청
+     * @param memberId
+     * @return
+     */
+    @ResponseBody
+    public Map<String, BoardDTO> showReply(@RequestParam(name = "memberId") String memberId) {
+        MemberDTO member = memberService.findById(memberId);
+        List<ReplyDTO> replyList = replyService.findByMemberId(MemberEntity.toEntity(member));
+        Map<String, BoardDTO> dataMap = new HashMap<>();
+        for (ReplyDTO temp : replyList) {
+            BoardDTO board = boardService.findById(temp.getBoardId());
+            dataMap.put(temp.getContent(), board);
+        }
+        return dataMap;
+    }
+
+    // ============ 게시글 댓글 수 =====================
     /**
      * ajax - 게시글의 댓글 수 요청
      * @param param

@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.controller;
+package net.dima_community.CommunityProject.controller.board;
 
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
-import net.dima_community.CommunityProject.service.BoardService;
+import net.dima_community.CommunityProject.service.board.BoardService;
 
 @Slf4j
 @Controller

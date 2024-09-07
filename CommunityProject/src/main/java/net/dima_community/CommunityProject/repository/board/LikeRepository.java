@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.LikeEntity;
-import net.dima_community.CommunityProject.entity.board.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 
 

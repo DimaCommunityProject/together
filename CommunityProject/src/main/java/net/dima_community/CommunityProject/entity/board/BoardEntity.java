@@ -28,6 +28,7 @@ import lombok.Setter;
 import lombok.ToString;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
