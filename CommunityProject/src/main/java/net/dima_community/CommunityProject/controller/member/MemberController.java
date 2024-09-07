@@ -38,18 +38,17 @@ public class MemberController {
 	}
 
 	/**
-	    * 회원가입 처리
-	    * 
-	    * @param memberId
-	    * @return
-	    */
-	   @PostMapping("/member/join")
-	   public String joinProc(@ModelAttribute MemberDTO memberDTO) {
-	      log.info(memberDTO.toString());
-	      MemberDTO newMember = memberservice.setEncodedPassword(memberDTO);
-	      memberservice.saveMember(newMember);
-	      return "/";
-	   }
+	 * 회원가입 처리
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	@PostMapping("/member/join")
+	public String joinProc(@ModelAttribute MemberDTO memberDTO) {
+		log.info(memberDTO.toString());
+		memberservice.saveMember(memberDTO);
+		return "main/main";
+	}
 
 	/**
 	 * ID 중복확인
@@ -251,10 +250,8 @@ public class MemberController {
 	@PostMapping("/member/changePw")
 	@ResponseBody
 	public String chagePwck(
-			HttpServletRequest request, 
-			@RequestParam("newmemberPw") String newmemberPw,
-			@RequestParam("loginName") String memberId, 
-			MemberDTO memberDTO, Model model) {
+			HttpServletRequest request, @RequestParam("newmemberPw") String newmemberPw,
+			@RequestParam("loginName") String memberId, MemberDTO memberDTO, Model model) {
 
 		log.info("아이디 확인 : {}", memberId);
 		log.info("새 비번 확인 : {}", newmemberPw);

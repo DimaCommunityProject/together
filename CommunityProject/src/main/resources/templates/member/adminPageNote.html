@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
-    <title>신고 게시글 관리</title>
+    <title>공지사항</title>
     <style>
         #loginLine {
             width: 1200px;
@@ -455,7 +455,7 @@
                             <div class="widget-content searchable-container list">
                                 <div class="card card-body" style="margin-bottom: 0px; ">
                                     <div class="row" style="align-items: center;">
-                                        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">신고 게시글
+                                        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">공지사항
                                         </h3>
                                         <div class="col-md-4 col-xl-3">
                                             <form class="position-relative">
@@ -467,107 +467,109 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- 신고된 게시글 보여줌 -->
-                            <div class="card card-body" id="card-body">
-                                <div class="table-responsive">
-                                    <p style="display: inline;">게시글 개수 : [[${list.totalElements}]] </p>
-                                    <table class="table search-table align-middle text-nowrap"
-                                        style="text-align: center;">
-                                        <form id="searchForm" th:action="@{/admin/adminPageBoard}" method="GET">
-                                            <input type="hidden" name="page" id="requestPage" th:value="${page}">
-                                        </form>
-                                        <thead class="header-item">
-                                            <th>글 번호</th>
-                                            <th>신고 상세 사유</th>
-                                            <th>신고 이유</th>
-                                            <th>신고일</th>
-                                        </thead>
-                                        <tbody>
-                                            <!-- start row -->
-                                            <tr class="search-items" th:each="boardReport, status : ${list}">
-                                                <td
-                                                    th:text="${list.getTotalElements - (list.number * list.size) - status.index}">
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="ms-3">
-                                                            <div class="user-meta-info">
-                                                                <a th:href="@{/admin/adminPageBoardDetail(reportId=${boardReport.reportId})}"
-                                                                    th:text="${boardReport.reason}">신고 상세 사유</a>
-                                                                <!-- <span
-                                                                th:if="${adminNote.adminNoteOriginalFileName != null}">
-                                                                <img th:src="@{/images/NoteClip.png}" alt="첨부파일"
-                                                                    width="15px">
-                                                            </span> -->
+                                <!-- 공지사항 보여줌 -->
+                                <div class="card card-body" id="card-body">
+                                    <div class="table-responsive">
+                                        <p style="display: inline;">게시글 개수 : [[${list.totalElements}]] </p>
+                                        <table class="table search-table align-middle text-nowrap"
+                                            style="text-align: center;">
+                                            <form id="searchForm" th:action="@{/member/adminPageNote}" method="GET">
+                                                <input type="hidden" name="page" id="requestPage" th:value="${page}">
+                                            </form>
+                                            <thead class="header-item">
+                                                <th>글 번호</th>
+                                                <th>제목</th>
+                                                <th>조회수</th>
+                                                <th>작성일</th>
+                                            </thead>
+                                            <tbody>
+                                                <!-- start row -->
+                                                <tr class="search-items" th:each="adminNote, status : ${list}">
+                                                    <td
+                                                        th:text="${list.getTotalElements - (list.number * list.size) - status.index}">
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="ms-3">
+                                                                <div class="user-meta-info">
+                                                                    <a th:href="@{/member/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}"
+                                                                        th:text="${adminNote.adminNoteTitle}">공지사항
+                                                                        제목</a>
+                                                                    <span
+                                                                        th:if="${adminNote.adminNoteOriginalFileName != null}">
+                                                                        <img th:src="@{/images/NoteClip.png}"
+                                                                            alt="첨부파일" width="15px">
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="usr-email-addr" th:text="${boardReport.category}">신고
-                                                        이유</span>
-                                                </td>
-                                                <td>
-                                                    <span class="usr-location"
-                                                        th:text="*{#temporals.format(boardReport.reportDate, 'yyyy-MM-dd')}">
-                                                        신고일</span>
-                                                </td>
-                                            </tr>
-                                            <!-- end row -->
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                    <td>
+                                                        <span class="usr-email-addr"
+                                                            th:text="${adminNote.adminNoteHitcount}">공지사항 조회수</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="usr-location"
+                                                            th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}">
+                                                            공지사항 작성일</span>
+                                                    </td>
+                                                </tr>
+                                                <!-- end row -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
+
+                                <!--글쓰기 버튼-->
+                                <th:block sec:authorize="hasRole('ADMIN')">
+                                    <div style="font-size: 15px; float: right; margin-bottom: 130px;">
+                                        <a th:href="@{/admin/adminPageNoteWrite}" class="btn btn-secondary">글쓰기</a>
+                                    </div>
+                                </th:block>
+
+                                <!-- 페이징 -->
+                                <nav class="pagination" style="text-align: center; display: block; font-size: 18px;">
+                                    <a th:if="${navi.startPageGroup > 1}"
+                                        th:href="@{|/member/adminPageNote?page=${navi.startPageGroup - 10}|}"
+                                        class="btn prev">&laquo; Previous</a>
+                                    <span
+                                        th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+                                        <span th:if="${count == navi.page}">
+                                            <b class="page-no current" th:text="${count}"></b>
+                                        </span>
+                                        <span th:unless="${count == navi.page}">
+                                            <a class="page-no" th:href="@{|/member/adminPageNote?page=${count}|}"
+                                                th:text="${count}"></a>
+                                        </span>
+                                    </span>
+                                    <a th:if="${navi.endPageGroup < navi.totalPages}"
+                                        th:href="@{|/member/adminPageNote?page=${navi.endPageGroup + 1}|}"
+                                        class="btn next10">Next &raquo;</a>
+                                </nav>
+                                <!--페이징 끝-->
+                                <!-- 승인된 회원 보여줌 끝-->
                             </div>
-
-                            <!--글쓰기 버튼-->
-                            <!-- <div style="font-size: 15px; float: right; margin-bottom: 130px;">
-                            <a th:href="@{/admin/adminPageNoteWrite}" class="btn btn-secondary">글쓰기</a>
-                        </div> -->
-
-                            <!-- 페이징 -->
-                            <nav class="pagination"
-                                style="text-align: center; display: block; font-size: 18px;  margin-bottom: 130px;">
-                                <a th:if="${navi.startPageGroup > 1}"
-                                    th:href="@{|/admin/adminPageBoard?page=${navi.startPageGroup - 10}|}"
-                                    class="btn prev">&laquo; Previous</a>
-                                <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-                                    <span th:if="${count == navi.page}">
-                                        <b class="page-no current" th:text="${count}"></b>
-                                    </span>
-                                    <span th:unless="${count == navi.page}">
-                                        <a class="page-no" th:href="@{|/admin/adminPageBoard?page=${count}|}"
-                                            th:text="${count}"></a>
-                                    </span>
-                                </span>
-                                <a th:if="${navi.endPageGroup < navi.totalPages}"
-                                    th:href="@{|/admin/adminPageBoard?page=${navi.endPageGroup + 1}|}"
-                                    class="btn next10">Next &raquo;</a>
-                            </nav>
-                            <!--페이징 끝-->
-                            <!-- 승인된 회원 보여줌 끝-->
                         </div>
+                        <!-- 첫번째 본문 끝 -->
                     </div>
-                    <!-- 첫번째 본문 끝 -->
+                    <!-- 이 div가 본문들의 전체를 감싸야함 -->
                 </div>
-                <!-- 이 div가 본문들의 전체를 감싸야함 -->
             </div>
-        </div>
-        <!-- 본문 끝 -->
-        <script>
-            function handleColorTheme(e) {
-                document.documentElement.setAttribute("data-color-theme", e);
-            }
-        </script>
-        <!-- <button
+            <!-- 본문 끝 -->
+            <script>
+                function handleColorTheme(e) {
+                    document.documentElement.setAttribute("data-color-theme", e);
+                }
+            </script>
+            <!-- <button
                     class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
                     type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
                     aria-controls="offcanvasExample">
                     <i class="icon ti ti-settings fs-7"></i>
                 </button> -->
 
-        <!-- <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+            <!-- <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
                     aria-labelledby="offcanvasExampleLabel">
                     <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
                         <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
@@ -744,11 +746,23 @@
                         </div>
                     </div>
                 </div> -->
-        <!-- </div> -->
-    </div>
+            <!-- </div> -->
+        </div>
     </div>
     <div class="dark-transparent sidebartoggler"></div>
     <!-- Import Js Files -->
+    <!-- <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/simplebar/dist/simplebar.min.js"></script>
+    <script src="/js/theme/app.horizontal.init.js"></script>
+    <script src="/js/theme/theme.js"></script>
+    <script src="/js/theme/app.min.js"></script>
+    <script src="/js/theme/sidebarmenu.js"></script> -->
+
+    <!-- solar icons -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
+    <!-- <script src="/libs/fullcalendar/index.global.min.js"></script>
+    <script src="/js/apps/chat.js"></script> -->
+
     <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/libs/simplebar/dist/simplebar.min.js"></script>
     <script src="/js/theme/app.init.js"></script>
@@ -762,12 +776,6 @@
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     <script src="/libs/fullcalendar/index.global.min.js"></script>
     <script src="/js/apps/contact.js"></script>
-    <script>
-        function pageFormSubmit(page) {
-            document.getElementById("requestPage").value = page;
-            document.getElementById("searchForm").submit();
-        }
-    </script>
 </body>
 
 </html>

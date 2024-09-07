@@ -16,7 +16,6 @@
         function changePw() {
             let newmemberPw = $('#newmemberPw').val()
             let newmemberPwck = $('#newmemberPwck').val()
-            let loginName = $('#loginName').val();
 
             // 이전 경고 메시지 지우기
             $("#confirmnewmemberPw").html("");
@@ -49,9 +48,7 @@
             $.ajax({
                 url: "/member/changePw"
                 , type: "POST"
-                , data: { 
-                	"newmemberPw": newmemberPw,
-                	"loginName": loginName}
+                , data: { "newmemberPw": newmemberPw, "loginName": `[[${loginName}]]` }
                 , success: function (data) {
                     console.log(data);
                     if (data == "false") {
@@ -73,9 +70,6 @@
                         document.getElementById('conbtn').addEventListener('click', function () {
                             $("#newmemberPw").val("");
                             $("#newmemberPwck").val("");
-                            
-                            // index 화면으로 리다이렉션
-                            window.location.href = "/";
                         });
                     } else {
                         document.getElementById('modalMessage2').textContent = "서버 오류가 발생했습니다. 다시 시도해 주세요.";
@@ -107,7 +101,6 @@
 </head>
 
 <body>
-	<input type="hidden" id="loginName" th:value="${loginName}">
     <!-- 맨 위 로고 -->
     <div class="preloader">
         <img src="/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />

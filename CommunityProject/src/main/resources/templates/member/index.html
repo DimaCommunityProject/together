@@ -12,27 +12,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle&family=East+Sea+Dokdo&display=swap" rel="stylesheet">
 
     <!-- CSS 설정 -->
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
 </head>
 <body>
     <!-- 로그인 유저 이름 : <span th:text="${loginName}"></span> -->
     <div class="container">
         <div class="logo">
-            <img th:src="@{/images/festival.png}" alt="로고">
+            <img th:src="@{/assets/images/festival.png}" alt="로고">
             <h2>회원 전용 게시판</h2>
         </div>
     
         <div class="gnb">
             <ul>
                 <!--인증이 되지 않은 사람-->
-                <li sec:authorize="isAnonymous()"><a th:href="@{/member/join}">회원가입</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/member/authentication-register2}">회원가입</a></li>
                 <li sec:authorize="isAnonymous()"><a th:href="@{/member/login}">로그인</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/admin/adminPage}">관리자페이지</a></li>
 
                 <!--인증이 된 사람-->
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/member/logout}">[[${loginName}]]님, 로그아웃</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/member/changePw(loginName=${loginName})}">비밀번호 바꾸기</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{api/chat/chatPage}">채팅하기</a></li>
             </ul>
         </div>
 

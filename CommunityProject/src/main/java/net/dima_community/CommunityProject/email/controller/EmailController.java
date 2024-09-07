@@ -3,23 +3,14 @@ package net.dima_community.CommunityProject.email.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.port.VerifyRandomCodeHolder;
-import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
 import net.dima_community.CommunityProject.service.member.MemberService;
@@ -53,13 +44,9 @@ public class EmailController {
                 .title("디마 회원가입 본인인증")
                 .content("인증번호는 " + generatedString + " 입니다.")
                 .build();
-       try {
+
         boolean result = emailSender.sendMail(email);
         return result;
-       }catch (Exception e) {
-    	    log.error("오류 발생: {}", e.getMessage());
-    	    return false; // 또는 더 구체적인 응답 처리
-    	}
     }
 
     @ResponseBody

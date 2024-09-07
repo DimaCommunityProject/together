@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="/css/styles.css" />
 
   <!-- Ajax -->
-  <script th:src="@{/libs/jquery-3.7.1.min.js}"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
   <script>
     $(function () {
       $("#memberId").on('keyup', checkId)
@@ -88,7 +88,6 @@
       $("#verifyCode").on('click', function () {
         let myVerifyCode = $("#myVerifyCode").val();
         let memberId = $("#memberId").val();
-        console.log(myVerifyCode, memberId);
 
         $.ajax({
           url: "/email/verifyCode"
@@ -244,7 +243,7 @@
           <div class="col-md-8 col-lg-6 col-xxl-3 auth-card">
             <div class="card mb-0">
               <div class="card-body">
-                <a href="/" class="text-nowrap logo-img text-center d-block mb-5 w-100">
+                <a href="../main/index.html" class="text-nowrap logo-img text-center d-block mb-5 w-100">
                   <p for="exampleInputEmail1" class="form-label">디마 커뮤니티</p>
                 </a>
                 <form id="joinForm" th:action="@{/member/join}" method="post" enctype="multipart/form-data">
@@ -357,7 +356,7 @@
                             </p>
                           </div>
                           <div class="modal-footer">
-                            <a href="/" class="btn btn-light">메인으로 돌아가기</a> -->
+                            <a href="/main" class="btn btn-light">메인으로 돌아가기</a> -->
 
                   </div>
               </div>
@@ -551,7 +550,7 @@
   <script src="../../js/plugins/toastr-init.js"></script>
 
   <!-- solar icons -->
-  
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
 </html>
