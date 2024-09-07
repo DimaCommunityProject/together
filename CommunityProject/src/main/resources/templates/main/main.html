@@ -7,7 +7,8 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/css/styles.css" />
+  <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
+  <link rel="stylesheet" href="../../static/css/styles.css" />
   <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
 
   <title>디지털마스터 커뮤니티</title>
@@ -33,6 +34,23 @@
 
     .loginLineA:hover {
       color: #5d87ff;
+    }
+
+    .h6-style {
+      font-size: 0.79rem !important;
+      font-weight: 500 !important;
+      color: #13171e !important;
+      margin: 0 !important;
+      line-height: 1.2 !important;
+      text-decoration: none !important;
+    }
+    .icon{
+      width: 42px;
+      height: 27px;
+    }
+    .icon1{
+      width: 80px;
+      height: 40px;
     }
   </style>
 </head>
@@ -75,7 +93,6 @@
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
                   <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
-                  <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180" alt="modernize-img" />
                 </a>
               </li>
             </ul>
@@ -267,15 +284,16 @@
               <!-- ------------------------------- -->
               <!-- end apps Dropdown -->
               <!-- ------------------------------- -->
-              <!-- <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../horizontal/app-chat.html">Chat</a>
-              </li>
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../horizontal/app-calendar.html">Calendar</a>
+                <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
               </li>
-              <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="../horizontal/app-email.html">Email</a>
-              </li> -->
+              <th:block sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown-hover d-none d-lg-block">
+                  <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+                </li>
+              </th:block>
+            
+
             </ul>
             <!-- topbar 메뉴 끝-->
 
@@ -292,14 +310,14 @@
                 </a>
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                   <!-- 다크모드 -->
-                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                  <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link moon dark-layout" href="javascript:void(0)">
                       <i class="ti ti-moon moon"></i>
                     </a>
                     <a class="nav-link sun light-layout" href="javascript:void(0)">
                       <i class="ti ti-sun sun"></i>
                     </a>
-                  </li>
+                  </li> -->
                   <!-- 채팅 -->
                   <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
@@ -368,12 +386,14 @@
                       <!-- <a class="text-muted text-decoration-none" href="../horizontal/index.html"></a> -->
                       <!-- </li> -->
                       <li class="breadcrumb-item" aria-current="page">환영합니다!</li>
+					  <li class="breadcrumb-item" aria-current="page">신인가수 조정석 재밌음</li>
                     </ol>
                   </nav>
                 </div>
                 <div class="col-3">
                   <div class="text-center mb-n5" style="height: 100%;">
-                    <img src="/static/images/main/codePic.jpg" alt="modernize-img" class="img-fluid mb-n4" />
+                    <img src="/static/images/main/coding.png" alt="modernize-img" class="img-fluid mb-n4"
+                      style="padding-right: 30px;" />
                   </div>
                 </div>
               </div>
@@ -499,51 +519,21 @@
                   </div>
                 </div>
                 <!-- 전체 게시글 끝-->
+
+
                 <!-- 공지사항 시작-->
                 <div class="card-body">
                   <h4 class="card-title fw-semibold">공지사항</h4>
-                  <!-- <p class="card-subtitle">지금 가장 인기있는 게시글입니다</p> -->
-                  <!-- mt-4 pb-3 -->
-                  <div class="border-bottom">
+                  <div class="border-bottom" th:each="adminNote, status : ${list}">
                     <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto">8 March 2020</span>
+                      <span class="fs-2 ms-auto"
+                        th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}">8 March 2020</span>
                     </div>
-                    <h6 class="fs-2">NFT Landing Page</h6>
-                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 13 Commets
-                      </a>
-                    </div>
-                  </div>
-                  <!-- py-3 -->
-                  <div class="border-bottom">
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto">8 Jan 2024</span>
-                    </div>
-                    <h6 class="fs-2">Dashboard Finanace Management</h6>
-                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 50 Commets
-                      </a>
-                    </div>
-                  </div>
-                  <!-- pt-3 -->
-                  <div>
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto">8 Feb 2024</span>
-                    </div>
-                    <h6 class="fs-2">Logo Branding</h6>
-                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 12 Commets
-                      </a>
-                    </div>
+                    <h6 class="fs-2"><a class="fs-2 h6-style" th:text="${adminNote.adminNoteTitle}"
+                        th:href="@{/member/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT Landing
+                        Page</a></h6>
+                    <!-- <a class="fs-2"  th:text="${adminNote.adminNoteTitle}" th:href="@{/admin/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT Landing Page</a> -->
+                    <!-- <span class="fs-2 lh-sm" th:text="${adminNote.adminNoteContent}">[[ ${adminNote.adminNoteContent} ]]</span> -->
                   </div>
                 </div>
                 <!-- 공지사항 끝-->
@@ -730,18 +720,19 @@
         </div>
       </div>
     </div>
-    <div class="dark-transparent sidebartoggler"></div>
-    <script src="/static/js/vendor.min.js"></script>
-    <!-- Import Js Files -->
-    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/static/js/theme/app.horizontal.init.js"></script>
-    <script src="/static/js/theme/theme.js"></script>
-    <script src="/static/js/theme/app.min.js"></script>
+  </div>
+  <div class="dark-transparent sidebartoggler"></div>
+  <script src="/static/js/vendor.min.js"></script>
+  <!-- Import Js Files -->
+  <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+  <script src="/static/js/theme/app.horizontal.init.js"></script>
+  <script src="/static/js/theme/theme.js"></script>
+  <script src="/static/js/theme/app.min.js"></script>
 
-    <!-- solar icons -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
-    <script src="/static/js/apps/chat.js"></script>
+  <!-- solar icons -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
+  <script src="/static/js/apps/chat.js"></script>
 </body>
 
 </html>

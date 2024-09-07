@@ -295,6 +295,7 @@ public class MemberController {
 	@GetMapping("/member/showImageAtMain/{memberId}")
 	public ResponseEntity<Resource> showImageAtMain(@PathVariable(name = "memberId") String memberId)
 			throws MalformedURLException {
+		log.info("컨트롤러 도착");
 		String fullPath = memberService.showImageAtMain(memberId);
 		try {
 			log.info(fullPath);

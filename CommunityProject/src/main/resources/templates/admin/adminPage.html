@@ -1,336 +1,862 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
+<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="horizontal"
   xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>관리자 페이지</title>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/static/css/styles.css" />
   <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+
+  <title>관리자 페이지</title>
+  <style>
+    #loginLine {
+      width: 1200px;
+      margin-left: 139px;
+      margin-right: 139px;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+
+    .loginLineLi {
+      display: inline-block;
+      margin-right: 7px
+    }
+
+    .loginLineA {
+      font-size: 12.5px;
+      color: #595959;
+    }
+
+    .loginLineA:hover {
+      color: #5d87ff;
+    }
+
+    .h6-style {
+      font-size: 0.79rem !important;
+      font-weight: 500 !important;
+      color: #13171e !important;
+      margin: 0 !important;
+      line-height: 1.2 !important;
+      text-decoration: none !important;
+    }
+
+    #pills-tabContent {
+      padding-top: 20px;
+    }
+
+    #h3 {
+      font-size: 22.5px;
+      margin-bottom: 15px !important;
+    }
+
+    #card-body {
+      font-size: 12.5px;
+      padding: 70px !important;
+      padding-top: 0px !important;
+    }
+  </style>
 </head>
 
 <body class="link-sidebar">
-  <div class="body-wrapper">
-    <div class="container-fluid" style="max-width: 1200px;">
-      <!-- 배너 시작-->
-      <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
-        <div class="card-body px-4 py-3">
-          <div class="row align-items-center">
-            <div class="col-9">
-              <h4 class="fw-semibold mb-8">Admin Page</h4>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
-                  </li>
-                  <li class="breadcrumb-item" aria-current="page">Admin Page</li>
-                </ol>
-              </nav>
-            </div>
-            <div class="col-3">
-              <div class="text-center mb-n5">
-                <img src="/static/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 배너 밑 시작 본문 시작 전 -->
-      <div class="card overflow-hidden">
-        <div class="card-body p-0">
-          <img src="/static/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
-          <!-- 아이템 센터로 놓는거 필수 -->
-          <div class="row align-items-center">
-            <!-- 방문자 수 시작-->
-            <div class="col-lg-4 order-lg-1 order-2">
-              <div class="d-flex align-items-center justify-content-around m-4">
-              </div>
-            </div>
-            <!-- 방문자 수 끝 -->
-            <!--프로필사진 시작-->
-            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-              <div class="mt-n5">
-                <div class="d-flex align-items-center justify-content-center mb-2">
-                  <div class="d-flex align-items-center justify-content-center round-110">
-                    <div
-                      class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
-                      <img src="/static/images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
+  <!-- Preloader -->
+  <div class="preloader">
+    <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+  </div>
+  <div id="main-wrapper">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar with-vertical">
+      <!-- <div> -->
+      <!-- ---------------------------------- -->
+      <!-- Start Vertical Layout Sidebar -->
+      <!-- ---------------------------------- -->
+      <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="../horizontal/index.html" class="text-nowrap logo-img">
+            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          </a>
+          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+            <i class="ti ti-x"></i>
+          </a>
+        </div> -->
+    </aside>
+
+
+    <div class="page-wrapper">
+      <!--  Header Start -->
+      <header class="topbar">
+        <div class="app-header with-horizontal">
+          <nav class="navbar navbar-expand-xl container-fluid p-0" style="margin-top: 10px !important;">
+            <ul class="navbar-nav align-items-center">
+              <!-- <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li> -->
+              <li class="nav-item d-none d-xl-block">
+                <a th:href="@{/}" class="text-nowrap nav-link">
+                  <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
+                  <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
+                                        alt="modernize-img" /> -->
+                </a>
+              </li>
+            </ul>
+
+            <!-- topbar 메뉴 -->
+            <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+              <!-- ------------------------------- -->
+              <!-- start apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    수업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                    style="min-width: 340px !important">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a href="../horizontal/app-chat.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 195px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/code.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        코드 공유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">모르는
+                                        코드 물어보세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 280px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/project.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유
+                                        게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">지난
+                                        기수들의 프로젝트를 확인해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <!-- 관리자 이름 적으면 됨 -->
-                <div class="text-center">
-                  <h5 class="mb-0">디마 커뮤니티 관리자</h5>
-                  <p class="mb-0">천재</p>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    취업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                    style="min-width: 340px !important">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a href="../horizontal/app-chat.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 225px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/job.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        취업 공고 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">최신
+                                        채용 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 266px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/recruit.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트
+                                        구인 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">정보를
+                                        확인하고 팀원을 모집해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    자유 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                    style="min-width: 340px !important">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a href="../horizontal/app-chat.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 230px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/board.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        자유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">자유롭게
+                                        게시글을 올려주세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 266px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/info.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">세상의
+                                        모든 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 266px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img src="/static/images/main/classroom.png" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">기수별로
+                                        소통하고 정보를 공유하세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- ------------------------------- -->
+              <!-- end apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item dropdown-hover d-none d-lg-block">
+                <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+              </li>
+              <th:block sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown-hover d-none d-lg-block">
+                  <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+                </li>
+              </th:block>
+            </ul>
+            <!-- topbar 메뉴 끝-->
+
+
+
+            <!-- 채팅/마이페이지 시작 -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+                <a href="javascript:void(0)"
+                  class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- 다크모드 -->
+                  <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                        <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                                            <i class="ti ti-moon moon"></i>
+                                        </a>
+                                        <a class="nav-link sun light-layout" href="javascript:void(0)">
+                                            <i class="ti ti-sun sun"></i>
+                                        </a>
+                                    </li> -->
+                  <!-- 채팅 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                      <img src="/static/images/main/chat.png" alt="modernize-img"
+                        style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                  <!-- 마이페이지 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <!-- 링크 수정 필요-->
+                    <a class="nav-link position-relative"
+                      th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                      <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                      <img src="/static/images/profile/user-1.jpg" alt="modernize-img"
+                        style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
-            <!--프로필사진 끝-->
+            <!-- 채팅/마이페이지 끝-->
+          </nav>
+          <!-- 회원가입/로그인 div 시작 -->
+          <div id="loginLine">
+            <ul>
+              <li class="loginLineLi" sec:authorize="isAnonymous()">
+                <a type="submit" th:href="@{/member/join}" class="loginLineA">회원가입
+                </a>
+              </li>
+              <li class="loginLineLi" sec:authorize="isAnonymous()">|</li> <!-- 구분자 추가 -->
+              <li class="loginLineLi" sec:authorize="isAnonymous()">
+                <a type="submit" th:href="@{/member/login}" class="loginLineA">로그인
+                </a>
+              </li>
+              <li class="loginLineLi" sec:authorize="isAuthenticated()">
+                <a type="submit" th:href="@{/member/logout}" class="loginLineA">로그아웃
+                </a>
+              </li>
+            </ul>
           </div>
-          <!-- 아이템 센터 끝 -->
+          <!-- 회원가입/로그인 div 끝 -->
+        </div>
+      </header>
+      <!--  Header End -->
+
+
+      <!-- 여기부터 본문 시작 -->
+      <div class="body-wrapper" style="padding-top: 120px;">
+        <div class="container-fluid" style="padding-top: 20px !important">
+          <!-- 파란색 부분 시작 -->
+          <!-- <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+                        <div class="card-body px-4 py-3">
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <h4 class="fw-semibold mb-8">디지털 마스터 커뮤니티</h4>
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item" aria-current="page">환영합니다!</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                                <div class="col-3">
+                                    <div class="text-center mb-n5" style="height: 100%;">
+                                        <img src="/static/images/main/coding.png" alt="modernize-img"
+                                            class="img-fluid mb-n4" style="padding-right: 30px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+          <!-- 파란색 부분 끝 -->
+          <!-- 게시판 보여주기 시작 -->
+
           <!-- 사이드바 대신  -->
           <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
-            <a type="submit" th:href="@{/admin/adminPage}"
-              style="display: flex; align-items: center; font-size: 16.5px; margin: 12px;">
-              <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
-              <span class="d-none d-md-block">회원 관리</span>
-            </a>
-            <a type="submit" th:href="@{/admin/adminPageBoard}"
-              style="display: flex; align-items: center; font-size: 16.5px;  margin: 12px;">
-              <i class="ti ti-heart fs-5" style="margin-right: 8px;"></i>
-              <span class="d-none d-md-block">게시글 관리</span>
-            </a>
-            <a type="submit" th:href="@{/admin/adminPageNote}"
-              style="display: flex; align-items: center; font-size: 16.5px;  margin: 12px;">
+            <th:block sec:authorize="hasRole('ADMIN')">
+              <a type="submit" th:href="@{/admin/adminPage}"
+                style="display: flex; align-items: center; font-size: 14.5px; margin: 12px;">
+                <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
+                <span class="d-none d-md-block">회원 관리</span>
+              </a>
+              <a type="submit" th:href="@{/admin/adminPageBoard}"
+                style="display: flex; align-items: center; font-size: 14.5px;  margin: 12px;">
+                <i class="ti ti-heart fs-5" style="margin-right: 8px;"></i>
+                <span class="d-none d-md-block">게시글 관리</span>
+              </a>
+            </th:block>
+            <a type="submit" th:href="@{/member/adminPageNote}"
+              style="display: flex; align-items: center; font-size: 14.5px;  margin: 12px;">
               <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
               <span class="d-none d-md-block">공지사항</span>
             </a>
           </ul>
           <!-- 사이드바 대신 끝-->
-        </div>
-      </div>
-      <!-- 배너 밑 끝 본문 시작 전 -->
 
-      <div class="tab-content" id="pills-tabContent">
-        <!-- 첫번째 본문 시작 -->
-        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-          tabindex="0">
-          <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" style="display: inline;">승인된 회원</h3>
-          <!-- 회원 테이블 본문 시작 -->
-          <div class="widget-content searchable-container list">
-            <div class="card card-body" style="margin-bottom: 0px;">
-              <div class="row">
-                <!-- 검색기능 -->
-                <div class="col-md-4 col-xl-3">
-                  <form class="position-relative">
-                    <input type="text" class="form-control product-search ps-5" id="input-search"
-                      placeholder="Search Contacts..." />
-                    <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                  </form>
+
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+              aria-labelledby="pills-profile-tab" tabindex="0">
+              <!-- <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">승인된 회원</h3> -->
+              <!-- 회원 테이블 본문 시작 -->
+              <div class="widget-content searchable-container list">
+                <!-- <div class="card card-body" style="margin-bottom: 0px;">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3">
+                      <form class="position-relative">
+                        <input type="text" class="form-control product-search ps-5" id="input-search"
+                          placeholder="Search Contacts..." />
+                        <i
+                          class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+                      </form>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="card card-body" style="margin-bottom: 0px; ">
+                  <div class="row" style="align-items: center;">
+                    <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">승인된 회원
+                    </h3>
+                    <div class="col-md-4 col-xl-3">
+                      <form class="position-relative">
+                        <input type="text" class="form-control product-search ps-5" id="input-search"
+                          placeholder="Search Contacts..." />
+                        <i
+                          class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <!-- 승인된 회원 보여줌 -->
-            <div class="card card-body">
-              <div class="table-responsive">
-                <table class="table search-table align-middle text-nowrap">
-                  <p style="display: inline;">게시글 개수 : [[${enablelist.totalElements}]] </p>
-                  <form id="searchForm" th:action="@{/admin/adminPage}" method="GET">
-                    <input type="hidden" name="page" id="requestPage" th:value="${page}">
-                    <select name="memberGroup" class="btn bg-secondary-subtle text-secondary dropdown-toggle"
-                      style="margin-left: 870px;">
-                      <option value="1기" th:selected="${memberGroup == '1기'}">1기</option>
-                      <option value="2기" th:selected="${memberGroup == '2기'}">2기</option>
-                      <option value="3기" th:selected="${memberGroup == '3기'}">3기</option>
-                      <option value="4기" th:selected="${memberGroup == '4기'}">4기</option>
-                      <option value="5기" th:selected="${memberGroup == '5기'}">5기</option>
-                    </select>
-                    <input type="submit" class="btn bg-secondary-subtle text-secondary" value="검색">
-                    </input>
-                  </form>
-                  <thead class="header-item">
-                    <th>
-                      <div class="n-chk align-self-center text-center">
-                        <div class="form-check">
-                          <input type="checkbox" class="form-check-input primary" id="contact-check-all" />
-                          <label class="form-check-label" for="contact-check-all"></label>
-                          <span class="new-control-indicator"></span>
-                        </div>
-                      </div>
-                    </th>
-                    <th>이름</th>
-                    <th>이메일</th>
-                    <th>기수</th>
-                    <th>아이디</th>
-                    <th>승인</th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                    <!-- start row -->
-                    <tr class="search-items" th:each="member, status : ${enablelist}">
-                      <td>
-                        <div class="n-chk align-self-center text-center">
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input contact-chkbox primary" id="checkbox1" />
-                            <label class="form-check-label" for="checkbox1"></label>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <div class="ms-3">
-                            <div class="user-meta-info">
-                              <h6 class="user-name mb-0" data-name="Emma Adams" th:text="${member.memberName}">Emma
-                                Adams</h6>
+                <!-- 승인된 회원 보여줌 -->
+                <div class="card card-body" id="card-body">
+                  <div class="table-responsive">
+                    <table class="table search-table align-middle text-nowrap" style="text-align: center;">
+                      <p style="display: inline;">게시글 개수 : [[${enablelist.totalElements}]] </p>
+                      <form id="searchForm" th:action="@{/admin/adminPage}" method="GET">
+                        <input type="hidden" name="page" id="requestPage" th:value="${page}">
+                        <select name="memberGroup" class="btn bg-secondary-subtle text-secondary dropdown-toggle"
+                          style="margin-left: 800px;">
+                          <option value="1기" th:selected="${memberGroup == '1기'}">1기</option>
+                          <option value="2기" th:selected="${memberGroup == '2기'}">2기</option>
+                          <option value="3기" th:selected="${memberGroup == '3기'}">3기</option>
+                          <option value="4기" th:selected="${memberGroup == '4기'}">4기</option>
+                          <option value="5기" th:selected="${memberGroup == '5기'}">5기</option>
+                        </select>
+                        <input type="submit" class="btn bg-secondary-subtle text-secondary" value="검색">
+                        </input>
+                      </form>
+                      <thead class="header-item">
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>기수</th>
+                        <th>아이디</th>
+                        <th>승인</th>
+                        <th>Action</th>
+                      </thead>
+                      <tbody>
+                        <!-- start row -->
+                        <tr class="search-items" th:each="member, status : ${enablelist}">
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <div class="ms-3">
+                                <div class="user-meta-info">
+                                  <h6 class="user-name mb-0" data-name="Emma Adams" th:text="${member.memberName}">Emma
+                                    Adams</h6>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <span class="usr-email-addr" th:text="${member.memberEmail}">adams@mail.com</span>
-                      </td>
-                      <td>
-                        <span class="usr-location" th:text="${member.memberGroup}">Boston, USA</span>
-                      </td>
-                      <td>
-                        <span class="usr-ph-no" th:text="${member.memberId}">+91 (070) 123-4567</span>
-                      </td>
-                      <td>
-                        <span class="usr-ph-no" th:text="${member.memberEnabled}">+91 (070) 123-4567</span>
-                      </td>
-                      <td>
-                        <div class="action-btn">
-                          <a th:href="@{/memberpage/showpage(memberId=${member.memberId})}" class="text-primary edit">
-                            <i class="ti ti-eye fs-5"></i>
-                          </a>
-                          <a href="javascript:void(0)" class="text-dark delete ms-2">
-                            <i class="ti ti-trash fs-5"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- end row -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- 페이징 -->
-            <nav class="pagination" style="text-align: center; display: block; font-size: 18px;">
-              <a th:if="${navi.startPageGroup > 1}"
-                th:href="@{|/admin/adminPage?page=${navi.startPageGroup - 10}&memberGroup=${memberGroup}|}"
-                class="btn prev">&laquo; Previous</a>
-              <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-                <span th:if="${count == navi.page}">
-                  <b class="page-no current" th:text="${count}"></b>
-                </span>
-                <span th:unless="${count == navi.page}">
-                  <a class="page-no" th:href="@{|/admin/adminPage?page=${count}&memberGroup=${memberGroup}|}"
-                    th:text="${count}"></a>
-                </span>
-              </span>
-              <a th:if="${navi.endPageGroup < navi.totalPages}"
-                th:href="@{|/admin/adminPage?page=${navi.endPageGroup + 1}&memberGroup=${memberGroup}|}"
-                class="btn next10">Next &raquo;</a>
-            </nav>
-            <!--페이징 끝-->
-            <!-- 승인된 회원 보여줌 끝-->
+                          </td>
+                          <td>
+                            <span class="usr-email-addr" th:text="${member.memberEmail}">adams@mail.com</span>
+                          </td>
+                          <td>
+                            <span class="usr-location" th:text="${member.memberGroup}">Boston, USA</span>
+                          </td>
+                          <td>
+                            <span class="usr-ph-no" th:text="${member.memberId}">+91 (070) 123-4567</span>
+                          </td>
+                          <td>
+                            <span class="usr-ph-no" th:text="${member.memberEnabled}">+91 (070) 123-4567</span>
+                          </td>
+                          <td>
+                            <div class="action-btn">
+                              <a th:href="@{/memberpage/showpage(memberId=${member.memberId})}"
+                                class="text-primary edit">
+                                <i class="ti ti-eye fs-5"></i>
+                              </a>
+                              <a href="javascript:void(0)" class="text-dark delete ms-2">
+                                <i class="ti ti-trash fs-5"></i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- end row -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- 페이징 -->
+                <nav class="pagination" style="text-align: center; display: block; font-size: 18px;">
+                  <a th:if="${navi.startPageGroup > 1}"
+                    th:href="@{|/admin/adminPage?page=${navi.startPageGroup - 10}&memberGroup=${memberGroup}|}"
+                    class="btn prev">&laquo; Previous</a>
+                  <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+                    <span th:if="${count == navi.page}">
+                      <b class="page-no current" th:text="${count}"></b>
+                    </span>
+                    <span th:unless="${count == navi.page}">
+                      <a class="page-no" th:href="@{|/admin/adminPage?page=${count}&memberGroup=${memberGroup}|}"
+                        th:text="${count}"></a>
+                    </span>
+                  </span>
+                  <a th:if="${navi.endPageGroup < navi.totalPages}"
+                    th:href="@{|/admin/adminPage?page=${navi.endPageGroup + 1}&memberGroup=${memberGroup}|}"
+                    class="btn next10">Next &raquo;</a>
+                </nav>
+                <!--페이징 끝-->
+                <!-- 승인된 회원 보여줌 끝-->
 
-            <!-- 승인 안된 회원 보여줌 -->
-            <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" style="display: inline;">승인 안된 회원</h3>
-            <div class="card card-body">
-              <div class="table-responsive">
-                <table class="table search-table align-middle text-nowrap">
-                  <p style="display: inline;" th:text="'게시글 개수 : ' + ${disablelist.size()}"> </p>
-                  <thead class="header-item">
-                    <th>
-                      <div class="n-chk align-self-center text-center">
-                        <div class="form-check">
-                          <input type="checkbox" class="form-check-input primary" id="contact-check-all" />
-                          <label class="form-check-label" for="contact-check-all"></label>
-                          <span class="new-control-indicator"></span>
-                        </div>
-                      </div>
-                    </th>
-                    <th>이름</th>
-                    <th>이메일</th>
-                    <th>기수</th>
-                    <th>아이디</th>
-                    <th>승인</th>
-                    <th>승인 허가</th>
-                  </thead>
-                  <tbody>
-                    <!-- start row -->
-                    <tr class="search-itemsno" th:each="member, status : ${disablelist}">
-                      <td>
-                        <div class="n-chk align-self-center text-center">
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input contact-chkbox primary" id="checkbox1" />
-                            <label class="form-check-label" for="checkbox1"></label>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <div class="ms-3">
-                            <div class="user-meta-info">
-                              <h6 class="user-name mb-0" data-name="Emma Adams" th:text="${member.memberName}">Emma
-                                Adams</h6>
+                <!-- 승인 안된 회원 보여줌 -->
+                <div class="card card-body" style="margin-bottom: 0px; ">
+                  <div class="row" style="align-items: center;">
+                    <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">승인 안된 회원
+                    </h3>
+                    <div class="col-md-4 col-xl-3">
+                      <form class="position-relative">
+                        <input type="text" class="form-control product-search ps-5" id="input-search"
+                          placeholder="Search Contacts..." />
+                        <i
+                          class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card card-body" id="card-body">
+                  <div class="table-responsive">
+                    <table class="table search-table align-middle text-nowrap" style="text-align: center;">
+                      <p style="display: inline;" th:text="'게시글 개수 : ' + ${disablelist.size()}"> </p>
+                      <thead class="header-item">
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>기수</th>
+                        <th>아이디</th>
+                        <th>승인</th>
+                        <th>승인 허가</th>
+                      </thead>
+                      <tbody>
+                        <!-- start row -->
+                        <tr class="search-itemsno" th:each="member, status : ${disablelist}">
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <div class="ms-3">
+                                <div class="user-meta-info">
+                                  <h6 class="user-name mb-0" data-name="Emma Adams" th:text="${member.memberName}">Emma
+                                    Adams</h6>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <span class="usr-email-addr" th:text="${member.memberEmail}">adams@mail.com</span>
-                      </td>
-                      <td>
-                        <span class="usr-location" th:text="${member.memberGroup}">Boston, USA</span>
-                      </td>
-                      <td>
-                        <span class="usr-ph-no" th:text="${member.memberId}">+91 (070) 123-4567</span>
-                      </td>
-                      <td>
-                        <span class="usr-ph-no" th:text="${member.memberEnabled}">+91 (070) 123-4567</span>
-                      </td>
-                      <td>
-                        <div class="action-btn">
-                          <a class="btn bg-secondary-subtle text-secondary"
-                            th:href="@{/email/approve(memberId=${member.memberId}, memberEmail=${member.memberEmail})}">
-                            승인
-                          </a>
-                          <a type="button" class="btn bg-danger-subtle text-danger"
-                            th:href="@{/email/refuse(memberId=${member.memberId}, memberEmail=${member.memberEmail})}">
-                            거부
-                          </a>
-                          <!--에러 발생시 출력-->
-                          <th:block th:if="${error}">
-                            <div th:text="${errMessage}" style="font-size: 0.8em; color:red;" id="errormessage"></div>
-                          </th:block>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- end row -->
-                  </tbody>
-                </table>
+                          </td>
+                          <td>
+                            <span class="usr-email-addr" th:text="${member.memberEmail}">adams@mail.com</span>
+                          </td>
+                          <td>
+                            <span class="usr-location" th:text="${member.memberGroup}">Boston, USA</span>
+                          </td>
+                          <td>
+                            <span class="usr-ph-no" th:text="${member.memberId}">+91 (070) 123-4567</span>
+                          </td>
+                          <td>
+                            <span class="usr-ph-no" th:text="${member.memberEnabled}">+91 (070) 123-4567</span>
+                          </td>
+                          <td>
+                            <div class="action-btn">
+                              <a class="btn bg-secondary-subtle text-secondary"
+                                th:href="@{/email/approve(memberId=${member.memberId}, memberEmail=${member.memberEmail})}">
+                                승인
+                              </a>
+                              <a type="button" class="btn bg-danger-subtle text-danger"
+                                th:href="@{/email/refuse(memberId=${member.memberId}, memberEmail=${member.memberEmail})}">
+                                거부
+                              </a>
+                              <!--에러 발생시 출력-->
+                              <th:block th:if="${error}">
+                                <div th:text="${errMessage}" style="font-size: 0.8em; color:red;" id="errormessage">
+                                </div>
+                              </th:block>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- end row -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- 승인 안된 회원 보여줌 끝-->
               </div>
             </div>
-            <!-- 승인 안된 회원 보여줌 끝-->
+            <!-- 첫번째 본문 끝 -->
+
           </div>
+          <!-- 이 div가 본문들의 전체를 감싸야함 -->
+
         </div>
-        <!-- 첫번째 본문 끝 -->
-
       </div>
-      <!-- 이 div가 본문들의 전체를 감싸야함 -->
+      <!-- 본문 끝 -->
+      <script>
+        function handleColorTheme(e) {
+          document.documentElement.setAttribute("data-color-theme", e);
+        }
+      </script>
+      <!-- <button
+                    class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
+                    type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                    aria-controls="offcanvasExample">
+                    <i class="icon ti ti-settings fs-7"></i>
+                </button> -->
+
+      <!-- <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+                    aria-labelledby="offcanvasExampleLabel">
+                    <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+                        <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
+                            Settings
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body h-n80" data-simplebar>
+                        <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
+
+                        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
+                                <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
+                            </label>
+
+                            <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
+                                <i class="icon ti ti-moon fs-7 me-2"></i>Dark
+                            </label>
+                        </div>
+
+                        <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
+                        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                            <input type="radio" class="btn-check" name="direction-l" id="ltr-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary" for="ltr-layout">
+                                <i class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR
+                            </label>
+
+                            <input type="radio" class="btn-check" name="direction-l" id="rtl-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary" for="rtl-layout">
+                                <i class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL
+                            </label>
+                        </div>
+
+                        <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
+
+                        <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
+                            <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-title="BLUE_THEME">
+                                <div
+                                    class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
+                                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                                </div>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-title="AQUA_THEME">
+                                <div
+                                    class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
+                                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                                </div>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-title="PURPLE_THEME">
+                                <div
+                                    class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
+                                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                                </div>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="handleColorTheme('Green_Theme')" for="green-theme-layout"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
+                                <div
+                                    class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
+                                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                                </div>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
+                                <div
+                                    class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
+                                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                                </div>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                                onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
+                                <div
+                                    class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
+                                    <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                                </div>
+                            </label>
+                        </div>
+
+                        <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
+                        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                            <div>
+                                <input type="radio" class="btn-check" name="page-layout" id="vertical-layout"
+                                    autocomplete="off" />
+                                <label class="btn p-9 btn-outline-primary" for="vertical-layout">
+                                    <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout"
+                                    autocomplete="off" />
+                                <label class="btn p-9 btn-outline-primary" for="horizontal-layout">
+                                    <i class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal
+                                </label>
+                            </div>
+                        </div>
+
+                        <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
+
+                        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                            <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary" for="boxed-layout">
+                                <i class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed
+                            </label>
+
+                            <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary" for="full-layout">
+                                <i class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full
+                            </label>
+                        </div>
+
+                        <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
+                        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                            <a href="javascript:void(0)" class="fullsidebar">
+                                <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar"
+                                    autocomplete="off" />
+                                <label class="btn p-9 btn-outline-primary" for="full-sidebar">
+                                    <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
+                                </label>
+                            </a>
+                            <div>
+                                <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar"
+                                    autocomplete="off" />
+                                <label class="btn p-9 btn-outline-primary" for="mini-sidebar">
+                                    <i class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse
+                                </label>
+                            </div>
+                        </div>
+
+                        <h6 class="mt-5 fw-semibold fs-4 mb-2">Card With</h6>
+
+                        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                            <input type="radio" class="btn-check" name="card-layout" id="card-with-border"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary" for="card-with-border">
+                                <i class="icon ti ti-border-outer fs-7 me-2"></i>Border
+                            </label>
+
+                            <input type="radio" class="btn-check" name="card-layout" id="card-without-border"
+                                autocomplete="off" />
+                            <label class="btn p-9 btn-outline-primary" for="card-without-border">
+                                <i class="icon ti ti-border-none fs-7 me-2"></i>Shadow
+                            </label>
+                        </div>
+                    </div>
+                </div> -->
+      <!-- </div> -->
     </div>
+  </div>
+  <div class="dark-transparent sidebartoggler"></div>
+  <!-- Import Js Files -->
+  <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+  <script src="/static/js/theme/app.init.js"></script>
+  <script src="/static/js/theme/theme.js"></script>
+  <script src="/static/js/theme/app.min.js"></script>
+  <script src="/static/js/vendor.min.js"></script>
+  <script src="/static/js/theme/sidebarmenu.js"></script>
+  <script src="/static/js/theme/app.horizontal.init.js"></script>
 
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script src="/static/libs/fullcalendar/index.global.min.js"></script>
+  <script src="/static/js/apps/contact.js"></script>
 
-    <div class="dark-transparent sidebartoggler"></div> -->
-    <!-- Import Js Files -->
-    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/static/js/theme/app.init.js"></script>
-    <script src="/static/js/theme/theme.js"></script>
-    <script src="/static/js/theme/app.min.js"></script>
-    <!-- <script src="/static/js/theme/sidebarmenu.js"></script> -->
-
-    <!-- solar icons -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
-    <script src="/static/libs/fullcalendar/index.global.min.js"></script>
-    <!-- <script src="/static/js/apps/contact.js"></script> -->
-
-    <script>
-      function pageFormSubmit(page) {
-        document.getElementById("requestPage").value = page;
-        // 선택한 검색 옵션과 검색어를 폼에 추가하여 서브밋
-        var memberGroup = document.getElementById("memberGroup").value;
-        document
-          .getElementById("memberGroup")
-          .setAttribute("name", "memberGroup");
-        document.getElementById("searchForm").submit();
-      }
-    </script>
+  <script>
+    function pageFormSubmit(page) {
+      document.getElementById("requestPage").value = page;
+      var memberGroup = document.getElementById("memberGroup").value;
+      document
+        .getElementById("memberGroup")
+        .setAttribute("name", "memberGroup");
+      document.getElementById("searchForm").submit();
+    }
+  </script>
 </body>
 
 </html>
