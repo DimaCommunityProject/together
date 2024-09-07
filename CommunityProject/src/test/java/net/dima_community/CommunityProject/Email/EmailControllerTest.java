@@ -9,7 +9,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import jakarta.mail.MessagingException;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
-import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.email.controller.EmailController;
 
 @SpringBootTest

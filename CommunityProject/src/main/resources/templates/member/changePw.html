@@ -48,7 +48,7 @@
             $.ajax({
                 url: "/member/changePw"
                 , type: "POST"
-                , data: { "newmemberPw": newmemberPw, "loginName": `[[${loginName}]]` }
+                , data: { "newmemberPw": newmemberPw}
                 , success: function (data) {
                     console.log(data);
                     if (data == "false") {

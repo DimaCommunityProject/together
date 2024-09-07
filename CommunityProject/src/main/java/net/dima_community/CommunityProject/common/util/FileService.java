@@ -56,15 +56,16 @@ public class FileService {
 		}
 		return savedFileName; // 저장 파일명 반환
 	}// end saveFile
-	
+
 	// 저장장치에 저장된 파일을 삭제(경로 + 파일명)
-		public static boolean deleteFile(String fullPath) {
-			boolean result = false;	
-			
-			File delFile = new File(fullPath);	//경로랑 파일 상태가 포함되어 잇음
-			if(delFile.isFile()) { 
-				result = delFile.delete();
-			}
-			return result;
-		}//end deleteFile
+	public static boolean deleteFile(String fullPath) {
+		boolean result = false;
+
+		File delFile = new File(fullPath); // 경로랑 파일 상태가 포함되어 잇음
+		if (delFile.isFile()) {
+			result = delFile.delete();
+		}
+		return result;
+	}// end deleteFile
+
 }// end class

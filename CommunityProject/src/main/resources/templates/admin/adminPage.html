@@ -7,8 +7,8 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/css/styles.css" />
-  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+  <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
 
   <title>관리자 페이지</title>
   <style>
@@ -64,7 +64,7 @@
 <body class="link-sidebar">
   <!-- Preloader -->
   <div class="preloader">
-    <img src="/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -75,8 +75,8 @@
       <!-- ---------------------------------- -->
       <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="../horizontal/index.html" class="text-nowrap logo-img">
-            <img src="/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
@@ -98,8 +98,8 @@
               </li> -->
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
-                  <img src="/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
-                  <!-- <img src="/images/logos/light-logo.svg" class="light-logo" width="180"
+                  <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
+                  <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
                                         alt="modernize-img" /> -->
                 </a>
               </li>
@@ -131,7 +131,7 @@
                                     style="width: 195px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/code.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/code.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -147,7 +147,7 @@
                                     style="width: 280px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/project.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/project.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -189,7 +189,7 @@
                                     style="width: 225px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/job.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/job.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -205,7 +205,7 @@
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/recruit.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/recruit.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -247,7 +247,7 @@
                                     style="width: 230px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/board.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/board.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -263,7 +263,7 @@
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/info.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/info.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -278,7 +278,7 @@
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/classroom.png" alt="modernize-img" class="img-fluid"
+                                      <img src="/static/images/main/classroom.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -337,7 +337,7 @@
                   <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
                       data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                      <img src="/images/main/chat.png" alt="modernize-img"
+                      <img src="/static/images/main/chat.png" alt="modernize-img"
                         style="width: 30.2px; height: 30px;" />
                     </a>
                   </li>
@@ -347,7 +347,7 @@
                     <a class="nav-link position-relative"
                       th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
                       <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
-                      <img src="/images/profile/user-1.jpg" alt="modernize-img"
+                      <img src="/static/images/profile/user-1.jpg" alt="modernize-img"
                         style="width: 30.2px; height: 30px;" />
                     </a>
                   </li>
@@ -397,7 +397,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="text-center mb-n5" style="height: 100%;">
-                                        <img src="/images/main/coding.png" alt="modernize-img"
+                                        <img src="/static/images/main/coding.png" alt="modernize-img"
                                             class="img-fluid mb-n4" style="padding-right: 30px;" />
                                     </div>
                                 </div>
@@ -520,7 +520,8 @@
                                 class="text-primary edit">
                                 <i class="ti ti-eye fs-5"></i>
                               </a>
-                              <a href="javascript:void(0)" class="text-dark delete ms-2">
+                              <a th:href="@{/member/deleteMember(memberId=${member.memberId})}"
+                                class="text-dark delete ms-2">
                                 <i class="ti ti-trash fs-5"></i>
                               </a>
                             </div>
@@ -833,19 +834,19 @@
   </div>
   <div class="dark-transparent sidebartoggler"></div>
   <!-- Import Js Files -->
-  <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/libs/simplebar/dist/simplebar.min.js"></script>
-  <script src="/js/theme/app.init.js"></script>
-  <script src="/js/theme/theme.js"></script>
-  <script src="/js/theme/app.min.js"></script>
-  <script src="/js/vendor.min.js"></script>
-  <script src="/js/theme/sidebarmenu.js"></script>
-  <script src="/js/theme/app.horizontal.init.js"></script>
+  <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+  <script src="/static/js/theme/app.init.js"></script>
+  <script src="/static/js/theme/theme.js"></script>
+  <script src="/static/js/theme/app.min.js"></script>
+  <script src="/static/js/vendor.min.js"></script>
+  <script src="/static/js/theme/sidebarmenu.js"></script>
+  <script src="/static/js/theme/app.horizontal.init.js"></script>
 
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-  <script src="/libs/fullcalendar/index.global.min.js"></script>
-  <script src="/js/apps/contact.js"></script>
+  <script src="/static/libs/fullcalendar/index.global.min.js"></script>
+  <script src="/static/js/apps/contact.js"></script>
 
   <script>
     function pageFormSubmit(page) {

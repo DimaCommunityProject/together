@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 import java.time.LocalDateTime;
 

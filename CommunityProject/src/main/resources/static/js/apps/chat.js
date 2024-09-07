@@ -270,10 +270,10 @@ $(document).ready(function () {
 	    // 멤버 이름과 이미지 생성
 	    members.forEach(function (memberName, index) {
 	        imagesHtml += `
-	        <img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />
-	        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
-                <span class="visually-hidden">New alerts</span>
-            </span>
+		        <img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />
+		        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
+	                <span class="visually-hidden">New alerts</span>
+	            </span>
 	        `
 	        namesHtml += `${memberName}` + (index < members.length - 1 ? ', ' : ''); // 쉼표로 이름 구분
 	    });

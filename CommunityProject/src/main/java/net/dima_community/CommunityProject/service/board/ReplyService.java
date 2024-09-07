@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.service.member;
+package net.dima_community.CommunityProject.service.board;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
-import net.dima_community.CommunityProject.repository.member.ReplyRepository;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
+import net.dima_community.CommunityProject.repository.board.ReplyRepository;
 
 @Service
 @RequiredArgsConstructor

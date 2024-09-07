@@ -15,7 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
 
 @Entity
 @Getter

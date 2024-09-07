@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.chat.ChatRoomDTO;
 import net.dima_community.CommunityProject.dto.chat.ChatRoomMemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
 import net.dima_community.CommunityProject.service.chat.ChatRoomService;

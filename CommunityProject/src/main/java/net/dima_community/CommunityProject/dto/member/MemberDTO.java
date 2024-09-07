@@ -1,7 +1,7 @@
-package net.dima_community.CommunityProject.dto;
+package net.dima_community.CommunityProject.dto.member;
 
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 import org.springframework.web.multipart.MultipartFile;
 
