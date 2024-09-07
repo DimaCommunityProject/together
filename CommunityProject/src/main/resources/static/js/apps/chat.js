@@ -1,13 +1,15 @@
 $(document).ready(function () {
     let stompClient = null;
-    let currentChatRoomId = null;
-    let currnetChatUniqueKey = null;
     let currentUserId = $('.userId').text().trim();
     let currentUserName = $('.userName').text().trim();
+	let currentUserRole = null;
+	let currentUserEmail = null;
+	let currentUserImage = null;
     let currentUniqueKey = null; 
-    var chatarea = $("#chat");
+	let currentChatRoomId = null;
 
-    // 초기 데이터 로드
+
+    // ========== 초기 데이터 로드 ==========
     function loadInitialData() {
         $.ajax({
             url: '/api/chat/chatData',
@@ -19,38 +21,59 @@ $(document).ready(function () {
         });
     }
 
- 	// 초기 데이터를 처리하는 함수
+ 	// ========== 초기 데이터를 처리하는 함수 ==========
     function handleInitialData(response) {
         console.log("Received data:", response);
+        
+        // 1. 대화 상대 목록 로드
+        updateRecipientSelect(response.members);
 
-        // 사용자 정보 설정
+        // 2. 사용자 정보 설정
         updateUserInfo(response.currentUser);
 
-        // 채팅방 목록 로드
+        // 3. 채팅방 목록 로드
         updateChatRooms(response.chatRooms);
 
-        // 대화 상대 목록 로드
-        updateRecipientSelect(response.members);
+        
     }
+    
+    // ========== 1. 대화 상대 목록 업데이트 ==========
+    function updateRecipientSelect(members) {
+        $('#recipientSelect').empty();
+        members.forEach(function (member) {
+            if (member.memberId !== currentUserId) {
+                $('#recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
+            }
+        });
+    }
+    
+    // ========== 1. 대화 상대 목록 업데이트 끝 ==========
+    
 
- 	// 사용자 정보를 업데이트하는 함수
+ 	// ========== 2. 사용자 정보 설정 업데이트 ==========
     function updateUserInfo(currentUser) {
         if (currentUser && currentUser.memberId) {
+			currentUserName = currentUser.memberName;
             currentUserId = currentUser.memberId.trim();
-            currentUserName = currentUser.memberName;
+            currentUserEmail = currentUser.memberEmail;
+            currentUserRole = currentUser.memberRole;
+            currentUserImage = 'src', `../../images/profile/${currentUserName}.jpg`;
 			
-            $('.userName').text(currentUser.memberName);
-            $('.userId').text(currentUser.memberId);
-            $('.userRole').text(currentUser.memberRole);
-            $('.userEmail').text(currentUser.memberEmail);
-            $('.userProfileImage').attr('src', `../../images/profile/${currentUser.memberName}.jpg`);
+			
+            $('.userName').text(currentUserName);
+            $('.userId').text(currentUserId);
+            $('.userRole').text(currentUserRole);
+            $('.userEmail').text(currentUserEmail);
+            $('.userProfileImage').attr('src', `../../images/profile/${currentUserName}.jpg`);
         } else {
             console.error("Invalid user data.");
         }
     }
+    
+    // ========== 2. 사용자 정보 설정 업데이트 끝 ==========
 
 
-    // 채팅방 목록 업데이트
+    // ========== 3. 채팅방 목록 로드 ==========
     function updateChatRooms(chatRooms) {
 		
 		// 유니크 값으로 멤버 이름 조회 
@@ -60,71 +83,47 @@ $(document).ready(function () {
         $('#chatList').empty();
         chatRooms.forEach(renderChatRoom);
     }
-    
- 	// 채팅방 UI 렌더링
-    function renderChatRoom(room) {
-        let imagesHtml = '';
-        let memberNames = '';
-        let uniqueKey = room.uniqueKey; // uniqueKey 가져오기
 
-        if (Array.isArray(room.members)) {
-            room.members.forEach(function (member, index) {
-                if (member.deleted === 0) {
-                    imagesHtml += generateMemberImageHtml(member);
-                    memberNames += member.memberName + (index < room.members.length - 1 ? ', ' : '');
-                }
-            });
-        } else {
-            console.error('Members is not defined or not an array for room: ' + room.id);
-        }
-
-        const roomHtml = `
-            <li>
-                <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" 
-                	data-room-id="${room.id}" 
-                	data-unique-key="${uniqueKey}">
-                    <div class="d-flex align-items-center">
-                        ${imagesHtml} 
-                        <div class="ms-3 d-inline-block w-75">
-                            <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
-                                ${memberNames}
-                            </h6>
-                        </div>
-                    </div>
-                </a>
-            </li>
-        `;
-        
-        $('#chatList').append(roomHtml);
-        registerChatRoomClickEvent(); // 클릭 이벤트 등록
-    }
-    
-    // 채팅방 멤버 UI 업데이트
-    function updateChatPartnerUI(members) {
+ 	// ========== 채팅방 리스트 UI 렌더링 ========== 
+	function renderChatRoom(room) {
 	    let imagesHtml = '';
-	    let namesHtml = '';
+	    let memberNames = '';
+	    currentUniqueKey = room.uniqueKey; // uniqueKey 가져오기
 	
-	    if (Array.isArray(members)) {
-	        members.forEach(function (member) {
-	            const memberName = member.name || 'Unknown'; // 기본값 설정
-	            imagesHtml += `<img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />`
-	            namesHtml += `${memberName}, `;
-	        });
+	    // uniqueKey에서 멤버 이름을 쉼표로 분리
+	    const members = currentUniqueKey.split(','); // 쉼표로 구분된 이름 배열
 	
-	        namesHtml = namesHtml.slice(0, -2); // 마지막 쉼표 제거
-	    } else {
-	        console.error('Members is not defined or not an array');
-	    }
+	    // 멤버 이름과 이미지 생성
+	    members.forEach(function (memberName, index) {
+	        imagesHtml += generateMemberImageHtml(memberName); // 이미지 생성
+	        memberNames += memberName + (index < members.length - 1 ? ', ' : ''); // 쉼표로 이름 구분
+	    });
 	
-	    $('#chatPartnerImages').html(imagesHtml);
-	    $('#chatPartnerName').text(namesHtml);
+	    // 채팅방 HTML 생성
+	    const roomHtml = `
+	        <li>
+	            <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" 
+	                data-room-id="${room.id}" 
+	                data-unique-key="${currentUniqueKey}">
+	                <div class="d-flex align-items-center">
+	                    ${imagesHtml} 
+	                    <div class="ms-3 d-inline-block w-75">
+	                        <h6 class="mb-1 fw-semibold chat-title" data-username="${memberNames}">
+	                            ${memberNames}
+	                        </h6>
+	                    </div>
+	                </div>
+	            </a>
+	        </li>
+	    `;
+	    
+	    $('#chatList').append(roomHtml);
+	    registerChatRoomClickEvent(); // 클릭 이벤트 등록
 	}
-
-
-    // 멤버 이미지 HTML 생성
-    function generateMemberImageHtml(member) {
-	    const memberName = member.memberName || 'default'; // undefined 방지
-	    const badgeClass = member.isOnline ? 'bg-success' : 'bg-light';   // 상태에 따라 변경 가능
+	
+	// ========== 채팅방멤버 프로필 이미지 HTML 생성 ==========
+	function generateMemberImageHtml(memberName) {
+	    const badgeClass = 'bg-light';   // 상태에 따라 배지 클래스 결정 (추후 수정 가능)
 	    return `
 	        <span class="position-relative">
 	            <img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />
@@ -134,29 +133,9 @@ $(document).ready(function () {
 	        </span>
 	    `;
 	}
-
-
-
-    // 대화 상대 목록 업데이트
-    function updateRecipientSelect(members) {
-        $('#recipientSelect').empty();
-        members.forEach(function (member) {
-            if (member.memberId !== currentUserId) {
-                $('#recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
-            }
-        });
-    }
-
- 	// 채팅방 클릭 이벤트 등록
-    function registerChatRoomClickEvent() {
-        $('.chat-user').off('click').on('click', function () {
-            const selectedRoomId = $(this).data('room-id');
-            if (selectedRoomId) {
-                $('.chat-not-selected').addClass('d-none');
-                joinChatRoom(selectedRoomId);
-            }
-        });
-    }
+	
+	// ========== 3. 채팅방 목록 로드 끝 ==========
+    
     
 
  	// STOMP 연결 및 구독 설정
@@ -173,8 +152,133 @@ $(document).ready(function () {
             console.log("WebSocket connection closed:", error);
         });
     }
+    
+	
+	// 채팅방 클릭 이벤트 등록
+    function registerChatRoomClickEvent() {
+        $('.chat-user').off('click').on('click', function () {
+            const selectedRoomId = $(this).data('room-id');
+            if (selectedRoomId) {
+                $('.chat-not-selected').addClass('d-none');
+                joinChatRoom(selectedRoomId);
+            }
+        });
+    }
+    
+    // 채팅방 입장 
+	function joinChatRoom(roomId) {
+	    if (stompClient && roomId) {
+	        if (currentChatRoomId) {
+	            // 현재 채팅방에서 퇴장 메시지 전송
+	            leaveChatRoom(currentChatRoomId);
+	            // 이전 채팅방 구독 해제
+	            stompClient.unsubscribe(`sub-${currentChatRoomId}`);
+	        }
+	
+	        currentChatRoomId = roomId;
+	        
+	        // 선택된 채팅방에서 uniqueKey 가져오기
+	        const selectedChatRoom = $(`.chat-user[data-room-id="${roomId}"]`);
+	        currentUniqueKey = selectedChatRoom.data('unique-key'); 
+	        console.log("Selected uniqueKey:", currentUniqueKey);
+	
+	        // 새로운 채팅방 구독 설정
+	        stompClient.subscribe(`/queue/chat.room.${roomId}`, function (messageOutput) {
+	            let message;
+	            try {
+	                message = JSON.parse(messageOutput.body);
+	                console.log("Parsed message:", message);
+	            } catch (e) {
+	                console.log("Received plain text message:", messageOutput.body);
+	                message = { content: messageOutput.body };
+	            }
+	            showMessage(message); // 실시간으로 도착한 메시지를 화면에 출력
+	        }, { id: `sub-${roomId}` });
+	
+	        // **이전 메시지 로드**
+	        loadChatMessages(roomId);
+	
+	        // 채팅방 멤버 목록 가져오기 및 UI 업데이트
+	        loadChatRoomMembers(roomId);
+	
+	        // 사용자 입장 메시지 전송
+	        const enterMessage = {
+	            senderId: currentUserId,
+	            chatRoomId: roomId,
+	            content: currentUserName + '님이 입장하셨습니다.'
+	        };
+	        stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
+	    }
+	}
+
+	// 채팅방에서 퇴장 시 메시지
+    function leaveChatRoom(roomId) {
+        if (stompClient && roomId) {
+            const exitMessage = {
+                senderId: currentUserId,
+                chatRoomId: roomId,
+                content: currentUserName + '님이 퇴장하셨습니다.'
+            };
+            stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
+        }
+    }
+    
+    // 이전 메시지 로드
+    function loadChatMessages(roomId) {
+        return $.ajax({
+            url: `/api/chat/getMessages/${roomId}`, // 서버에서 메시지를 가져오는 API 경로
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                console.log("Previous messages loaded:", response);
+                $('#messageArea').empty(); // 기존 메시지 삭제
+                response.forEach(function(message) {
+                    showMessage(message); // 각 메시지를 화면에 표시
+                });
+                scrollToBottom(); // 메시지 로드 후 스크롤을 최하단으로 이동
+            },
+            error: function(error) {
+                console.error('Error loading messages:', error);
+            }
+        });
+    }
+    
+    // 채팅방 멤버 목록을 가져와 UI 업데이트
+	function loadChatRoomMembers(roomId) {
+	    $.ajax({
+	        url: `/api/chat/getRoomMemberNamesByUniqueKey/${currentUniqueKey}`, // 서버에서 멤버 목록을 가져오는 API 경로
+	        method: 'GET',
+	        success: function(response) {
+	            console.log("Members in chat room:", response.members);
+	            updateChatPartnerUI(response.members); // 멤버 목록 UI 업데이트
+	        },
+	        error: function(error) {
+	            console.error('Error loading chat room members:', error);
+	        }
+	    });
+	}
+	
+	// ========== 채팅방 멤버 UI 업데이트 ==========
+    function updateChatPartnerUI(room) {
+	    let imagesHtml = '';
+	    let namesHtml = '';
+	
+	    // room.uniqueKey 값을 쉼표로 분리하여 멤버 이름 배열 생성
+	    const members = currentUniqueKey.split(','); // 쉼표로 구분된 이름 배열
+	
+	    // 멤버 이름과 이미지 생성
+	    members.forEach(function (memberName, index) {
+	        imagesHtml += `<img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />`
+	        namesHtml += `${memberName}` + (index < members.length - 1 ? ', ' : ''); // 쉼표로 이름 구분
+	    });
+	
+	    // UI에 반영
+	    $('#chatPartnerImages').html(imagesHtml);  // 멤버 프로필 이미지 업데이트
+	    $('#chatPartnerName').text(namesHtml);  // 멤버 이름 목록 업데이트
+	}
+    
  	
-    // 메시지 처리
+    // 메시지창 처리
     function showMessage(message) {
     	console.log(message);
     	const senderId = message.senderId.trim();  // 메시지를 보낸 사용자의 ID를 가져옴
@@ -186,7 +290,8 @@ $(document).ready(function () {
 	    $('#messageArea').append(messageHtml);
 	    scrollToBottom(); // 메시지를 추가한 후 스크롤을 최하단으로 이동
 	}
-    
+	
+	// 보낸 메시지 
     function generateSentMessageHtml(message) {
         const messageDate = new Date(message.timestamp);
         const hours = messageDate.getHours().toString().padStart(2, '0');
@@ -204,6 +309,7 @@ $(document).ready(function () {
 	    `;
     }
 
+	//받은 메시지
     function generateReceivedMessageHtml(message) {
         const messageDate = new Date(message.timestamp);
         const hours = messageDate.getHours().toString().padStart(2, '0');
@@ -225,15 +331,6 @@ $(document).ready(function () {
 	    `;
     }
     
-   function leaveMessageHtml(message){
-	   leaveMessageHtml = `
-           <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
-               <div class="p-2 text-danger d-inline-block text-dark fs-3">
-                   ${message.content}
-               </div>
-           </div>`;
-   }
-
     // 스크롤을 최하단으로 이동시키는 함수
     function scrollToBottom() {
         const chatBox = document.querySelector('.chat-box-inner');
@@ -285,79 +382,7 @@ $(document).ready(function () {
         }
     });
     
-	// 채팅방 입장 
-	function joinChatRoom(roomId) {
-	    if (stompClient && roomId) {
-	        if (currentChatRoomId) {
-	            // 현재 채팅방에서 퇴장 메시지 전송
-	            leaveChatRoom(currentChatRoomId);
-	            // 이전 채팅방 구독 해제
-	            stompClient.unsubscribe(`sub-${currentChatRoomId}`);
-	        }
-	
-	        currentChatRoomId = roomId;
-	        
-	        // 선택된 채팅방에서 uniqueKey 가져오기
-	        const selectedChatRoom = $(`.chat-user[data-room-id="${roomId}"]`);
-	        currentUniqueKey = selectedChatRoom.data('unique-key'); 
-	        console.log("Selected uniqueKey:", currentUniqueKey);
-	
-	        // 새로운 채팅방 구독 설정
-	        stompClient.subscribe(`/queue/chat.room.${roomId}`, function (messageOutput) {
-	            let message;
-	            try {
-	                message = JSON.parse(messageOutput.body);
-	                console.log("Parsed message:", message);
-	            } catch (e) {
-	                console.log("Received plain text message:", messageOutput.body);
-	                message = { content: messageOutput.body };
-	            }
-	            showMessage(message); // 실시간으로 도착한 메시지를 화면에 출력
-	        }, { id: `sub-${roomId}` });
-	
-	        // **이전 메시지 로드**
-	        loadChatMessages(roomId);
-	
-	        // 채팅방 멤버 목록 가져오기 및 UI 업데이트
-	        loadChatRoomMembers(roomId);
-	
-	        // 사용자 입장 메시지 전송
-	        const enterMessage = {
-	            senderId: currentUserId,
-	            chatRoomId: roomId,
-	            content: currentUserName + '님이 입장하셨습니다.'
-	        };
-	        stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
-	    }
-	}
 
-	// 채팅방 멤버 목록을 가져와 UI 업데이트
-	function loadChatRoomMembers(roomId) {
-	    $.ajax({
-	        url: `/api/chat/getRoomMemberNamesByUniqueKey/${currentUniqueKey}`, // 서버에서 멤버 목록을 가져오는 API 경로
-	        method: 'GET',
-	        success: function(response) {
-	            console.log("Members in chat room:", response.members);
-	            updateChatPartnerUI(response.members); // 멤버 목록 UI 업데이트
-	        },
-	        error: function(error) {
-	            console.error('Error loading chat room members:', error);
-	        }
-	    });
-	}
-    
- 	// 채팅방에서 퇴장
-    function leaveChatRoom(roomId) {
-        if (stompClient && roomId) {
-            const exitMessage = {
-                senderId: currentUserId,
-                chatRoomId: roomId,
-                content: currentUserName + '님이 퇴장하셨습니다.'
-            };
-            stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
-        }
-    }
- 	
  	// 페이지 벗어날 때 WebSocket 연결 끊기 및 퇴장 처리
     function checkAndDisconnectSocket() {
         if (stompClient) {
@@ -371,26 +396,7 @@ $(document).ready(function () {
         }
     }
     
- 	// 이전 메시지 로드
-    function loadChatMessages(roomId) {
-        return $.ajax({
-            url: `/api/chat/getMessages/${roomId}`, // 서버에서 메시지를 가져오는 API 경로
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                console.log("Previous messages loaded:", response);
-                $('#messageArea').empty(); // 기존 메시지 삭제
-                response.forEach(function(message) {
-                    showMessage(message); // 각 메시지를 화면에 표시
-                });
-                scrollToBottom(); // 메시지 로드 후 스크롤을 최하단으로 이동
-            },
-            error: function(error) {
-                console.error('Error loading messages:', error);
-            }
-        });
-    }
-    
+
  	// 대화상대 초대 
 	$('.inviteButton').click(function () {
 	    // 현재 선택된 채팅방의 uniqueKey 가져오기

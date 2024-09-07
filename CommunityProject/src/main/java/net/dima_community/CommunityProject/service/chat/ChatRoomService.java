@@ -238,25 +238,25 @@ public class ChatRoomService {
 	 }
 	
 	 /**
-	  * 유니크 키에서 나간 사용자의 ID를 삭제하고 갱신하는 메서드.
+	  * 유니크 키에서 나간 사용자의 이름을 삭제하고 갱신하는 메서드.
 	  * @param chatRoom 채팅방 객체
 	  * @param userId 나간 사용자 ID
 	  */
 	 @Transactional
 	 public void updateChatRoomUniqueKey(ChatRoom chatRoom, String userId) {
-	     // 현재 채팅방의 남아 있는 멤버 ID를 기반으로 새로운 유니크 키 생성
-	     List<String> remainingMemberIds = chatRoom.getChattingRoomMembers()
+	     // 현재 채팅방의 남아 있는 멤버 이름을 기반으로 새로운 유니크 키 생성
+	     List<String> remainingMemberNames = chatRoom.getChattingRoomMembers()
 	             .stream()
 	             .filter(member -> !member.getMember().getMemberId().equals(userId))
-	             .map(member -> member.getMember().getMemberId())
-	             .sorted()  // 멤버 ID 정렬
+	             .map(member -> member.getMember().getMemberName()) // ID 대신 이름을 가져옴
+	             .sorted()  // 이름을 알파벳순으로 정렬
 	             .collect(Collectors.toList());
-	
+
 	     // 새로운 유니크 키로 업데이트
-	     String newUniqueKey = String.join(MEMBER_SEPARATOR, remainingMemberIds);
+	     String newUniqueKey = String.join(MEMBER_SEPARATOR, remainingMemberNames);
 	     chatRoom.setUniqueKey(newUniqueKey);
 	     chatRoomRepository.save(chatRoom);  // 변경 사항 저장
-	     
+
 	     log.info("유니크 키가 {}로 업데이트되었습니다.", newUniqueKey);
 	 }
 	
