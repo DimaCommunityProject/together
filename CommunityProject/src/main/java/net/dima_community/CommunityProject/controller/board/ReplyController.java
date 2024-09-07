@@ -19,6 +19,7 @@ import net.dima_community.CommunityProject.service.board.ReplyService;
 import net.dima_community.CommunityProject.service.member.MemberService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class ReplyController {
      * @param memberId
      * @return
      */
+    @PostMapping("/board/showReply")
     @ResponseBody
     public Map<String, BoardDTO> showReply(@RequestParam(name = "memberId") String memberId) {
         MemberDTO member = memberService.findById(memberId);

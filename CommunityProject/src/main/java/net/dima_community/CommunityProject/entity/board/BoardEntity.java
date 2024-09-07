@@ -101,7 +101,10 @@ public class BoardEntity {
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("member_id")
     private List<LikeEntity> likeEntities;
-    
+    // 3) Reply
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("reply_id")
+    private List<ReplyEntity> replyEntity;
 
     /**
      * Entity 변환 함수 (jobBoardEntity 값은 null로 세팅)

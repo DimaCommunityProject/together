@@ -19,8 +19,8 @@ import net.dima_community.CommunityProject.entity.board.ReplyEntity;
 import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.board.BoardRepository;
 import net.dima_community.CommunityProject.repository.board.LikeRepository;
-import net.dima_community.CommunityProject.repository.board.MemberRepository;
 import net.dima_community.CommunityProject.repository.board.ReplyRepository;
+import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 @Service
 @RequiredArgsConstructor

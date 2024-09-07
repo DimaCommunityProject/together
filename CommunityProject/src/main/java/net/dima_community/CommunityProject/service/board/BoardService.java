@@ -34,7 +34,7 @@ import net.dima_community.CommunityProject.repository.board.BoardRepository;
 import net.dima_community.CommunityProject.repository.board.JobBoardRecruitRepository;
 import net.dima_community.CommunityProject.repository.board.JobBoardRepository;
 import net.dima_community.CommunityProject.repository.board.LikeRepository;
-import net.dima_community.CommunityProject.repository.board.MemberRepository;
+import net.dima_community.CommunityProject.repository.member.MemberRepository;
 import net.dima_community.CommunityProject.util.FileService;
 
 @Slf4j

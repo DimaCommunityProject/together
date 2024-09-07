@@ -24,6 +24,9 @@ repositories {
 }
 
 dependencies {
+
+    // 메일 보내는 디펜던시 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -38,6 +41,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    
+    
+    //보안관련
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'	//추가했음
+    implementation 'org.springframework.boot:spring-boot-starter-security'	
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
