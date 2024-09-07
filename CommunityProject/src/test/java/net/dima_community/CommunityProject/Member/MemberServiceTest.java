@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import net.dima_community.CommunityProject.dto.MemberDTO;
-import net.dima_community.CommunityProject.service.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 
 @SpringBootTest
 public class MemberServiceTest {

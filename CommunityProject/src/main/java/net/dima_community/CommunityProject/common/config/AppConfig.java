@@ -16,12 +16,12 @@ public class AppConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @SuppressWarnings({ "removal", "deprecation" })
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .anyRequest().permitAll();
-        return http.build();
-    }
+//    @SuppressWarnings({ "removal", "deprecation" })
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf().disable()
+//                .authorizeRequests()
+//                .anyRequest().permitAll();
+//        return http.build();
+//    }
 }

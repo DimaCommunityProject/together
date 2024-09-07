@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
 
+
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     
     Optional<ChatRoom> findByUniqueKey(String uniqueKey);

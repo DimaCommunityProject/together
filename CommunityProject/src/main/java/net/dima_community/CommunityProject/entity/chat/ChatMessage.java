@@ -22,7 +22,7 @@ public class ChatMessage {
     private String senderName; 
     private String content;
     private String timestamp;
-    private boolean deleted;
-    private String roomId;
+    private int deleted;
+    private Long roomId;
 
 }

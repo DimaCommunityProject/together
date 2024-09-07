@@ -25,44 +25,40 @@ repositories {
 
 dependencies {
 
-	// 메일 보내는 디펜던시 추가
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    
-    runtimeOnly 'com.h2database:h2'
+
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
     implementation 'org.webjars:sockjs-client:1.5.1'
     implementation 'org.webjars:stomp-websocket:2.3.3'
-    
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    
+
     //보안관련
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'	//추가했음
     implementation 'org.springframework.boot:spring-boot-starter-security'	
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    
 
-	// 작업외부 브로커를 사용
+	//외부 브로커를 사용하기 위해
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
 
-	// JSON 데이터를 변환할 때 날짜와 시간처리 
+	//jackson2json에서 LocalDateTime을 handling 하기 위해
 	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
 	
-	//rabbitMQ 테스트 
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 	
-	// Netty 라이브러리에서 macOS 환경지원 
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
-    
-    //메시지 전송에서 보안 기능
+
     implementation 'org.springframework.security:spring-security-messaging'
 }
 

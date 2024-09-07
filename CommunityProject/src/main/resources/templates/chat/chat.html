@@ -10,7 +10,10 @@
     <script src="/script/libs/stomp.min.js"></script>
     <script src="/script/libs/axios.min.js"></script>
 </head>
-<body data-current-user-id="[[${currentUserId}]]" data-current-user-name="[[${currentUserName}]]">
+<body class="link-sidebar"
+      th:data-current-user-id="${currentUserId}"
+      th:data-current-user-name="${currentUserName}"
+      th:data-current-user-id-num="${currentUserIdNum}">
     <div id="chatContainer">
         <div id="chatSidebar">
 		    <div id="userInfo">
