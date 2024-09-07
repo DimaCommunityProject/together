@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.dto;
+package net.dima_community.CommunityProject.dto.member;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import net.dima_community.CommunityProject.entity.AdminNoteEntity;
+import net.dima_community.CommunityProject.entity.member.AdminNoteEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,10 +28,10 @@ public class AdminNoteDTO {
 
 	// 파일이 첨부되었을 때 추가작업 : DTO가 데이터를 받는 곳이기 때문에 작업해줘야 함
 	private MultipartFile uploadFile;
-	private String adminNoteOriginalFileName; 	
-	private String adminNoteSavedFileName;		
-	
-	//공지사항 리스트 보여줄 내용 추림
+	private String adminNoteOriginalFileName;
+	private String adminNoteSavedFileName;
+
+	// 공지사항 리스트 보여줄 내용 추림
 	public AdminNoteDTO(Long adminNoteNum, String adminNoteTitle, int adminNoteHitcount,
 			LocalDateTime adminNoteCreateDate, String adminNoteOriginalFileName) {
 		super();
@@ -41,7 +41,7 @@ public class AdminNoteDTO {
 		this.adminNoteCreateDate = adminNoteCreateDate;
 		this.adminNoteOriginalFileName = adminNoteOriginalFileName;
 	}
-	
+
 	public static AdminNoteDTO toDTO(AdminNoteEntity adminNoteEntity) {
 		return AdminNoteDTO.builder()
 				.adminNoteNum(adminNoteEntity.getAdminNoteNum())
@@ -54,5 +54,5 @@ public class AdminNoteDTO {
 				.adminNoteSavedFileName(adminNoteEntity.getAdminNoteSavedFileName())
 				.build();
 	}
-	
+
 }

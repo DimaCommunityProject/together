@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
-import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;
 import net.dima_community.CommunityProject.service.member.MemberService;
-import net.dima_community.CommunityProject.service.member.BoardService;
+import net.dima_community.CommunityProject.service.board.BoardService;
 import net.dima_community.CommunityProject.service.member.MemberPageService;
 import net.dima_community.CommunityProject.service.member.MemberProjectService;
 
@@ -38,7 +38,7 @@ public class MemberPageController {
         // Object principal =
         // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // String username = ((UserDetails) principal).getUsername();
-    	
+
         // 회원, 회원페이지, 회원프로젝트 객체 가져오기
         MemberDTO member = memberService.findById(memberId);
         MemberPageDTO memberPage = memberPageService.findByUsername(member.getMemberId());

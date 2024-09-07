@@ -47,4 +47,8 @@ public class MemberVerifyCodeService {
             throw new ResourceNotFoundException("MemberVerifyCode", memberId);
         }
     }
+
+    public void deleteById(String memberId) {
+        memberVerifyCodeRepository.deleteByMemberId(memberId);
+    }
 }

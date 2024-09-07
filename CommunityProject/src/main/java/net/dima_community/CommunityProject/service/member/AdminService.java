@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.service;
+package net.dima_community.CommunityProject.service.member;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,15 +17,15 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.util.FileService;
-import net.dima_community.CommunityProject.dto.AdminNoteDTO;
-import net.dima_community.CommunityProject.dto.MemberDTO;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.board.BoardReportDTO;
-import net.dima_community.CommunityProject.entity.AdminNoteEntity;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.dto.member.AdminNoteDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.BoardReportEntity;
-import net.dima_community.CommunityProject.repository.AdminNoteRepository;
+import net.dima_community.CommunityProject.entity.member.AdminNoteEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
+import net.dima_community.CommunityProject.repository.member.AdminNoteRepository;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 import net.dima_community.CommunityProject.repository.board.BoardReportRepository;
 

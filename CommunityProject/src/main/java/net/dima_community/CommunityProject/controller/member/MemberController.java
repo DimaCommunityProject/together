@@ -24,11 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
 import net.dima_community.CommunityProject.service.member.MemberPageService;
 import net.dima_community.CommunityProject.service.member.MemberService;
+import net.dima_community.CommunityProject.service.member.MemberVerifyCodeService;
 
 @Controller
 @Slf4j
@@ -37,6 +38,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final EmailSender emailSender;
 	private final MemberPageService memberPageService;
+	private final MemberVerifyCodeService memberVerifyCodeService;
 
 	// ===================== 회원가입 요청 페이지 =====================
 
@@ -74,7 +76,6 @@ public class MemberController {
 	@ResponseBody
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberService.findByIdThroughConn(memberId);
-		log.info("" + result);
 		return result;
 	}
 
@@ -336,5 +337,13 @@ public class MemberController {
 	public boolean deleteImage(@RequestParam("memberId") String memberId) {
 		Boolean result = memberService.deleteImage(memberId);
 		return result;
+	}
+
+	// ============= 회원 삭제
+	@PostMapping("/member/deleteMember")
+	public void deleteMember(@ModelAttribute("memberId") String memberId) {
+		log.info("회원삭제 컨트롤러 도착");
+		memberService.deleteMember(memberId);
+		memberVerifyCodeService.deleteById(memberId);
 	}
 }// end class

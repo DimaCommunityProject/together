@@ -1,4 +1,4 @@
-package net.dima_community.CommunityProject.repository.member;
+package net.dima_community.CommunityProject.repository.board;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import net.dima_community.CommunityProject.dto.board.ReplyDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 

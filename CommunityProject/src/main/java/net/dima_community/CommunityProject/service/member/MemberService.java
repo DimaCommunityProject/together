@@ -21,9 +21,9 @@ import net.dima_community.CommunityProject.common.exception.ResourceNotFoundExce
 import net.dima_community.CommunityProject.common.port.BCryptEncoderHolder;
 import net.dima_community.CommunityProject.common.port.DBConnector;
 import net.dima_community.CommunityProject.common.util.FileService;
-import net.dima_community.CommunityProject.dto.MemberDTO;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.member.MemberPageRepository;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
@@ -295,6 +295,10 @@ public class MemberService {
 		}
 		memberRepository.save(memberEntity);
 		return true;
+	}
+
+	public void deleteMember(String memberId) {
+		memberRepository.deleteById(memberId);
 	}
 
 }// end findmemId

@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 import net.dima_community.CommunityProject.dto.board.BoardCategory;
 import net.dima_community.CommunityProject.dto.board.BoardDTO;
-import net.dima_community.CommunityProject.entity.MemberEntity;
 // import net.dima_community.CommunityProject.dto.board.combine.BoardListDTO;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
