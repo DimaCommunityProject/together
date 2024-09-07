@@ -8,8 +8,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
-  <link rel="stylesheet" href="../../static/css/styles.css" />
-  <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
   <title>디지털마스터 커뮤니티</title>
   <style>
@@ -44,11 +44,13 @@
       line-height: 1.2 !important;
       text-decoration: none !important;
     }
-    .icon{
+
+    .icon {
       width: 42px;
       height: 27px;
     }
-    .icon1{
+
+    .icon1 {
       width: 80px;
       height: 40px;
     }
@@ -58,7 +60,7 @@
 <body class="link-sidebar">
   <!-- Preloader -->
   <div class="preloader">
-    <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -92,7 +94,7 @@
               </li> -->
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
-                  <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
                 </a>
               </li>
             </ul>
@@ -123,7 +125,7 @@
                                     style="width: 195px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/code.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -138,7 +140,7 @@
                                     style="width: 280px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/project.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -178,7 +180,7 @@
                                     style="width: 225px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/job.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -193,7 +195,7 @@
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/recruit.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -233,7 +235,7 @@
                                     style="width: 230px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/board.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -248,7 +250,7 @@
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/info.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -262,7 +264,7 @@
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/classroom.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -292,7 +294,7 @@
                   <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
                 </li>
               </th:block>
-            
+
 
             </ul>
             <!-- topbar 메뉴 끝-->
@@ -322,8 +324,7 @@
                   <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
                       data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                      <img src="/static/images/main/chat.png" alt="modernize-img"
-                        style="width: 30.2px; height: 30px;" />
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
                     </a>
                   </li>
                   <!-- 마이페이지 -->
@@ -386,13 +387,13 @@
                       <!-- <a class="text-muted text-decoration-none" href="../horizontal/index.html"></a> -->
                       <!-- </li> -->
                       <li class="breadcrumb-item" aria-current="page">환영합니다!</li>
-					  <li class="breadcrumb-item" aria-current="page">신인가수 조정석 재밌음</li>
+                      <li class="breadcrumb-item" aria-current="page">신인가수 조정석 재밌음</li>
                     </ol>
                   </nav>
                 </div>
                 <div class="col-3">
                   <div class="text-center mb-n5" style="height: 100%;">
-                    <img src="/static/images/main/coding.png" alt="modernize-img" class="img-fluid mb-n4"
+                    <img th:src="@{/images/main/coding.png}" alt="modernize-img" class="img-fluid mb-n4"
                       style="padding-right: 30px;" />
                   </div>
                 </div>
@@ -722,17 +723,18 @@
     </div>
   </div>
   <div class="dark-transparent sidebartoggler"></div>
-  <script src="/static/js/vendor.min.js"></script>
+
   <!-- Import Js Files -->
-  <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-  <script src="/static/js/theme/app.horizontal.init.js"></script>
-  <script src="/static/js/theme/theme.js"></script>
-  <script src="/static/js/theme/app.min.js"></script>
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/vendor.min.js}"></script>
+  <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
 
   <!-- solar icons -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
-  <script src="/static/js/apps/chat.js"></script>
+  <script th:src="@{/js/apps/chat.js}"></script>
 </body>
 
 </html>
