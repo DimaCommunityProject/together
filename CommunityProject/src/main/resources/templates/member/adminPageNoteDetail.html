@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/styles.css" />
     <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
 
-    <title>신고 게시글 관리</title>
+    <title>디지털마스터 커뮤니티</title>
     <style>
         #loginLine {
             width: 1200px;
@@ -44,19 +44,44 @@
             text-decoration: none !important;
         }
 
-        #pills-tabContent {
-            padding-top: 20px;
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(93, 135, 255, 0.1);
+            width: 1000px;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 28px;
+            color: rgb(93, 135, 255);
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
 
-        #h3 {
-            font-size: 22.5px;
-            margin-bottom: 15px !important;
+        .title-container img {
+            width: 40px;
+            height: auto;
+            margin-right: 15px;
+            margin-left: 15px;
         }
 
-        #card-body {
-            font-size: 12.5px;
-            padding: 70px !important;
-            padding-top: 0px !important;
+        .form-control {
+            width: 730px;
+            font-size: 13px;
+        }
+
+        .form-horizontal {
+            width: 1000px;
+            margin: 250px auto;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .buttonbox {
+            display: flex;
+            justify-content: center;
+            height: 42px;
         }
     </style>
 </head>
@@ -398,7 +423,7 @@
 
             <!-- 여기부터 본문 시작 -->
             <div class="body-wrapper" style="padding-top: 120px;">
-                <div class="container-fluid" style="padding-top: 20px !important">
+                <div class="container-fluid" style="padding-top: 20px !important; ">
                     <!-- 파란색 부분 시작 -->
                     <!-- <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
                         <div class="card-body px-4 py-3">
@@ -422,152 +447,103 @@
                     </div> -->
                     <!-- 파란색 부분 끝 -->
                     <!-- 게시판 보여주기 시작 -->
-
-                    <!-- 사이드바 대신  -->
-                    <ul
-                        class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
-                        <th:block sec:authorize="hasRole('ADMIN')">
-                            <a type="submit" th:href="@{/admin/adminPage}"
-                                style="display: flex; align-items: center; font-size: 14.5px; margin: 12px;">
-                                <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
-                                <span class="d-none d-md-block">회원 관리</span>
-                            </a>
-                            <a type="submit" th:href="@{/admin/adminPageBoard}"
-                                style="display: flex; align-items: center; font-size: 14.5px;  margin: 12px;">
-                                <i class="ti ti-heart fs-5" style="margin-right: 8px;"></i>
-                                <span class="d-none d-md-block">게시글 관리</span>
-                            </a>
-                        </th:block>
-                        <a type="submit" th:href="@{/member/adminPageNote}"
-                            style="display: flex; align-items: center; font-size: 14.5px;  margin: 12px;">
-                            <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
-                            <span class="d-none d-md-block">공지사항</span>
-                        </a>
-                    </ul>
-                    <!-- 사이드바 대신 끝-->
-
-                    <!-- 배너 밑 끝 본문 시작 전 -->
-                    <div class="tab-content" id="pills-tabContent">
-                        <!-- 첫번째 본문 시작 -->
-                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
-                            aria-labelledby="pills-profile-tab" tabindex="0">
-                            <!-- 회원 테이블 본문 시작 -->
-                            <div class="widget-content searchable-container list">
-                                <div class="card card-body" style="margin-bottom: 0px; ">
-                                    <div class="row" style="align-items: center;">
-                                        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">신고 게시글
-                                        </h3>
-                                        <div class="col-md-4 col-xl-3">
-                                            <form class="position-relative">
-                                                <input type="text" class="form-control product-search ps-5"
-                                                    id="input-search" placeholder="Search Contacts..." />
-                                                <i
-                                                    class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                                            </form>
+                    <form class="form-horizontal r-separator">
+                        <!-- 공지사항 작성 시작 -->
+                        <div class="title-container">
+                            <img src="/static/images/note.png" alt="첨부파일">
+                            공지사항 상세 페이지
+                            <img src="/static/images/note.png" alt="첨부파일">
+                        </div>
+                        <div class="card-body text-bg-light">
+                            <input type="hidden" name="adminNoteNum" th:value="${adminNote.adminNoteNum}">
+                            <div class="form-group mb-0">
+                                <div class="row align-items-center">
+                                    <label for="inputText4" class="col-3 text-end  col-form-label">제목</label>
+                                    <div class="col-9 border-start pb-2 pt-2">
+                                        <span th:text="${adminNote.adminNoteTitle}" class="form-control"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="row align-items-center">
+                                    <label for="inputText4" class="col-3 text-end  col-form-label">작성일</label>
+                                    <div class="col-9 border-start pb-2 pt-2">
+                                        <span class="form-control"
+                                            th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="row align-items-center">
+                                    <label for="inputText4" class="col-3 text-end  col-form-label">수정일</label>
+                                    <div class="col-9 border-start pb-2 pt-2">
+                                        <!-- <span th:text="${adminNote.adminNoteUpdateDate}" class="form-control"></span> -->
+                                        <span class="form-control"
+                                            th:text="*{#temporals.format(adminNote.adminNoteUpdateDate, 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="row align-items-center">
+                                    <label for="inputText4" class="col-3 text-end  col-form-label">내용</label>
+                                    <div class="col-9 border-start pb-2 pt-2">
+                                        <pre class="form-control" rows="10"
+                                            style="height: 380px;">[[ ${adminNote.adminNoteContent} ]]</pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="row align-items-center">
+                                    <label for="inputGroupFile01" class="col-3 text-end  col-form-label">첨부파일
+                                    </label>
+                                    <div class="col-9 border-start pb-2 pt-2">
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <!-- <input type="file" class="form-control" id="uploadFile" name="uploadFile" /> -->
+                                                <span th:if="${adminNote.adminNoteOriginalFileName != null}">
+                                                    <a th:href="@{/admin/adminFileDownload(adminNoteNum=${adminNote.adminNoteNum})}"
+                                                        th:text="${adminNote.adminNoteOriginalFileName}">bts.jpg</a>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- 신고된 게시글 보여줌 -->
-                            <div class="card card-body" id="card-body">
-                                <div class="table-responsive">
-                                    <p style="display: inline;">게시글 개수 : [[${list.totalElements}]] </p>
-                                    <table class="table search-table align-middle text-nowrap"
-                                        style="text-align: center;">
-                                        <form id="searchForm" th:action="@{/admin/adminPageBoard}" method="GET">
-                                            <input type="hidden" name="page" id="requestPage" th:value="${page}">
-                                        </form>
-                                        <thead class="header-item">
-                                            <th>글 번호</th>
-                                            <th>신고 상세 사유</th>
-                                            <th>신고 이유</th>
-                                            <th>신고일</th>
-                                        </thead>
-                                        <tbody>
-                                            <!-- start row -->
-                                            <tr class="search-items" th:each="boardReport, status : ${list}">
-                                                <td
-                                                    th:text="${list.getTotalElements - (list.number * list.size) - status.index}">
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="ms-3">
-                                                            <div class="user-meta-info">
-                                                                <a th:href="@{/admin/adminPageBoardDetail(reportId=${boardReport.reportId})}"
-                                                                    th:text="${boardReport.reason}">신고 상세 사유</a>
-                                                                <!-- <span
-                                                                th:if="${adminNote.adminNoteOriginalFileName != null}">
-                                                                <img th:src="@{/static/images/NoteClip.png}" alt="첨부파일"
-                                                                    width="15px">
-                                                            </span> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="usr-email-addr" th:text="${boardReport.category}">신고
-                                                        이유</span>
-                                                </td>
-                                                <td>
-                                                    <span class="usr-location"
-                                                        th:text="*{#temporals.format(boardReport.reportDate, 'yyyy-MM-dd')}">
-                                                        신고일</span>
-                                                </td>
-                                            </tr>
-                                            <!-- end row -->
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <!-- 저장/취소 버튼 시작 -->
+                            <div class="buttonbox">
+                                <th:block sec:authorize="hasRole('ADMIN')">
+                                    <a type="submit" class="btn btn-secondary" style="margin-right: 5px;"
+                                        th:href="@{/admin/adminPageNoteUpdate(adminNoteNum=${adminNote.adminNoteNum})}">수
+                                        정
+                                    </a>
+                                    <a th:href="@{/admin/adminPageNoteDelete(adminNoteNum=${adminNote.adminNoteNum})}"
+                                        class="btn btn-rounded btn-danger" style="margin-right: 5px;">
+                                        삭 제
+                                    </a>
+                                </th:block>
+                                <a th:href="@{/member/adminPageNote}" class="btn btn-rounded btn-info">목 록</a>
                             </div>
-
-                            <!--글쓰기 버튼-->
-                            <!-- <div style="font-size: 15px; float: right; margin-bottom: 130px;">
-                            <a th:href="@{/admin/adminPageNoteWrite}" class="btn btn-secondary">글쓰기</a>
-                        </div> -->
-
-                            <!-- 페이징 -->
-                            <nav class="pagination"
-                                style="text-align: center; display: block; font-size: 18px;  margin-bottom: 130px;">
-                                <a th:if="${navi.startPageGroup > 1}"
-                                    th:href="@{|/admin/adminPageBoard?page=${navi.startPageGroup - 10}|}"
-                                    class="btn prev">&laquo; Previous</a>
-                                <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-                                    <span th:if="${count == navi.page}">
-                                        <b class="page-no current" th:text="${count}"></b>
-                                    </span>
-                                    <span th:unless="${count == navi.page}">
-                                        <a class="page-no" th:href="@{|/admin/adminPageBoard?page=${count}|}"
-                                            th:text="${count}"></a>
-                                    </span>
-                                </span>
-                                <a th:if="${navi.endPageGroup < navi.totalPages}"
-                                    th:href="@{|/admin/adminPageBoard?page=${navi.endPageGroup + 1}|}"
-                                    class="btn next10">Next &raquo;</a>
-                            </nav>
-                            <!--페이징 끝-->
-                            <!-- 승인된 회원 보여줌 끝-->
+                            <!-- 저장/취소 버튼 끝 -->
                         </div>
-                    </div>
-                    <!-- 첫번째 본문 끝 -->
+                        <!-- 공지사항 작성 끝 -->
+                    </form>
+
                 </div>
-                <!-- 이 div가 본문들의 전체를 감싸야함 -->
             </div>
-        </div>
-        <!-- 본문 끝 -->
-        <script>
-            function handleColorTheme(e) {
-                document.documentElement.setAttribute("data-color-theme", e);
-            }
-        </script>
-        <!-- <button
+            <!-- 본문 끝 -->
+            <script>
+                function handleColorTheme(e) {
+                    document.documentElement.setAttribute("data-color-theme", e);
+                }
+            </script>
+            <!-- <button
                     class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
                     type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
                     aria-controls="offcanvasExample">
                     <i class="icon ti ti-settings fs-7"></i>
                 </button> -->
 
-        <!-- <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+            <!-- <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
                     aria-labelledby="offcanvasExampleLabel">
                     <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
                         <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
@@ -744,11 +720,23 @@
                         </div>
                     </div>
                 </div> -->
-        <!-- </div> -->
-    </div>
+            <!-- </div> -->
+        </div>
     </div>
     <div class="dark-transparent sidebartoggler"></div>
     <!-- Import Js Files -->
+    <!-- <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+    <script src="/static/js/theme/app.horizontal.init.js"></script>
+    <script src="/static/js/theme/theme.js"></script>
+    <script src="/static/js/theme/app.min.js"></script>
+    <script src="/static/js/theme/sidebarmenu.js"></script> -->
+
+    <!-- solar icons -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
+    <!-- <script src="/static/libs/fullcalendar/index.global.min.js"></script>
+    <script src="/static/js/apps/chat.js"></script> -->
+
     <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
     <script src="/static/js/theme/app.init.js"></script>
@@ -762,12 +750,6 @@
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     <script src="/static/libs/fullcalendar/index.global.min.js"></script>
     <script src="/static/js/apps/contact.js"></script>
-    <script>
-        function pageFormSubmit(page) {
-            document.getElementById("requestPage").value = page;
-            document.getElementById("searchForm").submit();
-        }
-    </script>
 </body>
 
 </html>
