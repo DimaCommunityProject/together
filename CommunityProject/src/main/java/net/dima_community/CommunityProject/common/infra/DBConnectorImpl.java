@@ -12,9 +12,15 @@ import net.dima_community.CommunityProject.common.port.DBConnector;
 public class DBConnectorImpl implements DBConnector {
 
     private String driver = "com.mysql.cj.jdbc.Driver";
+<<<<<<< HEAD
     private String url = "jdbc:mysql://localhost:3306/dima";
     private String id = "root";
     private String pwd = "mysqlpassword";
+=======
+    private String url = "jdbc:mysql://localhost:3306/dmcommunity";
+    private String id = "root";
+    private String pwd = "0000";
+>>>>>>> 1077d68542280b33e79bcb749857fc40fd548970
 
     @Override
     public Connection getConnection() {
