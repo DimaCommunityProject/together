@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.repository.mongo.ChatMessageRepository;
+import net.dima_community.CommunityProject.repository.chat.ChatMessageRepository;
 
 @Slf4j
 @Configuration

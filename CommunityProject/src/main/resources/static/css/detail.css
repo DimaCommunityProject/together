@@ -1,77 +1,106 @@
 @charset "UTF-8";
 @import "main.css";
 
-.btn {
-    display: inline-block;
-    font-weight: 800;
-    line-height: 1.5;
-    color: #212529;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.2rem 0.4rem;
-    font-size: 1rem;
-    border-radius: 0.25rem;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-.btn-primary {
-    color: #fff;
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-.btn-danger {
-    color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-/**************************
-        글쓰기 화면
-***************************/
+/* **************************************
+	글쓰기 화면
+**************************************** */
 div.content td {
-    text-align: left;
-    width: 750px;
-}
-div.content td input[type="text"] {
-    width : 500px
-}
-div.content td textarea {
-    width : 750px;
-    height : 450px;
+	text-align :left;
+	width : 800px;
 }
 
-/**************************
-        글보기 화면
-***************************/
+div.content td input[type="text"]{
+	width : 500px;
+}
+
+div.content td textarea{
+	width : 750px;
+	height: 200px;
+}
+
+/* **************************************
+	글보기 화면
+**************************************** */
 pre {
-    width: 750px;
-    height: 200px;
-}   
+	width: 750px;
+	height: 200px;
+}
 
-/*********************
-        댓글
-**********************/
+/* **************************************
+	댓글
+**************************************** */
 div.reply-write {
-    width: 1000px;
-    margin: 20px auto;
+	width : 1000px;
+	margin: 20px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+input#replyText {
+	display: inline-block;
+	width :910px;
+	height: 35px;
+}
+
+/* **************************************
+	댓글
+**************************************** */
+div#reply-list {
+	width: 1200px;
+	margin: 0 auto;
+}
+div.reply-write {
+	width: 1000px;
+	margin: 20px auto;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+ 
 input#replyText {
     display: inline-block;
     width: 900px;
-    height: 35px;
+    height: 35px; 
 }
 
-img{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* 댓글 내용 */
+td.reply-no {
+	background-color:red;
+	width: 50px;
 }
+tr.reply-tr>td.reply-writer {
+	width: 200px;
+	text-align: center;
+}
+
+tr.reply-tr > td.reply-text {
+	
+	text-align: center;
+}
+tr.reply-tr > td.reply-date {
+	width: 300px;
+	text-align: center;
+}
+tr.reply-tr > td.reply-date {
+	width: 300px;
+	text-align: center;
+}
+tr.reply-tr > td.btns {
+	width: 200px;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

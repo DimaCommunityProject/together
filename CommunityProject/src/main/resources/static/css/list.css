@@ -2,59 +2,94 @@
 @import "main.css";
 
 div.content {
-    width: 1000px;
-    margin: 0 auto;
+	width : 1000px;
+	margin : 0 auto;
 }
-/**********************************
-    검색창, 글개수 출력부분(상단)
-***********************************/
+
+/* **************************************
+	검색창, 글개수 출력부분 (상단)
+**************************************** */
 div.head {
-    display: flex;
-    /* flex-direction: row; */
+	display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 div.search {
-    width: 520px;
+    width: 550px;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-end;
 }
+
 select {
-    width: 150px;
-    height: 32px;
-    border: 0px;
-    outline: 1px solid rgb(13, 107, 184);
-    border-radius : 10px;
+	width : 150px;
+	height : 32px;
+	border : 0px;
+	outline : 1px solid rgb(0, 125, 179);
+	border-radius : 10px;
 }
+
 input[type="text"] {
-    width: 300px;
-    height: 30px;
-    border-radius : 10px;
-    border: 1px solid rgb(13, 107, 184);
+	width : 300px;
 }
-/**************************
-    게시글 목록 테이블
-***************************/
 
+/* ************************
+	게시글 목록 테이블
+************************* */
+.no, .writer, .hitcount {
+	width : 100px;
+}
+.create_date {
+	width : 180px;
+}
 
-/**************************
-        글쓰기 버튼
-***************************/
+/* ************************
+	  글쓰기 버튼 
+************************* */
 div.write {
-    margin-top: 10px;
-    text-align: right;
+	margin-top : 10px;
+	text-align : right;
 }
-/**************************
-        글쓰기 버튼
-***************************/
+
+/* ************************
+	  글쓰기 버튼 
+************************* */
 nav.pagination {
+	width : 1000px;
 	margin: 20px auto;
-	width: 1000px;
-	text-align: center;
-	
+	text-align : center;
 }
+
+/* ************************
+	    Pagination
+************************* */
+.current {
+	font-weight : bold;
+	color : red;
+}
+
+.page-no {
+	display : inline-block;
+	width: 20px;
+	height: 30px;
+	padding : 0.4rem;
+	line-height : 1rem;
+	margin : 0px 2px;	
+}
+
+.navi {
+	font-size:1.4em;
+	width: 10px;	
+}
+
+
+
+
+
+
+
 
 
 

@@ -9,7 +9,7 @@
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--css  설정-->
-    <link rel="stylesheet" th:href="@{ /css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
+    <link rel="stylesheet" th:href="@{/css/user.css}"> <!-- 로그인할 때 써먹을거임 -->
     <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 </head>
 <body>
@@ -20,9 +20,11 @@
         </div>
     </div><!--container 끝-->
 
-    <p class="title">회원님의 임시 비밀번호 입니다</p>
+    <p class="title">회원님의 임시 비밀번호를 이메일로 발송했습니다.</p>
     <div class="result-box">
-    <p>${newPw}</p>
-    <p>${msg}</p>
+	<p th:text="${newPw}"></p>
+	<p th:text="${msg}"></p>
+	
+	<a th:href="@{/member/login}" class="btn btn-secondary">로그인 하기</a>
 </body>
 </html>

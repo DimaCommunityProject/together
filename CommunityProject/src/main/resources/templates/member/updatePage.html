@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
+  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon icon-->
+  <link rel="shortcut icon" type="image/png" href="../../images/logos/favicon.png" />
+
+  <!-- Core Css -->
+  <link rel="stylesheet" href="../../css/styles.css" />
+
+  <title>Modernize Bootstrap Admin</title>
+  <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css">
+
+  <title>Modernize Bootstrap Admin</title>
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+  <script th:inline="javascript">
+    // memberProject가 JSON 배열로 변환되어 JavaScript 변수에 할당됩니다.
+    var memberProject = /*[[${memberProject}]]*/[];
+    // console.log(memberProject[0].memberProjectSeq); // JavaScript 배열로서 사용 가능
+  </script>
+
+  <script>
+    $(function () {
+      init();
+      let originalEmail = $("#memberEmail").val();
+      $("#skillUpdateBtn").on('click', updateSkill);
+      $("#memberEmail").on('keyup', function () { addInvalidClass(originalEmail) });
+      $("#sendVerifyCode").on('click', sendVerifyCode);
+      $("#verifyCode").on('click', verifyCode);
+      $("#pageUpdateBtn").on('click', updatePage);
+      $("#newProject").on('click', insertNewProject);
+
+    })
+
+    function init() {
+      let memberId = $("#memberId").text();
+      $.ajax({
+        url: "/memberpage/showproject"
+        , data: { memberId: memberId }
+        , method: "POST"
+        , success: function (resp) {
+          // if (resp = null) { return; }
+          $("div").remove(".projectComponent");
+          let data = "";
+          $.each(resp, function (index, item) {
+            data += `<div class="card card-hover projectComponent">
+                        <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
+                            <input type="text" class="form-control" id="title${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" value="${item.projectTitle}" style="width: 80%"></input>
+                        </div>
+                        <div class="card-body">
+                          <input class="form-control" id="subtitle${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" value="${item.projectSubtitle}" style="width: 80%; margin-bottom:10px"></input>
+                          <input class="form-control" id="git${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" value="${item.projectGit}" style="width: 80%"></input>  
+                            <div style="display: flex; justify-content: flex-end;">
+                              <span hidden id="project${item.memberProjectSeq}Complete"
+                        style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+                      <button type="button" id="update${item.memberProjectSeq}"  class="projectSaveBtns btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
+                      <button type="button" id="delete${item.memberProjectSeq}"  class="projectDeleteBtns btn bg-danger-subtle text-danger" style="margin:10px">삭제</button>
+                    </div>
+                        </div>
+                    </div>`;
+          })
+          $("#startProject").after(data);
+          $(".projectSaveBtns").on('click', updateProject);
+          $(".projectDeleteBtns").on('click', deleteProject);
+        }
+      })
+
+      $.ajax({
+        url: "/board/showBoard"
+        , data: { memberId: memberId }
+        , method: "POST"
+        , success: function (resp) {
+          let data = "";
+          $.each(resp, function (index, item) {
+            console.log(item.title);
+            data += `<div class="row">
+                          <div data-draggable="true" class="card img-task">
+                            <div class="card-body" style="padding: 10px;">
+                              <div class="task-header">
+                                <div>
+                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                              margin-bottom: 0;">
+                                    ${item.title}</h4>
+                                </div>
+                                <div class="tb-section-2">
+                                  <span class="badge text-bg-warning fs-1" >${item.category}</span>
+                                </div>
+                              </div>
+
+                              <div class="task-content">
+                                <p class="mb-0"
+                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." >
+                                ${item.content}
+                                </p>
+                              </div>
+                              <div class="task-body">
+                                <div class="task-bottom">
+                                  <div class="tb-section-1">
+                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                      <i class="ti ti-calendar fs-5"></i>${item.createDate}
+                                    </span>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>`;
+          })
+          $("#navpill-111").html(data);
+
+        }
+      })
+      data = "";
+
+      $.ajax({
+        url: "/reply/showReply"
+        , data: { memberId: memberId }
+        , method: "POST"
+        , success: function (resp) {
+          $.each(resp, function (key, value) {
+            console.log(key.content);
+            data += `<div class="row">
+                          <div data-draggable="true" class="card img-task">
+                            <div class="card-body" style="padding: 10px;">
+                              <div class="task-header">
+                                <div>
+                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                              margin-bottom: 0;">${key}
+                                    </h4>
+                                </div>
+                                <div class="tb-section-2">
+                                  <span class="badge text-bg-warning fs-1" >${value.category}</span>
+                                </div>
+                              </div>
+
+                              <div class="task-content">
+                                <p class="mb-0"
+                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
+                                  ${value.title}
+                                </p>
+                              </div>
+                              <div class="task-body">
+                                <div class="task-bottom">
+                                  <div class="tb-section-1">
+                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                      <i class="ti ti-calendar fs-5"></i> ${value.createDate}
+                                    </span>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>`;
+          })
+          $("#navpill-222").html(data);
+        }
+      })
+
+    }
+    function updateSkill() {
+      let memberId = $("#memberId").text();
+      let memberSkill = "";
+      $("#skill :selected").each(function () {
+        memberSkill += this.value + " ";
+      })
+      let data = { memberId: memberId, memberSkill: memberSkill.trim() };
+      $.ajax({
+        url: "/memberpage/updateMemberSkill"
+        , data: data
+        , method: "POST"
+        , success: function (resp) {
+          if (!resp) { alert("저장을 실패했습니다. 다시 시도해 주세요."); return; }
+          $("#skillComplete").attr("hidden", false);
+          return;
+        }
+
+      })
+      return;
+
+    };
+    function addInvalidClass(originalEmail) {
+      console.log(originalEmail);
+      console.log($("#memberEmail").val());
+      if ($("#memberEmail").val() != originalEmail) {
+        if ($("#memberEmail").hasClass("is-invalid")) { return; }
+        $("#memberEmail").addClass("is-invalid");
+        $("#invalidEmail").attr("hidden", false);
+      } else {
+        $("#memberEmail").removeClass("is-invalid");
+        $("#invalidEmail").attr("hidden", true);
+      }
+    }
+
+    function sendVerifyCode() {
+      let memberId = $("#memberId").text();
+      let memberEmail = $("#memberEmail").val();
+      toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
+        progressBar: true,
+      });
+      $.ajax({
+        url: "/email/resend"
+        , method: "POST"
+        , data: { memberId: memberId, memberEmail: memberEmail }
+        , success: function (resp) {
+
+        }
+      });
+    }
+
+    function verifyCode() {
+      let memberId = $("#memberId").text();
+      let memberEmail = $("#memberEmail").val();
+      let verificationCode = $("#verificationCode").val();
+      $.ajax({
+        url: "/member/updateVerificationcode"
+        , data: { memberId: memberId, verificationCode: verificationCode }
+        , method: "POST"
+        , success: function (resp) {
+          if (resp) {
+            $("#memberEmail").removeClass("is-invalid");
+            $("#memberEmail").addClass("is-valid");
+            $("#invalidEmail").removeClass("invalid-feedback");
+            $("#invalidEmail").addClass("valid-feedback");
+            $("#invalidEmail").text("이메일 인증이 완료되었습니다");
+          }
+          else { alert("본인인증에 실패했습니다.") }
+        }
+      })
+
+    }
+
+    function updatePage() {
+      if ($("#memberEmail").hasClass("is-invalid")) { alert("이메일 본인인증을 완료해주세요"); return; }
+      else {
+        let memberId = $("#memberId").text();
+        let memberSelfInfo = $("#memberSelfInfo").val();
+        let memberInterest = $("#memberInterest").val();
+        let memberEmail = $("#memberEmail").val();
+        let memberGit = $("#memberGit").val();
+        let memberBlog = $("#memberBlog").val();
+        $.ajax({
+          url: "/memberpage/updatePage"
+          , data: {
+            memberId: memberId,
+            memberSelfInfo: memberSelfInfo, memberInterest: memberInterest, memberEmail: memberEmail,
+            memberGit: memberGit, memberBlog: memberBlog
+          }
+          , method: "POST"
+          , success: function (resp) {
+            if (!resp) { alert("저장을 실패했습니다. 다시 시도해 주세요."); return; }
+            $("#pageComplete").attr("hidden", false);
+            return;
+          }
+        })
+      }
+
+    }
+
+    function updateProject() {
+      let memberId = $("#memberId").text();
+      let btnId = $(this).attr('id').charAt($(this).attr('id').length - 1);
+      let projectTitle = $("#title" + btnId).val();
+      let projectSubtitle = $("#subtitle" + btnId).val();
+      let projectGit = $("#git" + btnId).val();
+      let data = { memberId: memberId, projectSeq: btnId, projectTitle: projectTitle, projectSubtitle: projectSubtitle, projectGit: projectGit }
+      $.ajax({
+        url: "/memberproject/updateproject"
+        , data: data
+        , method: "POST"
+        , success: function (resp) {
+          $("#project" + btnId + "Complete").attr("hidden", false);
+          return;
+        }
+      })
+
+    }
+
+    function deleteProject() {
+      let btnId = $(this).attr('id').replace("delete", "");
+      console.log(btnId);
+      $.ajax({
+        url: "/memberproject/deleteproject"
+        , data: { projectSeq: btnId }
+        , method: "POST"
+        , success: function (resp) {
+          init();
+        }
+      })
+    }
+
+    function insertNewProject() {
+      if ($("#projectForm").children(":last-child").hasClass("newProject")) {
+        console.log("도착!")
+        return;
+      } else {
+        let data = `<div class="card card-hover projectComponent newProject">
+                        <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897); display:flex; justify-content: space-between;
+    align-items: center;">
+                            <input type="text" class="form-control" id="newTitle" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" style="width: 80%"></input>
+                            <button type="button" 
+                      class="btn mb-1 bg-danger-subtle rounded-circle round-40 btn-sm d-inline-flex align-items-center justify-content-center"
+                      style="margin-left: 7px;" id="cancleNewProject"> <i class="btn-close"></i>
+                    </button>
+                        </div>
+                        <div class="card-body">
+                          <input class="form-control" id="newSubtitle" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" style="width: 80%; margin-bottom:10px"></input>
+                          <input class="form-control" id="newGit" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" style="width: 80%"></input>  
+                            <div style="display: flex; justify-content: flex-end;">
+                      <button type="button" id="insertNewProjectBtns" class = "btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
+                    </div>
+                        </div>
+                    </div>`;
+        $("#projectForm:last-child").append(data);
+        $("#insertNewProjectBtns").on('click', saveNewProject);
+        $("#cancleNewProject").on('click', function () {
+          init();
+        })
+      }
+    }
+
+    function saveNewProject() {
+      let memberId = $("#memberId").text();
+      let projectTitle = $("#newTitle").val();
+      let projectSubtitle = $("#newSubtitle").val();
+      let projectGit = $("#newGit").val();
+      let data = { memberId: memberId, projectTitle: projectTitle, projectSubtitle: projectSubtitle, projectGit: projectGit }
+      $.ajax({
+        url: "/memberproject/savenewproject"
+        , data: data
+        , method: "POST"
+        , success: function (resp) {
+          init();
+        }
+      })
+    }
+
+  </script>
+</head>
+
+<body class="link-sidebar">
+
+  <div class="body-wrapper">
+    <div class="container-fluid">
+      <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+        <div class="card-body px-4 py-3">
+          <div class="row align-items-center">
+            <div class="col-9">
+              <h4 class="fw-semibold mb-8">User Profile</h4>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+                  </li>
+                  <li class="breadcrumb-item" aria-current="page">User Profile</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-3">
+              <div class="text-center mb-n5">
+                <img src="../../images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card overflow-hidden">
+        <div class="card-body p-0">
+          <img src="../../images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
+          <div class="row" style="justify-content: flex-end;">
+            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+              <div class="mt-n5">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <div class="d-flex align-items-center justify-content-center round-110">
+                    <div
+                      class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+                      <img src="../../images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <span class="mb-1 badge rounded-pill  bg-info-subtle text-info"
+                    th:text="${member.memberGroup}"></span>
+                  <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson</h5>
+                  <p class="mb-0" id="memberId" th:text="${member.memberId}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 order-last">
+              <ul
+                class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
+                <li>
+                  <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
+                    href=`chat?memberId=${member.memberId}` width="30" height="30">
+                    <i class="ti ti-message-chatbot"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
+                    href="mailto:${member.memberEmail}">
+                    <i class=" ti ti-mail"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
+                    th:href="${memberPage.memberBlog}">
+                    <i class="ti ti-brand-blogger"></i>
+                  </a>
+                </li>
+                <li>
+                  <button class="btn btn-primary text-nowrap">Add To Story</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
+            id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-profile-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                aria-selected="true">
+                <i class="ti ti-user-circle fs-5"></i>
+                <span class="d-none d-md-block">Profile</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
+          tabindex="0">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card shadow-none border">
+                <div class="card-body">
+                  <h4 class="mb-3">Introduction</h4>
+                  <div class="form-group">
+                    <textarea class="form-control" id="memberSelfInfo" rows="3" th:text="${memberPage.memberSelfInfo}"
+                      data-bs-toggle="tooltip" data-bs-placement="right" title="간단한 자기소개를 입력해주세요"></textarea>
+                  </div>
+                  <div class="vstack gap-3 mt-4">
+                    <div class="hstack gap-6">
+                      <i class="ti ti-briefcase text-dark fs-6"></i>
+                      <input type="text" class="form-control" id="memberInterest"
+                        th:value="${memberPage.memberInterest}" data-bs-toggle="tooltip" data-bs-placement="right"
+                        title="관심분야">
+                    </div>
+                    <div class="hstack gap-6">
+                      <i class="ti ti-mail text-dark fs-6"></i>
+                      <form style="width: 100%;">
+                        <input type="text" class="form-control" id="memberEmail" th:value="${member.memberEmail}"
+                          data-bs-toggle="tooltip" data-bs-placement="right" title="이메일">
+                        <div id="invalidEmail" class="invalid-feedback" hidden>
+                          본인인증을 완료해주세요
+                        </div>
+                        <div style="display: flex; width: 100%;">
+                          <button type="button" id="sendVerifyCode"
+                            class="btn btn-rounded bg-warning-subtle text-warning " style="margin: 5px; ">
+                            인증코드 보내기
+                          </button>
+                          <input type="text" id="verificationCode" class="form-control"
+                            style="width: 30%; margin: 5px;">
+                          <button type="button" id="verifyCode" class="btn btn-rounded bg-warning-subtle text-warning"
+                            style="margin: 5px;">
+                            확인
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="hstack gap-6">
+                      <i class="ti ti-device-desktop text-dark fs-6"></i>
+                      <input type="text" class="form-control" id="memberGit" th:value="${memberPage.memberGit}"
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="Github 주소">
+                    </div>
+                    <div class=" hstack gap-6">
+                      <i class="ti ti-map-pin text-dark fs-6"></i>
+                      <input type="text" class="form-control" id="memberBlog" th:value="${memberPage.memberBlog}"
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="블로그 주소">
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: flex-end;">
+                    <span hidden id="pageComplete"
+                      style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+
+                    <button type="button" id="pageUpdateBtn" class="btn bg-secondary-subtle text-secondary"
+                      style="margin: 10px;">
+                      저장
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card shadow-none border">
+                <div class="card-body">
+                  <h4 class="mb-3">내 활동</h4>
+                  <div class="row">
+                    <ul class="nav nav-pills nav-fill mt-4" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#navpill-111" role="tab">
+                          <span>내가 쓴 게시글</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#navpill-222" role="tab">
+                          <span>내가 쓴 댓글</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content border mt-2">
+                      <div class="tab-pane active p-3" id="navpill-111" role="tabpanel">
+
+                      </div>
+                      <div class="tab-pane p-3" id="navpill-222" role="tabpanel">
+
+                      </div>
+                      <div class="tab-pane p-3" id="navpill-333" role="tabpanel">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <img src="../assets/images/blog/blog-img3.jpg" alt="modernize-img" class="img-fluid" />
+                          </div>
+                          <div class="col-md-8">
+                            <p>
+                              Raw denim you probably haven't heard of them jean
+                              shorts Austin. Nesciunt tofu stumptown aliqua,
+                              retro synth master cleanse. Mustache cliche
+                              tempor, williamsburg carles vegan helvetica.
+                            </p>
+                          </div>
+                          <!-- </div> -->
+                          <!-- </div> -->
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                      <!-- end Tab with Fill & Justify -->
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+
+              <div class="card">
+                <div class="card-body">
+                  <form action="/memberSkill/updateMemberSkill" method="Post">
+                    <!-- <p id="skillMemberId" th:text="${memberPage.memberId}" hidden></p> -->
+
+                    <h5>Skill Set</h5>
+                    <p th:text="${memberPage.memberSkill}" id="memberSkill" hidden></p>
+                    <select id="skill" name="skill" class="select2 form-control" multiple="multiple">
+                      <option value="JAVA"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
+                        JAVA
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
+                        <option value="JAVA" selected>JAVA</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
+                        <option value="JAVA">JAVA</option>
+                      </div> -->
+                      <option value="PYTHON"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PYTHON')}">
+                        PYTHON
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PYTHON')}">
+                        <option value="PYTHON" selected>PYTHON</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('PYTHON')}">
+                        <option value="PYTHON">PYTHON</option>
+                      </div> -->
+                      <option value="C"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C')}">
+                        C
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C')}">
+                        <option value="C" selected>C</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('C')}">
+                        <option value="C">C</option>
+                      </div> -->
+                      <option value="C++"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C++')}">
+                        C++
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C++')}">
+                        <option value="C++" selected>C++</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('C++')}">
+                        <option value="C++">C++</option>
+                      </div> -->
+                      <option value="C#"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C#')}">
+                        C#
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C#')}">
+                        <option value="C#" selected>C#</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('C#')}">
+                        <option value="C#">C#</option>
+                      </div> -->
+                      <option value="Javascript"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Javascript')}">
+                        Javascript
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Javascript')}">
+                        <option value="Javascript" selected>Javascript</option>
+                      </div>
+                      <div
+                        th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Javascript')}">
+                        <option value="Javascript">Javascript</option>
+                      </div> -->
+                      <option value="React"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('React')}">
+                        React
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('React')}">
+                        <option value="React" selected>React</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('React')}">
+                        <option value="React">React</option>
+                      </div> -->
+                      <option value="HTML"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('HTML')}">
+                        HTML
+                      </option>
+                      <!-- 
+                      <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('HTML')}">
+                        <option value="HTML" selected>HTML</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('HTML')}">
+                        <option value="HTML">HTML</option>
+                      </div> -->
+                      <option value="Springboot"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Springboot')}">
+                        Springboot
+                      </option>
+                      <!-- <div
+                        th:if="${memberPage.memberSkill != null and memberPage.memberSkill != null and memberPage.memberSkill.contains('Springboot')}">
+                        <option value="Springboot" selected>Springboot</option>
+                      </div>
+                      <div
+                        th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Springboot')}">
+                        <option value="Springboot">Springboot</option>
+                      </div> -->
+
+                      <option value="jQuery"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('jQuery')}">
+                        jQuery
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('jQuery')}">
+                        <option value="jQuery" selected>jQuery</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('jQuery')}">
+                        <option value="jQuery">jQuery</option>
+                      </div> -->
+
+                      <option value="CSS3"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('CSS3')}">
+                        CSS3
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('CSS3')}">
+                        <option value="CSS3" selected>CSS3</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('CSS3')}">
+                        <option value="CSS3">CSS3</option>
+                      </div> -->
+
+                      <option value="Node.js"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Node.js')}">
+                        Node.js
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Node.js')}">
+                        <option value="Node.js" selected>Node.js</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Node.js')}">
+                        <option value="Node.js">Node.js</option>
+                      </div> -->
+
+                      <option value="Oracle"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Oracle')}">
+                        Oracle
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Oracle')}">
+                        <option value="Oracle" selected>Oracle</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('Oracle')}">
+                        <option value="Oracle">Oracle</option>
+                      </div> -->
+
+                      <option value="MySQL"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MySQL')}">
+                        MySQL
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MySQL')}">
+                        <option value="MySQL" selected>MySQL</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('MySQL')}">
+                        <option value="MySQL">MySQL</option>
+                      </div> -->
+
+                      <option value="MongoDB"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MongoDB')}">
+                        MongoDB
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MongoDB')}">
+                        <option value="MongoDB" selected>MongoDB</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill = null or memberPage.memberSkill.contains('MongoDB')}">
+                        <option value="MongoDB">MongoDB</option>
+                      </div> -->
+
+                      <option value="MariaDB"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MariaDB')}">
+                        MariaDB
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MariaDB')}">
+                        <option value="MariaDB" selected>MariaDB</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('MariaDB')}">
+                        <option value="MariaDB">MariaDB</option>
+                      </div> -->
+
+                      <option value="PostgreSQL"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PostgreSQL')}">
+                        PostgreSQL
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PostgreSQL')}">
+                        <option value="PostgreSQL" selected>PostgreSQL</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('PostgreSQL')}">
+                        <option value="PostgreSQL">PostgreSQL</option>
+                      </div> -->
+
+                      <option value="JPA"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JPA')}">
+                        JPA
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JPA')}">
+                        <option value="JPA" selected>JPA</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('JPA')}">
+                        <option value="JPA">JPA</option>
+                      </div> -->
+
+                      <option value="JSP"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JSP')}">
+                        JSP
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JSP')}">
+                        <option value="JSP" selected>JSP</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('JSP')}">
+                        <option value="JSP">JSP</option>
+                      </div> -->
+
+
+                      <option value="Linux"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Linux')}">
+                        Linux
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Linux')}">
+                        <option value="Linux" selected>Linux</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('Linux')}">
+                        <option value="Linux">Linux</option>
+                      </div> -->
+
+                      <option value="Unity"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Unity')}">
+                        Unity
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Unity')}">
+                        <option value="Unity" selected>Unity</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('Unity')}">
+                        <option value="Unity">Unity</option>
+                      </div> -->
+
+                      <option value="Flutter"
+                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Flutter')}">
+                        Flutter
+                      </option>
+                      <!-- <div th:if="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Flutter')}">
+                        <option value="Flutter" selected>Flutter</option>
+                      </div>
+                      <div th:unless="${memberPage.memberSkill.contains('Flutter')}">
+                        <option value="Flutter">Flutter</option>
+                      </div> -->
+                    </select>
+                    <div style="display: flex; justify-content: flex-end;">
+                      <span hidden id="skillComplete"
+                        style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+
+                      <button type="button" id="skillUpdateBtn" class="btn bg-secondary-subtle text-secondary"
+                        style="margin: 10px;">
+                        저장
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body border-bottom" id="projectForm">
+                  <h4 class="card-title mb-3" id="startProject">Project
+                    <button type="button"
+                      class="btn mb-1 bg-info-subtle rounded-circle round-32 btn-sm d-inline-flex align-items-center justify-content-center"
+                      style="margin-left: 7px;" id="newProject">
+                      <i class="fs-5 ti ti-plus"></i>
+                    </button>
+                  </h4>
+                </div>
+              </div>
+              <span style="margin: 10px; float: right;">
+                <a th:href="@{/memberpage/showpage(memberId=${member.memberId})}"
+                  class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">마이페이지로
+                  돌아가기</a></span>
+
+
+            </div>
+          </div>
+          <!-- Import Js Files -->
+          <script src="../../libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="../../libs/simplebar/dist/simplebar.min.js"></script>
+          <script src="../../js/theme/app.init.js"></script>
+          <script src="../../js/theme/theme.js"></script>
+          <script src="../../js/theme/app.min.js"></script>
+          <script src="../../js/theme/sidebarmenu.js"></script>
+
+          <script src="../../js/vendor.min.js"></script>
+          <!-- solar icons -->
+          <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+          <!-- This Page JS -->
+          <script src="../../libs/select2/dist/js/select2.full.min.js"></script>
+          <script src="../../libs/select2/dist/js/select2.min.js"></script>
+          <script src="../../js/forms/select2.init.js"></script>
+          <script src="../../js/apps/kanban.js"></script>
+          <script src="../../js/plugins/toastr-init.js"></script>
+</body>
+
+</html>
