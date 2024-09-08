@@ -29499,7 +29499,7 @@ html[data-layout="horizontal"] .body-wrapper > .container-md,
 html[data-layout="horizontal"] .body-wrapper > .container-sm,
 html[data-layout="horizontal"] .body-wrapper > .container-xl,
 html[data-layout="horizontal"] .body-wrapper > .container-xxl {
-    padding-top: 115px !important;
+    /* padding-top: 115px !important; */
     padding: 15px;
 }
 @media (min-width: 992px) and (max-width: 1299.98px) {

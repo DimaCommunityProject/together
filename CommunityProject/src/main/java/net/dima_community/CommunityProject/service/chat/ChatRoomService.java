@@ -2,6 +2,8 @@ package net.dima_community.CommunityProject.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dima_community.CommunityProject.common.util.UserStatusManager;
+import net.dima_community.CommunityProject.dto.chat.ChatRoomMemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
@@ -236,6 +238,20 @@ public class ChatRoomService {
 	                 return true;
 	             }).orElse(false);
 	 }
+	 
+	 /**
+	  * 
+	  * @param userId
+	  * @param roomId
+	  * @param status
+	  */
+	 public void updateMemberStatus(String userId, Long roomId, String status) {
+		    // UserStatusManager를 사용해 상태를 업데이트
+		    UserStatusManager.updateUserStatus(userId, status);
+		    
+		    // 이 경우 더 이상 상태를 DB에 저장하지 않음.
+		    // chattingRoomMemberRepository.save(member);는 필요하지 않음.
+		}
 	
 	 /**
 	  * 유니크 키에서 나간 사용자의 이름을 삭제하고 갱신하는 메서드.
@@ -296,45 +312,60 @@ public class ChatRoomService {
 	  * @return 채팅방 상세 정보 목록
 	  */
 	 public List<Map<String, Object>> getChatRoomDetails(String userId) {
-	     // 1. 삭제되지 않은 채팅방 ID 목록을 가져옴
-	     List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberIdAndDeleted(userId, 0)
-	             .stream().map(member -> member.getChatRoom().getId()).collect(Collectors.toList());
-	
-	     // 2. 채팅방 ID로 세부 정보 조회
-	     return chatRoomRepository.findAllById(roomIds)
-	             .stream()
-	             .map(this::mapChatRoomToDetails)
-	             .collect(Collectors.toList());
-	 }
+		    // 1. 삭제되지 않은 채팅방 ID 목록을 가져옴 (deleted 값이 0인 사람만)
+		    List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberIdAndDeleted(userId, 0)
+		            .stream().map(member -> member.getChatRoom().getId()).collect(Collectors.toList());
+
+		    // 2. 채팅방 ID로 세부 정보 조회
+		    return chatRoomRepository.findAllById(roomIds)
+		            .stream()
+		            .map(this::mapChatRoomToDetails) // 각 채팅방의 세부 정보를 변환
+		            .collect(Collectors.toList());
+		}
 	
 	 /**
-	  * 채팅방 객체를 맵으로 변환하는 메서드.
+	  * 채팅방 객체를 맵으로 변환하여 유니크 키를 이름으로 변경하여 회원 정보 반환 
 	  * @param chatRoom 변환할 채팅방 객체
 	  * @return 채팅방 세부 정보가 담긴 맵
 	  */
 	 private Map<String, Object> mapChatRoomToDetails(ChatRoom chatRoom) {
-	     Map<String, Object> roomDetails = new HashMap<>();
-	     
-	     // 채팅방 ID, 이름, 유니크 키 저장
-	     roomDetails.put("id", chatRoom.getId());
-	     roomDetails.put("name", chatRoom.getName());
-	     roomDetails.put("uniqueKey", chatRoom.getUniqueKey());
-	
-	     // 채팅방 멤버 정보 변환
-	     List<Map<String, Object>> members = chatRoom.getChattingRoomMembers()
-	             .stream()
-	             .map(member -> {
-	                 Map<String, Object> memberMap = new HashMap<>();
-	                 memberMap.put("memberId", member.getMember().getMemberId());
-	                 memberMap.put("memberName", member.getMember().getMemberName());
-	                 memberMap.put("deleted", member.getDeleted());
-	                 return memberMap;
-	             })
-	             .collect(Collectors.toList());
-	
-	     roomDetails.put("members", members);
-	     return roomDetails;
-	 }
+		    Map<String, Object> roomDetails = new HashMap<>();
+		    
+		    // 1. 채팅방 ID와 이름을 저장
+		    roomDetails.put("id", chatRoom.getId());
+		    roomDetails.put("name", chatRoom.getName());
+
+		    // 2. 삭제되지 않은 멤버들의 이름을 유니크 키로 변환
+		    String uniqueKey = chatRoom.getChattingRoomMembers()
+		        .stream()
+		        .filter(member -> member.getDeleted() == 0)  // 삭제되지 않은 멤버들만 필터링
+		        .map(member -> member.getMember().getMemberName()) // 이름을 가져옴
+		        .sorted()  // 알파벳순 정렬
+		        .collect(Collectors.joining(","));  // 쉼표로 이어서 유니크 키 생성
+		    
+		    roomDetails.put("uniqueKey", uniqueKey);
+
+		    // 3. 채팅방 멤버들의 정보 저장 (ChatRoomMemberDTO로 변환)
+		    List<ChatRoomMemberDTO> members = chatRoom.getChattingRoomMembers()
+		        .stream()
+		        .map(member -> {
+		            String memberId = member.getMember().getMemberId();
+		            String memberName = member.getMember().getMemberName();
+		            String memberGroup = member.getMember().getMemberGroup(); // memberGroup 추가
+		            Integer deleted = member.getDeleted();
+
+		            // UserStatusManager를 사용해 상태를 조회
+		            String status = UserStatusManager.getUserStatus(memberId).equals("online") ? "online" : "offline";
+
+		            // 명시적으로 ChatRoomMemberDTO 생성
+		            return new ChatRoomMemberDTO(memberId, memberName, memberGroup, status, deleted);
+		        })
+		        .collect(Collectors.toList());
+
+		    roomDetails.put("members", members);
+		    
+		    return roomDetails;
+		}
 	
 	 // =======================================================
 	 // ================== 회원 및 채팅방 관리 ==================
