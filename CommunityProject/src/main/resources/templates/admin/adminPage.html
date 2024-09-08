@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/css/styles.css" />
+  <link rel="stylesheet" th:href="/static/css/styles.css" />
   <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
 
   <title>관리자 페이지</title>
@@ -64,7 +64,7 @@
 <body class="link-sidebar">
   <!-- Preloader -->
   <div class="preloader">
-    <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    <img th:src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -74,11 +74,11 @@
       <!-- Start Vertical Layout Sidebar -->
       <!-- ---------------------------------- -->
       <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="../horizontal/index.html" class="text-nowrap logo-img">
-            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          <a th:href="../horizontal/index.html" class="text-nowrap logo-img">
+            <img th:src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img th:src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
           </a>
-          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+          <a th:href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
           </a>
         </div> -->
@@ -92,13 +92,13 @@
           <nav class="navbar navbar-expand-xl container-fluid p-0" style="margin-top: 10px !important;">
             <ul class="navbar-nav align-items-center">
               <!-- <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
-                <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" th:href="javascript:void(0)">
                   <i class="ti ti-menu-2"></i>
                 </a>
               </li> -->
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
-                  <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
+                  <img th:src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
                   <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
                                         alt="modernize-img" /> -->
                 </a>
@@ -112,7 +112,7 @@
               <!-- ------------------------------- -->
               <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
                 <div class="hover-dd">
-                  <a class="nav-link" href="javascript:void(0)">
+                  <a class="nav-link" th:href="javascript:void(0)">
                     수업 <span class="mt-1">
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
@@ -126,12 +126,12 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../horizontal/app-chat.html"
+                                  <a th:href="../horizontal/app-chat.html"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 195px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/code.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="/static/images/main/code.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -142,12 +142,12 @@
                                         코드 물어보세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="../horizontal/app-invoice.html"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 280px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/project.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="/static/images/main/project.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -170,7 +170,7 @@
               </li>
               <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
                 <div class="hover-dd">
-                  <a class="nav-link" href="javascript:void(0)">
+                  <a class="nav-link" th:href="javascript:void(0)">
                     취업 <span class="mt-1">
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
@@ -189,7 +189,7 @@
                                     style="width: 225px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/job.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="/static/images/main/job.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -200,12 +200,12 @@
                                         채용 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="../horizontal/app-invoice.html"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/recruit.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="/static/images/main/recruit.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -228,7 +228,7 @@
               </li>
               <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
                 <div class="hover-dd">
-                  <a class="nav-link" href="javascript:void(0)">
+                  <a class="nav-link" th:href="javascript:void(0)">
                     자유 <span class="mt-1">
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
@@ -242,12 +242,12 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../horizontal/app-chat.html"
+                                  <a th:href="../horizontal/app-chat.html"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 230px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/board.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="/static/images/main/board.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -258,12 +258,12 @@
                                         게시글을 올려주세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="../horizontal/app-invoice.html"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/static/images/main/info.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="/static/images/main/info.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -273,7 +273,7 @@
                                         모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="../horizontal/app-invoice.html"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
@@ -317,7 +317,7 @@
             <!-- 채팅/마이페이지 시작 -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-                <a href="javascript:void(0)"
+                <a th:href="javascript:void(0)"
                   class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
                   type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
                   aria-controls="offcanvasWithBothOptions">
@@ -326,16 +326,16 @@
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                   <!-- 다크모드 -->
                   <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                                        <a class="nav-link moon dark-layout" th:href="javascript:void(0)">
                                             <i class="ti ti-moon moon"></i>
                                         </a>
-                                        <a class="nav-link sun light-layout" href="javascript:void(0)">
+                                        <a class="nav-link sun light-layout" th:href="javascript:void(0)">
                                             <i class="ti ti-sun sun"></i>
                                         </a>
                                     </li> -->
                   <!-- 채팅 -->
                   <li class="nav-item nav-icon-hover-bg rounded-circle">
-                    <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
+                    <a class="nav-link position-relative" th:href="javascript:void(0)" data-bs-toggle="offcanvas"
                       data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                       <img src="/static/images/main/chat.png" alt="modernize-img"
                         style="width: 30.2px; height: 30px;" />
@@ -346,7 +346,7 @@
                     <!-- 링크 수정 필요-->
                     <a class="nav-link position-relative"
                       th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
-                      <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                      <!-- <a class="nav-link position-relative" th:href="/memberpage/showpage?memberId=ssehn9327"> -->
                       <img src="/static/images/profile/user-1.jpg" alt="modernize-img"
                         style="width: 30.2px; height: 30px;" />
                     </a>

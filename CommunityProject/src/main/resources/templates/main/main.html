@@ -313,7 +313,7 @@
                   aria-controls="offcanvasWithBothOptions">
                   <i class="ti ti-align-justified fs-7"></i>
                 </a>
-                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center" sec:authorize="isAuthenticated()">
                   <!-- 다크모드 -->
                   <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link moon dark-layout" href="javascript:void(0)">
@@ -332,7 +332,7 @@
                     </a>
                   </li>
                   <!-- 마이페이지 -->
-                  <div sec:authorize="isAuthenticated()">
+                  <div>
                     <li class="nav-item nav-icon-hover-bg rounded-circle">
                       <!-- 링크 수정 필요-->
                       <a class="nav-link position-relative"
