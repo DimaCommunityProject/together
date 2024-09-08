@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>공지사항 수정 페이지</title>
-    <link rel="stylesheet" href="/static/css/styles.css" />
-    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <style>
         .title-container {
             display: flex;
@@ -54,9 +54,9 @@
         enctype="multipart/form-data">
         <!-- 공지사항 작성 시작 -->
         <div class="title-container">
-            <img src="/static/images/note.png" alt="첨부파일">
+            <img th:src="@{/images/note.png}" alt="첨부파일">
             공지사항 수정
-            <img src="/static/images/note.png" alt="첨부파일">
+            <img th:src="@{/images/note.png}" alt="첨부파일">
         </div>
         <div class="card-body text-bg-light">
             <input type="hidden" name="adminNoteNum" th:value="${adminNote.adminNoteNum}">
@@ -65,7 +65,7 @@
                     <label for="inputText4" class="col-3 text-end  col-form-label">제목</label>
                     <div class="col-9 border-start pb-2 pt-2">
                         <input type="text" class="form-control" id="adminNoteTitle" name="adminNoteTitle"
-                        th:value="${adminNote.adminNoteTitle}" required/>
+                            th:value="${adminNote.adminNoteTitle}" required />
                     </div>
                 </div>
             </div>
@@ -74,7 +74,8 @@
                     <label for="inputText4" class="col-3 text-end  col-form-label">내용</label>
                     <div class="col-9 border-start pb-2 pt-2">
                         <textarea class="form-control" id="adminNoteContent" name="adminNoteContent" rows="10"
-                            placeholder="Text Here..." style="height: 480px;" required>[[ ${adminNote.adminNoteContent} ]]</textarea>
+                            placeholder="Text Here..." style="height: 480px;"
+                            required>[[ ${adminNote.adminNoteContent} ]]</textarea>
                     </div>
                 </div>
             </div>
@@ -106,12 +107,13 @@
 
     </form>
     <!-- Import Js Files -->
-    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/static/js/theme/app.init.js"></script>
-    <script src="/static/js/theme/theme.js"></script>
-    <script src="/static/js/theme/app.min.js"></script>
-    <script src="/static/js/theme/sidebarmenu.js"></script>
+    <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/js/theme/app.init.js}"></script>
+    <script th:src="@{/js/theme/theme.js}"></script>
+    <script th:src="@{/js/theme/app.min.js}"></script>
+    <script th:src="@{/js/vendor.min.js}"></script>
+    <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>

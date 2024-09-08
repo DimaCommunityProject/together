@@ -7,8 +7,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/styles.css" />
-    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
     <title>공지사항</title>
     <style>
@@ -64,7 +64,7 @@
 <body class="link-sidebar">
     <!-- Preloader -->
     <div class="preloader">
-        <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+        <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
     </div>
     <div id="main-wrapper">
         <!-- Sidebar Start -->
@@ -98,7 +98,7 @@
               </li> -->
                             <li class="nav-item d-none d-xl-block">
                                 <a th:href="@{/}" class="text-nowrap nav-link">
-                                    <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180"
+                                    <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180"
                                         alt="modernize-img" />
                                     <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
                                         alt="modernize-img" /> -->
@@ -127,30 +127,29 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="position-relative">
-                                                                    <a href="../horizontal/app-chat.html"
+                                                                    <a th:href="@{/board/list(category=code)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 195px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/code.png"
+                                                                            <img th:src="@{/images/main/code.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
                                                                         <div>
-                                                                            <h6 class="mb-1 fw-semibold fs-3">
-                                                                                코드 공유 게시판
+                                                                            <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
                                                                             </h6>
                                                                             <span
                                                                                 class="fs-2 d-block text-body-secondary">모르는
                                                                                 코드 물어보세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=project)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 280px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/project.png"
+                                                                            <img th:src="@{/images/main/project.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
@@ -189,12 +188,12 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="position-relative">
-                                                                    <a href="../horizontal/app-chat.html"
+                                                                    <a th:href="@{/board/list(category=activity)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 225px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/job.png"
+                                                                            <img th:src="@{/images/main/job.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
@@ -207,12 +206,12 @@
                                                                                 채용 정보를 확인하세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=recruit)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 266px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/recruit.png"
+                                                                            <img th:src="@{/images/main/recruit.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
@@ -251,12 +250,12 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="position-relative">
-                                                                    <a href="../horizontal/app-chat.html"
+                                                                    <a th:href="@{/board/list(category=free)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 230px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/board.png"
+                                                                            <img th:src="@{/images/main/board.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
@@ -269,12 +268,12 @@
                                                                                 게시글을 올려주세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=info)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 266px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/info.png"
+                                                                            <img th:src="@{/images/main/info.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
@@ -286,12 +285,12 @@
                                                                                 모든 정보를 확인하세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=group)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 266px !important">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                                                            <img src="/static/images/main/classroom.png"
+                                                                            <img th:src="@{/images/main/classroom.png}"
                                                                                 alt="modernize-img" class="img-fluid"
                                                                                 width="24" height="24" />
                                                                         </div>
@@ -332,41 +331,47 @@
                         <!-- 채팅/마이페이지 시작 -->
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                             <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-                                <a href="javascript:void(0)"
-                                    class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
-                                    type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
-                                    aria-controls="offcanvasWithBothOptions">
-                                    <i class="ti ti-align-justified fs-7"></i>
-                                </a>
-                                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                                <!-- <a href="javascript:void(0)"
+                    class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                    type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                    aria-controls="offcanvasWithBothOptions">
+                    <i class="ti ti-align-justified fs-7"></i>
+                  </a> -->
+                                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center"
+                                    sec:authorize="isAuthenticated()">
                                     <!-- 다크모드 -->
                                     <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <a class="nav-link moon dark-layout" href="javascript:void(0)">
-                                            <i class="ti ti-moon moon"></i>
-                                        </a>
-                                        <a class="nav-link sun light-layout" href="javascript:void(0)">
-                                            <i class="ti ti-sun sun"></i>
-                                        </a>
-                                    </li> -->
+                      <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                        <i class="ti ti-moon moon"></i>
+                      </a>
+                      <a class="nav-link sun light-layout" href="javascript:void(0)">
+                        <i class="ti ti-sun sun"></i>
+                      </a>
+                    </li> -->
                                     <!-- 채팅 -->
-                                    <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <a class="nav-link position-relative" href="javascript:void(0)"
-                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                            aria-controls="offcanvasRight">
-                                            <img src="/static/images/main/chat.png" alt="modernize-img"
+                                    <li class="nav-item nav-icon-hover-bg rounded-circle"
+                                        sec:authorize="isAuthenticated()">
+                                        <a class="nav-link position-relative" th:href="@{api/chat/chatPage} ">
+                                            <img th:src="@{/images/main/chat.png}" alt="modernize-img"
                                                 style="width: 30.2px; height: 30px;" />
                                         </a>
                                     </li>
                                     <!-- 마이페이지 -->
-                                    <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <!-- 링크 수정 필요-->
-                                        <a class="nav-link position-relative"
-                                            th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
-                                            <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
-                                            <img src="/static/images/profile/user-1.jpg" alt="modernize-img"
-                                                style="width: 30.2px; height: 30px;" />
-                                        </a>
-                                    </li>
+                                    <div>
+                                        <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                            <!-- 링크 수정 필요-->
+                                            <a class="nav-link position-relative"
+                                                th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                                                <!-- savedFileName이 존재하는 경우 -->
+                                                <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                                                    alt="profile image" class="h-100">
+
+                                                <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
+                                                <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                            alt="default profile image" class="w-100 h-100"> -->
+                                            </a>
+                                        </li>
+                                    </div>
                                 </ul>
                             </div>
                         </div>
@@ -498,8 +503,8 @@
                                                                         제목</a>
                                                                     <span
                                                                         th:if="${adminNote.adminNoteOriginalFileName != null}">
-                                                                        <img th:src="@{/static/images/NoteClip.png}"
-                                                                            alt="첨부파일" width="15px">
+                                                                        <img th:src="@{/images/NoteClip.png}" alt="첨부파일"
+                                                                            width="15px">
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -751,31 +756,20 @@
     </div>
     <div class="dark-transparent sidebartoggler"></div>
     <!-- Import Js Files -->
-    <!-- <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/static/js/theme/app.horizontal.init.js"></script>
-    <script src="/static/js/theme/theme.js"></script>
-    <script src="/static/js/theme/app.min.js"></script>
-    <script src="/static/js/theme/sidebarmenu.js"></script> -->
-
-    <!-- solar icons -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
-    <!-- <script src="/static/libs/fullcalendar/index.global.min.js"></script>
-    <script src="/static/js/apps/chat.js"></script> -->
-
-    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/static/js/theme/app.init.js"></script>
-    <script src="/static/js/theme/theme.js"></script>
-    <script src="/static/js/theme/app.min.js"></script>
-    <script src="/static/js/vendor.min.js"></script>
-    <script src="/static/js/theme/sidebarmenu.js"></script>
-    <script src="/static/js/theme/app.horizontal.init.js"></script>
+    <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/js/theme/app.init.js}"></script>
+    <script th:src="@{/js/theme/theme.js}"></script>
+    <script th:src="@{/js/theme/app.min.js}"></script>
+    <script th:src="@{/js/vendor.min.js}"></script>
+    <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+    <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
 
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-    <script src="/static/libs/fullcalendar/index.global.min.js"></script>
-    <script src="/static/js/apps/contact.js"></script>
-</body>
+    <script th:src="@{/libs/fullcalendar/index.global.min.js}"></script>
+    <script th:src="@{/js/apps/contact.js}"></script>
+
+
 
 </html>
