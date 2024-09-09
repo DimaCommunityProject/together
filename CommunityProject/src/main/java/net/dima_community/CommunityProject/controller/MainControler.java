@@ -32,7 +32,7 @@ public class MainControler {
 
 		model.addAttribute("list", dtoList);
 
-		return "chat/test";
+		return "main/main";
 
 	}
 }

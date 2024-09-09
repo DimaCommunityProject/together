@@ -7,8 +7,7 @@ $(document).ready(function () {
 	let currentUserImage = null;
     let currentUniqueKey = null; 
 	let currentChatRoomId = null;
-	let userStatusCache = {};
-	let subscribedRooms = {};
+
 
     // ========== 초기 데이터 로드 ==========
     function loadInitialData() {
@@ -58,7 +57,6 @@ $(document).ready(function () {
             currentUserId = currentUser.memberId.trim();
             currentUserEmail = currentUser.memberEmail;
             currentUserRole = currentUser.memberRole;
-            currentUserMemberGroup = currentUser.memberGroup;
             currentUserImage = 'src', `../../images/profile/${currentUserName}.jpg`;
 			
 			
@@ -66,7 +64,6 @@ $(document).ready(function () {
             $('.currentUserId').text(currentUserId);
             $('.currentUserRole').text(currentUserRole);
             $('.currentUserEmail').text(currentUserEmail);
-            $('.currentUserMemberGroup').text(currentUserMemberGroup);
             $('.userProfileImage').attr('src', `../../images/profile/${currentUserName}.jpg`);
         } else {
             console.error("Invalid user data.");
@@ -79,7 +76,7 @@ $(document).ready(function () {
     // ========== 3. 채팅방 목록 로드 ==========
     function updateChatRooms(chatRooms) {
 	    console.log("Chat rooms data:", chatRooms); // chatRooms 데이터를 확인
-	    $('.chatList').empty();
+	    $('#chatList').empty();
 	    chatRooms.forEach(function(room) {
 	        console.log("Rendering room:", room); // 각 room 객체를 확인
 	        renderChatRoom(room);  // room을 전달
@@ -136,7 +133,7 @@ $(document).ready(function () {
 	        </li>
 	    `;
 	    
-	    $('.chatList').append(roomListHtml);
+	    $('#chatList').append(roomListHtml);
 	    registerChatRoomClickEvent(); // 클릭 이벤트 등록
 	}
 	
@@ -145,7 +142,7 @@ $(document).ready(function () {
 	function generateMemberImageHtml(memberName, memberId, status) {
 	    const badgeClass = status === 'online' ? 'bg-success' : 'bg-light';  // 상태에 따른 배지 클래스 결정
 	    return `
-	        <span class="position-relative chat-user" data-user-id="${memberId}">
+	        <span class="position-relative" data-user-id="${memberId}">
 	            <img src="../../images/profile/${memberName}.jpg" alt="${memberName}" width="48" height="48" class="rounded-circle ms-1" />
 	            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}">
 	                <span class="visually-hidden">New alerts</span>
@@ -192,43 +189,41 @@ $(document).ready(function () {
     function joinChatRoom(roomId, uniqueKey) {
 	    if (stompClient && roomId) {
 	        if (currentChatRoomId) {
-	            leaveChatRoom(currentChatRoomId);  // 이전 방에서 퇴장
-	            stompClient.unsubscribe(`sub-${currentChatRoomId}`);  // 구독 해지
+	            leaveChatRoom(currentChatRoomId);
+	            stompClient.unsubscribe(`sub-${currentChatRoomId}`);
 	        }
 	
 	        currentChatRoomId = roomId;
 	        currentUniqueKey = uniqueKey;
 	
-	        // 새로운 채팅방 구독 설정
+	        // 채팅방 구독 설정
 	        stompClient.subscribe(`/queue/chat.room.${roomId}`, function (messageOutput) {
 			    const message = JSON.parse(messageOutput.body);
 			
-			    console.log('Received message:', message);  // 메시지 확인용 로그
-			
-			    // 본인이 보낸 메시지인 경우, 처리하지 않음
-			    if (message.senderId === currentUserId) {
-			        return;  // 본인의 상태 업데이트는 무시
-			    }
+			    console.log('Received message:', message); // 메시지 확인용 로그
 			
 			    if (message.content && message.senderName) {
-			        if (message.content.includes("접속하셨습니다")) {
+			        // 입장 메시지일 경우
+			        if (message.content.includes("입장하셨습니다")) {
 			            console.log(`User ${message.senderId} joined`);
-			            updateUserStatusInUI(message.senderId, "online");  // 상태 업데이트
-			        } else if (message.content.includes("로그아웃 하셨습니다")) {
-			            console.log(`User ${message.senderId} logged out`);
-			            updateUserStatusInUI(message.senderId, "offline");  // 상태 업데이트
+			            updateUserStatusInUI(message.senderId, "online");
 			        }
-			        showMessage(message);  // 메시지 표시
+			        // 퇴장 메시지일 경우
+			        else if (message.content.includes("로그아웃")) {
+			            console.log(`User ${message.senderId} logged out`);
+			            updateUserStatusInUI(message.senderId, "offline");
+			        }
+			        // 메시지 표시
+			        showMessage(message);
 			    } else {
 			        console.error("Invalid message received:", message);
 			    }
 			}, { id: `sub-${roomId}` });
 	
-	        updateStatus("online", roomId);  // 새로운 방에 들어왔을 때 상태를 online으로 설정
+	        updateStatus("online", roomId);
 	        loadChatMessages(roomId);
 	        loadChatRoomMembers(roomId);
 	
-	        // 입장 메시지 전송
 	        const enterMessage = {
 	            senderId: currentUserId,
 	            chatRoomId: roomId,
@@ -238,19 +233,38 @@ $(document).ready(function () {
 	    }
 	}
 	
-	// 채팅방에서 퇴장 시 메시지
-	function leaveChatRoom(roomId) {
-	    if (stompClient && roomId) {
-	        updateStatus("offline", roomId);  // 현재 방에서 나갈 때 상태를 offline으로 설정
-	        
-	        const exitMessage = {
-	            senderId: currentUserId,
-	            chatRoomId: roomId,
-	            content: `${currentUserName}님이 퇴장하셨습니다.`
-	        };
-	        stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
+	// 사용자의 상태 업데이트를 UI에 반영하는 함수
+	function updateUserStatusInUI(userId, status) {
+	    console.log(`Updating status for user ${userId} to ${status}`);
+	    
+	    // 상태에 따른 배지 클래스 설정
+	    const badgeClass = status === 'online' ? 'bg-success' : 'bg-light';  
+	    
+	    // 해당 사용자의 상태 배지를 찾아서 업데이트
+	    const userBadge = $(`.chat-user[data-user-id="${userId}"] .badge`);
+	    console.log(`Looking for user badge with selector: .chat-user[data-user-id="${userId}"]`);
+	    
+	    if (userBadge.length) {
+	        userBadge.attr('class', `position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}`);
+	        console.log(`Updated badge class for user ${userId} to ${badgeClass}`);
+	    } else {
+	        console.error(`Could not find user with ID ${userId} to update status.`);
 	    }
 	}
+
+	// 채팅방에서 퇴장 시 메시지
+    function leaveChatRoom(roomId) {
+        if (stompClient && roomId) {
+			updateStatus("offline", roomId);
+			
+            const exitMessage = {
+                senderId: currentUserId,
+                chatRoomId: roomId,
+                content: `${currentUserName}님이 퇴장하셨습니다.`
+            };
+            stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
+        }
+    }
     
     // 상태 업데이트 (online/offline)
 	function updateStatus(status, roomId) {
@@ -312,7 +326,6 @@ $(document).ready(function () {
 	    });
 	}
 	
-	
 	// ========== 채팅방 멤버 UI 업데이트 ==========
 	function updateChatPartnerUI(members) {
 	    console.log("Received members:", members); // members 데이터 확인
@@ -339,36 +352,18 @@ $(document).ready(function () {
 	        updateUserStatusInUI(member.memberId, member.status);  // 상태 업데이트
 	    });
 	}
-	
-	// 사용자의 상태 업데이트를 UI에 반영하는 함수
-	function updateUserStatusInUI(userId, status) {
-	    const badgeClass = status === 'online' ? 'bg-success' : 'bg-light';  
-	    const userBadge = $(`.chat-user[data-user-id="${userId}"] .badge`);
-	    
-	    console.log("Looking for user badge with selector:", `.chat-user[data-user-id="${userId}"]`);
-	
-	    if (userBadge.length) {
-	        userBadge.attr('class', `position-absolute bottom-0 end-0 p-1 badge rounded-pill ${badgeClass}`);
-	    } else {
-	        console.error(`Could not find user with ID ${userId} to update status.`);
-	    }
-	}
-	 	
+ 	
     // 메시지창 처리
     function showMessage(message) {
 	    const senderId = message.senderId.trim(); // 메시지를 보낸 사용자의 ID를 가져옴
-	    
-	    
 	    const messageContent = message.content;
 	
-	    
 	    // 메시지가 "입장" 또는 "퇴장"과 관련된 경우 상태를 변경
-	    if (messageContent.includes("접속하셨습니다")) {
+	    if (messageContent.includes("입장하셨습니다")) {
 	        updateUserStatusInUI(senderId, "online");
-	    } else if (messageContent.includes("로그아웃 하셨습니다")) {
+	    } else if (messageContent.includes("퇴장하셨습니다")) {
 	        updateUserStatusInUI(senderId, "offline");
 	    }
-	    
 	
 	    const messageHtml = senderId === currentUserId
 	        ? generateSentMessageHtml(message) // 자신이 보낸 메시지
@@ -514,19 +509,6 @@ $(document).ready(function () {
 	
 	    console.log("availableMembers", availableMembers);
 	    
-	    // 멤버 목록 모델에 표시 
-	    const membersCheckboxes = $('#inviteMembersCheckboxes');
-	    membersCheckboxes.empty(); // 기존 목록 초기화
-	    availableMembers.forEach(member => {
-	        membersCheckboxes.append(`
-	            <div class="form-check">
-	                <input class="form-check-input invite-member-checkbox" type="checkbox" value="${member.memberId}" id="member-${member.memberId}">
-	                <label class="form-check-label" for="member-${member.memberId}">
-	                    ${member.memberName}
-	                </label>
-	            </div>
-	        `);
-	    });
 	    
 	
 	    // 모달 표시
