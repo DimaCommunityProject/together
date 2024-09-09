@@ -15,6 +15,7 @@ import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRep
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -39,6 +40,7 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final RabbitAdmin rabbitAdmin;
+    private final RabbitTemplate rabbitTemplate;
     
     private static final String MEMBER_SEPARATOR = ",";
     private static final String QUEUE_PREFIX = "chat.room.";
@@ -159,6 +161,22 @@ public class ChatRoomService {
     // =======================================================
     // ===================== RabbitMQ Queue 생성 =====================
     // =======================================================
+    
+    /**
+     * 모든 회원이 구독하는 공통 큐 
+     */
+    private void createRabbitMQCommonQueue() {
+        String queueName = "chat.common";
+        Queue queue = new Queue(queueName, true);
+        rabbitAdmin.declareQueue(queue);
+        Binding binding = BindingBuilder.bind(queue).to(new TopicExchange("chat.exchange")).with(queueName);
+        rabbitAdmin.declareBinding(binding);
+    }
+
+    // 모든 회원에게 알림 전송
+    private void sendCommonQueueMessage(ChatMessage message) {
+        rabbitTemplate.convertAndSend("chat.exchange", "chat.common", message);
+    }
 
     /**
      * RabbitMQ 큐 생성

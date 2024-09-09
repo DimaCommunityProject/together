@@ -369,7 +369,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
             </ul>
 
             <div class="d-block d-lg-none py-4">
-              <a th:href="@{main.main}" class="text-nowrap logo-img">
+              <a th:href="@{/}" class="text-nowrap logo-img">
                 <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
               </a>
             </div>
@@ -455,7 +455,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
           <!-- apps Dropdown in Small screen -->
           <!-- ------------------------------- -->
           <!--  Mobilenavbar -->
-          <!-- 안쓸거 -->
+          <!-- 안쓸거 시작  -->
           <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar" aria-labelledby="offcanvasWithBothOptionsLabel">
             <nav class="sidebar-nav scroll-sidebar">
               <div class="offcanvas-header justify-content-between">
@@ -617,7 +617,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
               </div>
             </nav>
           </div>
-          <!-- 안쓸거 -->
+          <!-- 안쓸거 끝 -->
         </div>
         <div class="app-header with-horizontal">
           <nav class="navbar navbar-expand-xl container-fluid p-0">
@@ -628,7 +628,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                 </a>
               </li>
               <li class="nav-item d-none d-xl-block">
-                <a href="../horizontal/index.html" class="text-nowrap nav-link">
+                <a th:href="@{/}" class="text-nowrap nav-link">
                   <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
                 </a>
               </li>
