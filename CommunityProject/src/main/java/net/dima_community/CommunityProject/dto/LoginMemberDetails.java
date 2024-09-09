@@ -14,6 +14,12 @@ public class LoginMemberDetails implements UserDetails {
 	private String memberId;
 	private String memberPw;
 	private String memberRole;
+	
+	// name, group, email 가져오기 - 인영 
+	private String memberName;
+	private String memberGroup;
+	private String memberEmail;
+	// =======================================
 	private static final long serialVersionUID = 1L; // 자동으로 발생
 
 	public LoginMemberDetails(MemberDTO memberDTO) {
@@ -21,6 +27,12 @@ public class LoginMemberDetails implements UserDetails {
 		this.memberId = memberDTO.getMemberId();
 		this.memberPw = memberDTO.getMemberPw();
 		this.memberRole = memberDTO.getMemberRole();
+		
+		// name, group, email 가져오기 - 인영 
+		this.memberName = memberDTO.getMemberName();
+		this.memberGroup = memberDTO.getMemberGroup();
+		this.memberEmail = memberDTO.getMemberEmail();
+		// =======================================
 	}
 
 	// @Override
@@ -47,6 +59,20 @@ public class LoginMemberDetails implements UserDetails {
 		collection.add(new SimpleGrantedAuthority(memberRole)); // 'ROLE_ADMIN' 등의 권한이 그대로 추가됨
 		return collection;
 	}
+	
+	// == name, group, email 가져오기 - 인영 == 
+		public String getMemberName() {
+			return memberName;
+		}
+
+		public String getMemberGroup() {
+			return memberGroup;
+		}
+
+		public String getMemberEmail() {
+			return memberEmail;
+		}
+	// =======================================
 
 	@Override
 	public String getPassword() {
