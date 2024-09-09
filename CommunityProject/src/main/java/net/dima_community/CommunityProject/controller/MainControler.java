@@ -21,28 +21,18 @@ public class MainControler {
 
 	@GetMapping({ "", "/" })
 	public String index(
-	        @AuthenticationPrincipal LoginMemberDetails loginUser, Model model) {
-	    if (loginUser != null) {
-	    	model.addAttribute("loginId", loginUser.getUsername()); // id
-	        model.addAttribute("loginName", loginUser.getMemberName()); // 이름 추가
-	        model.addAttribute("loginGroup", loginUser.getMemberGroup()); // 그룹 추가
-	        model.addAttribute("loginEmail", loginUser.getMemberEmail()); // 이메일 추가
-	    }
+			@AuthenticationPrincipal LoginMemberDetails loginUser, Model model) {
+		if (loginUser != null)
+			model.addAttribute("loginName", loginUser.getUsername());
 
-	    // 공지사항 불러오기
-	    List<AdminNoteDTO> dtoList = mainService.selectNoteAll();
-	    log.info("메인페이지 공지사항 dto: {}", dtoList.toString());
+		// 공지사항 불러오기
+		List<AdminNoteDTO> dtoList = mainService.selectNoteAll();
 
-<<<<<<< HEAD
 		log.info("메인페이지 공시항dto : {}", dtoList.toString());
 
 		model.addAttribute("list", dtoList);
 
 		return "main/main";
-=======
-	    model.addAttribute("list", dtoList);
->>>>>>> 527e81414b8e862e7cac047b8353e26a7292cee7
 
-	    return "main/main";
 	}
 }

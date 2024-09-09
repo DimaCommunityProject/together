@@ -139,8 +139,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
               <img class="currentUserImage rounded-circle" width="40" height="40" alt="modernize-img" />
             </div>
             <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
-              <span class="fs-2">Designer</span>
+              <h6 class="mb-0 fs-4 fw-semibold currentUserName">Mathew</h6>
+              <span class="fs-2 currentUserMemberGroup">Designer</span>
             </div>
             <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
               <i class="ti ti-power fs-6"></i>
@@ -415,9 +415,9 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                           <img class="rounded-circle userProfileImage" width="80" height="80" alt="modernize-img" />
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3 currentUserName">Mathew Anderson</h5>
-                            <span class="mb-1 d-block currentUserRole">Designer</span>
+                            <span class="mb-1 d-block currentUserMemberGroup">Designer</span>
                             <p class="mb-0 d-flex align-items-center gap-2">
-                              <i class="ti ti-mail fs-4" currentUserEmail></i>                             </p>
+                              <i class="ti ti-mail fs-4 currentUserEmail" ></i>                             </p>
                           </div>
                         </div>
                         <div class="message-body">
@@ -878,7 +878,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                           <img class="rounded-circle userProfileImage" width="80" height="80" alt="modernize-img" />
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3 currentUserName">Mathew Anderson</h5>
-                            <span class="mb-1 d-block currentUserRole">Designer</span>
+                            <span class="mb-1 d-block currentUserMemberGroup">Designer</span>
                             <p class="mb-0 d-flex align-items-center gap-2">
                               <i class="ti ti-mail fs-4 currentUserEmail"></i>
                             </p>
@@ -1087,16 +1087,16 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 									</div>
                   
                 </div>
-                <div class="app-chat" >
-									<ul class="chat-users mb-0 mh-n100" id="chatList" data-simplebar>
-										<!-- 1 채팅방 -->
-										<li th:each="room : ${chatRooms}" th:text="${room.name}">
-											<a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
-								
-											</a>
-										</li>
-									</ul>
-								</div>
+                <div class="app-chat " >
+					<ul class="chat-users mb-0 mh-n100 chatList" id="" data-simplebar>
+						<!-- 1 채팅방 -->
+						<li th:each="room : ${chatRooms}" th:text="${room.name}">
+							<a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
+				
+							</a>
+						</li>
+					</ul>
+				</div>
               </div>
 
               <div class="w-70 w-xs-100 chat-container">
@@ -1134,14 +1134,14 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 												<ul class="dropdown-menu">
 													<li><a
 														class="dropdown-item d-flex align-items-center gap-2 border-bottom inviteButton"
-														th:href="@{/}"> <span> <i
+														> <span> <i
 																class="ti ti-settings fs-4"></i>
 														</span>대화 상대 초대
 													</a></li>
 													<!-- 로그아웃 -->
 													<li><a
 														class="dropdown-item d-flex align-items-center gap-2 leaveButton"
-														th:href="@{/}" > <span> <i
+														> <span> <i
 																class="ti ti-login fs-4"></i>
 														</span>나가기
 													</a></li>
@@ -1150,23 +1150,23 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 
 											<!-- 초대 모달 -->
 											<div id="inviteModal" class="modal" tabindex="-1" role="dialog">
-											    <div class="modal-dialog" role="document">
-											        <div class="modal-content">
-											            <div class="modal-header">
-											                <h5 class="modal-title">대화 상대 초대</h5>
-											                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											            </div>
-											            <div class="modal-body">
-											                <div id="inviteMembersCheckboxes" class="form-group">
-											                    <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
-											                </div>
-											            </div>
-											            <div class="modal-footer">
-											                <button type="button" class="btn btn-secondary" id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
-											                <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
-											            </div>
-											        </div>
-											    </div>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">대화 상대 초대</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="inviteMembersCheckboxes" class="form-group">
+                                        <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
+                                </div>
+                            </div>
+                        </div>
 											</div>
 										</div>
 										<div class="d-flex parent-chat-box app-chat-right">
@@ -1194,7 +1194,11 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 									</div>
                 </div>
               </div>
-
+              
+              <!-- =================== -->
+			        <!-- start chat-sidebar -->
+               <!-- 미니화면에서 좌측 사이드바 -->
+               <!-- =================== -->
               <div class="offcanvas offcanvas-start user-chat-box chat-offcanvas" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
                   <h5 class="offcanvas-title" id="offcanvasExampleLabel">
@@ -1240,23 +1244,35 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </ul>
                     </div>
                   </div>
-                  <!-- 대화 상대 선택 및 시작 -->
-									<div class="d-flex align-items-center mb-4">
-										<select class="select2 form-control recipientSelect" >
-											<option value="" disabled selected>대화 상대를 선택하세요</option>
-											<option th:each="member : ${members}"
-												th:value="${member.memberId}" th:text="${member.memberName}"></option>
-										</select>
-										<button id="startChat"
-											class="btn btn-primary hstack gap-6 ms-2">
-											<i class="ti ti-circle-plus ms-1 fs-5"></i>
-										</button>
-									</div>
+                  <!-- =================== -->
+			            <!-- End chat-sidebar -->
+                  <!-- =================== -->
+
+                  <!-- =================== -->  
+                  <!-- 대화 상대 선택 및 채팅방 생성 시작 -->
+                  <!-- =================== -->  
+                  <div class="d-flex align-items-center mb-4">
+                    <select class="select2 form-control recipientSelect" >
+                      <option value="" disabled selected>대화 상대를 선택하세요</option>
+                      <option th:each="member : ${members}"
+                        th:value="${member.memberId}" th:text="${member.memberName}"></option>
+                    </select>
+                    <button id="startChat"
+                      class="btn btn-primary hstack gap-6 ms-2">
+                      <i class="ti ti-circle-plus ms-1 fs-5"></i>
+                    </button>
+                  </div>
+                  <!-- =================== -->  
+                  <!-- 대화 상대 선택 및 채팅방 생성 끝 -->
+                  <!-- =================== -->  
                 </div>
 
-                <div class="app-chat">
-                  <ul class="chat-users mb-0 mh-n100" data-simplebar>
-                    <!-- 1 채팅방 -->
+                <!-- =================== -->  
+                <!-- 사용자가 속한 채팅방 리스트 -->
+                <!-- =================== -->  
+                <div class="app-chat ">
+                  <ul class="chat-users mb-0 mh-n100 chatList" data-simplebar>
+                    <!-- 채팅방 리스트  -->
                     <li th:each="room : ${chatRooms}" th:text="${room.name}">
                       <a th:href="@{/}" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
                 
@@ -1265,6 +1281,9 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                   </ul>
                 </div>
               </div>
+              <!-- =================== -->
+              <!-- end chat-sidebar -->
+              <!-- =================== -->
             </div>
           </div>
         </div>
@@ -1610,8 +1629,9 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
   <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
   <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
-  <script th:src="@{/js/theme/theme.js}"></script>
   <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  
   <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
   <!-- solar icons -->
