@@ -8,10 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png" th:href="@{/assets/images/logos/favicon.png}" />
+  <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
 
   <!-- Core Css -->
-  <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
   
   <!-- Tabler icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
@@ -24,7 +24,7 @@
   <input type="hidden" name="searchWord" th:value="${searchWord}">
   <!-- Preloader -->
   <div class="preloader">
-    <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -34,8 +34,8 @@
         &lt;!-- ---------------------------------- --&gt;
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a th:href="@{/main/index.html}" class="text-nowrap logo-img">
-            <img th:src="@{/assets/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
-            <img th:src="@{/assets/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
+            <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+            <img th:src="@{/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
@@ -1462,7 +1462,7 @@
         <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
           <div class="hstack gap-3">
             <div class="john-img">
-              <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="40" height="40" alt="modernize-img" />
+              <img th:src="@{/images/profile/user-1.jpg}" class="rounded-circle" width="40" height="40" alt="modernize-img" />
             </div>
             <div class="john-title">
               <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
@@ -1522,7 +1522,7 @@
                                 <div class="position-relative">
                                   <a th:href="@{/main/app-chat.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1533,7 +1533,7 @@
                                   </a>
                                   <a th:href="@{/main/app-invoice.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Invoice App</h6>
@@ -1542,7 +1542,7 @@
                                   </a>
                                   <a th:href="@{/main/app-contact2.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1553,7 +1553,7 @@
                                   </a>
                                   <a th:href="@{/main/app-email.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Email App</h6>
@@ -1566,7 +1566,7 @@
                                 <div class="position-relative">
                                   <a th:href="@{/main/page-user-profile.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1577,7 +1577,7 @@
                                   </a>
                                   <a th:href="@{/main/app-calendar.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1588,7 +1588,7 @@
                                   </a>
                                   <a th:href="@{/main/app-contact.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1599,7 +1599,7 @@
                                   </a>
                                   <a th:href="@{/main/app-notes.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -1675,8 +1675,8 @@
 
             <div class="d-block d-lg-none py-4">
               <a th:href="@{/main/index.html}" class="text-nowrap logo-img">
-                <img th:src="@{/assets/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
-                <img th:src="@{/assets/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
+                <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+                <img th:src="@{/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
               </a>
             </div>
             <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -1701,31 +1701,31 @@
                   </li>
                   <li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
                     <a class="nav-link" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                      <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                      <img th:src="@{/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                       <div class="message-body">
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">English (UK)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-cn.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-cn.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">中国人 (Chinese)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-fr.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-fr.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">français (French)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-sa.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-sa.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">عربي (Arabic)</p>
                         </a>
@@ -1765,7 +1765,7 @@
                       <div class="message-body" data-simplebar>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-2.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-2.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -1774,7 +1774,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-3.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-3.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">New message</h6>
@@ -1783,7 +1783,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-4.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-4.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Bianca sent payment</h6>
@@ -1792,7 +1792,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-5.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-5.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Jolly completed tasks</h6>
@@ -1801,7 +1801,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-6.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-6.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">John received payment</h6>
@@ -1810,7 +1810,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-7.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-7.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -1834,7 +1834,7 @@
                     <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                       <div class="d-flex align-items-center">
                         <div class="user-profile-img">
-                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
+                          <img th:src="@{/images/profile/user-1.jpg}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
                         </div>
                       </div>
                     </a>
@@ -1844,7 +1844,7 @@
                           <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
                         </div>
                         <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
+                          <img th:src="@{/images/profile/user-1.jpg}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3">Mathew Anderson</h5>
                             <span class="mb-1 d-block">Designer</span>
@@ -1856,7 +1856,7 @@
                         <div class="message-body">
                           <a th:href="@{/main/page-user-profile.html}" class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/assets/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
@@ -1865,7 +1865,7 @@
                           </a>
                           <a th:href="@{/main/app-email.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/assets/images/svgs/icon-inbox.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-inbox.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Inbox</h6>
@@ -1874,7 +1874,7 @@
                           </a>
                           <a th:href="@{/main/app-notes.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/assets/images/svgs/icon-tasks.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-tasks.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Task</h6>
@@ -1891,7 +1891,7 @@
                               </div>
                               <div class="col-6">
                                 <div class="m-n4 unlimited-img">
-                                  <img th:src="@{/assets/images/backgrounds/unlimited-bg.png}" alt="modernize-img" class="w-100" />
+                                  <img th:src="@{/images/backgrounds/unlimited-bg.png}" alt="modernize-img" class="w-100" />
                                 </div>
                               </div>
                             </div>
@@ -1919,7 +1919,7 @@
           <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar" aria-labelledby="offcanvasWithBothOptionsLabel">
             <nav class="sidebar-nav scroll-sidebar">
               <div class="offcanvas-header justify-content-between">
-                <img th:src="@{/assets/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
+                <img th:src="@{/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body h-n80" data-simplebar>
@@ -1935,7 +1935,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-chat.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
@@ -1946,7 +1946,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-invoice.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Invoice App</h6>
@@ -1957,7 +1957,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-cotact.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Contact Application</h6>
@@ -1968,7 +1968,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-email.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Email App</h6>
@@ -1979,7 +1979,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/page-user-profile.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">User Profile</h6>
@@ -1990,7 +1990,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-calendar.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Calendar App</h6>
@@ -2001,7 +2001,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-contact2.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Contact List Table</h6>
@@ -2012,7 +2012,7 @@
                       <li class="sidebar-item py-2">
                         <a th:href="@{/main/app-notes.html}" class="d-flex align-items-center">
                           <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/assets/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                            <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
@@ -2088,8 +2088,8 @@
               </li>
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/main/index.html}" class="text-nowrap nav-link">
-                  <img th:src="@{/assets/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
-                  <img th:src="@{/assets/images/logos/light-logo.svg}" class="light-logo" width="180" alt="modernize-img" />
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                  <img th:src="@{/images/logos/light-logo.svg}" class="light-logo" width="180" alt="modernize-img" />
                 </a>
               </li>
               <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-xl-flex">
@@ -2119,7 +2119,7 @@
                                 <div class="position-relative">
                                   <a th:href="@{/main/app-chat.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2130,7 +2130,7 @@
                                   </a>
                                   <a th:href="@{/main/app-invoice.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Invoice App</h6>
@@ -2139,7 +2139,7 @@
                                   </a>
                                   <a th:href="@{/main/app-contact2.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2150,7 +2150,7 @@
                                   </a>
                                   <a th:href="@{/main/app-email.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">Email App</h6>
@@ -2163,7 +2163,7 @@
                                 <div class="position-relative">
                                   <a th:href="@{/main/page-user-profile.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2174,7 +2174,7 @@
                                   </a>
                                   <a th:href="@{/main/app-calendar.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2185,7 +2185,7 @@
                                   </a>
                                   <a th:href="@{/main/app-contact.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2196,7 +2196,7 @@
                                   </a>
                                   <a th:href="@{/main/app-notes.html}" class="d-flex align-items-center pb-9 position-relative">
                                     <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/assets/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                                      <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -2271,7 +2271,7 @@
             </ul>
             <div class="d-block d-xl-none">
               <a th:href="@{/main/index.html}" class="text-nowrap nav-link">
-                <img th:src="@{/assets/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
+                <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
               </a>
             </div>
             <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -2298,31 +2298,31 @@
                   </li>
                   <li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
                     <a class="nav-link" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                      <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                      <img th:src="@{/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                       <div class="message-body">
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-en.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">English (UK)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-cn.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-cn.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">中国人 (Chinese)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-fr.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-fr.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">français (French)</p>
                         </a>
                         <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
                           <div class="position-relative">
-                            <img th:src="@{/assets/images/svgs/icon-flag-sa.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
+                            <img th:src="@{/images/svgs/icon-flag-sa.svg}" alt="modernize-img" width="20px" height="20px" class="rounded-circle object-fit-cover round-20" />
                           </div>
                           <p class="mb-0 fs-3">عربي (Arabic)</p>
                         </a>
@@ -2362,7 +2362,7 @@
                       <div class="message-body" data-simplebar>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-2.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-2.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -2371,7 +2371,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-3.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-3.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">New message</h6>
@@ -2380,7 +2380,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-4.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-4.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Bianca sent payment</h6>
@@ -2389,7 +2389,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-5.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-5.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Jolly completed tasks</h6>
@@ -2398,7 +2398,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-6.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-6.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">John received payment</h6>
@@ -2407,7 +2407,7 @@
                         </a>
                         <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
                           <span class="me-3">
-                            <img th:src="@{/assets/images/profile/user-7.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
+                            <img th:src="@{/images/profile/user-7.jpg}" alt="user" class="rounded-circle" width="48" height="48" />
                           </span>
                           <div class="w-100">
                             <h6 class="mb-1 fw-semibold lh-base">Roman Joined the Team!</h6>
@@ -2431,7 +2431,7 @@
                     <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                       <div class="d-flex align-items-center">
                         <div class="user-profile-img">
-                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
+                          <img th:src="@{/images/profile/user-1.jpg}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
                         </div>
                       </div>
                     </a>
@@ -2441,7 +2441,7 @@
                           <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
                         </div>
                         <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img th:src="@{/assets/images/profile/user-1.jpg}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
+                          <img th:src="@{/images/profile/user-1.jpg}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3">Mathew Anderson</h5>
                             <span class="mb-1 d-block">Designer</span>
@@ -2453,7 +2453,7 @@
                         <div class="message-body">
                           <a th:href="@{/main/page-user-profile.html}" class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/assets/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
@@ -2462,7 +2462,7 @@
                           </a>
                           <a th:href="@{/main/app-email.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/assets/images/svgs/icon-inbox.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-inbox.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Inbox</h6>
@@ -2471,7 +2471,7 @@
                           </a>
                           <a th:href="@{/main/app-notes.html}" class="py-8 px-7 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/assets/images/svgs/icon-tasks.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-tasks.svg}" alt="modernize-img" width="24" height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Task</h6>
@@ -2488,7 +2488,7 @@
                               </div>
                               <div class="col-6">
                                 <div class="m-n4 unlimited-img">
-                                  <img th:src="@{/assets/images/backgrounds/unlimited-bg.png}" alt="modernize-img" class="w-100" />
+                                  <img th:src="@{/images/backgrounds/unlimited-bg.png}" alt="modernize-img" class="w-100" />
                                 </div>
                               </div>
                             </div>
@@ -3255,7 +3255,7 @@
 
                 <div class="col-3">
                   <div class="text-center mb-n5">
-                    <img th:src="@{/assets/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                    <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
                   </div>
                 </div>
 
@@ -3275,7 +3275,7 @@
                       <!-- 작성자 ID -->
                       <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
                         <!-- 작성자 이미지 -->
-                        <img th:src="@{/assets/images/profile/user-5.jpg}" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
+                        <img th:src="@{/images/profile/user-5.jpg}" alt="modernize-img" class="rounded-circle img-fluid" width="40" height="40">
                       </div>
                       
                       <!-- 모집인원 -->
@@ -3648,7 +3648,7 @@
         <ul class="mb-0">
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img th:src="@{/assets/images/products/product-1.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img th:src="@{/images/products/product-1.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
@@ -3669,7 +3669,7 @@
           </li>
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img th:src="@{/assets/images/products/product-2.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img th:src="@{/images/products/product-2.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
@@ -3690,7 +3690,7 @@
           </li>
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img th:src="@{/assets/images/products/product-3.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img th:src="@{/images/products/product-3.jpg}" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
@@ -3731,12 +3731,12 @@
   </div>
   <div class="dark-transparent sidebartoggler"></div>
   <!-- Import Js Files -->
-  <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
-  <script th:src="@{/assets/js/theme/app.init.js}"></script>
-  <script th:src="@{/assets/js/theme/theme.js}"></script>
-  <script th:src="@{/assets/js/theme/app.min.js}"></script>
-  <script th:src="@{/assets/js/theme/sidebarmenu.js}"></script>
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/app.init.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>

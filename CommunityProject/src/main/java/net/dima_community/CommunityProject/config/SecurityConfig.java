@@ -93,7 +93,12 @@ public class SecurityConfig {
 		http.headers(headers -> headers.xssProtection(
 				xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
 				.contentSecurityPolicy(
-						cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline'")));
+						cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
+													"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com; " +
+													"object-src 'none';" // script-src에 외부 CDN 추가, style-src도 설정
+						)
+				)
+		);
 
 		return http.build();
 	}// end filterchain

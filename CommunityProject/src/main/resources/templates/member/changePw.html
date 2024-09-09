@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 변경</title>
-    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -48,7 +48,7 @@
             $.ajax({
                 url: "/member/changePw"
                 , type: "POST"
-                , data: { "newmemberPw": newmemberPw, "loginName": /*[[${loginName}]]*/ }
+                , data: { "newmemberPw": newmemberPw, "loginName": ""} /*[[${loginName}]]*/
                 , success: function (data) {
                     console.log(data);
                     if (data == "false") {
@@ -103,7 +103,7 @@
 <body>
     <!-- 맨 위 로고 -->
     <div class="preloader">
-        <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+        <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
     </div>
     <div id="main-wrapper" class="auth-customizer-none">
         <div
@@ -114,7 +114,7 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a th:href="@{/}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
-                                    <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+                                    <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
                                 </a>
                                 <!-- <h4 class="form-label">[[${loginName}]]님 비밀번호 변경</h4> -->
                                 <form th:action="@{/member/findIdResult}" method="POST" id="idForm">
@@ -122,7 +122,7 @@
                                         <label for="exampleInputEmail1" class="form-label">새 비밀번호</label>
                                         <input type="password" class="form-control" id="newmemberPw" name="newmemberPw"
                                             aria-describedby="emailHelp">
-                                        <img id="warnnewPw" src="/static/images/ico_warning.png" alt="경고"
+                                        <img id="warnnewPw" th:src="@{/images/ico_warning.png}" alt="경고"
                                             style="display: none; width: 15px; height: 15px;">
                                         <span id="confirmnewmemberPw" style="font-size: 0.8em;"></span>
                                     </div>
@@ -130,10 +130,10 @@
                                         <label for="exampleInputPassword1" class="form-label">새 비밀번호 확인</label>
                                         <input type="password" class="form-control" id="newmemberPwck"
                                             name="newmemberPwck">
-                                        <img id="warnnewPwck" src="/static/images/ico_warning.png" alt="경고"
+                                        <img id="warnnewPwck" th:src="@{/images/ico_warning.png}" alt="경고"
                                             style="display: none; width: 15px; height: 15px;">
                                         <span id="confirmnewmemberPwck" style="font-size: 0.8em;"></span>
-                                        <img id="warnnewPwck2" src="/static/images/ico_warning.png" alt="경고"
+                                        <img id="warnnewPwck2" th:src="@{/images/ico_warning.png}" alt="경고"
                                             style="display: none; width: 15px; height: 15px;">
                                         <span id="confirmnewmemberPwCheck" style="font-size: 0.8em;"></span>
                                     </div>
@@ -185,11 +185,12 @@
             </div>
         </div>
         <!-- Import Js Files -->
-        <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-        <script src="/static/js/theme/app.init.js"></script>
-        <script src="/static/js/theme/theme.js"></script>
-        <script src="/static/js/theme/app.min.js"></script>
+        <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+        <script th:src="@{/js/theme/app.init.js}"></script>
+        <script th:src="@{/js/theme/theme.js}"></script>
+        <script th:src="@{/js/theme/app.min.js}"></script>
+
 </body>
 
 </html>

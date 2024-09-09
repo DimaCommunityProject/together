@@ -9,16 +9,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png" href="../../static/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
 
   <!-- Core Css -->
-  <link rel="stylesheet" href="../../static/css/styles.css" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
   <title>Modernize Bootstrap Admin</title>
-  <link rel="stylesheet" href="../../static/libs/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" th:href="@{/libs/select2/dist/css/select2.min.css}">
 
   <title>Modernize Bootstrap Admin</title>
-  <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
   <script>
     $(function () {
       var skillItem = $("#skillItem").text();
@@ -136,35 +136,345 @@
 
 <body class="link-sidebar">
 
-  <div class="body-wrapper">
-    <div class="container-fluid">
-      <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
-        <div class="card-body px-4 py-3">
-          <div class="row align-items-center">
-            <div class="col-9">
-              <h4 class="fw-semibold mb-8">User Profile</h4>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
-                  </li>
-                  <li class="breadcrumb-item" aria-current="page">User Profile</li>
-                </ol>
-              </nav>
-            </div>
-            <div class="col-3">
-              <div class="text-center mb-n5">
-                <img src="../../static/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+  <!-- Preloader -->
+  <div class="preloader">
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+  </div>
+  <div id="main-wrapper">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar with-vertical">
+      <!-- <div> -->
+      <!-- ---------------------------------- -->
+      <!-- Start Vertical Layout Sidebar -->
+      <!-- ---------------------------------- -->
+      <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
+            <a href="../horizontal/index.html" class="text-nowrap logo-img">
+              <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+              <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+            </a>
+            <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+              <i class="ti ti-x"></i>
+            </a>
+          </div> -->
+    </aside>
+
+    <div class="page-wrapper">
+      <!--  Header Start -->
+      <header class="topbar">
+        <div class="app-header with-horizontal">
+          <nav class="navbar navbar-expand-xl container-fluid p-0" style="margin-top: 10px !important;">
+            <ul class="navbar-nav align-items-center">
+              <!-- <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+                  <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                  </a>
+                </li> -->
+              <li class="nav-item d-none d-xl-block">
+                <a th:href="@{/}" class="text-nowrap nav-link">
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                  <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
+                                          alt="modernize-img" /> -->
+                </a>
+              </li>
+            </ul>
+
+                        <!-- topbar 메뉴 -->
+                        <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+                          <!-- ------------------------------- -->
+                          <!-- start apps Dropdown -->
+                          <!-- ------------------------------- -->
+                          <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                            <div class="hover-dd">
+                              <a class="nav-link" href="javascript:void(0)">
+                                수업 <span class="mt-1">
+                                  <i class="ti ti-chevron-down fs-3"></i>
+                                </span>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                                style="min-width: 340px !important">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="ps-7 pt-7">
+                                      <div class="border-bottom">
+                                        <div class="row">
+                                          <div class="col-6">
+                                            <div class="position-relative">
+                                              <a th:href="@{/board/list(category=code)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 195px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
+                                                </div>
+                                              </a>
+                                              <a th:href="@{/board/list(category=project)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 280px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">지난 기수들의 프로젝트를 확인해보세요!</span>
+                                                </div>
+                                              </a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                            <div class="hover-dd">
+                              <a class="nav-link" href="javascript:void(0)">
+                                취업 <span class="mt-1">
+                                  <i class="ti ti-chevron-down fs-3"></i>
+                                </span>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                                style="min-width: 340px !important">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="ps-7 pt-7">
+                                      <div class="border-bottom">
+                                        <div class="row">
+                                          <div class="col-6">
+                                            <div class="position-relative">
+                                              <a th:href="@{/board/list(category=activity)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 225px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">
+                                                    취업 공고 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
+                                                </div>
+                                              </a>
+                                              <a th:href="@{/board/list(category=recruit)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 266px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 구인 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">정보를 확인하고 팀원을 모집해보세요!</span>
+                                                </div>
+                                              </a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                            <div class="hover-dd">
+                              <a class="nav-link" href="javascript:void(0)">
+                                자유 <span class="mt-1">
+                                  <i class="ti ti-chevron-down fs-3"></i>
+                                </span>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                                style="min-width: 340px !important">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="ps-7 pt-7">
+                                      <div class="border-bottom">
+                                        <div class="row">
+                                          <div class="col-6">
+                                            <div class="position-relative">
+                                              <a th:href="@{/board/list(category=free)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 230px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">
+                                                    자유 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
+                                                </div>
+                                              </a>
+                                              <a th:href="@{/board/list(category=info)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 266px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
+                                                </div>
+                                              </a>
+                                              <a th:href="@{/board/list(category=group)}"
+                                                class="d-flex align-items-center pb-9 position-relative"
+                                                style="width: 266px !important">
+                                                <div
+                                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                                  <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+                                                    width="24" height="24" />
+                                                </div>
+                                                <div>
+                                                  <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                                  </h6>
+                                                  <span class="fs-2 d-block text-body-secondary">기수별로 소통하고 정보를 공유하세요!</span>
+                                                </div>
+                                              </a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                          <!-- ------------------------------- -->
+                          <!-- end apps Dropdown -->
+                          <!-- ------------------------------- -->
+                          <li class="nav-item dropdown-hover d-none d-lg-block">
+                            <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+                          </li>
+                          <th:block sec:authorize="hasRole('ADMIN')">
+                            <li class="nav-item dropdown-hover d-none d-lg-block">
+                              <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+                            </li>
+                          </th:block>
+                        </ul>
+                        <!-- topbar 메뉴 끝-->
+
+
+
+                        <!-- 채팅/마이페이지 시작 -->
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                          <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+                            <!-- <a href="javascript:void(0)"
+                              class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                              type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                              aria-controls="offcanvasWithBothOptions">
+                              <i class="ti ti-align-justified fs-7"></i>
+                            </a> -->
+                            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center" sec:authorize="isAuthenticated()">
+                              <!-- 다크모드 -->
+                              <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                                  <i class="ti ti-moon moon"></i>
+                                </a>
+                                <a class="nav-link sun light-layout" href="javascript:void(0)">
+                                  <i class="ti ti-sun sun"></i>
+                                </a>
+                              </li> -->
+                              <!-- 채팅 -->
+                              <li class="nav-item nav-icon-hover-bg rounded-circle"  sec:authorize="isAuthenticated()">
+                                <a class="nav-link position-relative" 
+                                  th:href="@{api/chat/chatPage} ">
+                                  <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                                </a>
+                              </li>
+                              <!-- 마이페이지 -->
+                              <div>
+                                <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                  <!-- 링크 수정 필요-->
+                                  <a class="nav-link position-relative"
+                                    th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                                    <!-- savedFileName이 존재하는 경우 -->
+                                    <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                                      alt="profile image" class="h-100">
+            
+                                    <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
+                                    <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                                      alt="default profile image" class="w-100 h-100"> -->
+                                  </a>
+                                </li>
+                              </div>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- 채팅/마이페이지 끝-->
+          </nav>
+          <!-- 회원가입/로그인 div 시작 -->
+          <div id="loginLine">
+            <ul>
+              <li class="loginLineLi" sec:authorize="isAnonymous()">
+                <a type="submit" th:href="@{/member/join}" class="loginLineA">회원가입
+                </a>
+              </li>
+              <li class="loginLineLi" sec:authorize="isAnonymous()">|</li> <!-- 구분자 추가 -->
+              <li class="loginLineLi" sec:authorize="isAnonymous()">
+                <a type="submit" th:href="@{/member/login}" class="loginLineA">로그인
+                </a>
+              </li>
+              <li class="loginLineLi" sec:authorize="isAuthenticated()">
+                <a type="submit" th:href="@{/member/logout}" class="loginLineA">로그아웃
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- 회원가입/로그인 div 끝 -->
+        </div>
+      </header>
+      <!--  Header End -->
+      <div class="body-wrapper" style="padding-top: 120px;">
+        <div class="container-fluid" style="padding-top: 20px !important">
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">User Profile</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">User Profile</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="card overflow-hidden">
-        <div class="card-body p-0">
-          <img src="../../static/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
-          <div class="row" style="justify-content: flex-end;">
-            <!-- <div class="col-lg-4 order-lg-1 order-2">
+          <div class="card overflow-hidden">
+            <div class="card-body p-0">
+              <img th:src="@{/images/backgrounds/profilebg.jpg}" alt="modernize-img" class="img-fluid">
+              <div class="row" style="justify-content: flex-end;">
+                <!-- <div class="col-lg-4 order-lg-1 order-2">
               <div class="d-flex align-items-center justify-content-around m-4">
                 <div class="text-center">
                   <i class="ti ti-file-description fs-6 d-block mb-2"></i>
@@ -183,200 +493,208 @@
                 </div>
               </div>
             </div> -->
-            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-              <div class="mt-n5">
-                <div class="d-flex align-items-center justify-content-center mb-2">
-                  <div class="d-flex align-items-center justify-content-center round-110">
-                    <div
-                      class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
-                      <!-- savedFileName이 존재하는 경우 -->
-                      <!-- <img th:if="${member.savedFileName != null}"
+                <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+                  <div class="mt-n5">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                      <div class="d-flex align-items-center justify-content-center round-110">
+                        <div
+                          class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+                          <!-- savedFileName이 존재하는 경우 -->
+                          <!-- <img th:if="${member.savedFileName != null}"
                         th:src="@{/member/showImage/{fileName}(fileName=${member.savedFileName})}" alt="profile image"
                         class="w-100 h-100"> -->
 
-                      <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
-                      <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                          <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
+                          <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
                         alt="default profile image" class="w-100 h-100"> -->
-                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
-                        alt="profile image" class="h-100">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
+                            alt="profile image" class="h-100">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <span class="mb-1 badge rounded-pill  bg-info-subtle text-info"
+                        th:text="${member.memberGroup}"></span>
+                      <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson
+                      </h5>
+                      <p class="mb-0" th:text="${member.memberId}" id="memberId">Designer</p>
                     </div>
                   </div>
                 </div>
-                <div class="text-center">
-                  <span class="mb-1 badge rounded-pill  bg-info-subtle text-info"
-                    th:text="${member.memberGroup}"></span>
-                  <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson
-                  </h5>
-                  <p class="mb-0" th:text="${member.memberId}" id="memberId">Designer</p>
+                <div class="col-lg-4 order-last">
+                  <ul
+                    class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
+                    <li>
+                      <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
+                        href=`chat?memberId=${member.memberId}` width="30" height="30">
+                        <i class="ti ti-message-chatbot"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
+                        href="mailto:${member.memberEmail}">
+                        <i class=" ti ti-mail"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
+                        th:href="${memberPage.memberBlog}">
+                        <i class="ti ti-brand-blogger"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <button class="btn btn-primary text-nowrap">Add To Story</button>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-4 order-last">
               <ul
-                class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
-                <li>
-                  <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
-                    href=`chat?memberId=${member.memberId}` width="30" height="30">
-                    <i class="ti ti-message-chatbot"></i>
-                  </a>
-                </li>
-                <li>
-                  <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                    href="mailto:${member.memberEmail}">
-                    <i class=" ti ti-mail"></i>
-                  </a>
-                </li>
-                <li>
-                  <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                    th:href="${memberPage.memberBlog}">
-                    <i class="ti ti-brand-blogger"></i>
-                  </a>
-                </li>
-                <li>
-                  <button class="btn btn-primary text-nowrap">Add To Story</button>
+                class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
+                id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-profile-tab"
+                    data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab"
+                    aria-controls="pills-profile" aria-selected="true">
+                    <i class="ti ti-user-circle fs-5"></i>
+                    <span class="d-none d-md-block">Profile</span>
+                  </button>
                 </li>
               </ul>
             </div>
           </div>
-          <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
-            id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-profile-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                aria-selected="true">
-                <i class="ti ti-user-circle fs-5"></i>
-                <span class="d-none d-md-block">Profile</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-          tabindex="0">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card shadow-none border">
-                <div class="card-body">
-                  <h4 class="mb-3">Introduction</h4>
-                  <p class="card-subtitle" th:text="${memberPage.memberSelfInfo}">Hello, I am Mathew Anderson. I love
-                    making websites and graphics. Lorem
-                    ipsum dolor sit amet,
-                    consectetur adipiscing elit.</p>
-                  <div class="vstack gap-3 mt-4">
-                    <div class="hstack gap-6">
-                      <i class="ti ti-briefcase text-dark fs-6"></i>
-                      <h6 class=" mb-0" th:text="${memberPage.memberInterest}">Sir, P P Institute Of Science</h6>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+              aria-labelledby="pills-profile-tab" tabindex="0">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="card shadow-none border">
+                    <div class="card-body">
+                      <h4 class="mb-3">Introduction</h4>
+                      <p class="card-subtitle" th:text="${memberPage.memberSelfInfo}">Hello, I am Mathew Anderson. I
+                        love
+                        making websites and graphics. Lorem
+                        ipsum dolor sit amet,
+                        consectetur adipiscing elit.</p>
+                      <div class="vstack gap-3 mt-4">
+                        <div class="hstack gap-6">
+                          <i class="ti ti-briefcase text-dark fs-6"></i>
+                          <h6 class=" mb-0" th:text="${memberPage.memberInterest}">Sir, P P Institute Of Science</h6>
+                        </div>
+                        <div class="hstack gap-6">
+                          <i class="ti ti-mail text-dark fs-6"></i>
+                          <h6 class=" mb-0" th:text="${member.memberEmail}">xyzmathewanderson@gmail.com</h6>
+                        </div>
+                        <div class="hstack gap-6">
+                          <i class="ti ti-device-desktop text-dark fs-6"></i>
+                          <!-- <h6 class=" mb-0" th:text="${memberPage.memberGit}">www.xyz.com</h6> -->
+                          <a class=" mb-0" th:href="${memberPage.memberGit}" th:text="${memberPage.memberGit}"></a>
+                        </div>
+                        <div class=" hstack gap-6">
+                          <i class="ti ti-map-pin text-dark fs-6"></i>
+                          <h6 class=" mb-0" th:text="${memberPage.memberBlog}">Newyork, USA - 100001</h6>
+                        </div>
+                      </div>
                     </div>
-                    <div class="hstack gap-6">
-                      <i class="ti ti-mail text-dark fs-6"></i>
-                      <h6 class=" mb-0" th:text="${member.memberEmail}">xyzmathewanderson@gmail.com</h6>
-                    </div>
-                    <div class="hstack gap-6">
-                      <i class="ti ti-device-desktop text-dark fs-6"></i>
-                      <!-- <h6 class=" mb-0" th:text="${memberPage.memberGit}">www.xyz.com</h6> -->
-                      <a class=" mb-0" th:href="${memberPage.memberGit}" th:text="${memberPage.memberGit}"></a>
-                    </div>
-                    <div class=" hstack gap-6">
-                      <i class="ti ti-map-pin text-dark fs-6"></i>
-                      <h6 class=" mb-0" th:text="${memberPage.memberBlog}">Newyork, USA - 100001</h6>
+                  </div>
+                  <div class="card shadow-none border">
+                    <div class="card-body">
+                      <h4 class="mb-3">내 활동</h4>
+                      <div class="row">
+                        <ul class="nav nav-pills nav-fill mt-4" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#navpill-111" role="tab">
+                              <span>내가 쓴 게시글</span>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#navpill-222" role="tab">
+                              <span>내가 쓴 댓글</span>
+                            </a>
+                          </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content border mt-2">
+                          <div class="tab-pane active p-3" id="navpill-111" role="tabpanel">
+
+                          </div>
+                          <div class="tab-pane p-3" id="navpill-222" role="tabpanel">
+                          </div>
+
+                          <!-- end Tab with Fill & Justify -->
+
+                        </div>
+
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="card shadow-none border">
-                <div class="card-body">
-                  <h4 class="mb-3">내 활동</h4>
-                  <div class="row">
-                    <ul class="nav nav-pills nav-fill mt-4" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#navpill-111" role="tab">
-                          <span>내가 쓴 게시글</span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#navpill-222" role="tab">
-                          <span>내가 쓴 댓글</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content border mt-2">
-                      <div class="tab-pane active p-3" id="navpill-111" role="tabpanel">
+                <div class="col-lg-8">
 
-                      </div>
-                      <div class="tab-pane p-3" id="navpill-222" role="tabpanel">
-                      </div>
-
-                      <!-- end Tab with Fill & Justify -->
-
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8">
-
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title mb-3">Skill Set</h4>
-                  <p th:text="${memberPage.memberSkill}" id="skillItem" hidden>SkillSet</p>
-                  <ul class="list-group list-group-horizontal" id="skillUl" style="display: flex;
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title mb-3">Skill Set</h4>
+                      <p th:text="${memberPage.memberSkill}" id="skillItem" hidden>SkillSet</p>
+                      <ul class="list-group list-group-horizontal" id="skillUl" style="display: flex;
   flex-wrap: wrap; 
   padding: 0;
   margin: 0;
   list-style-type: none;">
-                  </ul>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body border-bottom">
-                  <h4 class="card-title mb-3">Project</h4>
-                  <!-- <p th:text="${memberProject}" id="projects" hidden>Projects</p> -->
-                  <div th:each="entry : ${memberProject}">
-
-                    <div class="card card-hover">
-                      <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
-                        <h4 th:text="${entry.projectTitle}" class="mb-0 text-dark card-title">Card Title</h4>
-                      </div>
-                      <div class="card-body">
-                        <h3 th:text="${entry.projectSubtitle}" class="card-title">Special title treatment</h3>
-                        <p th:text="${entry.projectGit}" class="card-text">
-                          With supporting text below as a natural lead-in to
-                          additional content.
-                        </p>
-                        <a th:href="${entry.projectGit}" class="btn btn-primary">Git Repository 바로가기</a>
-                      </div>
+                      </ul>
                     </div>
-
                   </div>
+                  <div class="card">
+                    <div class="card-body border-bottom">
+                      <h4 class="card-title mb-3">Project</h4>
+                      <!-- <p th:text="${memberProject}" id="projects" hidden>Projects</p> -->
+                      <div th:each="entry : ${memberProject}">
+
+                        <div class="card card-hover">
+                          <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
+                            <h4 th:text="${entry.projectTitle}" class="mb-0 text-dark card-title">Card Title</h4>
+                          </div>
+                          <div class="card-body">
+                            <h3 th:text="${entry.projectSubtitle}" class="card-title">Special title treatment</h3>
+                            <p th:text="${entry.projectGit}" class="card-text">
+                              With supporting text below as a natural lead-in to
+                              additional content.
+                            </p>
+                            <a th:href="${entry.projectGit}" class="btn btn-primary">Git Repository 바로가기</a>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                  <span style="margin: 10px; float: right;">
+                    <a th:href="@{/memberpage/updatepage(memberId=${member.memberId})}"
+                      class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">수정하기</a></span>
+
 
                 </div>
               </div>
-              <span style="margin: 10px; float: right;">
-                <a th:href="@{/memberpage/updatepage(memberId=${member.memberId})}"
-                  class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">수정하기</a></span>
-
-
             </div>
           </div>
-          <!-- Import Js Files -->
-          <script src="../../static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-          <script src="../../static/libs/simplebar/dist/simplebar.min.js"></script>
-          <script src="../../static/js/theme/app.init.js"></script>
-          <script src="../../static/js/theme/theme.js"></script>
-          <script src="../../static/js/theme/app.min.js"></script>
-          <script src="../../static/js/theme/sidebarmenu.js"></script>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <script src="../../static/js/vendor.min.js"></script>
-          <!-- solar icons -->
-          <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-          <!-- This Page JS -->
-          <script src="../../static/libs/select2/dist/js/select2.full.min.js"></script>
-          <script src="../../static/libs/select2/dist/js/select2.min.js"></script>
-          <script src="../../static/js/forms/select2.init.js"></script>
-          <script src="../../static/js/apps/kanban.js"></script>
+  <!-- Import Js Files -->
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/app.init.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/vendor.min.js}"></script>
+  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <!-- This Page JS -->
+  <script th:src="@{/libs/select2/dist/js/select2.full.min.js}"></script>
+  <script th:src="@{/libs/select2/dist/js/select2.min.js}"></script>
+  <script th:src="@{/js/forms/select2.init.js}"></script>
+  <script th:src="@{/js/apps/kanban.js}"></script>
 </body>
 
 </html>

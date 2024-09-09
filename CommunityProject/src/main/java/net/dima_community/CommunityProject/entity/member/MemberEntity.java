@@ -85,12 +85,13 @@ public class MemberEntity {
 	 */
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@OrderBy("memberproject_seq asc")
-	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
+	// private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
+	private List<MemberProjectEntity> memberProjectEntity;
 
 	// 1) Board
-	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@OrderBy("board_id")
-	private List<BoardEntity> BoardEntities = new ArrayList<BoardEntity>();
+	// @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	// @OrderBy("board_id")
+	// private List<BoardEntity> BoardEntities = new ArrayList<BoardEntity>();
 
     // ========== 도연 추가 ===============
     // 자식

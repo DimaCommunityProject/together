@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아이디 찾기</title>
-    <link rel="stylesheet" href="/static/css/styles.css" />
-    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <script th:inline="javascript">
         $(function () {
             $("#find_id").on('click', findId_click);
@@ -93,7 +93,7 @@
 <body>
     <!-- 맨 위 로고 -->
     <div class="preloader">
-        <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+        <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
     </div>
     <div id="main-wrapper" class="auth-customizer-none">
         <div
@@ -104,22 +104,21 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a th:href="@{/}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
-                                    <img src="/static/images/logos/dark-logo.svg" class="dark-logo"
-                                        alt="Logo-Dark" />
+                                    <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
                                 </a>
                                 <form th:action="@{/member/findIdResult}" method="POST" id="idForm">
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">이름을 입력하세요</label>
                                         <input type="text" class="form-control" id="memberName" name="memberName"
                                             aria-describedby="emailHelp">
-                                        <img id="warnName" src="/static/images/ico_warning.png" alt="경고"
+                                        <img id="warnName" th:src="@{/images/ico_warning.png}" alt="경고"
                                             style="display: none; width: 15px; height: 15px;">
                                         <span id="confirmName" style="font-size: 0.8em;"></span>
                                     </div>
                                     <div class="mb-4">
                                         <label for="exampleInputPassword1" class="form-label">이메일을 입력하세요</label>
                                         <input type="email" class="form-control" id="memberEmail" name="memberEmail">
-                                        <img id="warnEmail" src="/static/images/ico_warning.png" alt="경고"
+                                        <img id="warnEmail" th:src="@{/images/ico_warning.png}" alt="경고"
                                             style="display: none; width: 15px; height: 15px;">
                                         <span id="confirmEmail" style="font-size: 0.8em;"></span>
                                     </div>
@@ -178,11 +177,12 @@
             </div>
         </div>
         <!-- Import Js Files -->
-        <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
-        <script src="/static/js/theme/app.init.js"></script>
-        <script src="/static/js/theme/theme.js"></script>
-        <script src="/static/js/theme/app.min.js"></script>
+        <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+        <script th:src="@{/js/theme/app.init.js}"></script>
+        <script th:src="@{/js/theme/theme.js}"></script>
+        <script th:src="@{/js/theme/app.min.js}"></script>
+
 </body>
 
 </html>
