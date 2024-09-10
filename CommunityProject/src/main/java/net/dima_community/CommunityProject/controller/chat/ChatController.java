@@ -36,10 +36,10 @@ public class ChatController {
 	@MessageMapping("/statusUpdate") // 전체 회원이 구독
 	@SendTo("/topic/statusUpdates")
 	public StatusUpdateMessage sendStatusUpdate(StatusUpdateMessage message) {
-	    // 전체 구독자에게 상태 업데이트 메시지를 전송
-	    return message;
+		// 전체 구독자에게 상태 업데이트 메시지를 전송
+		return message;
 	}
-	
+
 	// =======================================================
 	// ===================== 채팅방 입장 =====================
 	// =======================================================
