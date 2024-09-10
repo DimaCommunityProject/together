@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>관리자 페이지 공지사항 작성</title>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <style>
         .title-container {
@@ -54,9 +54,9 @@
         enctype="multipart/form-data">
         <!-- 공지사항 작성 시작 -->
         <div class="title-container">
-            <img src="/images/note.png" alt="첨부파일">
+            <img th:src="@{/images/note.png}" alt="첨부파일">
             공지사항 작성
-            <img src="/images/note.png" alt="첨부파일">
+            <img th:src="@{/images/note.png}" alt="첨부파일">
         </div>
         <div class="card-body text-bg-light">
             <div class="form-group mb-0">
@@ -104,12 +104,14 @@
 
     </form>
     <!-- Import Js Files -->
-    <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/libs/simplebar/dist/simplebar.min.js"></script>
-    <script src="/js/theme/app.init.js"></script>
-    <script src="/js/theme/theme.js"></script>
-    <script src="/js/theme/app.min.js"></script>
-    <script src="/js/theme/sidebarmenu.js"></script>
+
+    <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/js/theme/app.init.js}"></script>
+    <script th:src="@{/js/theme/theme.js}"></script>
+    <script th:src="@{/js/theme/app.min.js}"></script>
+    <script th:src="@{/js/vendor.min.js}"></script>
+    <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>

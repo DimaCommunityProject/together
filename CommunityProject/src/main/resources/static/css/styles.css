@@ -29329,12 +29329,13 @@ html[data-boxed-layout="boxed"] .container-xxl {
     position: static;
 }
 .hover-dd .dropdown-menu-nav {
-    min-width: 860px !important;
+    min-width: 340px !important;
     width: 100%;
 }
 .hover-dd:hover .dropdown-menu {
     display: block;
 }
+
 .notification {
     content: "";
     position: absolute;
@@ -29499,7 +29500,7 @@ html[data-layout="horizontal"] .body-wrapper > .container-md,
 html[data-layout="horizontal"] .body-wrapper > .container-sm,
 html[data-layout="horizontal"] .body-wrapper > .container-xl,
 html[data-layout="horizontal"] .body-wrapper > .container-xxl {
-    padding-top: 115px !important;
+    /* padding-top: 115px !important; */
     padding: 15px;
 }
 @media (min-width: 992px) and (max-width: 1299.98px) {

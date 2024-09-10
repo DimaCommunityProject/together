@@ -7,8 +7,8 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="stylesheet" href="/css/styles.css"/> -->
-  <link rel="stylesheet" href="../../css/styles.css" />
+  <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
   <title>디지털마스터 커뮤니티</title>
@@ -60,7 +60,7 @@
 <body class="link-sidebar">
   <!-- Preloader -->
   <div class="preloader">
-    <img src="/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -71,8 +71,8 @@
       <!-- ---------------------------------- -->
       <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="../horizontal/index.html" class="text-nowrap logo-img">
-            <img src="/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
@@ -94,7 +94,7 @@
               </li> -->
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
-                  <img src="/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
                 </a>
               </li>
             </ul>
@@ -120,27 +120,31 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../horizontal/app-chat.html"
+                                  <a th:href="@{/board/list(category=code)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 195px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/images/main/code.png" alt="modernize-img" class="img-fluid" width="24"
                                         height="24" />
+=======
+                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
                                     </div>
                                     <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">
-                                        코드 공유 게시판
+                                      <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
                                       </h6>
                                       <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="@{/board/list(category=project)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 280px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/project.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -175,13 +179,18 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../horizontal/app-chat.html"
+                                  <a th:href="@{/board/list(category=activity)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 225px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/images/main/job.png" alt="modernize-img" class="img-fluid" width="24"
                                         height="24" />
+=======
+                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -190,12 +199,12 @@
                                       <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="@{/board/list(category=recruit)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/recruit.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -230,13 +239,18 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
-                                  <a href="../horizontal/app-chat.html"
+                                  <a th:href="@{/board/list(category=free)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 230px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/images/main/board.png" alt="modernize-img" class="img-fluid" width="24"
                                         height="24" />
+=======
+                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
@@ -245,13 +259,18 @@
                                       <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="@{/board/list(category=info)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/images/main/info.png" alt="modernize-img" class="img-fluid" width="24"
                                         height="24" />
+=======
+                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">정보 게시판
@@ -259,12 +278,12 @@
                                       <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a href="../horizontal/app-invoice.html"
+                                  <a th:href="@{/board/list(category=group)}"
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img src="/images/main/classroom.png" alt="modernize-img" class="img-fluid"
+                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
                                     <div>
@@ -294,8 +313,11 @@
                   <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
                 </li>
               </th:block>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
             </ul>
             <!-- topbar 메뉴 끝-->
 
@@ -304,13 +326,13 @@
             <!-- 채팅/마이페이지 시작 -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-                <a href="javascript:void(0)"
+                <!-- <a href="javascript:void(0)"
                   class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
                   type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
                   aria-controls="offcanvasWithBothOptions">
                   <i class="ti ti-align-justified fs-7"></i>
-                </a>
-                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                </a> -->
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center" sec:authorize="isAuthenticated()">
                   <!-- 다크모드 -->
                   <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link moon dark-layout" href="javascript:void(0)">
@@ -321,6 +343,7 @@
                     </a>
                   </li> -->
                   <!-- 채팅 -->
+<<<<<<< HEAD
                   <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
                     <a class="nav-link position-relative" th:href="@{api/chat/chatPage} ">
                       <img src="/images/main/chat.png" alt="modernize-img" style="width: 30.2px; height: 30px;" />
@@ -335,10 +358,36 @@
                       <img src="/images/profile/user-1.jpg" alt="modernize-img" style="width: 30.2px; height: 30px;" />
                     </a>
                   </li>
+=======
+                  <li class="nav-item nav-icon-hover-bg rounded-circle"  sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" 
+                      th:href="@{api/chat/chatPage} ">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                  <!-- 마이페이지 -->
+                  <div>
+                    <li class="nav-item nav-icon-hover-bg rounded-circle">
+                      <!-- 링크 수정 필요-->
+                      <a class="nav-link position-relative"
+                        th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                        <!-- savedFileName이 존재하는 경우 -->
+                        <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                          alt="profile image" class="h-100">
+
+                        <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
+                        <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                          alt="default profile image" class="w-100 h-100"> -->
+                      </a>
+                    </li>
+                  </div>
+                </ul>
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
               </div>
               </ul>
             </div>
         </div>
+<<<<<<< HEAD
         <!-- 채팅/마이페이지 끝-->
         </nav>
         <!-- 회원가입/로그인 div 시작 -->
@@ -346,6 +395,335 @@
           <ul>
             <li class="loginLineLi" sec:authorize="isAnonymous()">
               <a type="submit" th:href="@{/member/join}" class="loginLineA">회원가입
+=======
+      </header>
+      <!--  Header End -->
+
+
+      <!-- 여기부터 본문 시작 -->
+      <div class="body-wrapper" style="padding-top: 120px;">
+        <div class="container-fluid" style="padding-top: 20px !important">
+          <!-- 파란색 부분 시작 -->
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">디지털 마스터 커뮤니티</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <!-- <li class="breadcrumb-item"> -->
+                      <!-- <a class="text-muted text-decoration-none" href="../horizontal/index.html"></a> -->
+                      <!-- </li> -->
+                      <li class="breadcrumb-item" aria-current="page">환영합니다!</li>
+                      <li class="breadcrumb-item" aria-current="page">신인가수 조정석 재밌음</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5" style="height: 100%;">
+                    <img th:src="@{/images/main/coding.png}" alt="modernize-img" class="img-fluid mb-n4"
+                      style="padding-right: 30px;" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 파란색 부분 끝 -->
+          <!-- 게시판 보여주기 시작 -->
+          <!-- 인기 게시글 시작-->
+          <div style="display: flex">
+            <div class="col-lg-5 d-flex align-items-stretch">
+              <div class="card w-100">
+                <div class="card-body">
+                  <h4 class="card-title fw-semibold">인기 게시글</h4>
+                  <!-- <p class="card-subtitle">지금 가장 인기있는 게시글입니다</p> -->
+                  <div class="mt-4 pb-3 border-bottom">
+                    <div class="d-flex align-items-center">
+                      <span class="bg-primary-subtle text-primary badge">Inprogress</span>
+                      <span class="fs-3 ms-auto">8 March 2020</span>
+                    </div>
+                    <h6 class="mt-3">NFT Landing Page</h6>
+                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)"
+                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 2 Tasks
+                      </a>
+                      <a href="javascript:void(0)"
+                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 13 Commets
+                      </a>
+                    </div>
+                  </div>
+                  <div class="py-3 border-bottom">
+                    <div class="d-flex align-items-center">
+                      <span class="bg-danger-subtle text-danger badge">Inpending</span>
+                      <span class="fs-3 ms-auto">8 Jan 2024</span>
+                    </div>
+                    <h6 class="mt-3">Dashboard Finanace Management</h6>
+                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)"
+                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 4 Tasks
+                      </a>
+                      <a href="javascript:void(0)"
+                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 50 Commets
+                      </a>
+                    </div>
+                  </div>
+                  <div class="pt-3">
+                    <div class="d-flex align-items-center">
+                      <span class="bg-success-subtle text-success badge">Completed</span>
+                      <span class="fs-3 ms-auto">8 Feb 2024</span>
+                    </div>
+                    <h6 class="mt-3">Logo Branding</h6>
+                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)"
+                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 1 Task
+                      </a>
+                      <a href="javascript:void(0)"
+                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 12 Commets
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 인기 게시글 끝 -->
+
+
+            <div class="col-lg-7 d-flex align-items-stretch">
+
+              <div class="card w-100">
+                <!-- 전체 게시글 시작-->
+                <div class="card-body">
+                  <h4 class="card-title fw-semibold">전체 게시글</h4>
+                  <!-- <p class="card-subtitle">지금 가장 인기있는 게시글입니다</p> -->
+                  <!-- mt-4 pb-3 -->
+                  <div class="border-bottom">
+                    <div class="d-flex align-items-center">
+                      <span class="fs-2 ms-auto">8 March 2020</span>
+                    </div>
+                    <h6 class="fs-2">NFT Landing Page</h6>
+                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)"
+                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 13 Commets
+                      </a>
+                    </div>
+                  </div>
+                  <!-- py-3 -->
+                  <div class="border-bottom">
+                    <div class="d-flex align-items-center">
+                      <span class="fs-2 ms-auto">8 Jan 2024</span>
+                    </div>
+                    <h6 class="fs-2">Dashboard Finanace Management</h6>
+                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)"
+                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 50 Commets
+                      </a>
+                    </div>
+                  </div>
+                  <!-- pt-3 -->
+                  <div>
+                    <div class="d-flex align-items-center">
+                      <span class="fs-2 ms-auto">8 Feb 2024</span>
+                    </div>
+                    <h6 class="fs-2">Logo Branding</h6>
+                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)"
+                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 12 Commets
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- 전체 게시글 끝-->
+
+
+                <!-- 공지사항 시작-->
+                <div class="card-body">
+                  <h4 class="card-title fw-semibold">공지사항</h4>
+                  <div class="border-bottom" th:each="adminNote, status : ${list}">
+                    <div class="d-flex align-items-center">
+                      <span class="fs-2 ms-auto"
+                        th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}">8 March 2020</span>
+                    </div>
+                    <h6 class="fs-2"><a class="fs-2 h6-style" th:text="${adminNote.adminNoteTitle}"
+                        th:href="@{/member/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT Landing
+                        Page</a></h6>
+                    <!-- <a class="fs-2"  th:text="${adminNote.adminNoteTitle}" th:href="@{/admin/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT Landing Page</a> -->
+                    <!-- <span class="fs-2 lh-sm" th:text="${adminNote.adminNoteContent}">[[ ${adminNote.adminNoteContent} ]]</span> -->
+                  </div>
+                </div>
+                <!-- 공지사항 끝-->
+
+              </div>
+            </div>
+
+
+
+            <!-- 게시판 보여주기 끝 -->
+          </div>
+        </div>
+        <!-- 본문 끝 -->
+        <script>
+          function handleColorTheme(e) {
+            document.documentElement.setAttribute("data-color-theme", e);
+          }
+        </script>
+        <button
+          class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
+          type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          <i class="icon ti ti-settings fs-7"></i>
+        </button>
+
+        <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+          aria-labelledby="offcanvasExampleLabel">
+          <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+            <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
+              Settings
+            </h4>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body h-n80" data-simplebar>
+            <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
+
+            <div class="d-flex flex-row gap-3 customizer-box" role="group">
+              <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout"
+                autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
+                <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
+              </label>
+
+              <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout"
+                autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
+                <i class="icon ti ti-moon fs-7 me-2"></i>Dark
+              </label>
+            </div>
+
+            <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
+            <div class="d-flex flex-row gap-3 customizer-box" role="group">
+              <input type="radio" class="btn-check" name="direction-l" id="ltr-layout" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="ltr-layout">
+                <i class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR
+              </label>
+
+              <input type="radio" class="btn-check" name="direction-l" id="rtl-layout" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="rtl-layout">
+                <i class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL
+              </label>
+            </div>
+
+            <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
+
+            <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
+              <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip"
+                data-bs-placement="top" data-bs-title="BLUE_THEME">
+                <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
+                  <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                </div>
+              </label>
+
+              <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip"
+                data-bs-placement="top" data-bs-title="AQUA_THEME">
+                <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
+                  <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                </div>
+              </label>
+
+              <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip"
+                data-bs-placement="top" data-bs-title="PURPLE_THEME">
+                <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
+                  <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                </div>
+              </label>
+
+              <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout"
+                autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip"
+                data-bs-placement="top" data-bs-title="GREEN_THEME">
+                <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
+                  <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                </div>
+              </label>
+
+              <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout"
+                autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip"
+                data-bs-placement="top" data-bs-title="CYAN_THEME">
+                <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
+                  <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                </div>
+              </label>
+
+              <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout"
+                autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+                onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip"
+                data-bs-placement="top" data-bs-title="ORANGE_THEME">
+                <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
+                  <i class="ti ti-check text-white d-flex icon fs-5"></i>
+                </div>
+              </label>
+            </div>
+
+            <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
+            <div class="d-flex flex-row gap-3 customizer-box" role="group">
+              <div>
+                <input type="radio" class="btn-check" name="page-layout" id="vertical-layout" autocomplete="off" />
+                <label class="btn p-9 btn-outline-primary" for="vertical-layout">
+                  <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical
+                </label>
+              </div>
+              <div>
+                <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout" autocomplete="off" />
+                <label class="btn p-9 btn-outline-primary" for="horizontal-layout">
+                  <i class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal
+                </label>
+              </div>
+            </div>
+
+            <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
+
+            <div class="d-flex flex-row gap-3 customizer-box" role="group">
+              <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="boxed-layout">
+                <i class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed
+              </label>
+
+              <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
+              <label class="btn p-9 btn-outline-primary" for="full-layout">
+                <i class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full
+              </label>
+            </div>
+
+            <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
+            <div class="d-flex flex-row gap-3 customizer-box" role="group">
+              <a href="javascript:void(0)" class="fullsidebar">
+                <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar" autocomplete="off" />
+                <label class="btn p-9 btn-outline-primary" for="full-sidebar">
+                  <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
+                </label>
+>>>>>>> a965408fef678997491bbafda472c9b3837c9786
               </a>
             </li>
             <li class="loginLineLi">|</li> <!-- 구분자 추가 -->
@@ -713,17 +1091,18 @@
   </div>
   </div>
   <div class="dark-transparent sidebartoggler"></div>
-  <script src="/js/vendor.min.js"></script>
+
   <!-- Import Js Files -->
-  <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/libs/simplebar/dist/simplebar.min.js"></script>
-  <script src="/js/theme/app.horizontal.init.js"></script>
-  <script src="/js/theme/theme.js"></script>
-  <script src="/js/theme/app.min.js"></script>
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/vendor.min.js}"></script>
+  <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
 
   <!-- solar icons -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
-  <script src="/js/apps/chat.js"></script>
+  <script th:src="@{/js/apps/chat.js}"></script>
 </body>
 
 </html>
