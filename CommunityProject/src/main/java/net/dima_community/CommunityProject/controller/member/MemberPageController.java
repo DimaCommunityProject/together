@@ -52,7 +52,7 @@ public class MemberPageController {
         model.addAttribute("member", member);
         model.addAttribute("memberPage", memberPage);
 
-        return "member/memberPage";
+        return "member/memberPageTest";
     }
 
     @GetMapping("/updatepage")

@@ -241,14 +241,19 @@ $(document).ready(function () {
 	// 채팅방에서 퇴장 시 메시지
 	function leaveChatRoom(roomId) {
 	    if (stompClient && roomId) {
-	        updateStatus("offline", roomId);  // 현재 방에서 나갈 때 상태를 offline으로 설정
-	        
+	        // 퇴장 메시지 전송
 	        const exitMessage = {
 	            senderId: currentUserId,
 	            chatRoomId: roomId,
 	            content: `${currentUserName}님이 퇴장하셨습니다.`
 	        };
 	        stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
+	
+	        // 상태를 offline으로 변경
+	        updateStatus("offline", roomId);
+	
+	        // 구독 해지
+	        stompClient.unsubscribe(`sub-${roomId}`);
 	    }
 	}
     
@@ -424,7 +429,7 @@ $(document).ready(function () {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
     
-    $('#startChat').click(function () {
+    $('.startChat').click(function () {
         const recipientId = $('.recipientSelect').val();  // 선택한 상대방의 ID
         if (recipientId) {
             axios.post('/api/chat/start', `recipientId=${encodeURIComponent(recipientId)}`, {
@@ -466,6 +471,8 @@ $(document).ready(function () {
             // 서버로 메시지 전송
             stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
             $('#messageInput').val(''); // 입력란 초기화
+            
+            showMessage(message);
         }
     });
     
@@ -578,40 +585,42 @@ $(document).ready(function () {
     });
     
  	// 채팅룸 나가기 
-    $('.leaveButton').click(function () {
-        const roomId = currentChatRoomId;  // 현재 채팅방 ID 가져오기
-        const userId = currentUserId;  // 현재 사용자 ID 가져오기
-
-        if (roomId && userId) {
-            axios.post('/api/chat/leaveRoom', 
-            `roomId=${encodeURIComponent(roomId)}&userId=${encodeURIComponent(userId)}`, 
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .then(response => {
-                console.log(response.data);  // 성공적인 응답 출력
-
-                // UI에서 해당 채팅방을 리스트에서 제거
-                $(`.chat-user[data-room-id="${roomId}"]`).remove(); // 선택자 수정
-                
-                // chatPartnerImages에서 나간 사용자의 이미지 제거
-                $(`.chat-partner-img[data-user-id="${userId}"]`).remove(); // 선택자 수정
-                
-                // 현재 채팅방 ID 초기화
-                currentChatRoomId = null;
-                
-                // 채팅방이 선택되지 않은 상태를 표시 (d-none 삭제)
-                $('.chat-not-selected').removeClass('d-none');
-            })
-            .catch(error => {
-                console.error('Error leaving the room:', error);
-            });
-        } else {
-            console.error('Invalid room ID or user ID.');
-        }
-    });
+	$('.leaveButton').click(function () {
+	    const roomId = currentChatRoomId;  // 현재 채팅방 ID 가져오기
+	    const userId = currentUserId;  // 현재 사용자 ID 가져오기
+	
+	    if (roomId && userId) {
+	        axios.post('/api/chat/leaveRoom', 
+	        `roomId=${encodeURIComponent(roomId)}&userId=${encodeURIComponent(userId)}`, 
+	        {
+	            headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded'
+	            }
+	        })
+	        .then(response => {
+	            console.log(response.data);  // 성공적인 응답 출력
+	
+	            // UI에서 해당 채팅방을 리스트에서 제거
+	            $(`.chat-user[data-room-id="${roomId}"]`).remove(); // 선택자 수정
+	
+	            // chatPartnerImages에서 나간 사용자의 이미지 제거
+	            $(`.chat-partner-img[data-user-id="${userId}"]`).remove(); // 선택자 수정
+	
+	            // 현재 채팅방 ID 초기화
+	            currentChatRoomId = null;
+	
+	            // 채팅방이 선택되지 않은 상태를 표시 (d-none 삭제)
+	            $('.chat-not-selected').removeClass('d-none');
+	
+	            leaveChatRoom(roomId);  // 채팅방 퇴장 처리
+	        })
+	        .catch(error => {
+	            console.error('Error leaving the room:', error);
+	        });
+	    } else {
+	        console.error('Invalid room ID or user ID.');
+	    }
+	});
     
     $(".search-chat").on("keyup", function () {
 	  var value = $(this).val().toLowerCase();

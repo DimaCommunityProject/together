@@ -29329,12 +29329,13 @@ html[data-boxed-layout="boxed"] .container-xxl {
     position: static;
 }
 .hover-dd .dropdown-menu-nav {
-    min-width: 860px !important;
+    min-width: 340px !important;
     width: 100%;
 }
 .hover-dd:hover .dropdown-menu {
     display: block;
 }
+
 .notification {
     content: "";
     position: absolute;

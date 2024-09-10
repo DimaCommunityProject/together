@@ -42,7 +42,7 @@ public class MainControler {
 
 		model.addAttribute("list", dtoList);
 
-		return "main/main";
+		return "main/mainTest";
 		
 
 	}

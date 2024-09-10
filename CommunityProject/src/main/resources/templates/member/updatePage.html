@@ -436,9 +436,11 @@
                     th:text="${member.memberGroup}"></span>
                   <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson</h5>
                   <p class="mb-0" id="memberId" th:text="${member.memberId}"></p>
-                  <button class="btn bg-secondary-subtle text-secondary" id="changeImageBtn">이미지 변경</button>
-                  <button class="btn bg-secondary-subtle text-secondary" id="changeImageProcBtn">저장</button>
-                  <button class="btn btn-danger text-nowrap" id="deleteImageProcBtn">이미지 삭제</button>
+                  <div class="m-3">
+	                  <button class="btn bg-secondary-subtle text-secondary" id="changeImageBtn">이미지 변경</button>
+	                  <button class="btn bg-secondary-subtle text-secondary" id="changeImageProcBtn">저장</button>
+	                  <button class="btn btn-danger text-nowrap" id="deleteImageProcBtn">이미지 삭제</button>
+                  </div>
                   <input type="file" name="newImage" id="newImage" hidden>
                 </div>
               </div>
