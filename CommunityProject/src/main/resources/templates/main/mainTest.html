@@ -140,7 +140,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                           alt="profile image" width="40" height="40" class="rounded-circle h-100">
             </div>
             <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold" th:text="${loginId}">Mathew</h6>
+              <h6 class="mb-0 fs-4 fw-semibold" th:text="${loginName}">Mathew</h6>
               <span class="fs-2" th:text="${loginGroup}">Designer</span>
             </div>
             <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
@@ -430,11 +430,11 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 						    <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
 						    alt="profile image" width="35" height="35" class="rounded-circle h-100">
 						    <div class="ms-3">
-						        <h5 class="mb-1 fs-3 currentUserName" th:text="${loginId}" >Mathew Anderson</h5> <!-- 이름 출력 -->
+						        <h5 class="mb-1 fs-3 currentUserName" th:text="${loginName}" >Mathew Anderson</h5> <!-- 이름 출력 -->
 						        <span class="mb-1 d-block currentUserGroup" th:text="${loginGroup}">Designer</span> <!-- 그룹 출력 -->
 						        <p class="mb-0 d-flex align-items-center gap-2">
-						            <i class="ti ti-mail fs-4 currentUserEmail" th:text="${loginEmail}"></i>
-						            <span >user@example.com</span> <!-- 이메일 출력 -->
+						            <i class="ti ti-mail fs-4 currentUserEmail" ></i>
+						            <span th:text="${loginEmail}"></span> <!-- 이메일 출력 -->
 						        </p>
 						    </div>
 						</div>
@@ -769,8 +769,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    style="min-width: 340px !important">
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340" 
+                    >
                     <div class="row">
                       <div class="col-8">
                         <div class="ps-7 pt-7">
@@ -907,7 +907,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                           <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
                           alt="profile image" width="35" height="35" class="rounded-circle h-100">
                           <div class="ms-3">
-                            <h5 class="mb-1 fs-3 currentUserName"  th:text="${loginId}">Mathew Anderson</h5>
+                            <h5 class="mb-1 fs-3 currentUserName"  th:text="${loginName}">Mathew Anderson</h5>
                             <span class="mb-1 d-block currentUserGroup" th:text="${loginGroup}">Designer</span>
                             <p class="mb-0 d-flex align-items-center gap-2">
                               <i class="ti ti-mail fs-4 currentUserEmail" th:text="${loginEmail}"></i>

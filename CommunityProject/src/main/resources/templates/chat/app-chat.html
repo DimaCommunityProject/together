@@ -136,7 +136,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
         <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
           <div class="hstack gap-3">
             <div class="john-img">
-              <img class="currentUserImage rounded-circle" width="40" height="40" alt="modernize-img" />
+              <img class="userProfileImage rounded-circle" width="40" height="40" alt="modernize-img" />
             </div>
             <div class="john-title">
               <h6 class="mb-0 fs-4 fw-semibold currentUserName">Mathew</h6>
@@ -1122,7 +1122,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 												</div>
 												<div>
 													<h6 class="mb-1 name fw-semibold chatPartnerName"></h6>
-													
+													<!-- 채팅방 참여자 이름(그룹) 추가되는 부분 -->
 												</div>
 											</div>
 											<div class="dropdown">
@@ -1150,23 +1150,23 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 
 											<!-- 초대 모달 -->
 											<div id="inviteModal" class="modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">대화 상대 초대</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="inviteMembersCheckboxes" class="form-group">
-                                        <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
-                                    <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
-                                </div>
-                            </div>
-                        </div>
+						                        <div class="modal-dialog" role="document">
+						                            <div class="modal-content">
+						                                <div class="modal-header">
+						                                    <h5 class="modal-title">대화 상대 초대</h5>
+						                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						                                </div>
+						                                <div class="modal-body">
+						                                    <div id="inviteMembersCheckboxes" class="form-group">
+						                                        <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
+						                                    </div>
+						                                </div>
+						                                <div class="modal-footer">
+						                                    <button type="button" class="btn btn-secondary" id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
+						                                    <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
+						                                </div>
+						                            </div>
+						                        </div>
 											</div>
 										</div>
 										<div class="d-flex parent-chat-box app-chat-right">

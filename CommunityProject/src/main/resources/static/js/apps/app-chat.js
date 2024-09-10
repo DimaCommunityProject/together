@@ -323,8 +323,10 @@ $(document).ready(function () {
 	    console.log("Received members:", members); // members 데이터 확인
 	    let imagesHtml = '';
 	    let namesHtml = '';
+		// deleted 값이 0인 멤버들만 필터링
+	    const activeMembers = members.filter(member => member.deleted === 0);
 	
-	    members.forEach(function (member) {
+	    activeMembers.forEach(function (member) {
 	        const memberName = member.name;
 	        const memberId = member.memberId;  // userId 추가
 	        const memberGroup = member.memberGroup; // 몇기인지 정보
@@ -506,38 +508,41 @@ $(document).ready(function () {
 	    
 	    console.log("uniqueKeyMembers", uniqueKeyMembers);
 	
-	    // 전체 멤버 목록 가져오기
-	    const allMembers = $('.recipientSelect option').map(function () {
-	        return {
-	            memberId: $(this).val(),
-	            memberName: $(this).text()
-	        };
-	    }).get();
-	    
-	    console.log("allMembers", allMembers);
+	    // 서버로부터 방의 전체 멤버 목록을 가져옴 (deleted 상태 포함)
+	    $.ajax({
+	        url: `/api/chat/getRoomMemberNamesByUniqueKey/${currentUniqueKey}`,  // 서버에서 멤버 목록을 가져오는 API 경로
+	        method: 'GET',
+	        success: function (response) {
+	            const allMembers = response.members;  // 서버에서 받은 멤버 목록
+	            
+	            console.log("All members in room", allMembers);
 	
-	    // 현재 채팅방에 포함되지 않은 멤버들만 필터링
-	    const availableMembers = allMembers.filter(member => !uniqueKeyMembers.includes(member.memberId));
+	            // 현재 방에 속한 멤버들 중 deleted 상태가 1인 멤버들만 필터링
+	            const availableMembers = allMembers.filter(member => member.deleted === 1 && !uniqueKeyMembers.includes(member.memberId));
 	
-	    console.log("availableMembers", availableMembers);
-	    
-	    // 멤버 목록 모델에 표시 
-	    const membersCheckboxes = $('#inviteMembersCheckboxes');
-	    membersCheckboxes.empty(); // 기존 목록 초기화
-	    availableMembers.forEach(member => {
-	        membersCheckboxes.append(`
-	            <div class="form-check">
-	                <input class="form-check-input invite-member-checkbox" type="checkbox" value="${member.memberId}" id="member-${member.memberId}">
-	                <label class="form-check-label" for="member-${member.memberId}">
-	                    ${member.memberName}
-	                </label>
-	            </div>
-	        `);
+	            console.log("Available members (deleted = 1)", availableMembers);
+	
+	            // 멤버 목록을 모달에 표시 
+	            const membersCheckboxes = $('#inviteMembersCheckboxes');
+	            membersCheckboxes.empty(); // 기존 목록 초기화
+	            availableMembers.forEach(member => {
+	                membersCheckboxes.append(`
+	                    <div class="form-check">
+	                        <input class="form-check-input invite-member-checkbox" type="checkbox" value="${member.memberId}" id="member-${member.memberId}">
+	                        <label class="form-check-label" for="member-${member.memberId}">
+	                            ${member.name}  <!-- 여기서 member.name 사용 -->
+	                        </label>
+	                    </div>
+	                `);
+	            });
+	
+	            // 모달 표시
+	            $('#inviteModal').modal('show'); // Bootstrap 모달 표시
+	        },
+	        error: function (error) {
+	            console.error('Error fetching member list:', error);
+	        }
 	    });
-	    
-	
-	    // 모달 표시
-	    $('#inviteModal').modal('show'); // Bootstrap 모달 표시
 	});
     
  	// 선택한 멤버들을 그룹에 초대
