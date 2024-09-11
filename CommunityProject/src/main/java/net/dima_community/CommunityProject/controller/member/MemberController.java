@@ -340,10 +340,12 @@ public class MemberController {
 	}
 
 	// ============= 회원 삭제
-	@PostMapping("/member/deleteMember")
-	public void deleteMember(@ModelAttribute("memberId") String memberId) {
+	@GetMapping("/member/deleteMember")
+	public String deleteMember(@RequestParam("memberId") String memberId) {
 		log.info("회원삭제 컨트롤러 도착");
 		memberService.deleteMember(memberId);
 		memberVerifyCodeService.deleteById(memberId);
+
+		return "redirect:/admin/adminPage";
 	}
 }// end class

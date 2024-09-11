@@ -363,8 +363,8 @@
                                         <a class="nav-link position-relative"
                                             th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
                                             <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
-                                            <img th:src="@{/images/profile/user-1.jpg}" alt="modernize-img"
-                                                style="width: 30.2px; height: 30px;" />
+                                            <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                                                alt="modernize-img" style="width: 30.2px; height: 30px;" />
                                         </a>
                                     </li>
                                 </ul>

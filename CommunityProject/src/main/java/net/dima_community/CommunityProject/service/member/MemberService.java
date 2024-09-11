@@ -276,7 +276,7 @@ public class MemberService {
 	public String showImageAtMain(String memberId) {
 		MemberDTO memberDTO = findById(memberId);
 		if (memberDTO.getSavedFileName() == null) {
-			return getFileFullPath("user-1.jpg");
+			return getFileFullPath("basic_profile.png");
 		} else {
 			return getFileFullPath(memberDTO.getSavedFileName());
 		}
