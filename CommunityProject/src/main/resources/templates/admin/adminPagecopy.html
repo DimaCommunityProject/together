@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 목록</title>
+    <link rel="stylesheet" th:href="@{/static/css/main.css}">
+    <link rel="stylesheet" th:href="@{/static/css/list.css}">
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"></a>
+            <h2>게시글 목록</h2>
+        </div>
+    </div>
+
+    <!--게시글 전체 목록 출력 -->
+    <div class="content">
+        <div class="head">
+            <!--전체 글 개수 출력-->
+
+            <!--검색 창-->
+            <div class="search">
+                <form id="searchForm" th:action="@{/admin/adminPagecopy}" method="GET">
+                    <input name="page" id="requestPage" th:value="${page}">
+                    <input name="memberGroup" id="hiddenMemberGroup" th:value="${memberGroup}">
+                    <select name="memberGroup" id="memberGroup">
+                        <option value="기수선택">기수선택</option>
+                        <option value="1기" th:selected="${memberGroup == '1기'}">1기</option>
+                        <option value="2기" th:selected="${memberGroup == '2기'}">2기</option>
+                        <option value="3기" th:selected="${memberGroup == '3기'}">3기</option>
+                    </select>
+                    <input type="submit" value="검색" class="btn btn-info">
+                </form>
+            </div>
+        </div><!--head end-->
+
+        <!-- 게시글 목록 -->
+        <div>
+            <table border="1">
+                <tr>
+                    <th class="no">글 번호</th>
+                    <th class="no">제목</th>
+                    <th class="writer">작성자</th>
+                    <th class="hitcount">조회수</th>
+                    <th class="create_date">작성일</th>
+                </tr>
+                <!-- 반복 구간 -->
+                <tr class="search-items" th:each="member, status : ${enablelist}">
+                    <td>
+                    <span class="usr-email-addr" th:text="${member.memberName}">adams@mail.com</span>
+                    </td>
+                    <td th:text="${member.memberEmail}">홍길동</td>
+                    <td th:text="${member.memberGroup}">22</td>
+                    <td th:text="${member.memberId}">22</td>
+                    <td th:text="${member.memberEnabled}">22</td>
+                </tr>
+            </table>
+        </div> <!-- .content 끝-->
+  
+
+        <!-- Page Navigatiton -->
+        <nav class="pagination">
+            <!-- 앞 그룹 -->
+            <!-- 2번 그룹 이상일 때 -->
+            <th:block th:if ="${navi.startPageGroup > 1}">
+                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.startPageGroup-1})|">&laquo;</a>
+            </th:block>
+            <!-- 1번 그룹 이상일 때 -->
+            <th:block th:unless ="${navi.startPageGroup > 1}">
+                <span class="page-no navi">&laquo;</span>
+            </th:block>
+
+            <!-- 앞 페이지 -->
+            <!-- 2 페이지 이상의 페이지를 보고 있으면 링크 생김 -->
+            <th:block th:if="${navi.page > 1}">
+                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.page -1})|">&lsaquo;</a>
+            </th:block>
+            <!-- 1 페이지를 보고있으면 링크 생기지 않음 -->
+            <th:block th:unless="${navi.page > 1}">
+                <span class="page-no navi">&lsaquo;</span>
+            </th:block>
+
+            <!-- 페이지 번호 출력 -->
+            <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+                <!-- 보고있는 페이지가 요청한 페이지와 같을 때는 링크 안생김 -->
+                <span th:if="${count == navi.page}">
+                    <b class="page-no current" th:text="${count}"></b>
+                </span>
+                <span th:unless="${count == navi.page}">
+                    <a class="page-no" th:href="|javascript:pageFormSubmit(${count})|" th:text="${count}"></a>
+                </span>
+            </span>
+            
+            <!-- 뒷 페이지 -->
+            <!-- 현재 페이지 뒤에 다른 페이지가 있으면 링크가 생김 -->
+            <th:block th:if="${navi.totalPages > navi.page}">
+                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.page + 1})|">&rsaquo;</a>
+            </th:block>
+            <!-- 마지막 페이지를 보고 있을 때는 링크가 생기면 안됨 -->
+            <th:block th:unless="${navi.totalPages > navi.page}">
+                <span class="page-no navi">&rsaquo;</span>
+            </th:block>
+
+            <!-- 뒷 그룹 -->
+            <!-- 다음 그룹이 있으면 링크가 생겨야함 -->
+            <th:block th:if ="${navi.totalGroupCount > navi.currentGroup}">
+                <a class="page-no navi" th:href="|javascript:pageFormSubmit(${navi.endPageGroup + 1})|">&raquo;</a>
+            </th:block>
+            <!-- 마지막 그룹을 보고 있을 때는 링크가 생기면 안됨 -->
+            <th:block th:unless ="${navi.totalGroupCount > navi.currentGroup}">
+                <span class="page-no navi">&raquo;</span>
+            </th:block>
+        </nav>
+    </div>
+    <script>
+        function pageFormSubmit(page){
+            const memberGroup = document.getElementById("memberGroup").value;  // 선택된 기수값 가져오기
+            console.log(memberGroup);
+            document.getElementById("requestPage").value = page;    // 요청하는 페이지값 넣기
+            //document.getElementById("hiddenMemberGroup").value = memberGroup; // 선택된 기수값을 숨겨진 input에 넣기
+            document.getElementById("searchForm").submit();         // 요청 페이지값과 함께 컨트롤러에 제출
+        }
+    
+        function checkMemberGroup() {
+            const selectedGroup = document.getElementById("memberGroup").value;
+            alert("Selected member group: " + selectedGroup);
+            return true;  // 폼 제출을 계속 진행
+        }
+    </script>
+</body>
+</html>

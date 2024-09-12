@@ -307,7 +307,27 @@
                   aria-controls="offcanvasWithBothOptions">
                   <i class="ti ti-align-justified fs-7"></i>
                 </a> -->
-                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center" sec:authorize="isAuthenticated()">
+                <!-- 회원가입/로그인 div 시작 -->
+                <!-- <div id="loginLine"> -->
+                  <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                    <li class="loginLineLi" sec:authorize="isAnonymous()">
+                      <a type="submit" th:href="@{/member/join}" class="loginLineA">회원가입
+                      </a>
+                    </li>
+                    <li class="loginLineLi" sec:authorize="isAnonymous()">|</li> <!-- 구분자 추가 -->
+                    <li class="loginLineLi" sec:authorize="isAnonymous()">
+                      <a type="submit" th:href="@{/member/login}" class="loginLineA">로그인
+                      </a>
+                    </li>
+                    <li class="loginLineLi" sec:authorize="isAuthenticated()">
+                      <a type="submit" th:href="@{/member/logout}" class="loginLineA">[[${loginName}]]님, 로그아웃
+                      </a>
+                    </li>
+                  </ul>
+                <!-- </div> -->
+                <!-- 회원가입/로그인 div 끝 -->
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center"
+                  sec:authorize="isAuthenticated()">
                   <!-- 다크모드 -->
                   <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
                     <a class="nav-link moon dark-layout" href="javascript:void(0)">
@@ -318,9 +338,8 @@
                     </a>
                   </li> -->
                   <!-- 채팅 -->
-                  <li class="nav-item nav-icon-hover-bg rounded-circle"  sec:authorize="isAuthenticated()">
-                    <a class="nav-link position-relative" 
-                      th:href="@{api/chat/chatPage} ">
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" th:href="@{api/chat/chatPage} ">
                       <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
                     </a>
                   </li>
@@ -346,13 +365,13 @@
             <!-- 채팅/마이페이지 끝-->
           </nav>
           <!-- 회원가입/로그인 div 시작 -->
-          <div id="loginLine">
+          <!-- <div id="loginLine">
             <ul>
               <li class="loginLineLi" sec:authorize="isAnonymous()">
                 <a type="submit" th:href="@{/member/join}" class="loginLineA">회원가입
                 </a>
               </li>
-              <li class="loginLineLi">|</li> <!-- 구분자 추가 -->
+              <li class="loginLineLi">|</li>
               <li class="loginLineLi" sec:authorize="isAnonymous()">
                 <a type="submit" th:href="@{/member/login}" class="loginLineA">로그인
                 </a>
@@ -362,7 +381,7 @@
                 </a>
               </li>
             </ul>
-          </div>
+          </div> -->
           <!-- 회원가입/로그인 div 끝 -->
         </div>
       </header>

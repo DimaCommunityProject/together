@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
+    xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>공지사항 상세 페이지</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <style>
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(93, 135, 255, 0.1);
+            width: 1000px;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 30px;
+            color: rgb(93, 135, 255);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .title-container img {
+            width: 40px;
+            height: auto;
+            margin-right: 15px;
+            margin-left: 15px;
+        }
+
+        .form-control {
+            width: 730px;
+        }
+
+        .form-horizontal {
+            width: 1000px;
+            margin: 150px auto;
+        }
+
+        .buttonbox {
+            display: flex;
+            justify-content: center;
+            height: 42px;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form-horizontal r-separator">
+        <!-- 공지사항 작성 시작 -->
+        <div class="title-container">
+            <img src="/static/images/note.png" alt="첨부파일">
+            공지사항 상세 페이지
+            <img src="/static/images/note.png" alt="첨부파일">
+        </div>
+        <div class="card-body text-bg-light">
+            <input type="hidden" name="adminNoteNum" th:value="${adminNote.adminNoteNum}">
+            <div class="form-group mb-0">
+                <div class="row align-items-center">
+                    <label for="inputText4" class="col-3 text-end  col-form-label">제목</label>
+                    <div class="col-9 border-start pb-2 pt-2">
+                        <span th:text="${adminNote.adminNoteTitle}" class="form-control"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0">
+                <div class="row align-items-center">
+                    <label for="inputText4" class="col-3 text-end  col-form-label">작성일</label>
+                    <div class="col-9 border-start pb-2 pt-2">
+                        <span class="form-control" th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0">
+                <div class="row align-items-center">
+                    <label for="inputText4" class="col-3 text-end  col-form-label">수정일</label>
+                    <div class="col-9 border-start pb-2 pt-2">
+                        <!-- <span th:text="${adminNote.adminNoteUpdateDate}" class="form-control"></span> -->
+                        <span class="form-control" th:text="*{#temporals.format(adminNote.adminNoteUpdateDate, 'yyyy-MM-dd')}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0">
+                <div class="row align-items-center">
+                    <label for="inputText4" class="col-3 text-end  col-form-label">내용</label>
+                    <div class="col-9 border-start pb-2 pt-2">
+                        <pre class="form-control" rows="10"
+                            style="height: 480px;">[[ ${adminNote.adminNoteContent} ]]</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0">
+                <div class="row align-items-center">
+                    <label for="inputGroupFile01" class="col-3 text-end  col-form-label">첨부파일
+                    </label>
+                    <div class="col-9 border-start pb-2 pt-2">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <!-- <input type="file" class="form-control" id="uploadFile" name="uploadFile" /> -->
+                                <span th:if="${adminNote.adminNoteOriginalFileName != null}">
+                                    <a th:href="@{/admin/adminFileDownload(adminNoteNum=${adminNote.adminNoteNum})}"
+                                        th:text="${adminNote.adminNoteOriginalFileName}">bts.jpg</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 저장/취소 버튼 시작 -->
+            <div class="buttonbox">
+                <th:block sec:authorize="hasRole('ADMIN')">
+                    <a type="submit" class="btn btn-secondary" style="margin-right: 5px;"
+                        th:href="@{/admin/adminPageNoteUpdate(adminNoteNum=${adminNote.adminNoteNum})}">수 정
+                    </a>
+                    <a th:href="@{/admin/adminPageNoteDelete(adminNoteNum=${adminNote.adminNoteNum})}"
+                        class="btn btn-rounded btn-danger" style="margin-right: 5px;">
+                        삭 제
+                    </a>
+                </th:block>
+                <a th:href="@{/member/adminPageNote}" class="btn btn-rounded btn-info">목 록</a>
+            </div>
+            <!-- 저장/취소 버튼 끝 -->
+        </div>
+        <!-- 공지사항 작성 끝 -->
+
+    </form>
+    <!-- Import Js Files -->
+    <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
+    <script src="/static/js/theme/app.init.js"></script>
+    <script src="/static/js/theme/theme.js"></script>
+    <script src="/static/js/theme/app.min.js"></script>
+    <script src="/static/js/theme/sidebarmenu.js"></script>
+
+    <!-- solar icons -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
+</body>
+
+</html>
