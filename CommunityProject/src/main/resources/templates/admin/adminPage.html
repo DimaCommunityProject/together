@@ -10,6 +10,15 @@
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
+  <script>
+    // $(function () {
+    //   $("#deleteMember").on("click", deleteMember);
+    // })
+
+    // function deleteMember() {
+
+    // }
+  </script>
   <title>관리자 페이지</title>
   <style>
     #loginLine {
@@ -331,21 +340,15 @@
                     </a>
                   </li>
                   <!-- 마이페이지 -->
-                  <div>
-                    <li class="nav-item nav-icon-hover-bg rounded-circle">
-                      <!-- 링크 수정 필요-->
-                      <a class="nav-link position-relative"
-                        th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
-                        <!-- savedFileName이 존재하는 경우 -->
-                        <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
-                          alt="profile image" class="h-100">
-
-                        <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
-                        <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
-                          alt="default profile image" class="w-100 h-100"> -->
-                      </a>
-                    </li>
-                  </div>
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <!-- 링크 수정 필요-->
+                    <a class="nav-link position-relative"
+                      th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                      <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                        alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -515,8 +518,7 @@
                                 class="text-primary edit">
                                 <i class="ti ti-eye fs-5"></i>
                               </a>
-                              <a th:href="@{/member/deleteMember(memberId=${member.memberId})}"
-                                class="text-dark delete ms-2">
+                              <a th:href="@{/member/deleteMember(memberId=${member.memberId})}" class="text-dark ms-2">
                                 <i class="ti ti-trash fs-5"></i>
                               </a>
                             </div>

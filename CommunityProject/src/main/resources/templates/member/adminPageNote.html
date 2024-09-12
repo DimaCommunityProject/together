@@ -11,6 +11,7 @@
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
     <title>공지사항</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
     <style>
         #loginLine {
             width: 1200px;
@@ -356,22 +357,20 @@
                                                 style="width: 30.2px; height: 30px;" />
                                         </a>
                                     </li>
+                                    <!-- 이름 출력 -->
+                            <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getRole()}">Designer</span>
+                            <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getGroup()}">Designer</span>
+                            <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getEmail()}">Designer</span>
                                     <!-- 마이페이지 -->
-                                    <div>
-                                        <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                            <!-- 링크 수정 필요-->
-                                            <a class="nav-link position-relative"
-                                                th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
-                                                <!-- savedFileName이 존재하는 경우 -->
-                                                <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
-                                                    alt="profile image" class="h-100">
-
-                                                <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
-                                                <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
-                            alt="default profile image" class="w-100 h-100"> -->
-                                            </a>
-                                        </li>
-                                    </div>
+                                    <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                        <!-- 링크 수정 필요-->
+                                        <a class="nav-link position-relative"
+                                            th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                                            <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                                            <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                                                alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

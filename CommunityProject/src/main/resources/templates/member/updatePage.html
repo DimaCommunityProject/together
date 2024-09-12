@@ -1,30 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
-  xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="horizontal"
+  xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <!-- Required meta tags -->
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Favicon icon-->
   <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
-
-  <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
-
-  <title>Modernize Bootstrap Admin</title>
   <link rel="stylesheet" th:href="@{/libs/select2/dist/css/select2.min.css}">
-
-  <title>Modernize Bootstrap Admin</title>
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
-  <script th:inline="javascript">
-    // memberProject가 JSON 배열로 변환되어 JavaScript 변수에 할당됩니다.
-    var memberProject = /*[[${memberProject}]]*/[];
-    // console.log(memberProject[0].memberProjectSeq); // JavaScript 배열로서 사용 가능
-  </script>
+  <title>업데이트 페이지</title>
+
 
   <script>
     $(function () {
@@ -56,20 +45,20 @@
           let data = "";
           $.each(resp, function (index, item) {
             data += `<div class="card card-hover projectComponent">
-                        <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
-                            <input type="text" class="form-control" id="title${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" value="${item.projectTitle}" style="width: 80%"></input>
-                        </div>
-                        <div class="card-body">
-                          <input class="form-control" id="subtitle${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" value="${item.projectSubtitle}" style="width: 80%; margin-bottom:10px"></input>
-                          <input class="form-control" id="git${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" value="${item.projectGit}" style="width: 80%"></input>  
-                            <div style="display: flex; justify-content: flex-end;">
-                              <span hidden id="project${item.memberProjectSeq}Complete"
-                        style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
-                      <button type="button" id="update${item.memberProjectSeq}"  class="projectSaveBtns btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
-                      <button type="button" id="delete${item.memberProjectSeq}"  class="projectDeleteBtns btn bg-danger-subtle text-danger" style="margin:10px">삭제</button>
-                    </div>
-                        </div>
-                    </div>`;
+                          <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
+                              <input type="text" class="form-control" id="title${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" value="${item.projectTitle}" style="width: 80%"></input>
+                          </div>
+                          <div class="card-body">
+                            <input class="form-control" id="subtitle${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" value="${item.projectSubtitle}" style="width: 80%; margin-bottom:10px"></input>
+                            <input class="form-control" id="git${item.memberProjectSeq}" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" value="${item.projectGit}" style="width: 80%"></input>  
+                              <div style="display: flex; justify-content: flex-end;">
+                                <span hidden id="project${item.memberProjectSeq}Complete"
+                          style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+                        <button type="button" id="update${item.memberProjectSeq}"  class="projectSaveBtns btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
+                        <button type="button" id="delete${item.memberProjectSeq}"  class="projectDeleteBtns btn bg-danger-subtle text-danger" style="margin:10px">삭제</button>
+                      </div>
+                          </div>
+                      </div>`;
           })
           $("#startProject").after(data);
           $(".projectSaveBtns").on('click', updateProject);
@@ -86,38 +75,38 @@
           $.each(resp, function (index, item) {
             console.log(item.title);
             data += `<div class="row">
-                          <div data-draggable="true" class="card img-task">
-                            <div class="card-body" style="padding: 10px;">
-                              <div class="task-header">
-                                <div>
-                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;">
-                                    ${item.title}</h4>
-                                </div>
-                                <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1" >${item.category}</span>
-                                </div>
-                              </div>
-
-                              <div class="task-content">
-                                <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." >
-                                ${item.content}
-                                </p>
-                              </div>
-                              <div class="task-body">
-                                <div class="task-bottom">
-                                  <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
-                                      <i class="ti ti-calendar fs-5"></i>${item.createDate}
-                                    </span>
+                            <div data-draggable="true" class="card img-task">
+                              <div class="card-body" style="padding: 10px;">
+                                <div class="task-header">
+                                  <div>
+                                    <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                                margin-bottom: 0;">
+                                      ${item.title}</h4>
                                   </div>
-
+                                  <div class="tb-section-2">
+                                    <span class="badge text-bg-warning fs-1" >${item.category}</span>
+                                  </div>
+                                </div>
+  
+                                <div class="task-content">
+                                  <p class="mb-0"
+                                    data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." >
+                                  ${item.content}
+                                  </p>
+                                </div>
+                                <div class="task-body">
+                                  <div class="task-bottom">
+                                    <div class="tb-section-1">
+                                      <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                        <i class="ti ti-calendar fs-5"></i>${item.createDate}
+                                      </span>
+                                    </div>
+  
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>`;
+                          </div>`;
           })
           $("#navpill-111").html(data);
 
@@ -133,38 +122,38 @@
           $.each(resp, function (key, value) {
             console.log(key.content);
             data += `<div class="row">
-                          <div data-draggable="true" class="card img-task">
-                            <div class="card-body" style="padding: 10px;">
-                              <div class="task-header">
-                                <div>
-                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;">${key}
-                                    </h4>
-                                </div>
-                                <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1" >${value.category}</span>
-                                </div>
-                              </div>
-
-                              <div class="task-content">
-                                <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
-                                  ${value.title}
-                                </p>
-                              </div>
-                              <div class="task-body">
-                                <div class="task-bottom">
-                                  <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
-                                      <i class="ti ti-calendar fs-5"></i> ${value.createDate}
-                                    </span>
+                            <div data-draggable="true" class="card img-task">
+                              <div class="card-body" style="padding: 10px;">
+                                <div class="task-header">
+                                  <div>
+                                    <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                                margin-bottom: 0;">${key}
+                                      </h4>
                                   </div>
-
+                                  <div class="tb-section-2">
+                                    <span class="badge text-bg-warning fs-1" >${value.category}</span>
+                                  </div>
+                                </div>
+  
+                                <div class="task-content">
+                                  <p class="mb-0"
+                                    data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
+                                    ${value.title}
+                                  </p>
+                                </div>
+                                <div class="task-body">
+                                  <div class="task-bottom">
+                                    <div class="tb-section-1">
+                                      <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                        <i class="ti ti-calendar fs-5"></i> ${value.createDate}
+                                      </span>
+                                    </div>
+  
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>`;
+                          </div>`;
           })
           $("#navpill-222").html(data);
         }
@@ -307,22 +296,22 @@
         return;
       } else {
         let data = `<div class="card card-hover projectComponent newProject">
-                        <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897); display:flex; justify-content: space-between;
-    align-items: center;">
-                            <input type="text" class="form-control" id="newTitle" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" style="width: 80%"></input>
-                            <button type="button" 
-                      class="btn mb-1 bg-danger-subtle rounded-circle round-40 btn-sm d-inline-flex align-items-center justify-content-center"
-                      style="margin-left: 7px;" id="cancleNewProject"> <i class="btn-close"></i>
-                    </button>
-                        </div>
-                        <div class="card-body">
-                          <input class="form-control" id="newSubtitle" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" style="width: 80%; margin-bottom:10px"></input>
-                          <input class="form-control" id="newGit" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" style="width: 80%"></input>  
-                            <div style="display: flex; justify-content: flex-end;">
-                      <button type="button" id="insertNewProjectBtns" class = "btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
-                    </div>
-                        </div>
-                    </div>`;
+                          <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897); display:flex; justify-content: space-between;
+      align-items: center;">
+                              <input type="text" class="form-control" id="newTitle" data-bs-toggle="tooltip" data-bs-placement="top" title="프로젝트 제목" style="width: 80%"></input>
+                              <button type="button" 
+                        class="btn mb-1 bg-danger-subtle rounded-circle round-40 btn-sm d-inline-flex align-items-center justify-content-center"
+                        style="margin-left: 7px;" id="cancleNewProject"> <i class="btn-close"></i>
+                      </button>
+                          </div>
+                          <div class="card-body">
+                            <input class="form-control" id="newSubtitle" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 부제목" style="width: 80%; margin-bottom:10px"></input>
+                            <input class="form-control" id="newGit" data-bs-toggle="tooltip" data-bs-placement="right" title="프로젝트 깃 주소" style="width: 80%"></input>  
+                              <div style="display: flex; justify-content: flex-end;">
+                        <button type="button" id="insertNewProjectBtns" class = "btn bg-secondary-subtle text-secondary" style="margin:10px">저장</button>
+                      </div>
+                          </div>
+                      </div>`;
         $("#projectForm:last-child").append(data);
         $("#insertNewProjectBtns").on('click', saveNewProject);
         $("#cancleNewProject").on('click', function () {
@@ -386,382 +375,759 @@
     }
 
   </script>
+  <style>
+    #loginLine {
+      width: 1200px;
+      margin-left: 139px;
+      margin-right: 139px;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+
+    .loginLineLi {
+      display: inline-block;
+      margin-right: 7px
+    }
+
+    .loginLineA {
+      font-size: 12.5px;
+      color: #595959;
+    }
+
+    .loginLineA:hover {
+      color: #5d87ff;
+    }
+
+    .h6-style {
+      font-size: 0.79rem !important;
+      font-weight: 500 !important;
+      color: #13171e !important;
+      margin: 0 !important;
+      line-height: 1.2 !important;
+      text-decoration: none !important;
+    }
+
+    #pills-tabContent {
+      padding-top: 20px;
+    }
+
+    #h3 {
+      font-size: 22.5px;
+      margin-bottom: 15px !important;
+    }
+
+    #card-body {
+      font-size: 12.5px;
+      padding: 70px !important;
+      padding-top: 0px !important;
+    }
+  </style>
 </head>
 
 <body class="link-sidebar">
+  <!-- Preloader -->
+  <div class="preloader">
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+  </div>
+  <div id="main-wrapper">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar with-vertical">
+      <!-- <div> -->
+      <!-- ---------------------------------- -->
+      <!-- Start Vertical Layout Sidebar -->
+      <!-- ---------------------------------- -->
+      <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="../horizontal/index.html" class="text-nowrap logo-img">
+            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          </a>
+          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+            <i class="ti ti-x"></i>
+          </a>
+        </div> -->
+    </aside>
 
-  <div class="body-wrapper">
-    <div class="container-fluid">
-      <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
-        <div class="card-body px-4 py-3">
-          <div class="row align-items-center">
-            <div class="col-9">
-              <h4 class="fw-semibold mb-8">User Profile</h4>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
-                  </li>
-                  <li class="breadcrumb-item" aria-current="page">User Profile</li>
-                </ol>
-              </nav>
-            </div>
-            <div class="col-3">
-              <div class="text-center mb-n5">
-                <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card overflow-hidden">
-        <div class="card-body p-0">
-          <img th:src="@{/images/backgrounds/profilebg.jpg}" alt="modernize-img" class="img-fluid">
-          <div class="row" style="justify-content: flex-end;">
-            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-              <div class="mt-n5">
-                <div class="d-flex align-items-center justify-content-center mb-2">
-                  <div class="d-flex align-items-center justify-content-center round-110">
-                    <div
-                      class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
-                      <!-- <img th:src="@{/member/showImage/{fileName}(fileName=${member.savedFileName})}"
-                        alt="modernize-img" class="w-100 h-100"> -->
-                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
-                        alt="profile image" class="h-100">
+
+    <div class="page-wrapper">
+      <!--  Header Start -->
+      <header class="topbar">
+        <div class="app-header with-horizontal">
+          <nav class="navbar navbar-expand-xl container-fluid p-0" style="margin-top: 10px !important;">
+            <ul class="navbar-nav align-items-center">
+              <!-- <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li> -->
+              <li class="nav-item d-none d-xl-block">
+                <a th:href="@{/}" class="text-nowrap nav-link">
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                  <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
+                                        alt="modernize-img" /> -->
+                </a>
+              </li>
+            </ul>
+
+            <!-- topbar 메뉴 -->
+            <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+              <!-- ------------------------------- -->
+              <!-- start apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    수업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                    style="min-width: 340px !important">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a href="../horizontal/app-chat.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 195px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        코드 공유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">모르는
+                                        코드 물어보세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 280px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유
+                                        게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">지난
+                                        기수들의 프로젝트를 확인해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="text-center">
-                  <span class="mb-1 badge rounded-pill  bg-info-subtle text-info"
-                    th:text="${member.memberGroup}"></span>
-                  <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson</h5>
-                  <p class="mb-0" id="memberId" th:text="${member.memberId}"></p>
-                  <button class="btn bg-secondary-subtle text-secondary" id="changeImageBtn">이미지 변경</button>
-                  <button class="btn bg-secondary-subtle text-secondary" id="changeImageProcBtn">저장</button>
-                  <button class="btn btn-danger text-nowrap" id="deleteImageProcBtn">이미지 삭제</button>
-                  <input type="file" name="newImage" id="newImage" hidden>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    취업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                    style="min-width: 340px !important">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a href="../horizontal/app-chat.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 225px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        취업 공고 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">최신
+                                        채용 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 266px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트
+                                        구인 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">정보를
+                                        확인하고 팀원을 모집해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    자유 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
+                    style="min-width: 340px !important">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a href="../horizontal/app-chat.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 230px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        자유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">자유롭게
+                                        게시글을 올려주세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 266px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">세상의
+                                        모든 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a href="../horizontal/app-invoice.html"
+                                    class="d-flex align-items-center pb-9 position-relative"
+                                    style="width: 266px !important">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">기수별로
+                                        소통하고 정보를 공유하세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- ------------------------------- -->
+              <!-- end apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item dropdown-hover d-none d-lg-block">
+                <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+              </li>
+              <th:block sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown-hover d-none d-lg-block">
+                  <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+                </li>
+              </th:block>
+            </ul>
+            <!-- topbar 메뉴 끝-->
+
+
+
+            <!-- 채팅/마이페이지 시작 -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+                <a href="javascript:void(0)"
+                  class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- 다크모드 -->
+                  <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                        <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                                            <i class="ti ti-moon moon"></i>
+                                        </a>
+                                        <a class="nav-link sun light-layout" href="javascript:void(0)">
+                                            <i class="ti ti-sun sun"></i>
+                                        </a>
+                                    </li> -->
+                  <!-- 채팅 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                  <!-- 마이페이지 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <!-- 링크 수정 필요-->
+                    <a class="nav-link position-relative"
+                      th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                      <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
+                        alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- 채팅/마이페이지 끝-->
+          </nav>
+          <!-- 회원가입/로그인 div 시작 -->
+          <div id="loginLine">
+            <ul>
+              <li class="loginLineLi" sec:authorize="isAnonymous()">
+                <a type="submit" th:href="@{/member/join}" class="loginLineA">회원가입
+                </a>
+              </li>
+              <li class="loginLineLi" sec:authorize="isAnonymous()">|</li> <!-- 구분자 추가 -->
+              <li class="loginLineLi" sec:authorize="isAnonymous()">
+                <a type="submit" th:href="@{/member/login}" class="loginLineA">로그인
+                </a>
+              </li>
+              <li class="loginLineLi" sec:authorize="isAuthenticated()">
+                <a type="submit" th:href="@{/member/logout}" class="loginLineA">로그아웃
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- 회원가입/로그인 div 끝 -->
+        </div>
+      </header>
+      <!--  Header End -->
+
+
+      <!-- 여기부터 본문 시작 -->
+      <div class="body-wrapper">
+        <div class="container-fluid">
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">User Profile</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">User Profile</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 order-last">
+          </div>
+          <div class="card overflow-hidden">
+            <div class="card-body p-0">
+              <img th:src="@{/images/backgrounds/profilebg.jpg}" alt="modernize-img" class="img-fluid">
+              <div class="row" style="justify-content: flex-end;">
+                <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+                  <div class="mt-n5">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                      <div class="d-flex align-items-center justify-content-center round-110">
+                        <div
+                          class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+                          <!-- <img th:src="@{/member/showImage/{fileName}(fileName=${member.savedFileName})}"
+                              alt="modernize-img" class="w-100 h-100"> -->
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
+                            alt="profile image" class="h-100">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <span class="mb-1 badge rounded-pill  bg-info-subtle text-info"
+                        th:text="${member.memberGroup}"></span>
+                      <h5 class="mb-0" th:text="${member.memberName}" style="display: inline;">Mathew Anderson</h5>
+                      <p class="mb-0" id="memberId" th:text="${member.memberId}"></p>
+                      <button class="btn bg-secondary-subtle text-secondary" id="changeImageBtn">이미지 변경</button>
+                      <button class="btn bg-secondary-subtle text-secondary" id="changeImageProcBtn">저장</button>
+                      <button class="btn btn-danger text-nowrap" id="deleteImageProcBtn">이미지 삭제</button>
+                      <input type="file" name="newImage" id="newImage" hidden>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 order-last">
+                  <ul
+                    class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
+                    <li>
+                      <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
+                        href=`chat?memberId=${member.memberId}` width="30" height="30">
+                        <i class="ti ti-message-chatbot"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
+                        href="mailto:${member.memberEmail}">
+                        <i class=" ti ti-mail"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
+                        th:href="${memberPage.memberBlog}">
+                        <i class="ti ti-brand-blogger"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <button class="btn btn-primary text-nowrap">Add To Story</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <ul
-                class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
-                <li>
-                  <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
-                    href=`chat?memberId=${member.memberId}` width="30" height="30">
-                    <i class="ti ti-message-chatbot"></i>
-                  </a>
-                </li>
-                <li>
-                  <a class="btn btn-secondary d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                    href="mailto:${member.memberEmail}">
-                    <i class=" ti ti-mail"></i>
-                  </a>
-                </li>
-                <li>
-                  <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                    th:href="${memberPage.memberBlog}">
-                    <i class="ti ti-brand-blogger"></i>
-                  </a>
-                </li>
-                <li>
-                  <button class="btn btn-primary text-nowrap">Add To Story</button>
+                class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
+                id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-profile-tab"
+                    data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab"
+                    aria-controls="pills-profile" aria-selected="true">
+                    <i class="ti ti-user-circle fs-5"></i>
+                    <span class="d-none d-md-block">Profile</span>
+                  </button>
                 </li>
               </ul>
             </div>
           </div>
-          <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
-            id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-profile-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                aria-selected="true">
-                <i class="ti ti-user-circle fs-5"></i>
-                <span class="d-none d-md-block">Profile</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-          tabindex="0">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card shadow-none border">
-                <div class="card-body">
-                  <h4 class="mb-3">Introduction</h4>
-                  <div class="form-group">
-                    <textarea class="form-control" id="memberSelfInfo" rows="3" th:text="${memberPage.memberSelfInfo}"
-                      data-bs-toggle="tooltip" data-bs-placement="right" title="간단한 자기소개를 입력해주세요"></textarea>
-                  </div>
-                  <div class="vstack gap-3 mt-4">
-                    <div class="hstack gap-6">
-                      <i class="ti ti-briefcase text-dark fs-6"></i>
-                      <input type="text" class="form-control" id="memberInterest"
-                        th:value="${memberPage.memberInterest}" data-bs-toggle="tooltip" data-bs-placement="right"
-                        title="관심분야">
-                    </div>
-                    <div class="hstack gap-6">
-                      <i class="ti ti-mail text-dark fs-6"></i>
-                      <form style="width: 100%;">
-                        <input type="text" class="form-control" id="memberEmail" th:value="${member.memberEmail}"
-                          data-bs-toggle="tooltip" data-bs-placement="right" title="이메일">
-                        <div id="invalidEmail" class="invalid-feedback" hidden>
-                          본인인증을 완료해주세요
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+              aria-labelledby="pills-profile-tab" tabindex="0">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="card shadow-none border">
+                    <div class="card-body">
+                      <h4 class="mb-3">Introduction</h4>
+                      <div class="form-group">
+                        <textarea class="form-control" id="memberSelfInfo" rows="3"
+                          th:text="${memberPage.memberSelfInfo}" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="간단한 자기소개를 입력해주세요"></textarea>
+                      </div>
+                      <div class="vstack gap-3 mt-4">
+                        <div class="hstack gap-6">
+                          <i class="ti ti-briefcase text-dark fs-6"></i>
+                          <input type="text" class="form-control" id="memberInterest"
+                            th:value="${memberPage.memberInterest}" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="관심분야">
                         </div>
-                        <div style="display: flex; width: 100%;">
-                          <button type="button" id="sendVerifyCode"
-                            class="btn btn-rounded bg-warning-subtle text-warning " style="margin: 5px; ">
-                            인증코드 보내기
-                          </button>
-                          <input type="text" id="verificationCode" class="form-control"
-                            style="width: 30%; margin: 5px;">
-                          <button type="button" id="verifyCode" class="btn btn-rounded bg-warning-subtle text-warning"
-                            style="margin: 5px;">
-                            확인
+                        <div class="hstack gap-6">
+                          <i class="ti ti-mail text-dark fs-6"></i>
+                          <form style="width: 100%;">
+                            <input type="text" class="form-control" id="memberEmail" th:value="${member.memberEmail}"
+                              data-bs-toggle="tooltip" data-bs-placement="right" title="이메일">
+                            <div id="invalidEmail" class="invalid-feedback" hidden>
+                              본인인증을 완료해주세요
+                            </div>
+                            <div style="display: flex; width: 100%;">
+                              <button type="button" id="sendVerifyCode"
+                                class="btn btn-rounded bg-warning-subtle text-warning " style="margin: 5px; ">
+                                인증코드 보내기
+                              </button>
+                              <input type="text" id="verificationCode" class="form-control"
+                                style="width: 30%; margin: 5px;">
+                              <button type="button" id="verifyCode"
+                                class="btn btn-rounded bg-warning-subtle text-warning" style="margin: 5px;">
+                                확인
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+
+                        <div class="hstack gap-6">
+                          <i class="ti ti-device-desktop text-dark fs-6"></i>
+                          <input type="text" class="form-control" id="memberGit" th:value="${memberPage.memberGit}"
+                            data-bs-toggle="tooltip" data-bs-placement="right" title="Github 주소">
+                        </div>
+                        <div class=" hstack gap-6">
+                          <i class="ti ti-map-pin text-dark fs-6"></i>
+                          <input type="text" class="form-control" id="memberBlog" th:value="${memberPage.memberBlog}"
+                            data-bs-toggle="tooltip" data-bs-placement="right" title="블로그 주소">
+                        </div>
+                      </div>
+                      <div style="display: flex; justify-content: flex-end;">
+                        <span hidden id="pageComplete"
+                          style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+
+                        <button type="button" id="pageUpdateBtn" class="btn bg-secondary-subtle text-secondary"
+                          style="margin: 10px;">
+                          저장
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card shadow-none border">
+                    <div class="card-body">
+                      <h4 class="mb-3">내 활동</h4>
+                      <div class="row">
+                        <ul class="nav nav-pills nav-fill mt-4" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#navpill-111" role="tab">
+                              <span>내가 쓴 게시글</span>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#navpill-222" role="tab">
+                              <span>내가 쓴 댓글</span>
+                            </a>
+                          </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content border mt-2">
+                          <div class="tab-pane active p-3" id="navpill-111" role="tabpanel">
+
+                          </div>
+                          <div class="tab-pane p-3" id="navpill-222" role="tabpanel">
+
+                          </div>
+                          <div class="tab-pane p-3" id="navpill-333" role="tabpanel">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <img th:src="@{/images/blog/blog-img3.jpg}" alt="modernize-img" class="img-fluid" />
+                              </div>
+                              <div class="col-md-8">
+                                <p>
+                                  Raw denim you probably haven't heard of them jean
+                                  shorts Austin. Nesciunt tofu stumptown aliqua,
+                                  retro synth master cleanse. Mustache cliche
+                                  tempor, williamsburg carles vegan helvetica.
+                                </p>
+                              </div>
+                              <!-- </div> -->
+                              <!-- </div> -->
+                              <!-- </div> -->
+                            </div>
+                          </div>
+                          <!-- end Tab with Fill & Justify -->
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <form action="/memberSkill/updateMemberSkill" method="Post">
+                        <!-- <p id="skillMemberId" th:text="${memberPage.memberId}" hidden></p> -->
+
+                        <h5>Skill Set</h5>
+                        <p th:text="${memberPage.memberSkill}" id="memberSkill" hidden></p>
+                        <select id="skill" name="skill" class="select2 form-control" multiple="multiple">
+                          <option value="JAVA"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
+                            JAVA
+                          </option>
+
+                          <option value="PYTHON"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PYTHON')}">
+                            PYTHON
+                          </option>
+
+                          <option value="C"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C')}">
+                            C
+                          </option>
+
+                          <option value="C++"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C++')}">
+                            C++
+                          </option>
+
+                          <option value="C#"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C#')}">
+                            C#
+                          </option>
+
+                          <option value="Javascript"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Javascript')}">
+                            Javascript
+                          </option>
+
+                          <option value="React"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('React')}">
+                            React
+                          </option>
+
+                          <option value="HTML"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('HTML')}">
+                            HTML
+                          </option>
+
+                          <option value="Springboot"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Springboot')}">
+                            Springboot
+                          </option>
+
+
+                          <option value="jQuery"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('jQuery')}">
+                            jQuery
+                          </option>
+
+
+                          <option value="CSS3"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('CSS3')}">
+                            CSS3
+                          </option>
+
+
+                          <option value="Node.js"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Node.js')}">
+                            Node.js
+                          </option>
+
+
+                          <option value="Oracle"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Oracle')}">
+                            Oracle
+
+
+                          <option value="MySQL"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MySQL')}">
+                            MySQL
+                          </option>
+
+
+                          <option value="MongoDB"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MongoDB')}">
+                            MongoDB
+                          </option>
+
+
+                          <option value="MariaDB"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MariaDB')}">
+                            MariaDB
+                          </option>
+
+
+                          <option value="PostgreSQL"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PostgreSQL')}">
+                            PostgreSQL
+                          </option>
+
+
+                          <option value="JPA"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JPA')}">
+                            JPA
+                          </option>
+
+
+                          <option value="JSP"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JSP')}">
+                            JSP
+                          </option>
+
+
+
+                          <option value="Linux"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Linux')}">
+                            Linux
+                          </option>
+
+
+                          <option value="Unity"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Unity')}">
+                            Unity
+                          </option>
+
+
+                          <option value="Flutter"
+                            th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Flutter')}">
+                            Flutter
+                          </option>
+
+                        </select>
+                        <div style="display: flex; justify-content: flex-end;">
+                          <span hidden id="skillComplete"
+                            style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+
+                          <button type="button" id="skillUpdateBtn" class="btn bg-secondary-subtle text-secondary"
+                            style="margin: 10px;">
+                            저장
                           </button>
                         </div>
                       </form>
                     </div>
-
-                    <div class="hstack gap-6">
-                      <i class="ti ti-device-desktop text-dark fs-6"></i>
-                      <input type="text" class="form-control" id="memberGit" th:value="${memberPage.memberGit}"
-                        data-bs-toggle="tooltip" data-bs-placement="right" title="Github 주소">
-                    </div>
-                    <div class=" hstack gap-6">
-                      <i class="ti ti-map-pin text-dark fs-6"></i>
-                      <input type="text" class="form-control" id="memberBlog" th:value="${memberPage.memberBlog}"
-                        data-bs-toggle="tooltip" data-bs-placement="right" title="블로그 주소">
+                  </div>
+                  <div class="card">
+                    <div class="card-body border-bottom" id="projectForm">
+                      <h4 class="card-title mb-3" id="startProject">Project
+                        <button type="button"
+                          class="btn mb-1 bg-info-subtle rounded-circle round-32 btn-sm d-inline-flex align-items-center justify-content-center"
+                          style="margin-left: 7px;" id="newProject">
+                          <i class="fs-5 ti ti-plus"></i>
+                        </button>
+                      </h4>
                     </div>
                   </div>
-                  <div style="display: flex; justify-content: flex-end;">
-                    <span hidden id="pageComplete"
-                      style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
+                  <span style="margin: 10px; float: right;">
+                    <a th:href="@{/memberpage/showpage(memberId=${member.memberId})}"
+                      class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">마이페이지로
+                      돌아가기</a></span>
 
-                    <button type="button" id="pageUpdateBtn" class="btn bg-secondary-subtle text-secondary"
-                      style="margin: 10px;">
-                      저장
-                    </button>
-                  </div>
+
                 </div>
               </div>
-              <div class="card shadow-none border">
-                <div class="card-body">
-                  <h4 class="mb-3">내 활동</h4>
-                  <div class="row">
-                    <ul class="nav nav-pills nav-fill mt-4" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#navpill-111" role="tab">
-                          <span>내가 쓴 게시글</span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#navpill-222" role="tab">
-                          <span>내가 쓴 댓글</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content border mt-2">
-                      <div class="tab-pane active p-3" id="navpill-111" role="tabpanel">
-
-                      </div>
-                      <div class="tab-pane p-3" id="navpill-222" role="tabpanel">
-
-                      </div>
-                      <div class="tab-pane p-3" id="navpill-333" role="tabpanel">
-                        <div class="row">
-                          <div class="col-md-4">
-                            <img th:src="@{/images/blog/blog-img3.jpg}" alt="modernize-img" class="img-fluid" />
-                          </div>
-                          <div class="col-md-8">
-                            <p>
-                              Raw denim you probably haven't heard of them jean
-                              shorts Austin. Nesciunt tofu stumptown aliqua,
-                              retro synth master cleanse. Mustache cliche
-                              tempor, williamsburg carles vegan helvetica.
-                            </p>
-                          </div>
-                          <!-- </div> -->
-                          <!-- </div> -->
-                          <!-- </div> -->
-                        </div>
-                      </div>
-                      <!-- end Tab with Fill & Justify -->
-
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8">
-
-              <div class="card">
-                <div class="card-body">
-                  <form action="/memberSkill/updateMemberSkill" method="Post">
-                    <!-- <p id="skillMemberId" th:text="${memberPage.memberId}" hidden></p> -->
-
-                    <h5>Skill Set</h5>
-                    <p th:text="${memberPage.memberSkill}" id="memberSkill" hidden></p>
-                    <select id="skill" name="skill" class="select2 form-control" multiple="multiple">
-                      <option value="JAVA"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JAVA')}">
-                        JAVA
-                      </option>
-
-                      <option value="PYTHON"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PYTHON')}">
-                        PYTHON
-                      </option>
-
-                      <option value="C"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C')}">
-                        C
-                      </option>
-
-                      <option value="C++"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C++')}">
-                        C++
-                      </option>
-
-                      <option value="C#"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('C#')}">
-                        C#
-                      </option>
-
-                      <option value="Javascript"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Javascript')}">
-                        Javascript
-                      </option>
-
-                      <option value="React"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('React')}">
-                        React
-                      </option>
-
-                      <option value="HTML"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('HTML')}">
-                        HTML
-                      </option>
-
-                      <option value="Springboot"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Springboot')}">
-                        Springboot
-                      </option>
-
-
-                      <option value="jQuery"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('jQuery')}">
-                        jQuery
-                      </option>
-
-
-                      <option value="CSS3"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('CSS3')}">
-                        CSS3
-                      </option>
-
-
-                      <option value="Node.js"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Node.js')}">
-                        Node.js
-                      </option>
-
-
-                      <option value="Oracle"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Oracle')}">
-                        Oracle
-
-
-                      <option value="MySQL"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MySQL')}">
-                        MySQL
-                      </option>
-
-
-                      <option value="MongoDB"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MongoDB')}">
-                        MongoDB
-                      </option>
-
-
-                      <option value="MariaDB"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('MariaDB')}">
-                        MariaDB
-                      </option>
-
-
-                      <option value="PostgreSQL"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('PostgreSQL')}">
-                        PostgreSQL
-                      </option>
-
-
-                      <option value="JPA"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JPA')}">
-                        JPA
-                      </option>
-
-
-                      <option value="JSP"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('JSP')}">
-                        JSP
-                      </option>
-
-
-
-                      <option value="Linux"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Linux')}">
-                        Linux
-                      </option>
-
-
-                      <option value="Unity"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Unity')}">
-                        Unity
-                      </option>
-
-
-                      <option value="Flutter"
-                        th:selected="${memberPage.memberSkill != null and memberPage.memberSkill.contains('Flutter')}">
-                        Flutter
-                      </option>
-
-                    </select>
-                    <div style="display: flex; justify-content: flex-end;">
-                      <span hidden id="skillComplete"
-                        style="color: #5d87ff; margin: 10px; align-content: center;">Complete!</span>
-
-                      <button type="button" id="skillUpdateBtn" class="btn bg-secondary-subtle text-secondary"
-                        style="margin: 10px;">
-                        저장
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body border-bottom" id="projectForm">
-                  <h4 class="card-title mb-3" id="startProject">Project
-                    <button type="button"
-                      class="btn mb-1 bg-info-subtle rounded-circle round-32 btn-sm d-inline-flex align-items-center justify-content-center"
-                      style="margin-left: 7px;" id="newProject">
-                      <i class="fs-5 ti ti-plus"></i>
-                    </button>
-                  </h4>
-                </div>
-              </div>
-              <span style="margin: 10px; float: right;">
-                <a th:href="@{/memberpage/showpage(memberId=${member.memberId})}"
-                  class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">마이페이지로
-                  돌아가기</a></span>
-
+              <!-- 본문 끝 -->
+              <script>
+                function handleColorTheme(e) {
+                  document.documentElement.setAttribute("data-color-theme", e);
+                }
+              </script>
 
             </div>
           </div>
+          <div class="dark-transparent sidebartoggler"></div>
           <!-- Import Js Files -->
           <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
           <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
@@ -770,15 +1136,19 @@
           <script th:src="@{/js/theme/app.min.js}"></script>
           <script th:src="@{/js/vendor.min.js}"></script>
           <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+          <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
 
-          <!-- solar icons -->
-          <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-          <!-- This Page JS -->
           <script th:src="@{/libs/select2/dist/js/select2.full.min.js}"></script>
           <script th:src="@{/libs/select2/dist/js/select2.min.js}"></script>
           <script th:src="@{/js/forms/select2.init.js}"></script>
           <script th:src="@{/js/apps/kanban.js}"></script>
           <script th:src="@{/js/plugins/toastr-init.js}"></script>
+
+          <!-- solar icons -->
+          <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+          <script th:src="@{/libs/fullcalendar/index.global.min.js}"></script>
+          <script th:src="@{/js/apps/contact.js}"></script>
+
 </body>
 
 </html>
