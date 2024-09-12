@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.description.ByteCodeElement.Member;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;

@@ -157,11 +157,15 @@ function heartToggle() {
 function getReplyList() {
     var boardId=$("#boardId").val();
     var currentUser=$("#currentUser").val();
+    console.log("-- 댓글 목록 가져오는 함수--");
+    console.log("boardId : "+ boardId);
+    console.log("currentUser : "+currentUser);
     $.ajax({
         url:"/reply/getList",
         method:"GET",
         data:{"boardId":boardId, "memberId":currentUser},
         success:function (list) {
+            console.log("!!가져오기 성공!!");
             $("#result").replaceWith(list);
             $(".replyHeart").click(replyLikeToggle);
             $(".childReplyBtn").click(childReplyWrite);

@@ -86,7 +86,7 @@ public class ReplyController {
         
         model.addAttribute("list", replyDTOs);
         
-        return "/board/detail::#result";
+        return "board/detail::#result";
     }
     
     // ================== 댓글 등록 ==================

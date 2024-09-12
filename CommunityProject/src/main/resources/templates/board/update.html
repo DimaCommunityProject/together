@@ -27,8 +27,7 @@
 </head>
 
 <body class="link-sidebar">
-  <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
-  <input type="hidden" id="memberId" value="doyeon">
+  <input type="hidden" id="memberId" th:value="${#authentication.name}">
   <input type="hidden" id="boardContent" th:value="${board.content}">
   <!-- Preloader -->
   <div class="preloader">
@@ -146,8 +145,7 @@
                     <div class="form-group mb-0 text-end"> 
                       <div class="row align-items-center">
                         <div class="col-9 border-start pb-2 pt-2">
-                          <!-- <input type="hidden" name="memberId" th:value="${#authentication.name}"> -->
-                          <input type="hidden" name="memberId" value="doyeon">
+                          <input type="hidden" name="memberId" th:value="${#authentication.name}">
                           <input type="hidden" name="boardId" th:value="${board.boardId}">
                           <input type="hidden" id="memberGroup" name="memberGroup" > <!--ajax-->
                           <input type="hidden" name="content" id="content"> <!--ckEditor에서 내용 읽어와서 value 채우기 (script에서 처리)-->

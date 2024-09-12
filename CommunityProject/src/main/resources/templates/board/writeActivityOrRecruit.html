@@ -29,8 +29,7 @@
 </head>
 
 <body class="link-sidebar">
-  <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
-  <input type="hidden" id="memberId" value="doyeon">
+  <input type="hidden" id="memberId" th:value="${#authentication.name}">
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -115,7 +114,6 @@
                           <div class="editor-container editor-container_classic-editor" id="editor-container">
                             <div class="editor-container__editor"><div id="editor"></div></div>
                           </div>
-                          <!-- <input type="email" class="form-control" id="inputEmail1" placeholder="Email Here" />  -->
                         </div>
                       </div>
                     </div>
@@ -139,8 +137,7 @@
                       <div class="row align-items-center">
                         <label for="inputGroupFile01" class="col-3 text-end  col-form-label"></label>
                         <div class="col-9 border-start pb-2 pt-2">
-                          <!-- <input type="hidden" name="memberId" th:value="${#authentication.name}"> -->
-                          <input type="hidden" name="memberId" value="doyeon">
+                          <input type="hidden" name="memberId" th:value="${#authentication.name}">
                           <input type="hidden" id="memberGroup" name="memberGroup" > <!--ajax-->
                           <input type="hidden" name="content" id="content"> <!--ckEditor에서 내용 읽어와서 value 채우기 (script에서 처리)-->
                         </div>

@@ -7,7 +7,6 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
@@ -70,9 +69,9 @@
       <!-- Start Vertical Layout Sidebar -->
       <!-- ---------------------------------- -->
       <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="../horizontal/index.html" class="text-nowrap logo-img">
-            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
-            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          <a th:href="@{/}" class="text-nowrap logo-img">
+            <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+            <img th:src="@{/images/logos/light-logo.svg}" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>
@@ -335,7 +334,7 @@
                           alt="profile image" class="h-100">
 
                         <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
-                        <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                        <!-- <img th:if="${member.savedFileName == null}" th:src="@{/images/main/chat.png}"
                           alt="default profile image" class="w-100 h-100"> -->
                       </a>
                     </li>
