@@ -22,18 +22,8 @@ public class MainControler {
 	@GetMapping({ "", "/" })
 	public String index(
 			@AuthenticationPrincipal LoginMemberDetails loginUser, Model model) {
-		if (loginUser != null) {
-			model.addAttribute("loginId", loginUser.getUsername());
-		
-			// == name, group, email 가져오기 - 인영 == 
-			model.addAttribute("loginName", loginUser.getMemberName()); // 이름 추가
-	        model.addAttribute("loginGroup", loginUser.getMemberGroup()); // 그룹 추가
-	        model.addAttribute("loginEmail", loginUser.getMemberEmail()); // 이메일 추가 
-			// =======================================
-		} else {
-	        // In case loginUser is null, you can log a message or take another action
-	        log.warn("No authenticated user found.");
-	    }
+		if (loginUser != null)
+			model.addAttribute("loginName", loginUser.getUsername());
 
 		// 공지사항 불러오기
 		List<AdminNoteDTO> dtoList = mainService.selectNoteAll();
@@ -42,8 +32,7 @@ public class MainControler {
 
 		model.addAttribute("list", dtoList);
 
-		return "main/mainTest";
-		
+		return "main/main";
 
 	}
 }

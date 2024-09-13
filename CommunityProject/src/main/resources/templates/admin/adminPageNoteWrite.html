@@ -1,120 +1,291 @@
 <!DOCTYPE html>
 <html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
-    xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
+  xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>관리자 페이지 공지사항 작성</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-    <style>
-        .title-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(93, 135, 255, 0.1);
-            width: 1000px;
-            height: 60px;
-            padding: 10px;
-            box-sizing: border-box;
-            font-size: 30px;
-            color: rgb(93, 135, 255);
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
+  <!-- Tab title -->
+  <title>관리자 페이지 공지사항 작성</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
-        .title-container img {
-            width: 40px;
-            height: auto;
-            margin-right: 15px;
-            margin-left: 15px;
-        }
-
-        .form-control {
-            width: 730px;
-        }
-
-        .form-horizontal {
-            width: 1000px;
-            margin: 150px auto;
-        }
-
-        .buttonbox {
-            display: flex;
-            justify-content: center;
-            height: 42px;
-        }
-    </style>
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 </head>
 
-<body>
-    <form class="form-horizontal r-separator" th:action="@{/admin/adminPageNoteWrite}" method="POST"
-        enctype="multipart/form-data">
-        <!-- 공지사항 작성 시작 -->
-        <div class="title-container">
-            <img th:src="@{/images/note.png}" alt="첨부파일">
-            공지사항 작성
-            <img th:src="@{/images/note.png}" alt="첨부파일">
-        </div>
-        <div class="card-body text-bg-light">
-            <div class="form-group mb-0">
-                <div class="row align-items-center">
-                    <label for="inputText4" class="col-3 text-end  col-form-label">제목</label>
-                    <div class="col-9 border-start pb-2 pt-2">
-                        <input type="text" class="form-control" id="adminNoteTitle" name="adminNoteTitle"
-                            placeholder="Text Here..." />
-                    </div>
+<body class="link-sidebar">
+  <!-- <input type="hidden" id="memberId" th:value="${#authentication.name}"> -->
+  <!-- <input type="hidden" id="memberId" value="doyeon"> -->
+  <!-- Preloader -->
+  <!-- <div class="preloader">
+    <img th:src="@{/assets/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+  </div> -->
+  <div id="main-wrapper">
+
+    <div class="body-wrapper">
+      <div class="container-fluid">
+        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+          <div class="card-body px-4 py-3">
+            <div class="row align-items-center">
+              <div class="col-9">
+                <h4 class="fw-semibold mb-8"> 공지사항 등록 </h4> <!-- 제목-->
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a class="text-muted text-decoration-none" th:href="@{/}">Home</a> <!--메인 화면으로-->
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+              <div class="col-3">
+                <div class="text-center mb-n5">
+                  <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
                 </div>
+              </div>
             </div>
-            <div class="form-group mb-0">
-                <div class="row align-items-center">
-                    <label for="inputText4" class="col-3 text-end  col-form-label">내용</label>
-                    <div class="col-9 border-start pb-2 pt-2">
+          </div>
+        </div>
+        <!-- Row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <form class="form-horizontal r-separator" id="writeForm" th:action="@{/admin/adminPageNoteWrite}"
+                method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                  <div class="form-group mb-0">
+                    <div class="row align-items-center">
+                      <label for="inputText11" class="col-3 text-end  col-form-label">Title</label>
+                      <div class="col-9 border-start pb-2 pt-2">
+                        <input type="text" name="adminNoteTitle" class="form-control" id="adminNoteTitle"
+                          placeholder="글 제목을 입력해주세요" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-0">
+                    <div class="row align-items-center">
+                      <label for="inputText14" class="col-3 text-end  col-form-label">Content</label>
+                      <div class="col-9 border-start pb-2 pt-2">
                         <textarea class="form-control" id="adminNoteContent" name="adminNoteContent" rows="10"
-                            placeholder="Text Here..." style="height: 480px;"></textarea>
+                          placeholder="내용을 입력해주세요" style="height: 380px;"></textarea>
+                      </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-group mb-0">
-                <div class="row align-items-center">
-                    <label for="inputGroupFile01" class="col-3 text-end  col-form-label">첨부파일
-                    </label>
-                    <div class="col-9 border-start pb-2 pt-2">
+                  </div>
+                  <div class="form-group mb-0">
+                    <div class="row align-items-center">
+                      <label for="inputGroupFile01" class="col-3 text-end  col-form-label">Select File</label>
+                      <div class="col-9 border-start pb-2 pt-2">
                         <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="form-control" id="uploadFile" name="uploadFile" />
-                            </div>
+                          <span class="input-group-text">Upload</span>
+                          <div class="custom-file">
+                            <input type="file" name="uploadFile" class="form-control" id="uploadFile" />
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+                <div class="card-body">
+                  <!-- 초기화/전송/취소/ 버튼-->
+                  <div class="form-group mb-0 text-end" style="padding-right:30px">
+                    <a th:href="@{/member/adminPageNote}" class="btn bg-danger-subtle text-danger ms-6">취소</a>
+                    <input type="submit" value="등록" class="btn btn-primary" style="margin-left:12px"></input>
+                  </div>
+                </div>
+              </form>
             </div>
-            <!-- 저장/취소 버튼 시작 -->
-            <div class="buttonbox">
-                <input type="submit" class="btn btn-secondary" value="등록" style="margin-right: 5px;">
-                </input>
-                <a th:href="@{/member/adminPageNote}" class="btn btn-rounded btn-danger">
-                    취소
-                </a>
-            </div>
-            <!-- 저장/취소 버튼 끝 -->
+            <div class="col-12" style="height:90px"></div>
+          </div>
         </div>
-        <!-- 공지사항 작성 끝 -->
+        <!-- End Row -->
+      </div>
+    </div>
 
-    </form>
-    <!-- Import Js Files -->
+    <script>
+      function handleColorTheme(e) {
+        document.documentElement.setAttribute("data-color-theme", e);
+      }
+    </script>
 
-    <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
-    <script th:src="@{/js/theme/app.init.js}"></script>
-    <script th:src="@{/js/theme/theme.js}"></script>
-    <script th:src="@{/js/theme/app.min.js}"></script>
-    <script th:src="@{/js/vendor.min.js}"></script>
-    <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+    <!-- Setting Button -->
+    <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
+      type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <i class="icon ti ti-settings fs-7"></i>
+    </button>
 
-    <!-- solar icons -->
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <!-- Setting -->
+    <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel">
+      <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+        <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
+          Settings
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body h-n80" data-simplebar>
+        <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
+
+        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+          <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
+            <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
+          </label>
+
+          <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
+            <i class="icon ti ti-moon fs-7 me-2"></i>Dark
+          </label>
+        </div>
+
+        <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
+        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+          <input type="radio" class="btn-check" name="direction-l" id="ltr-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary" for="ltr-layout">
+            <i class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR
+          </label>
+
+          <input type="radio" class="btn-check" name="direction-l" id="rtl-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary" for="rtl-layout">
+            <i class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL
+          </label>
+        </div>
+
+        <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
+
+        <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
+          <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+            onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-title="BLUE_THEME">
+            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
+              <i class="ti ti-check text-white d-flex icon fs-5"></i>
+            </div>
+          </label>
+
+          <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+            onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-title="AQUA_THEME">
+            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
+              <i class="ti ti-check text-white d-flex icon fs-5"></i>
+            </div>
+          </label>
+
+          <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+            onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="PURPLE_THEME">
+            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
+              <i class="ti ti-check text-white d-flex icon fs-5"></i>
+            </div>
+          </label>
+
+          <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+            onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="GREEN_THEME">
+            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
+              <i class="ti ti-check text-white d-flex icon fs-5"></i>
+            </div>
+          </label>
+
+          <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+            onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="CYAN_THEME">
+            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
+              <i class="ti ti-check text-white d-flex icon fs-5"></i>
+            </div>
+          </label>
+
+          <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+            onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="ORANGE_THEME">
+            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
+              <i class="ti ti-check text-white d-flex icon fs-5"></i>
+            </div>
+          </label>
+        </div>
+
+        <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
+        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+          <div>
+            <input type="radio" class="btn-check" name="page-layout" id="vertical-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="vertical-layout">
+              <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical
+            </label>
+          </div>
+          <div>
+            <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="horizontal-layout">
+              <i class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal
+            </label>
+          </div>
+        </div>
+
+        <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
+
+        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+          <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary" for="boxed-layout">
+            <i class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed
+          </label>
+
+          <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary" for="full-layout">
+            <i class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full
+          </label>
+        </div>
+
+        <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
+        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+          <a href="javascript:void(0)" class="fullsidebar">
+            <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="full-sidebar">
+              <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
+            </label>
+          </a>
+          <div>
+            <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar" autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary" for="mini-sidebar">
+              <i class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse
+            </label>
+          </div>
+        </div>
+
+        <h6 class="mt-5 fw-semibold fs-4 mb-2">Card With</h6>
+
+        <div class="d-flex flex-row gap-3 customizer-box" role="group">
+          <input type="radio" class="btn-check" name="card-layout" id="card-with-border" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary" for="card-with-border">
+            <i class="icon ti ti-border-outer fs-7 me-2"></i>Border
+          </label>
+
+          <input type="radio" class="btn-check" name="card-layout" id="card-without-border" autocomplete="off" />
+          <label class="btn p-9 btn-outline-primary" for="card-without-border">
+            <i class="icon ti ti-border-none fs-7 me-2"></i>Shadow
+          </label>
+        </div>
+      </div>
+    </div>
+    <!--End Setting-->
+  </div>
+
+  <div class="dark-transparent sidebartoggler"></div>
+  <!-- Import Js Files -->
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/app.init.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/vendor.min.js}"></script>
+  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
 </body>
 
 </html>

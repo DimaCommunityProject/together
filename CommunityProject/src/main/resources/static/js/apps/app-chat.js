@@ -2,7 +2,7 @@ $(document).ready(function () {
     let stompClient = null;
     let currentUserId = $('.userId').text().trim();
     let currentUserName = $('.userName').text().trim();
-    let currentUserRole = null;
+    let currentUserGroup = null;
     let currentUserEmail = null;
     let currentUserImage = null;
     let currentUniqueKey = null; 
@@ -109,12 +109,12 @@ $(document).ready(function () {
             currentUserName = currentUser.memberName;
             currentUserId = currentUser.memberId.trim();
             currentUserEmail = currentUser.memberEmail;
-            currentUserRole = currentUser.memberRole;
+            currentUserMemberGroup = currentUser.memberGroup;
             currentUserImage = `/member/showImageAtMain/${currentUserId}`;
 
             $('.currentUserName').text(currentUserName);
             $('.currentUserId').text(currentUserId);
-            $('.currentUserRole').text(currentUserRole);
+            $('.currentUserMemberGroup').text(currentUserMemberGroup);
             $('.currentUserEmail').text(currentUserEmail);
             $('.userProfileImage').attr('src', currentUserImage);
         } else {
