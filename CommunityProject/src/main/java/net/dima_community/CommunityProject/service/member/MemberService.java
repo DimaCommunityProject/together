@@ -298,6 +298,7 @@ public class MemberService {
 	}
 
 	public void deleteMember(String memberId) {
+		log.info("회원삭제 서비스 도착");
 		memberRepository.deleteById(memberId);
 	}
 

@@ -127,7 +127,7 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="position-relative">
-                                                                    <a href="../horizontal/app-chat.html"
+                                                                    <a th:href="@{/board/list(category=code)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 195px !important">
                                                                         <div
@@ -137,15 +137,14 @@
                                                                                 width="24" height="24" />
                                                                         </div>
                                                                         <div>
-                                                                            <h6 class="mb-1 fw-semibold fs-3">
-                                                                                코드 공유 게시판
+                                                                            <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
                                                                             </h6>
                                                                             <span
                                                                                 class="fs-2 d-block text-body-secondary">모르는
                                                                                 코드 물어보세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=project)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 280px !important">
                                                                         <div
@@ -189,7 +188,7 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="position-relative">
-                                                                    <a href="../horizontal/app-chat.html"
+                                                                    <a th:href="@{/board/list(category=activity)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 225px !important">
                                                                         <div
@@ -207,7 +206,7 @@
                                                                                 채용 정보를 확인하세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=recruit)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 266px !important">
                                                                         <div
@@ -251,7 +250,7 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="position-relative">
-                                                                    <a href="../horizontal/app-chat.html"
+                                                                    <a th:href="@{/board/list(category=free)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 230px !important">
                                                                         <div
@@ -269,7 +268,7 @@
                                                                                 게시글을 올려주세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=info)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 266px !important">
                                                                         <div
@@ -286,7 +285,7 @@
                                                                                 모든 정보를 확인하세요!</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="../horizontal/app-invoice.html"
+                                                                    <a th:href="@{/board/list(category=group)}"
                                                                         class="d-flex align-items-center pb-9 position-relative"
                                                                         style="width: 266px !important">
                                                                         <div
@@ -328,45 +327,50 @@
                         <!-- topbar 메뉴 끝-->
 
 
-
                         <!-- 채팅/마이페이지 시작 -->
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                             <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-                                <a href="javascript:void(0)"
-                                    class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
-                                    type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
-                                    aria-controls="offcanvasWithBothOptions">
-                                    <i class="ti ti-align-justified fs-7"></i>
-                                </a>
-                                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                                <!-- <a href="javascript:void(0)"
+                    class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                    type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                    aria-controls="offcanvasWithBothOptions">
+                    <i class="ti ti-align-justified fs-7"></i>
+                  </a> -->
+                                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center"
+                                    sec:authorize="isAuthenticated()">
                                     <!-- 다크모드 -->
                                     <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <a class="nav-link moon dark-layout" href="javascript:void(0)">
-                                            <i class="ti ti-moon moon"></i>
-                                        </a>
-                                        <a class="nav-link sun light-layout" href="javascript:void(0)">
-                                            <i class="ti ti-sun sun"></i>
-                                        </a>
-                                    </li> -->
+                      <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                        <i class="ti ti-moon moon"></i>
+                      </a>
+                      <a class="nav-link sun light-layout" href="javascript:void(0)">
+                        <i class="ti ti-sun sun"></i>
+                      </a>
+                    </li> -->
                                     <!-- 채팅 -->
-                                    <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <a class="nav-link position-relative" href="javascript:void(0)"
-                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                            aria-controls="offcanvasRight">
+                                    <li class="nav-item nav-icon-hover-bg rounded-circle"
+                                        sec:authorize="isAuthenticated()">
+                                        <a class="nav-link position-relative" th:href="@{api/chat/chatPage} ">
                                             <img th:src="@{/images/main/chat.png}" alt="modernize-img"
                                                 style="width: 30.2px; height: 30px;" />
                                         </a>
                                     </li>
                                     <!-- 마이페이지 -->
-                                    <li class="nav-item nav-icon-hover-bg rounded-circle">
-                                        <!-- 링크 수정 필요-->
-                                        <a class="nav-link position-relative"
-                                            th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
-                                            <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
-                                            <img th:src="@{/images/profile/user-1.jpg}" alt="modernize-img"
-                                                style="width: 30.2px; height: 30px;" />
-                                        </a>
-                                    </li>
+                                    <div>
+                                        <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                            <!-- 링크 수정 필요-->
+                                            <a class="nav-link position-relative"
+                                                th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                                                <!-- savedFileName이 존재하는 경우 -->
+                                                <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                                                    alt="profile image" class="h-100">
+
+                                                <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
+                                                <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                            alt="default profile image" class="w-100 h-100"> -->
+                                            </a>
+                                        </li>
+                                    </div>
                                 </ul>
                             </div>
                         </div>
