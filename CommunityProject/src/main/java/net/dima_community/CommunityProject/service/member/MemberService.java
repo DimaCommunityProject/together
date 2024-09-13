@@ -119,7 +119,7 @@ public class MemberService {
 		// findEntityById 매소드 하나 만듦!!
 		// findById와 findEntityById 구별해서 쓰기!!
 		MemberEntity memberEntity = findEntityById(id).get();
-		memberEntity.setMemberEnabled("Y");
+		memberEntity.setMemberRole("ROLE_USER");
 	}
 
 	public MemberDTO updateMember(String memberId, String memberName, String memberEmail) {

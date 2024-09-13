@@ -1,5 +1,5 @@
 var userSettings = {
-  Layout: "vertical", // vertical | horizontal
+  Layout: "horizontal", // vertical | horizontal
   SidebarType: "full", // full | mini-sidebar
   BoxedLayout: true, // true | false
   Direction: "ltr", // ltr | rtl

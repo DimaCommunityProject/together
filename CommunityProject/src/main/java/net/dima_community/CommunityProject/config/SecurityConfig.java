@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.handler.CustomFailureHandler;
@@ -51,9 +50,7 @@ public class SecurityConfig {
 		//
 		// , "/images/**"
 		// , "/css/**"
-		// "/member/*",
-		// "/memberpage/*", "memberproject/*")
-		// .permitAll()
+		// , "/script/**").permitAll()
 		//
 		// .requestMatchers("/admin/**").hasRole("ADMIN")
 		// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
@@ -92,10 +89,14 @@ public class SecurityConfig {
 
 		// HTTP 헤더 보안 설정
 		// xss와 csp는 둘 다 xss 보완이지만 xssProtection는 구식 브라우저 보호이며 csp는 현대적이고 더 강력함.
-		http.headers(headers -> headers.xssProtection(
-				xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-				.contentSecurityPolicy(
-						cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline'")));
+		http.headers(headers -> headers.contentSecurityPolicy(
+				cps -> cps.policyDirectives(
+						"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
+								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com; "
+								+
+								"font-src 'self' https://fonts.gstatic.com; " + // 폰트 출처 추가
+								"object-src 'none';" // object-src 제한
+				)));
 
 		return http.build();
 	}// end filterchain
