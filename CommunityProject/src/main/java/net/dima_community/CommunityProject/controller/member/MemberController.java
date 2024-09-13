@@ -67,7 +67,7 @@ public class MemberController {
 		MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
 		memberService.saveMember(newMember);
 		memberPageService.saveMemberPage(newMember);
-		return "main/main";
+		return "/main/main";
 	}
 
 	/**
