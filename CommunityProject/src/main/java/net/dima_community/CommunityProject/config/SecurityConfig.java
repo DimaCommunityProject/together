@@ -35,31 +35,31 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		// 웹 요청에 대한 접근권한 설정
-		http
-				.authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
-						.requestMatchers(
-								// "/"
-								// , "/member/confirmId"
-								// , "/member/join"
-								// , "/member/joinProc"
-								// , "/member/login"
-								// , "/member/loginProc"
-								// , "/member/findId"
-								// , "/member/findPw"
-								// , "/member/findPwResult"
-								//
-								// , "/images/**"
-								// , "/css/**"
-								"/member/*",
-								"/memberpage/*", "memberproject/*")
-						.permitAll()
-						//
-						// .requestMatchers("/admin/**").hasRole("ADMIN")
-						// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
-						.anyRequest().authenticated()
+		// // 웹 요청에 대한 접근권한 설정
+		// http
+		// .authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
+		// .requestMatchers(
+		// "/"
+		// , "/member/confirmId"
+		// , "/member/join"
+		// , "/member/joinProc"
+		// , "/member/login"
+		// , "/member/loginProc"
+		// , "/member/findId"
+		// , "/member/findPw"
+		// , "/member/findPwResult"
+		//
+		// , "/images/**"
+		// , "/css/**"
+		// "/member/*",
+		// "/memberpage/*", "memberproject/*")
+		// .permitAll()
+		//
+		// .requestMatchers("/admin/**").hasRole("ADMIN")
+		// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+		// .anyRequest().authenticated()
 
-				);
+		// );
 		http
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						.requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
