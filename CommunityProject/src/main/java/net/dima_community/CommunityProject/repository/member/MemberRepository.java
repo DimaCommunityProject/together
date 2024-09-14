@@ -35,7 +35,9 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     Page<MemberEntity> findByMemberGroup(@Param("memberGroup") String memberGroup, PageRequest pageRequest);
 
     // 관리자 페이지에 보여줄 승인 안된 회원 찾기
-    List<MemberEntity> findByMemberEnabled(String enabled);
+    //List<MemberEntity> findByMemberEnabled(String enabled);
 
     Optional<MemberEntity> findByMemberEmail(String to);
+
+	List<MemberEntity> findByMemberRole(String string);
 }
