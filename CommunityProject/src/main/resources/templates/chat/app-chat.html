@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="horizontal"
-xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
+  xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <!-- Required meta tags -->
@@ -14,9 +14,9 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
   <!-- Core Css -->
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/libs/jquery-3.7.1.min.js}"></script>
-	<script th:src="@{/libs/sockjs.min.js}"></script>
-	<script th:src="@{/libs/stomp.min.js}"></script>
-	<script th:src="@{/libs/axios.min.js}"></script>
+  <script th:src="@{/libs/sockjs.min.js}"></script>
+  <script th:src="@{/libs/stomp.min.js}"></script>
+  <script th:src="@{/libs/axios.min.js}"></script>
 
   <title>Modernize Bootstrap Admin</title>
 </head>
@@ -142,7 +142,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
               <h6 class="mb-0 fs-4 fw-semibold currentUserName">Mathew</h6>
               <span class="fs-2 currentUserMemberGroup">Designer</span>
             </div>
-            <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
+            <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
               <i class="ti ti-power fs-6"></i>
             </button>
           </div>
@@ -174,54 +175,50 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
             </ul>
 
             <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center"></ul>
-              <!-- ------------------------------- -->
-              <!-- start apps Dropdown -->
-              <!-- ------------------------------- -->
-              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
-                <div class="hover-dd">
-                  <a class="nav-link" href="javascript:void(0)">
-                    수업 <span class="mt-1">
-                      <i class="ti ti-chevron-down fs-3"></i>
-                    </span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    >
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="ps-7 pt-7">
-                          <div class="border-bottom">
-                            <div class="row">
-                              <div class="col-6">
-                                <div class="position-relative">
-                                  <a th:href="@{/board/list(category='code')}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
-                                    </div>
-                                  </a>
-                                  <a th:href="@{/board/list(category=project)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">지난 기수들의 프로젝트를 확인해보세요!</span>
-                                    </div>
-                                  </a>
-                                </div>
+            <!-- ------------------------------- -->
+            <!-- start apps Dropdown -->
+            <!-- ------------------------------- -->
+            <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+              <div class="hover-dd">
+                <a class="nav-link" href="javascript:void(0)">
+                  수업 <span class="mt-1">
+                    <i class="ti ti-chevron-down fs-3"></i>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="ps-7 pt-7">
+                        <div class="border-bottom">
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="position-relative">
+                                <a th:href="@{/board/list(category='code')}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=project)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">지난 기수들의 프로젝트를 확인해보세요!</span>
+                                  </div>
+                                </a>
                               </div>
                             </div>
                           </div>
@@ -230,53 +227,50 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                     </div>
                   </div>
                 </div>
-              </li>
-              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
-                <div class="hover-dd">
-                  <a class="nav-link" href="javascript:void(0)">
-                    취업 <span class="mt-1">
-                      <i class="ti ti-chevron-down fs-3"></i>
-                    </span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    >
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="ps-7 pt-7">
-                          <div class="border-bottom">
-                            <div class="row">
-                              <div class="col-6">
-                                <div class="position-relative">
-                                  <a th:href="@{/board/list(category=activity)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">
-                                        취업 공고 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
-                                    </div>
-                                  </a>
-                                  <a th:href="@{/board/list(category=recruit)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 구인 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">정보를 확인하고 팀원을 모집해보세요!</span>
-                                    </div>
-                                  </a>
-                                </div>
+              </div>
+            </li>
+            <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+              <div class="hover-dd">
+                <a class="nav-link" href="javascript:void(0)">
+                  취업 <span class="mt-1">
+                    <i class="ti ti-chevron-down fs-3"></i>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="ps-7 pt-7">
+                        <div class="border-bottom">
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="position-relative">
+                                <a th:href="@{/board/list(category=activity)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">
+                                      취업 공고 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=recruit)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 구인 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">정보를 확인하고 팀원을 모집해보세요!</span>
+                                  </div>
+                                </a>
                               </div>
                             </div>
                           </div>
@@ -285,67 +279,63 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                     </div>
                   </div>
                 </div>
-              </li>
-              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
-                <div class="hover-dd">
-                  <a class="nav-link" href="javascript:void(0)">
-                    자유 <span class="mt-1">
-                      <i class="ti ti-chevron-down fs-3"></i>
-                    </span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    >
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="ps-7 pt-7">
-                          <div class="border-bottom">
-                            <div class="row">
-                              <div class="col-6">
-                                <div class="position-relative">
-                                  <a th:href="@{/board/list(category=free)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">
-                                        자유 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
-                                    </div>
-                                  </a>
-                                  <a th:href="@{/board/list(category=info)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">정보 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
-                                    </div>
-                                  </a>
-                                  <a th:href="@{/board/list(category=group)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
-                                    <div
-                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
-                                        width="24" height="24" />
-                                    </div>
-                                    <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
-                                      </h6>
-                                      <span class="fs-2 d-block text-body-secondary">기수별로 소통하고 정보를 공유하세요!</span>
-                                    </div>
-                                  </a>
-                                </div>
+              </div>
+            </li>
+            <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+              <div class="hover-dd">
+                <a class="nav-link" href="javascript:void(0)">
+                  자유 <span class="mt-1">
+                    <i class="ti ti-chevron-down fs-3"></i>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="ps-7 pt-7">
+                        <div class="border-bottom">
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="position-relative">
+                                <a th:href="@{/board/list(category=free)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">
+                                      자유 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=info)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=group)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">기수별로 소통하고 정보를 공유하세요!</span>
+                                  </div>
+                                </a>
                               </div>
                             </div>
                           </div>
@@ -354,18 +344,19 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                     </div>
                   </div>
                 </div>
-              </li>
-              <!-- ------------------------------- -->
-              <!-- end apps Dropdown -->
-              <!-- ------------------------------- -->
+              </div>
+            </li>
+            <!-- ------------------------------- -->
+            <!-- end apps Dropdown -->
+            <!-- ------------------------------- -->
+            <li class="nav-item dropdown-hover d-none d-lg-block">
+              <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+            </li>
+            <th:block sec:authorize="hasRole('ADMIN')">
               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+                <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
               </li>
-              <th:block sec:authorize="hasRole('ADMIN')">
-                <li class="nav-item dropdown-hover d-none d-lg-block">
-                  <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
-                </li>
-              </th:block>
+            </th:block>
             </ul>
 
             <div class="d-block d-lg-none py-4">
@@ -373,12 +364,17 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                 <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
               </a>
             </div>
-            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
               <i class="ti ti-dots fs-7"></i>
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <div class="d-flex align-items-center justify-content-between">
-                <a th:href="@{/}" class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-none align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar" aria-controls="offcanvasWithBothOptions">
+                <a th:href="@{/}"
+                  class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
                   <i class="ti ti-align-justified fs-7 d-none"></i>
                 </a>
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
@@ -406,7 +402,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                         </div>
                       </div>
                     </a>
-                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
+                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+                      aria-labelledby="drop1">
                       <div class="profile-dropdown position-relative" data-simplebar>
                         <div class="py-3 px-7 pb-0">
                           <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
@@ -417,22 +414,23 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                             <h5 class="mb-1 fs-3 currentUserName">Mathew Anderson</h5>
                             <span class="mb-1 d-block currentUserMemberGroup">Designer</span>
                             <p class="mb-0 d-flex align-items-center gap-2">
-                              <i class="ti ti-mail fs-4 currentUserEmail" ></i>                             </p>
+                              <i class="ti ti-mail fs-4 currentUserEmail"></i>
+                            </p>
                           </div>
                         </div>
                         <div class="message-body">
                           <a th:href="@{/memberpage/showpage(memberId=${currentUserId})}"
-														class="py-8 px-7 mt-8 d-flex align-items-center"> <span
-														class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-															<img th:src="@{/images/svgs/icon-account.svg}"
-															alt="modernize-img" width="24" height="24" />
-													</span>
-														<div class="w-100 ps-3">
-															<h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
-															<span class="fs-2 d-block text-body-secondary">Account
-																Settings</span>
-														</div>
-													</a>
+                            class="py-8 px-7 mt-8 d-flex align-items-center"> <span
+                              class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
+                              <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24"
+                                height="24" />
+                            </span>
+                            <div class="w-100 ps-3">
+                              <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
+                              <span class="fs-2 d-block text-body-secondary">Account
+                                Settings</span>
+                            </div>
+                          </a>
                         </div>
                         <div class="d-grid py-4 px-7 pt-8">
                           <a th:href="@{/member/logout}" class="btn btn-outline-primary">Log Out</a>
@@ -456,7 +454,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
           <!-- ------------------------------- -->
           <!--  Mobilenavbar -->
           <!-- 안쓸거 시작  -->
-          <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar" aria-labelledby="offcanvasWithBothOptionsLabel">
+          <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar"
+            aria-labelledby="offcanvasWithBothOptionsLabel">
             <nav class="sidebar-nav scroll-sidebar">
               <div class="offcanvas-header justify-content-between">
                 <img th:src="@{/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
@@ -474,8 +473,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                     <ul aria-expanded="false" class="collapse first-level my-3">
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
@@ -485,8 +486,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Invoice App</h6>
@@ -496,8 +499,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Contact Application</h6>
@@ -507,8 +512,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Email App</h6>
@@ -518,8 +525,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">User Profile</h6>
@@ -529,8 +538,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Calendar App</h6>
@@ -540,8 +551,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Contact List Table</h6>
@@ -551,8 +564,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       </li>
                       <li class="sidebar-item py-2">
                         <a th:href="@{/}" class="d-flex align-items-center">
-                          <div class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                            <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid" width="24" height="24" />
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
@@ -645,8 +660,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    >
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
                     <div class="row">
                       <div class="col-8">
                         <div class="ps-7 pt-7">
@@ -655,8 +669,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                               <div class="col-6">
                                 <div class="position-relative">
                                   <a th:href="@{/board/list(category=code)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
@@ -669,8 +682,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=project)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
@@ -699,8 +711,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    >
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
                     <div class="row">
                       <div class="col-8">
                         <div class="ps-7 pt-7">
@@ -709,8 +720,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                               <div class="col-6">
                                 <div class="position-relative">
                                   <a th:href="@{/board/list(category=activity)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
@@ -724,8 +734,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=recruit)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
@@ -754,8 +763,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                       <i class="ti ti-chevron-down fs-3"></i>
                     </span>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0"
-                    >
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
                     <div class="row">
                       <div class="col-8">
                         <div class="ps-7 pt-7">
@@ -764,8 +772,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                               <div class="col-6">
                                 <div class="position-relative">
                                   <a th:href="@{/board/list(category=free)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
@@ -779,8 +786,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=info)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
@@ -793,8 +799,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=group)}"
-                                    class="d-flex align-items-center pb-9 position-relative min-width-340"
-                                    >
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
                                       <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
@@ -834,14 +839,19 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                 <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
               </a>
             </div>
-            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
               <span class="p-2">
                 <i class="ti ti-dots fs-7"></i>
               </span>
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-                <a th:href="@{/}" class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar" aria-controls="offcanvasWithBothOptions">
+                <a th:href="@{/}"
+                  class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
                   <i class="ti ti-align-justified fs-7"></i>
                 </a>
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
@@ -865,11 +875,13 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                     <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                       <div class="d-flex align-items-center">
                         <div class="user-profile-img">
-                          <img class="rounded-circle userProfileImage" width="35" height="35" alt="${currentUserName}" />
+                          <img class="rounded-circle userProfileImage" width="35" height="35"
+                            alt="${currentUserName}" />
                         </div>
                       </div>
                     </a>
-                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
+                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+                      aria-labelledby="drop1">
                       <div class="profile-dropdown position-relative" data-simplebar>
                         <div class="py-3 px-7 pb-0">
                           <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
@@ -885,9 +897,11 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                           </div>
                         </div>
                         <div class="message-body">
-                          <a th:href="@{/memberpage/showpage(memberId=${currentUserId})}" class="py-8 px-7 mt-8 d-flex align-items-center">
+                          <a th:href="@{/memberpage/showpage(memberId=${currentUserId})}"
+                            class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                              <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24" height="24" />
+                              <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24"
+                                height="24" />
                             </span>
                             <div class="w-100 ps-3">
                               <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
@@ -1025,10 +1039,11 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
               </div>
             </div>
           </div>
-          
+
           <div class="card overflow-hidden chat-application">
             <div class="d-flex align-items-center justify-content-between gap-6 m-3 d-lg-none">
-              <button class="btn btn-primary d-flex" type="button" data-bs-toggle="offcanvas" data-bs-target="#chat-sidebar" aria-controls="chat-sidebar">
+              <button class="btn btn-primary d-flex" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#chat-sidebar" aria-controls="chat-sidebar">
                 <i class="ti ti-menu-2 fs-5"></i>
               </button>
             </div>
@@ -1044,13 +1059,14 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                         </span>
                       </div>
                       <div class="ms-3">
-												<h6 class="fw-semibold mb-2 currentUserName">User
-													Name</h6>
-												<p class="mb-0 fs-2 userId" th:text="${currentUserId}"></p>
-											</div>
+                        <h6 class="fw-semibold mb-2 currentUserName">User
+                          Name</h6>
+                        <p class="mb-0 fs-2 userId" th:text="${currentUserId}"></p>
+                      </div>
                     </div>
                     <div class="dropdown">
-                      <a class="text-dark fs-6 nav-icon-hover" th:href="@{/}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <a class="text-dark fs-6 nav-icon-hover" th:href="@{/}" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <i class="ti ti-dots-vertical"></i>
                       </a>
                       <ul class="dropdown-menu">
@@ -1074,29 +1090,30 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                   </div>
 
                   <!-- 대화 상대 선택 및 시작 -->
-									<div class="d-flex align-items-center mb-4">
-										<select class="select2 form-control recipientSelect" >
-											<option value="" disabled selected>대화 상대를 선택하세요</option>
-											<option th:each="member : ${members}"
-												th:value="${member.memberId}" th:text="${member.memberName}"></option>
-										</select>
-										<button id=""
-											class="btn btn-primary hstack gap-6 ms-2 startChat">
-											<i class="ti ti-circle-plus ms-1 fs-5"></i>
-										</button>
-									</div>
-                  
+                  <div class="d-flex align-items-center mb-4">
+                    <select class="select2 form-control recipientSelect">
+                      <option value="" disabled selected>대화 상대를 선택하세요</option>
+                      <option th:each="member : ${members}" th:value="${member.memberId}"
+                        th:text="${member.memberName}"></option>
+                    </select>
+                    <button id="" class="btn btn-primary hstack gap-6 ms-2 startChat">
+                      <i class="ti ti-circle-plus ms-1 fs-5"></i>
+                    </button>
+                  </div>
+
                 </div>
-                <div class="app-chat " >
-					<ul class="chat-users mb-0 mh-n100 chatList" id="" data-simplebar>
-						<!-- 1 채팅방 -->
-						<li th:each="room : ${chatRooms}" th:text="${room.name}">
-							<a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
-				
-							</a>
-						</li>
-					</ul>
-				</div>
+                <div class="app-chat ">
+                  <ul class="chat-users mb-0 mh-n100 chatList" id="" data-simplebar>
+                    <!-- 1 채팅방 -->
+                    <li th:each="room : ${chatRooms}" th:text="${room.name}">
+                      <a href="javascript:void(0)"
+                        class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle"
+                        id="chat_user_1" th:data-user-id="${room.id}">
+
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               <div class="w-70 w-xs-100 chat-container">
@@ -1113,93 +1130,86 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                   </div>
 
                   <div class="chatting-box d-block">
-										<div class="p-9 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
-											<div class="hstack gap-3 current-chat-user-name d-flex align-items-center">
-												<div class="position-relative">
-													<div class="d-flex align-items-center chatPartnerImages" >
-														<!-- 프로필 이미지가 동적으로 추가될 부분 -->
-													</div>
-												</div>
-												<div>
-													<h6 class="mb-1 name fw-semibold chatPartnerName"></h6>
-													<!-- 채팅방 참여자 이름(그룹) 추가되는 부분 -->
-												</div>
-											</div>
-											<div class="dropdown">
-												<a class="text-dark fs-6 nav-icon-hover"
-													th:href="@{/}" role="button"
-													data-bs-toggle="dropdown" aria-expanded="false"> <i
-													class="ti ti-dots-vertical"></i>
-												</a>
-												<ul class="dropdown-menu">
-													<li><a
-														class="dropdown-item d-flex align-items-center gap-2 border-bottom inviteButton"
-														> <span> <i
-																class="ti ti-settings fs-4"></i>
-														</span>대화 상대 초대
-													</a></li>
-													<!-- 로그아웃 -->
-													<li><a
-														class="dropdown-item d-flex align-items-center gap-2 leaveButton"
-														> <span> <i
-																class="ti ti-login fs-4"></i>
-														</span>나가기
-													</a></li>
-												</ul>
-											</div>
+                    <div class="p-9 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
+                      <div class="hstack gap-3 current-chat-user-name d-flex align-items-center">
+                        <div class="position-relative">
+                          <div class="d-flex align-items-center chatPartnerImages">
+                            <!-- 프로필 이미지가 동적으로 추가될 부분 -->
+                          </div>
+                        </div>
+                        <div>
+                          <h6 class="mb-1 name fw-semibold chatPartnerName"></h6>
+                          <!-- 채팅방 참여자 이름(그룹) 추가되는 부분 -->
+                        </div>
+                      </div>
+                      <div class="dropdown">
+                        <a class="text-dark fs-6 nav-icon-hover" th:href="@{/}" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false"> <i class="ti ti-dots-vertical"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item d-flex align-items-center gap-2 border-bottom inviteButton">
+                              <span> <i class="ti ti-settings fs-4"></i>
+                              </span>대화 상대 초대
+                            </a></li>
+                          <!-- 로그아웃 -->
+                          <li><a class="dropdown-item d-flex align-items-center gap-2 leaveButton"> <span> <i
+                                  class="ti ti-login fs-4"></i>
+                              </span>나가기
+                            </a></li>
+                        </ul>
+                      </div>
 
-											<!-- 초대 모달 -->
-											<div id="inviteModal" class="modal" tabindex="-1" role="dialog">
-						                        <div class="modal-dialog" role="document">
-						                            <div class="modal-content">
-						                                <div class="modal-header">
-						                                    <h5 class="modal-title">대화 상대 초대</h5>
-						                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						                                </div>
-						                                <div class="modal-body">
-						                                    <div id="inviteMembersCheckboxes" class="form-group">
-						                                        <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
-						                                    </div>
-						                                </div>
-						                                <div class="modal-footer">
-						                                    <button type="button" class="btn btn-secondary" id="cancelInviteButton" data-bs-dismiss="modal">취소</button>
-						                                    <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
-						                                </div>
-						                            </div>
-						                        </div>
-											</div>
-										</div>
-										<div class="d-flex parent-chat-box app-chat-right">
-											<div class="chat-box w-xs-100">
-												<div class="chat-box-inner p-9" data-simplebar
-													id="messageArea">
-													<!-- 메시지 영역 -->
-												</div>
-												<div class="px-9 py-6 border-top chat-send-message-footer">
-													<div
-														class="d-flex align-items-center justify-content-between">
-														<div class="d-flex align-items-center gap-2 w-85">
-															<a class="position-relative nav-icon-hover z-index-5"
-																th:href="@{/}"> <i
-																class="ti ti-mood-smile text-dark bg-hover-primary fs-7"></i>
-															</a> <input type="text"
-																class="form-control message-type-box text-muted border-0 p-0 ms-2"
-																id="messageInput" placeholder="Type a Message" />
-														</div>
-														<button id="sendButton" class="btn btn-primary">전송</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
+                      <!-- 초대 모달 -->
+                      <div id="inviteModal" class="modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">대화 상대 초대</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div id="inviteMembersCheckboxes" class="form-group">
+                                <!-- 회원 목록이 체크박스로 동적으로 추가됩니다 -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" id="cancelInviteButton"
+                                data-bs-dismiss="modal">취소</button>
+                              <button type="button" class="btn btn-primary" id="confirmInviteButton">선택하기</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex parent-chat-box app-chat-right">
+                      <div class="chat-box w-xs-100">
+                        <div class="chat-box-inner p-9" data-simplebar id="messageArea">
+                          <!-- 메시지 영역 -->
+                        </div>
+                        <div class="px-9 py-6 border-top chat-send-message-footer">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2 w-85">
+                              <a class="position-relative nav-icon-hover z-index-5" th:href="@{/}"> <i
+                                  class="ti ti-mood-smile text-dark bg-hover-primary fs-7"></i>
+                              </a> <input type="text" class="form-control message-type-box text-muted border-0 p-0 ms-2"
+                                id="messageInput" placeholder="Type a Message" />
+                            </div>
+                            <button id="sendButton" class="btn btn-primary">전송</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
+
               <!-- =================== -->
-			        <!-- start chat-sidebar -->
-               <!-- 미니화면에서 좌측 사이드바 -->
-               <!-- =================== -->
-              <div class="offcanvas offcanvas-start user-chat-box chat-offcanvas" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
+              <!-- start chat-sidebar -->
+              <!-- 미니화면에서 좌측 사이드바 -->
+              <!-- =================== -->
+              <div class="offcanvas offcanvas-start user-chat-box chat-offcanvas" tabindex="-1" id="chat-sidebar"
+                aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
                   <h5 class="offcanvas-title" id="offcanvasExampleLabel">
                     Chats
@@ -1209,25 +1219,27 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                 <div class="px-4 pt-9 pb-6">
                   <div class="d-flex align-items-center justify-content-between mb-3">
                     <div class="d-flex align-items-center">
-					  <!-- 로그인한 회원 프로필 -->
+                      <!-- 로그인한 회원 프로필 -->
                       <div class="position-relative">
-                          <img class="rounded-circle userProfileImage"width="54" height="54"  />
-                          <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
-                              <span class="visually-hidden">New alerts</span>
-                          </span>
+                        <img class="rounded-circle userProfileImage" width="54" height="54" />
+                        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                          <span class="visually-hidden">New alerts</span>
+                        </span>
                       </div>
                       <div class="ms-3">
-                          <h6 id="" class="fw-semibold mb-2 currentUserName">User Name</h6>
-                          <p class="mb-0 fs-2 currentUserId"></p>
+                        <h6 id="" class="fw-semibold mb-2 currentUserName">User Name</h6>
+                        <p class="mb-0 fs-2 currentUserId"></p>
                       </div>
                     </div>
                     <div class="dropdown">
-                      <a class="text-dark fs-6 nav-icon-hover" th:href="@{/}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <a class="text-dark fs-6 nav-icon-hover" th:href="@{/}" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <i class="ti ti-dots-vertical"></i>
                       </a>
                       <ul class="dropdown-menu">
                         <li>
-                          <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" th:href="@{/memberpage/showpage(memberId=${currentUserId})}">
+                          <a class="dropdown-item d-flex align-items-center gap-2 border-bottom"
+                            th:href="@{/memberpage/showpage(memberId=${currentUserId})}">
                             <span>
                               <i class="ti ti-settings fs-4"></i>
                             </span>Setting
@@ -1245,37 +1257,38 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
                     </div>
                   </div>
                   <!-- =================== -->
-			            <!-- End chat-sidebar -->
+                  <!-- End chat-sidebar -->
                   <!-- =================== -->
 
-                  <!-- =================== -->  
+                  <!-- =================== -->
                   <!-- 대화 상대 선택 및 채팅방 생성 시작 -->
-                  <!-- =================== -->  
+                  <!-- =================== -->
                   <div class="d-flex align-items-center mb-4">
-                    <select class="select2 form-control recipientSelect" >
+                    <select class="select2 form-control recipientSelect">
                       <option value="" disabled selected>대화 상대를 선택하세요</option>
-                      <option th:each="member : ${members}"
-                        th:value="${member.memberId}" th:text="${member.memberName}"></option>
+                      <option th:each="member : ${members}" th:value="${member.memberId}"
+                        th:text="${member.memberName}"></option>
                     </select>
-                    <button id=""
-                      class="btn btn-primary hstack gap-6 ms-2 startChat">
+                    <button id="" class="btn btn-primary hstack gap-6 ms-2 startChat">
                       <i class="ti ti-circle-plus ms-1 fs-5"></i>
                     </button>
                   </div>
-                  <!-- =================== -->  
+                  <!-- =================== -->
                   <!-- 대화 상대 선택 및 채팅방 생성 끝 -->
-                  <!-- =================== -->  
+                  <!-- =================== -->
                 </div>
 
-                <!-- =================== -->  
+                <!-- =================== -->
                 <!-- 사용자가 속한 채팅방 리스트 -->
-                <!-- =================== -->  
+                <!-- =================== -->
                 <div class="app-chat ">
                   <ul class="chat-users mb-0 mh-n100 chatList" data-simplebar>
                     <!-- 채팅방 리스트  -->
                     <li th:each="room : ${chatRooms}" th:text="${room.name}">
-                      <a th:href="@{/}" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" th:data-user-id="${room.id}">
-                
+                      <a th:href="@{/}"
+                        class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle"
+                        id="chat_user_1" th:data-user-id="${room.id}">
+
                       </a>
                     </li>
                   </ul>
@@ -1289,15 +1302,17 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
         </div>
       </div>
       <script>
-  function handleColorTheme(e) {
-    document.documentElement.setAttribute("data-color-theme", e);
-  }
-</script>
-      <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        function handleColorTheme(e) {
+          document.documentElement.setAttribute("data-color-theme", e);
+        }
+      </script>
+      <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
+        type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="icon ti ti-settings fs-7"></i>
       </button>
 
-      <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
         <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
           <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
             Settings
@@ -1308,7 +1323,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
           <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
 
           <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
+            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout"
+              autocomplete="off" />
             <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
               <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
             </label>
@@ -1336,42 +1352,56 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
 
           <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
             <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="BLUE_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
             <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="AQUA_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
             <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="PURPLE_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
-            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
+            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout"
+              autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="GREEN_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
             <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="CYAN_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
-            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
+            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout"
+              autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="ORANGE_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
@@ -1481,7 +1511,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
               <li class="p-1 mb-1 bg-hover-light-black">
                 <a href="javascript:void(0)">
                   <span class="d-block">Detail</span>
-                  <span class="text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
+                  <span
+                    class="text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
                 </a>
               </li>
               <li class="p-1 mb-1 bg-hover-light-black">
@@ -1517,7 +1548,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
               <li class="p-1 mb-1 bg-hover-light-black">
                 <a href="javascript:void(0)">
                   <span class="d-block">Detail</span>
-                  <span class="text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
+                  <span
+                    class="text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
                 </a>
               </li>
               <li class="p-1 mb-1 bg-hover-light-black">
@@ -1532,7 +1564,8 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
       </div>
     </div>
     <!--  Shopping Cart -->
-    <div class="offcanvas offcanvas-end shopping-cart d-none" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas offcanvas-end shopping-cart d-none" tabindex="-1" id="offcanvasRight"
+      aria-labelledby="offcanvasRightLabel">
       <div class="offcanvas-header justify-content-between py-4">
         <h5 class="offcanvas-title fs-5 fw-semibold" id="offcanvasRightLabel">
           Shopping Cart
@@ -1543,18 +1576,23 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
         <ul class="mb-0">
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img src="../../images/products/product-1.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img src="../../images/products/product-1.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0"
+                alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
                 <div class="d-flex align-items-center justify-content-between mt-2">
                   <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
                   <div class="input-group input-group-sm w-50">
-                    <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button" id="add1">
+                    <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button"
+                      id="add1">
                       -
                     </button>
-                    <input type="text" class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add1" value="1" />
-                    <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button" id="addo2">
+                    <input type="text"
+                      class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty"
+                      placeholder="" aria-label="Example text with button addon" aria-describedby="add1" value="1" />
+                    <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button"
+                      id="addo2">
                       +
                     </button>
                   </div>
@@ -1564,18 +1602,23 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
           </li>
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img src="../../images/products/product-2.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img src="../../images/products/product-2.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0"
+                alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
                 <div class="d-flex align-items-center justify-content-between mt-2">
                   <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
                   <div class="input-group input-group-sm w-50">
-                    <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button" id="add2">
+                    <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button"
+                      id="add2">
                       -
                     </button>
-                    <input type="text" class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add2" value="1" />
-                    <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button" id="addon34">
+                    <input type="text"
+                      class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty"
+                      placeholder="" aria-label="Example text with button addon" aria-describedby="add2" value="1" />
+                    <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button"
+                      id="addon34">
                       +
                     </button>
                   </div>
@@ -1585,18 +1628,23 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
           </li>
           <li class="pb-7">
             <div class="d-flex align-items-center">
-              <img src="../../images/products/product-3.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="modernize-img" />
+              <img src="../../images/products/product-3.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0"
+                alt="modernize-img" />
               <div>
                 <h6 class="mb-1">Supreme toys cooker</h6>
                 <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
                 <div class="d-flex align-items-center justify-content-between mt-2">
                   <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
                   <div class="input-group input-group-sm w-50">
-                    <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button" id="add3">
+                    <button class="btn border-0 round-20 minus p-0 bg-success-subtle text-success" type="button"
+                      id="add3">
                       -
                     </button>
-                    <input type="text" class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add3" value="1" />
-                    <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button" id="addon3">
+                    <input type="text"
+                      class="form-control round-20 bg-transparent text-muted fs-2 border-0 text-center qty"
+                      placeholder="" aria-label="Example text with button addon" aria-describedby="add3" value="1" />
+                    <button class="btn text-success bg-success-subtle p-0 round-20 border-0 add" type="button"
+                      id="addon3">
                       +
                     </button>
                   </div>
@@ -1631,7 +1679,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/s
   <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
   <script th:src="@{/js/theme/app.min.js}"></script>
   <script th:src="@{/js/theme/theme.js}"></script>
-  
+
   <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
   <!-- solar icons -->

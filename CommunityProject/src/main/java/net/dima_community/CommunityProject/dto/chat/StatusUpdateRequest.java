@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class StatusUpdateRequest {
     private String userId;
-    private Long roomId; 
+    private Long roomId;
     private String status;
 }
