@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,7 +36,7 @@ public class BoardDTO {
     private String savedFileName;
     private boolean reported;
     private Long jobBoardId;
-    
+
     // Job board specific fields
     private LocalDateTime deadline;
     private int limitNumber;
@@ -45,12 +44,13 @@ public class BoardDTO {
     private int dDay;
 
     /**
-     *  jobBoard 정보가 없는 게시글인 경우 DTO변환 함수
+     * jobBoard 정보가 없는 게시글인 경우 DTO변환 함수
+     * 
      * @param entity
      * @param memberId
      * @return
      */
-    public static BoardDTO toDTO(BoardEntity entity, String memberId){
+    public static BoardDTO toDTO(BoardEntity entity, String memberId) {
         return BoardDTO.builder()
                 .boardId(entity.getBoardId())
                 .memberId(memberId)
@@ -72,12 +72,13 @@ public class BoardDTO {
 
     /**
      * jobBoard 정보가 있는 게시글인 경우 DTO 변환 함수
+     * 
      * @param entity
      * @param memberId
      * @param jobBoardId
      * @return
      */
-    public static BoardDTO toDTO(BoardEntity entity, String memberId, Long jobBoardId){
+    public static BoardDTO toDTO(BoardEntity entity, String memberId, Long jobBoardId) {
         return BoardDTO.builder()
                 .boardId(entity.getBoardId())
                 .memberId(memberId)
@@ -96,4 +97,5 @@ public class BoardDTO {
                 .jobBoardId(jobBoardId)
                 .build();
     }
+
 }

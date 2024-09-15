@@ -105,7 +105,7 @@ public class EmailController {
 
         String generatedString = verifyRandomCodeHolder.setRandomCode();
         // verifyCode 업데이트
-        memberVerifyCodeService.updateVerificationCode(memberId, generatedString);
+        memberVerifyCodeService.insert(memberId, generatedString);
         log.info("service 완료");
         Email email = Email.builder()
                 .to(newEmail)

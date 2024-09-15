@@ -5,22 +5,30 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
 import net.dima_community.CommunityProject.dto.member.MemberVerifyCodeDTO;
 import net.dima_community.CommunityProject.entity.member.MemberVerifyCodeEntity;
 import net.dima_community.CommunityProject.repository.member.MemberVerifyCodeRepository;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MemberVerifyCodeService {
     private final MemberVerifyCodeRepository memberVerifyCodeRepository;
 
     public void insert(String memberId, String generatedString) {
-        MemberVerifyCodeDTO memberVerifyCodeDTO = MemberVerifyCodeDTO.builder()
-                .memberId(memberId)
-                .verifyCode(generatedString)
-                .build();
-        memberVerifyCodeRepository.save(MemberVerifyCodeEntity.toEntity(memberVerifyCodeDTO));
+        Optional<MemberVerifyCodeEntity> result = memberVerifyCodeRepository.findByMemberId(memberId);
+        if (result.isPresent()) {
+            updateVerificationCode(result.get(), generatedString);
+        } else {
+            MemberVerifyCodeDTO memberVerifyCodeDTO = MemberVerifyCodeDTO.builder()
+                    .memberId(memberId)
+                    .verifyCode(generatedString)
+                    .build();
+            memberVerifyCodeRepository.save(MemberVerifyCodeEntity.toEntity(memberVerifyCodeDTO));
+        }
+
     }
 
     public boolean verifyMemberByCode(String memberId, String code) {
@@ -37,15 +45,9 @@ public class MemberVerifyCodeService {
             return true;
     }
 
-    public void updateVerificationCode(String memberId, String generatedString) {
-        Optional<MemberVerifyCodeEntity> entity = memberVerifyCodeRepository.findByMemberId(memberId);
-        if (entity.isPresent()) {
-            MemberVerifyCodeEntity getEntity = entity.get();
-            getEntity.setVerifyCode(generatedString);
-            memberVerifyCodeRepository.save(getEntity);
-        } else {
-            throw new ResourceNotFoundException("MemberVerifyCode", memberId);
-        }
+    public void updateVerificationCode(MemberVerifyCodeEntity entity, String generatedString) {
+        entity.setVerifyCode(generatedString);
+        memberVerifyCodeRepository.save(entity);
     }
 
     public void deleteById(String memberId) {
