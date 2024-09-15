@@ -535,7 +535,8 @@
                                                         alt="profile image" width="35" height="35"
                                                         class="rounded-circle h-100">
                                                     <div class="ms-3">
-                                                        <h5 class="mb-1 fs-3 currentUserName" th:text="${loginName}">
+                                                        <h5 class="mb-1 fs-3 currentUserName"
+                                                            th:text="${#authentication.principal.getName()}">
                                                             Mathew Anderson</h5>
                                                         <!-- 이름 출력 -->
                                                         <span class="mb-1 d-block currentUserGroup"
@@ -554,7 +555,8 @@
                                                         class="btn btn-outline-primary" style="width: 150px;">My
                                                         Page</a>
                                                     <a th:href="@{/member/logout}" class="btn btn-outline-primary"
-                                                        style="width: 150px;">Log Out</a>
+                                                        style="width: 150px;">Log
+                                                        Out</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1104,9 +1106,11 @@
                                                         class="btn btn-outline-primary" style="width: 150px;">My
                                                         Page</a>
                                                     <a th:href="@{/member/logout}" class="btn btn-outline-primary"
-                                                        style="width: 150px;">Log Out</a>
+                                                        style="width: 150px;">Log
+                                                        Out</a>
                                                 </div>
                                             </div>
+                                        </div>
                                     </li>
                                     <!-- ------------------------------- -->
                                     <!-- end isAuthenticated -->

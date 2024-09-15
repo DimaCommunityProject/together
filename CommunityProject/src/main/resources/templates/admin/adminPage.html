@@ -200,7 +200,8 @@
                 width="30" height="30" class="rounded-circle h-100">
             </div>
             <div class="john-title">
-              <h6 class="mb-0 fs-4 fw-semibold" th:text="${#authentication.principal.getName()}">Mathew</h6>
+              <h6 class="mb-0 fs-4 fw-semibold" th:text="${#authentication.principal.getName()}">Mathew
+              </h6>
               <span class="fs-2" th:text="${#authentication.principal.getGroup()}">Designer</span>
             </div>
             <a class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
@@ -264,7 +265,8 @@
                                   <div>
                                     <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">모르는
+                                      코드 물어보세요!</span>
                                   </div>
                                 </a>
                                 <a th:href="@{/board/list(category=project)}"
@@ -277,7 +279,8 @@
                                   <div>
                                     <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">지난 기수들의 프로젝트를 확인해보세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">지난
+                                      기수들의 프로젝트를 확인해보세요!</span>
                                   </div>
                                 </a>
                               </div>
@@ -316,7 +319,8 @@
                                     <h6 class="mb-1 fw-semibold fs-3">
                                       취업 공고 게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">최신
+                                      채용 정보를 확인하세요!</span>
                                   </div>
                                 </a>
                                 <a th:href="@{/board/list(category=recruit)}"
@@ -327,9 +331,11 @@
                                       width="24" height="24" />
                                   </div>
                                   <div>
-                                    <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 모집 게시판
+                                    <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 모집
+                                      게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">정보를 확인하고 팀원을 모집해보세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">정보를
+                                      확인하고 팀원을 모집해보세요!</span>
                                   </div>
                                 </a>
                               </div>
@@ -368,7 +374,8 @@
                                     <h6 class="mb-1 fw-semibold fs-3">
                                       자유 게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">자유롭게
+                                      게시글을 올려주세요!</span>
                                   </div>
                                 </a>
                                 <a th:href="@{/board/list(category=info)}"
@@ -381,7 +388,8 @@
                                   <div>
                                     <h6 class="mb-1 fw-semibold fs-3">정보 게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">세상의
+                                      모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
                                 <a th:href="@{/board/list(category=group)}"
@@ -394,7 +402,8 @@
                                   <div>
                                     <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
                                     </h6>
-                                    <span class="fs-2 d-block text-body-secondary">기수별로 소통하고 정보를 공유하세요!</span>
+                                    <span class="fs-2 d-block text-body-secondary">기수별로
+                                      소통하고 정보를 공유하세요!</span>
                                   </div>
                                 </a>
                               </div>
@@ -482,20 +491,23 @@
                           <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
                             alt="profile image" width="35" height="35" class="rounded-circle h-100">
                           <div class="ms-3">
-                            <h5 class="mb-1 fs-3 currentUserName" th:text="${loginName}">Mathew Anderson</h5>
+                            <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
+                              Mathew Anderson</h5>
                             <!-- 이름 출력 -->
                             <span class="mb-1 d-block currentUserGroup"
                               th:text="${#authentication.principal.getGroup()}">Designer</span>
                             <!-- 그룹 출력 -->
                             <p class="mb-0 d-flex align-items-center gap-2">
                               <i class="ti ti-mail fs-4"></i>
-                              <span th:text="${#authentication.principal.getEmail()}"></span> <!-- 이메일 출력 -->
+                              <span th:text="${#authentication.principal.getEmail()}"></span>
+                              <!-- 이메일 출력 -->
                             </p>
                           </div>
                         </div>
                         <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
                           <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
-                            class="btn btn-outline-primary" style="width: 150px;">My Page</a>
+                            class="btn btn-outline-primary" style="width: 150px;">My
+                            Page</a>
                           <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
                             Out</a>
                         </div>
@@ -544,7 +556,8 @@
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
-                            <span class="fs-2 d-block text-muted">New messages arrived</span>
+                            <span class="fs-2 d-block text-muted">New messages
+                              arrived</span>
                           </div>
                         </a>
                       </li>
@@ -596,7 +609,8 @@
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">User Profile</h6>
-                            <span class="fs-2 d-block text-muted">learn more information</span>
+                            <span class="fs-2 d-block text-muted">learn more
+                              information</span>
                           </div>
                         </a>
                       </li>
@@ -635,7 +649,8 @@
                           </div>
                           <div>
                             <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
-                            <span class="fs-2 d-block text-muted">To-do and Daily tasks</span>
+                            <span class="fs-2 d-block text-muted">To-do and Daily
+                              tasks</span>
                           </div>
                         </a>
                       </li>
@@ -742,7 +757,8 @@
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">모르는
+                                        코드 물어보세요!</span>
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=project)}"
@@ -753,9 +769,11 @@
                                         width="24" height="24" />
                                     </div>
                                     <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
+                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유
+                                        게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">지난 기수들의 프로젝트를 확인해보세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">지난
+                                        기수들의 프로젝트를 확인해보세요!</span>
                                     </div>
                                   </a>
                                 </div>
@@ -794,7 +812,8 @@
                                       <h6 class="mb-1 fw-semibold fs-3">
                                         취업 공고 게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">최신
+                                        채용 정보를 확인하세요!</span>
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=recruit)}"
@@ -805,9 +824,11 @@
                                         width="24" height="24" />
                                     </div>
                                     <div>
-                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 모집 게시판
+                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트
+                                        모집 게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">정보를 확인하고 팀원을 모집해보세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">정보를
+                                        확인하고 팀원을 모집해보세요!</span>
                                     </div>
                                   </a>
                                 </div>
@@ -846,7 +867,8 @@
                                       <h6 class="mb-1 fw-semibold fs-3">
                                         자유 게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">자유롭게
+                                        게시글을 올려주세요!</span>
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=info)}"
@@ -859,7 +881,8 @@
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">정보 게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">세상의
+                                        모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
                                   <a th:href="@{/board/list(category=group)}"
@@ -872,7 +895,8 @@
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
                                       </h6>
-                                      <span class="fs-2 d-block text-body-secondary">기수별로 소통하고 정보를 공유하세요!</span>
+                                      <span class="fs-2 d-block text-body-secondary">기수별로
+                                        소통하고 정보를 공유하세요!</span>
                                     </div>
                                   </a>
                                 </div>
@@ -973,7 +997,8 @@
                             <!-- 그룹 출력 -->
                             <p class="mb-0 d-flex align-items-center gap-2">
                               <i class="ti ti-mail fs-4"></i>
-                              <span th:text="${#authentication.principal.getEmail()}"></span> <!-- 이메일 출력 -->
+                              <span th:text="${#authentication.principal.getEmail()}"></span>
+                              <!-- 이메일 출력 -->
                             </p>
                             <!-- <span class="mb-1 d-block currentUserGrouㄴp">
                                 <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
@@ -996,13 +1021,16 @@
                               </div>
                             </a>
                           </div> -->
-                        <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8"> <!-- Flexbox로 감싸서 한 줄로 배치 -->
+                        <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
+                          <!-- Flexbox로 감싸서 한 줄로 배치 -->
                           <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
-                            class="btn btn-outline-primary" style="width: 150px;">My Page</a>
+                            class="btn btn-outline-primary" style="width: 150px;">My
+                            Page</a>
                           <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
                             Out</a>
                         </div>
                       </div>
+                    </div>
                   </li>
                   <!-- ------------------------------- -->
                   <!-- end isAuthenticated -->
@@ -1014,6 +1042,7 @@
         </div>
       </header>
       <!--  Header End -->
+
 
 
       <!-- 여기부터 본문 구조 시작(여러분 여기가 본문 구조를 잡아주는거에요 필수) -->
