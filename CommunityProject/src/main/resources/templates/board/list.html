@@ -1168,7 +1168,7 @@
                         <span th:if="${board.dDay &lt; 0}"><i class="ti ti-calendar-off fs-5"></i> 마감</span>
                       </span> -->
                       <!-- 마감기한 -->
-                      <span class="badge text-bg-primary fs-3 fw-semibold d-flex align-items-center justify-content-center" style="margin-top: 2%;" th:if="${board.deadline != null}">
+                      <span class="badge text-bg-primary fs-3 fw-semibold d-flex align-items-center justify-content-center" th:if="${board.deadline != null}">
                         <span th:if="${board.dDay > 0}" class="d-flex align-items-center"><i class="ti ti-calendar-event fs-5 me-1"></i> D-[[${board.dDay}]]</span>
                         <span th:if="${board.dDay == 0}" class="d-flex align-items-center"><i class="ti ti-calendar-event fs-5 me-1"></i> D-Day</span>
                         <span th:if="${board.dDay &lt; 0}" class="d-flex align-items-center"><i class="ti ti-calendar-off fs-5 me-1"></i> 마감</span>
@@ -1177,7 +1177,7 @@
                     </div>
 
                     <!--모집인원 -->
-                    <div class="d-flex align-items-start justify-content-between" style="margin-bottom: 49%; margin-left: 79.5%;"> 
+                    <div class="d-flex align-items-start justify-content-end h-100"> 
                       <span class="badge text-bg-primary fs-2 fw-semibold" th:if="${board.limitNumber != 0 && board.dDay >= 0}">
                         <i class="ti ti-user fs-5 me-1"></i> [[${board.currentNumber}]]/[[${board.limitNumber}]]
                       </span>
