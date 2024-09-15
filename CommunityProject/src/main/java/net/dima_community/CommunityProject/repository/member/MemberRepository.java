@@ -31,13 +31,14 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     int PwUpdate(@Param("memberId") String memberId, @Param("memberPw") String memberPw);
 
     // 관리자 페이지에 보여줄 기수로 승인된 회원 찾기
-    @Query("SELECT m FROM MemberEntity m WHERE m.memberGroup = :memberGroup AND m.memberEnabled = 'y'")
+    @Query("SELECT m FROM MemberEntity m WHERE m.memberGroup = :memberGroup AND m.memberRole = 'ROLE_USER'")
     Page<MemberEntity> findByMemberGroup(@Param("memberGroup") String memberGroup, PageRequest pageRequest);
 
     // 관리자 페이지에 보여줄 승인 안된 회원 찾기
     //List<MemberEntity> findByMemberEnabled(String enabled);
 
     Optional<MemberEntity> findByMemberEmail(String to);
-
+    
+    // 관리자 페이지에 보여줄 승인 안된 회원 찾기
 	List<MemberEntity> findByMemberRole(String string);
 }

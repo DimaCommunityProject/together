@@ -79,7 +79,6 @@ public class AdminService {
 	public List<MemberDTO> selectDisableAll() {
 
 		List<MemberEntity> entityList = null;
-//		entityList = memberRepository.findByMemberEnabled("n");
 		entityList = memberRepository.findByMemberRole("ROLE_GUEST");
 
 		// log.info("관리자 페이지 회원 테이블(서비스단) : {}", entityList.getContent());

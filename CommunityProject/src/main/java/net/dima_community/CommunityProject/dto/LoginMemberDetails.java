@@ -18,6 +18,7 @@ public class LoginMemberDetails implements UserDetails {
 	private String memberRole;
 	private String memberGroup;
 	private String memberEmail;
+	private String memberName;
 	
 	private static final long serialVersionUID = 1L; // 자동으로 발생
 
@@ -28,6 +29,7 @@ public class LoginMemberDetails implements UserDetails {
 		this.memberRole = memberDTO.getMemberRole();
 		this.memberGroup = memberDTO.getMemberGroup();
 		this.memberEmail = memberDTO.getMemberEmail();
+		this.memberName = memberDTO.getMemberName();
 	}
 	
 	@Override
@@ -55,13 +57,18 @@ public class LoginMemberDetails implements UserDetails {
     }
     
     public String getGroup() {
-    	log.info("Group data: {}", this.memberGroup);
+    	//log.info("Group data: {}", this.memberGroup);
     	return this.memberGroup;
     }
     
     public String getEmail() {
-    	log.info("email data: {}", this.memberEmail);
+    	//log.info("email data: {}", this.memberEmail);
     	return this.memberEmail;
+    }
+    
+    public String getName() {
+    	log.info("name data: {}", this.memberName);
+    	return this.memberName;
     }
 	
 

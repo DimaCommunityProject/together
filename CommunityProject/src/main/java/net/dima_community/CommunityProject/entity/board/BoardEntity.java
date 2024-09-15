@@ -37,9 +37,9 @@ import net.dima_community.CommunityProject.entity.member.MemberEntity;
 @ToString
 @Builder
 @Entity
-@Table(name = "board")
+@Table(name="board")
 public class BoardEntity {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
@@ -47,7 +47,7 @@ public class BoardEntity {
 
     // FK (N:1)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
+    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
     @Column(name = "member_group", nullable = false)
@@ -56,13 +56,13 @@ public class BoardEntity {
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     private BoardCategory category;
-
+    
     @Column(name = "title", nullable = false)
     private String title;
-
+    
     @Column(name = "content", nullable = false)
     private String content;
-
+    
     @Column(name = "create_date")
     @CreationTimestamp
     private LocalDateTime createDate;
@@ -71,10 +71,13 @@ public class BoardEntity {
     private LocalDateTime updateDate;
 
     @Column(name = "hit_count")
-    private Integer hitCount;
+    private int hitCount;
 
     @Column(name = "like_count")
-    private Integer likeCount;
+    private int likeCount;
+
+    @Column(name = "reply_count")
+    private int replyCount;
 
     @Column(name = "original_file_name")
     private String originalFileName;
@@ -82,38 +85,34 @@ public class BoardEntity {
     @Column(name = "saved_file_name")
     private String savedFileName;
 
-    // 2) Reply
+    @Column(name = "reported")
+    private boolean reported;
+
+    // FK (1:1)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_board_id")
+    private JobBoardEntity jobBoardEntity;
+
+    // 자식
+    // 1) BoardReport
+    @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private BoardReportEntity boardReportEntity;
+    // 2) Like
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("member_id")
+    private List<LikeEntity> likeEntities;
+    // 3) Reply
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("reply_id")
     private List<ReplyEntity> replyEntity;
 
-    // @Column(name = "reported")
-    // private Integer reported;
-
-    // // FK (1:1)
-    // @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "job_board_id")
-    // private JobBoardEntity jobBoardEntity;
-
-    // // 자식
-    // // 1) BoardReport
-    // @OneToOne(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch =
-    // FetchType.LAZY, orphanRemoval = true)
-    // private BoardReportEntity boardReportEntity;
-    // // 2) Like
-    // @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, fetch =
-    // FetchType.LAZY, orphanRemoval = true)
-    // @OrderBy("member_id")
-    // private List<LikeEntity> likeEntities;
-
     /**
      * Entity 변환 함수 (jobBoardEntity 값은 null로 세팅)
-     * 
      * @param dto
      * @param memberEntity
      * @return
      */
-    public static BoardEntity toEntity(BoardDTO dto, MemberEntity memberEntity) {
+    public static BoardEntity toEntity(BoardDTO dto, MemberEntity memberEntity){
         return BoardEntity.builder()
                 .boardId(dto.getBoardId())
                 .memberEntity(memberEntity)
@@ -125,10 +124,11 @@ public class BoardEntity {
                 .updateDate(dto.getUpdateDate())
                 .hitCount(dto.getHitCount())
                 .likeCount(dto.getLikeCount())
+                .replyCount(dto.getReplyCount())
                 .originalFileName(dto.getOriginalFileName())
                 .savedFileName(dto.getSavedFileName())
-                // .reported(dto.isReported())
-                // .jobBoardEntity(null)
+                .reported(dto.isReported())
+                .jobBoardEntity(null)
                 .build();
     }
 
