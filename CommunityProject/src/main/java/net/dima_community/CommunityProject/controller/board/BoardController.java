@@ -20,6 +20,7 @@ import net.dima_community.CommunityProject.dto.board.combine.BoardListDTO;
 import net.dima_community.CommunityProject.service.board.BoardService;
 import net.dima_community.CommunityProject.util.PageNavigator;
 
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
