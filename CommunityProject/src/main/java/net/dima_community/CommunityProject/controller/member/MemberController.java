@@ -52,6 +52,7 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/member/join")
+
 	public String join() {
 		return "member/join";
 	}
@@ -352,22 +353,24 @@ public class MemberController {
 
 		return "redirect:/admin/adminPage";
 	}
-	
-	//============= Board ===============
-		/**
-	     * ajax - memberId에 해당하는 memberEntity의 memberGroup 정보 요청 
-	     * @param memberId
-	     * @return
-	     */
-	    @ResponseBody
-	    @GetMapping("/member/getMemberGroup")
-	    public String getMemberGroup(@RequestParam(name = "memberId") String memberId) {
-	        Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
-	        
-	        if (memberEntity.isPresent()) {
-	            MemberEntity member = memberEntity.get();
-	            return member.getMemberGroup();
-	        }else return "";
-	    }
-	    
+
+	// ============= Board ===============
+	/**
+	 * ajax - memberId에 해당하는 memberEntity의 memberGroup 정보 요청
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/member/getMemberGroup")
+	public String getMemberGroup(@RequestParam(name = "memberId") String memberId) {
+		Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
+
+		if (memberEntity.isPresent()) {
+			MemberEntity member = memberEntity.get();
+			return member.getMemberGroup();
+		} else
+			return "";
+	}
+
 }// end class
