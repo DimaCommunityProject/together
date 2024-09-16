@@ -486,6 +486,7 @@
                                         </a>
                                     </li>
 
+
                                     <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                                         <a class="nav-link pe-0" href="javascript:void(0)" id="drop1"
                                             aria-expanded="false">
@@ -1007,12 +1008,11 @@
                                     <!-- ------------------------------- -->
                                     <li class="nav-item nav-icon-hover-bg rounded-circle"
                                         sec:authorize="isAuthenticated()">
-                                        <a class="nav-link position-relative" th:href="@{api/chat/chatPage} ">
+                                        <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
                                             <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35"
                                                 height="35" />
                                         </a>
                                     </li>
-
                                     <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                                         <a class="nav-link pe-0" href="javascript:void(0)" id="drop1"
                                             aria-expanded="false">

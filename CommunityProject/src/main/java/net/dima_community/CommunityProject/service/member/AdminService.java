@@ -25,9 +25,10 @@ import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.BoardReportEntity;
 import net.dima_community.CommunityProject.entity.member.AdminNoteEntity;
 import net.dima_community.CommunityProject.entity.member.MemberEntity;
+import net.dima_community.CommunityProject.repository.board.BoardReportRepository;
+import net.dima_community.CommunityProject.repository.board.BoardRepository;
 import net.dima_community.CommunityProject.repository.member.AdminNoteRepository;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
-import net.dima_community.CommunityProject.repository.board.BoardReportRepository;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -36,6 +37,7 @@ public class AdminService {
 	private final MemberRepository memberRepository;
 	private final AdminNoteRepository adminNoteRepository;
 	private final BoardReportRepository boardReportRepository;
+	private final BoardRepository boardRepository;
 
 	@Value("${admin.page.pageLimit}")
 	int pageLimit;
@@ -61,7 +63,7 @@ public class AdminService {
 		entityList = memberRepository.findByMemberGroup(memberGroup,
 				PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, "memberName")));
 
-		log.info("관리자 페이지 회원 테이블(서비스단) : {}", entityList.getContent());
+		//og.info("관리자 페이지 회원 테이블(서비스단) : {}", entityList.getContent());
 
 		Page<MemberDTO> dtoList = null;
 
@@ -107,7 +109,7 @@ public class AdminService {
 
 		Page<AdminNoteEntity> entityList = adminNoteRepository.findAll(pageable1);
 
-		log.info("관리자 페이지 공지사항 테이블(서비스단) : {}", entityList.getContent());
+		//log.info("관리자 페이지 공지사항 테이블(서비스단) : {}", entityList.getContent());
 
 		Page<AdminNoteDTO> dtoList = null;
 
@@ -176,7 +178,7 @@ public class AdminService {
 	@Transactional
 	public void incrementHitcount(Long adminNoteNum) {
 		Optional<AdminNoteEntity> entity = adminNoteRepository.findById(adminNoteNum);
-		log.info("조회수 증가 서비스 단 1: {}", entity.toString());
+		//log.info("조회수 증가 서비스 단 1: {}", entity.toString());
 
 		if (entity.isPresent()) {
 			AdminNoteEntity adminNoteEntity = entity.get();
@@ -194,7 +196,7 @@ public class AdminService {
 	 */
 	@Transactional
 	public void updateNoteOne(AdminNoteDTO adminNoteDTO) {
-		log.info("공지사항 수정 서비스단 1: {}", adminNoteDTO.toString());
+		//log.info("공지사항 수정 서비스단 1: {}", adminNoteDTO.toString());
 
 		MultipartFile uploadFile = adminNoteDTO.getUploadFile(); // 첨부파일
 
@@ -210,7 +212,7 @@ public class AdminService {
 
 		Optional<AdminNoteEntity> entity = adminNoteRepository.findById(adminNoteDTO.getAdminNoteNum());
 
-		log.info("공지사항 수정 서비스단 2: {}", entity.toString());
+		//log.info("공지사항 수정 서비스단 2: {}", entity.toString());
 
 		if (entity.isPresent()) {
 			AdminNoteEntity adminNoteEntity = entity.get();
@@ -230,7 +232,7 @@ public class AdminService {
 				adminNoteEntity.setAdminNoteSavedFileName(savedFileName);
 			}
 			// 3. 첨부파일이 아예 없는 경우 파일 빼고 다 set함
-			log.info("공지사항 수정 서비스단 3: {}", adminNoteDTO.toString());
+			//log.info("공지사항 수정 서비스단 3: {}", adminNoteDTO.toString());
 
 			adminNoteEntity.setAdminNoteTitle(adminNoteDTO.getAdminNoteTitle());
 			adminNoteEntity.setAdminNoteContent(adminNoteDTO.getAdminNoteContent());
@@ -274,10 +276,10 @@ public class AdminService {
 	public Page<BoardReportDTO> selectBoardReportAll(Pageable pageable) {
 		int page = pageable.getPageNumber() - 1;
 
-		Pageable pageable1 = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, "reportDate"));
+		Pageable pageable1 = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "reportDate"));
 		Page<BoardReportEntity> entityList = boardReportRepository.findAll(pageable1);
 
-		log.info("관리자 신고게시글 테이블(서비스단) : {}", entityList.getContent());
+		//log.info("관리자 신고게시글 테이블(서비스단) : {}", entityList.getContent());
 
 		Page<BoardReportDTO> dtoList = null;
 
@@ -331,8 +333,45 @@ public class AdminService {
 		Optional<BoardReportEntity> entity = boardReportRepository.findById(reportId);
 
 		if (entity.isPresent()) {
+			BoardReportEntity boardReportEntity = entity.get();
+			
+			// BoardEntity를 가져오기
+			BoardEntity boardEntity = boardReportEntity.getBoardEntity();
+			//boardEntity.getBoardId();
+			
 			boardReportRepository.deleteById(reportId);
+			boardRepository.deleteById(boardEntity.getBoardId());
 		}
-	}// end deleteBoardOne
+	}
+
+	/**
+	 * 신고 게시글 무시
+	 * @param reportId
+	 */
+	@Transactional
+	public void restoreBoardOne(Long reportId) {
+		Optional<BoardReportEntity> entity  = boardReportRepository.findById(reportId);
+		
+		if (entity.isPresent()) {
+			BoardReportEntity boardReportEntity = entity.get();
+			//log.info("신고 게시글 무시 : {}", boardReportEntity);
+
+			// BoardEntity를 가져오기
+			BoardEntity boardEntity = boardReportEntity.getBoardEntity();
+			//log.info("신고 게시글 무시 : {}", boardEntity.toString());
+
+	        boardEntity.setReported(false);
+	        //log.info("신고 게시글 무시2 : {}", boardEntity.toString());
+	        boardRepository.save(boardEntity);
+	        boardReportRepository.deleteById(reportId);
+	        //저장 여부
+//	        try {
+//	            boardRepository.save(boardEntity);
+//	            boolean success = true; 
+//	        } catch (Exception e) {
+//	            boolean success = false; 
+//	        }
+		}
+	}//end restoreBoardOne
 
 }// end class

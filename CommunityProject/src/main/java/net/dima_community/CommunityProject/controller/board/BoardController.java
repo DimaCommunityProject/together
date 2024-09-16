@@ -279,6 +279,8 @@ public class BoardController {
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
             RedirectAttributes rttr) {
 
+    	log.info("게시글 신고 카테고리 넘어와? : {}", category);
+    	
         // JobBoardReport DB에 저장
         boardService.insertJobBoardReported(dto);
 

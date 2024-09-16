@@ -67,7 +67,7 @@ public class LoginMemberDetails implements UserDetails {
     }
     
     public String getName() {
-    	log.info("name data: {}", this.memberName);
+    	//log.info("name data: {}", this.memberName);
     	return this.memberName;
     }
 	

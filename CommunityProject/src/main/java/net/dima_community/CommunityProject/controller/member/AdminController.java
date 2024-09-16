@@ -311,7 +311,6 @@ public class AdminController {
     }// end adminPageBoardDelete
 
     /**
-     * d
      * 신고 게시글 무시
      * 
      * @param reportId
@@ -321,7 +320,12 @@ public class AdminController {
     public String adminPageBoardignore(@RequestParam(name = "reportId") Long reportId) {
 
         // 신고 게시글 테이블에서 삭제
-        adminservice.deleteBoardOne(reportId);
+        //adminservice.deleteBoardOne(reportId);
+        
+    	//log.info("신고 게시글 무시 : {}", reportId);
+    	//boolean success = adminservice.restoreBoardOne(reportId);
+    	adminservice.restoreBoardOne(reportId);	//board에서 reported false + boardReport에서 삭제
+    	
         return "redirect:/admin/adminPageBoard";
     }
 }// end class
