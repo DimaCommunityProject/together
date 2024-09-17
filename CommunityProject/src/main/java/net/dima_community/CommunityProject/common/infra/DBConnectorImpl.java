@@ -14,7 +14,7 @@ public class DBConnectorImpl implements DBConnector {
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://localhost:3306/dima";
     private String id = "root";
-    private String pwd = "3122";
+    private String pwd = "mysqlpassword";
 
     @Override
     public Connection getConnection() {

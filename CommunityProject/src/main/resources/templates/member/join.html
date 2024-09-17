@@ -10,6 +10,217 @@
   <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  
+  <script>
+    $(function () {
+      $("#memberId").on('keyup', checkId)
+      $("#memberPw").on('keyup', checkPw)
+      $("#memberPw2").on('keyup', pwDoubleCheck)
+      $("#memberPhone").on('keyup', checkPhone)
+      $("#memberEmail").on('keyup', checkEmail)
+      $("#sendEmail").on('click', function () {
+        // if (!checkBeforeJoin) {
+        //   $("#maintainJoinPage").text("가입 정보를 입력해주세요!");
+        // }
+
+        let memberId = $("#memberId").val();
+        // let memberPw = $("#memberPw").val();
+        // let memberName = $("#memberName").val();
+        // let memberGroup = $("#memberGroup").val();
+        // let memberPhone = $("#memberPhone").val();
+        let memberEmail = $("#memberEmail").val();
+        // let memberEnabled = $("#memberEnabled").val();
+        // let memberRole = $("#memberRole").val();
+        // let uploadFile = $("#uploadFile").val();
+        // console.log(uploadFile);
+
+
+
+        //   if (!$("#termsCheckbox").is(':checked')) {
+        //     alert("약관 동의에 체크해주세요");
+        //     return;
+        //   }
+
+        toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
+          progressBar: true,
+        });
+        // // FormData 객체 생성
+        // var formData = new FormData();
+
+        // // JSON 데이터를 문자열로 변환하여 추가
+        // var jsonData = JSON.stringify({
+        //   memberId: memberId,
+        //   memberPw: memberPw,
+        //   memberName: memberName,
+        //   memberGroup: memberGroup,
+        //   memberPhone: memberPhone,
+        //   memberEmail: memberEmail,
+        //   memberEnabled: memberEnabled,
+        //   memberRole: memberRole
+        // });
+
+
+        // formData.append("jsonData", new Blob([jsonData], { type: "application/json" }));
+
+        // // 파일 추가
+        // if (uploadFile) {
+        //   formData.append("uploadFile", uploadFile);
+        // } else {
+        //   console.error("No file selected.");
+        // }
+        $.ajax({
+          url: "/email/send",
+          method: "POST",
+          data: { memberId: memberId, memberEmail: memberEmail },
+          success: function (resp) {
+            if (!resp) alert("메일 전송에 실패하였습니다. 다시한번 시도해주세요.")
+            else alert("메일을 성공적으로 전송했습니다.")
+          }
+        })
+      });
+
+
+      $("#verifyCode").on('click', function () {
+        let myVerifyCode = $("#myVerifyCode").val();
+        let memberId = $("#memberId").val();
+
+        $.ajax({
+          url: "/email/verifyCode"
+          , method: "GET"
+          , data: { memberVerifyCode: myVerifyCode, memberId: memberId }
+          , success: function (resp) {
+            if (!resp) alert("본인인증에 실패하였습니다. 다시한번 시도해주세요.")
+            else {
+
+              alert("본인인증에 성공했습니다. ");
+              $("#maintainJoinPage").text("");
+              $("#closeJoinPage").prop('hidden', false);
+            }
+          }
+        })
+      })
+
+      $("#closeJoinPage").on('click', function () {
+        if (!checkBeforeJoin()) {
+          alert("가입 정보를 확인해주세요.");
+          return;
+        } else {
+          $("#joinForm").submit();
+        }
+      })
+
+
+
+    });
+
+    function checkId() {
+      let id = $("#memberId").val();
+      if (id.trim().length < 8 || id.trim().length > 15) {
+        $("#checkId").text("아이디는 8~15자리로 설정해주세요");
+        return false;
+      }
+      if (id.trim().length >= 8 || id.trim().length <= 15) {
+        $.ajax({
+          url: "/member/checkDuplicate"
+          , data: { memberId: id }
+          , method: "GET"
+          , success: function (resp) {
+            console.log(resp);
+            if (!resp) {
+              $("#checkId").removeClass("text-success");
+              $("#checkId").removeClass("bg-danger-subtle");
+              $("#checkId").addClass("text-danger");
+              $("#checkId").addClass("bg-success-subtle");
+              $("#checkId").text("이미 존재하는 ID 입니다.");
+              return false;
+            } else {
+              $("#checkId").removeClass("text-danger");
+              $("#checkId").removeClass("bg-danger-subtle");
+              $("#checkId").addClass("text-success");
+              $("#checkId").addClass("bg-success-subtle");
+              $("#checkId").text("사용 가능한 ID 입니다.")
+            }
+
+          }
+        })
+        return true;
+      }
+    };
+
+    function checkPw() {
+      let pw = $("#memberPw").val();
+      if (pw.trim().length < 8 || pw.trim().length > 15) {
+        $("#memberPw2").attr('readonly', true)
+        $("#checkPw").text("비밀번호는 8~15자리로 설정해주세요.")
+        return false;
+      } else {
+        $("#memberPw2").attr('readonly', false)
+        $("#checkPw").text("");
+        return pwDoubleCheck();
+      }
+    }
+
+    function pwDoubleCheck() {
+      let pw = $("#memberPw").val();
+      let pw2 = $("#memberPw2").val();
+      if (pw.trim() != pw2.trim()) {
+        $("#pwDoubleCheck").removeClass("text-success");
+        $("#pwDoubleCheck").removeClass("bg-success-subtle");
+        $("#pwDoubleCheck").addClass("text-danger");
+        $("#pwDoubleCheck").addClass("bg-danger-subtle");
+        $("#pwDoubleCheck").text("비밀번호가 일치하지 않습니다.");
+        return false;
+      } else {
+        $("#pwDoubleCheck").removeClass("text-danger");
+        $("#pwDoubleCheck").removeClass("bg-danger-subtle");
+        $("#pwDoubleCheck").addClass("text-success");
+        $("#pwDoubleCheck").addClass("bg-success-subtle");
+        $("#pwDoubleCheck").text("비밀번호가 일치합니다.");
+        return true;
+      }
+    }
+
+    function checkPhone() {
+      let phone = $("#memberPhone").val();
+      if (phone.trim().length != 13) {
+        $("#checkPhone").text("전화번호는 '-'를 포함하여 13자리 입니다.");
+        return false;
+      } else {
+        $("#checkPhone").text("");
+        return true;
+      }
+    }
+
+    function checkEmail() {
+      let email = $("#memberEmail").val();
+      if (email === "") {
+        $("#checkEmail").html("이메일은 필수값입니다.<br>");
+        return false;
+      } else if (email.indexOf("@") === -1) {
+        $("#checkEmail").html("올바른 이메일 형식으로 입력해주세요.");
+        return false;
+      } else {
+        $("#checkEmail").html(null);
+        return true;
+      }
+
+    }
+
+    function checkBeforeJoin() {
+      let memberName = $("#memberName").val().trim();
+      let BmemberId = checkId();
+      let BmemberPw = checkPw();
+      let BmemberPhone = checkPhone();
+      let BmemberEmail = checkEmail();
+
+      if (!(memberName != "" && BmemberId && BmemberPw && BmemberPhone && BmemberEmail)) {
+        return false;
+      }
+      else { return true; }
+
+    }
+
+  </script>
 
   <title>디지털마스터 커뮤니티</title>
   <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
@@ -922,8 +1133,8 @@
                             <h5 class="mb-0 fs-5 fw-semibold userProfileImage">User Profile2</h5>
                           </div> -->
                         <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
-                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}" 
+                          alt="profile image" width="35" height="35" class="rounded-circle h-100">
                           <div class="ms-3">
                             <h5 class="mb-1 fs-3 currentUserName" th:text="${loginName}">Mathew Anderson</h5>
                             <!-- 이름 출력 -->
@@ -1001,11 +1212,11 @@
 
                           <div class="mb-3 registerblock">
                             <label for="exampleInputEmail1" class="form-label">Password
-                              <input type="password" name="memberPw" id="memberPw" class="form-control mx-n1"
-                                aria-describedby="textHelp">
-                              <span id="checkPw" class="badge fw-semibold py-1 bg-danger-subtle text-danger checkPw"
-                                style="width: 100%;"></span>
-                            </label>
+							  <input type="password" name="memberPw" id="memberPw" class="form-control mx-n1"
+							    aria-describedby="textHelp" autocomplete="current-password">
+							  <span id="checkPw" class="badge fw-semibold py-1 bg-danger-subtle text-danger checkPw"
+							    style="width: 100%;"></span>
+							</label>
 
                             <label for="exampleInputEmail1" class="form-label">비밀번호 확인
                               <input type="password" name="memberPw2" id="memberPw2" class="form-control mx-n1"
@@ -1306,6 +1517,7 @@
   <script th:src="@{/js/theme/theme.js}"></script>
 
   <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+  <script th:src="@{/js/plugins/toastr-init.js}"></script>
 
   <!-- solar icons -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
