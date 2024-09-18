@@ -79,7 +79,12 @@
                 <img th:src="@{/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="180">
               </a>
               <!-- 작성자 이미지 -->
+<<<<<<< HEAD
               <img th:src="@{/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
+=======
+               <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${board.memberId})}"
+                alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
               <!-- 작성자 ID 및 배지 -->
             </div>
             

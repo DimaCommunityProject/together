@@ -11,6 +11,10 @@
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
     <title>공지사항</title>
+<<<<<<< HEAD
+=======
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
     <style>
         #loginLine {
             width: 1200px;
@@ -356,6 +360,7 @@
                                                 style="width: 30.2px; height: 30px;" />
                                         </a>
                                     </li>
+<<<<<<< HEAD
                                     <!-- 마이페이지 -->
                                     <div>
                                         <li class="nav-item nav-icon-hover-bg rounded-circle">
@@ -372,6 +377,22 @@
                                             </a>
                                         </li>
                                     </div>
+=======
+                                    <!-- 이름 출력 -->
+                            <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getRole()}">Designer</span>
+                            <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getGroup()}">Designer</span>
+                            <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getEmail()}">Designer</span>
+                                    <!-- 마이페이지 -->
+                                    <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                        <!-- 링크 수정 필요-->
+                                        <a class="nav-link position-relative"
+                                            th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                                            <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                                            <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                                                alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                                        </a>
+                                    </li>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                 </ul>
                             </div>
                         </div>

@@ -90,15 +90,13 @@ public class SecurityConfig {
 
 		// HTTP 헤더 보안 설정
 		// xss와 csp는 둘 다 xss 보완이지만 xssProtection는 구식 브라우저 보호이며 csp는 현대적이고 더 강력함.
-		http.headers(headers -> headers.xssProtection(
-				xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-				.contentSecurityPolicy(
-						cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
-													"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com; " +
-													"object-src 'none';" // script-src에 외부 CDN 추가, style-src도 설정
-						)
-				)
-		);
+		http.headers(headers -> headers.contentSecurityPolicy(
+			    cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
+			                                "style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com; " +
+			                                "font-src 'self' https://fonts.gstatic.com; " +  // 폰트 출처 추가
+			                                "object-src 'none';" // object-src 제한
+			    )
+			));
 
 		return http.build();
 	}// end filterchain

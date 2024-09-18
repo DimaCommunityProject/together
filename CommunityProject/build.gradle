@@ -25,7 +25,6 @@ repositories {
 
 dependencies {
 
-    // 메일 보내는 디펜던시 추가
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -41,14 +40,31 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    
-    
+
     //보안관련
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'	//추가했음
     implementation 'org.springframework.boot:spring-boot-starter-security'	
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//외부 브로커를 사용하기 위해
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
+
+	//jackson2json에서 LocalDateTime을 handling 하기 위해
+	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	
+	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+	
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
+    implementation 'org.springframework.security:spring-security-messaging'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
 }

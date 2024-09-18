@@ -276,7 +276,7 @@ public class MemberService {
 	public String showImageAtMain(String memberId) {
 		MemberDTO memberDTO = findById(memberId);
 		if (memberDTO.getSavedFileName() == null) {
-			return getFileFullPath("user-1.jpg");
+			return getFileFullPath("basic_profile.png");
 		} else {
 			return getFileFullPath(memberDTO.getSavedFileName());
 		}
@@ -298,6 +298,7 @@ public class MemberService {
 	}
 
 	public void deleteMember(String memberId) {
+		log.info("회원삭제 서비스 도착");
 		memberRepository.deleteById(memberId);
 	}
 

@@ -9,7 +9,6 @@ import net.dima_community.CommunityProject.common.exception.ResourceNotFoundExce
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.repository.member.MemberPageRepository;
-import net.dima_community.CommunityProject.service.member.MemberService;
 
 @Service
 @RequiredArgsConstructor

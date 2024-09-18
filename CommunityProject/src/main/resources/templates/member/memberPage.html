@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical"
-  xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="horizontal"
+  xmlns:th="http://www.thymeleaf.org" xmlns:src="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <!-- Required meta tags -->
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{/libs/select2/dist/css/select2.min.css}">
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
+<<<<<<< HEAD
   <!-- Favicon icon-->
   <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
 
@@ -19,6 +24,8 @@
 
   <title>Modernize Bootstrap Admin</title>
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+=======
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
   <script>
     $(function () {
       var skillItem = $("#skillItem").text();
@@ -46,38 +53,38 @@
           $.each(resp, function (index, item) {
             console.log(item.title);
             data += `<div class="row">
-                          <div data-draggable="true" class="card img-task">
-                            <div class="card-body" style="padding: 10px;">
-                              <div class="task-header">
-                                <div>
-                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;">
-                                    ${item.title}</h4>
-                                </div>
-                                <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1" >${item.category}</span>
-                                </div>
-                              </div>
-
-                              <div class="task-content">
-                                <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." >
-                                ${item.content}
-                                </p>
-                              </div>
-                              <div class="task-body">
-                                <div class="task-bottom">
-                                  <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
-                                      <i class="ti ti-calendar fs-5"></i>${item.createDate}
-                                    </span>
+                            <div data-draggable="true" class="card img-task">
+                              <div class="card-body" style="padding: 10px;">
+                                <div class="task-header">
+                                  <div>
+                                    <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                                margin-bottom: 0;">
+                                      ${item.title}</h4>
                                   </div>
-
+                                  <div class="tb-section-2">
+                                    <span class="badge text-bg-warning fs-1" >${item.category}</span>
+                                  </div>
+                                </div>
+  
+                                <div class="task-content">
+                                  <p class="mb-0"
+                                    data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid." >
+                                  ${item.content}
+                                  </p>
+                                </div>
+                                <div class="task-body">
+                                  <div class="task-bottom">
+                                    <div class="tb-section-1">
+                                      <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                        <i class="ti ti-calendar fs-5"></i>${item.createDate}
+                                      </span>
+                                    </div>
+  
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>`;
+                          </div>`;
           })
           $("#navpill-111").html(data);
 
@@ -93,38 +100,38 @@
           $.each(resp, function (key, value) {
             console.log(key.content);
             data += `<div class="row">
-                          <div data-draggable="true" class="card img-task">
-                            <div class="card-body" style="padding: 10px;">
-                              <div class="task-header">
-                                <div>
-                                  <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                              margin-bottom: 0;">${key}
-                                    </h4>
-                                </div>
-                                <div class="tb-section-2">
-                                  <span class="badge text-bg-warning fs-1" >${value.category}</span>
-                                </div>
-                              </div>
-
-                              <div class="task-content">
-                                <p class="mb-0"
-                                  data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
-                                  ${value.title}
-                                </p>
-                              </div>
-                              <div class="task-body">
-                                <div class="task-bottom">
-                                  <div class="tb-section-1">
-                                    <span class="hstack gap-2 fs-2" data-item-date="24 July" >
-                                      <i class="ti ti-calendar fs-5"></i> ${value.createDate}
-                                    </span>
+                            <div data-draggable="true" class="card img-task">
+                              <div class="card-body" style="padding: 10px;">
+                                <div class="task-header">
+                                  <div>
+                                    <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+                                margin-bottom: 0;">${key}
+                                      </h4>
                                   </div>
-
+                                  <div class="tb-section-2">
+                                    <span class="badge text-bg-warning fs-1" >${value.category}</span>
+                                  </div>
+                                </div>
+  
+                                <div class="task-content">
+                                  <p class="mb-0"
+                                    data-item-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, o eiusmod tempor incid.">
+                                    ${value.title}
+                                  </p>
+                                </div>
+                                <div class="task-body">
+                                  <div class="task-bottom">
+                                    <div class="tb-section-1">
+                                      <span class="hstack gap-2 fs-2" data-item-date="24 July" >
+                                        <i class="ti ti-calendar fs-5"></i> ${value.createDate}
+                                      </span>
+                                    </div>
+  
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>`;
+                          </div>`;
           })
           $("#navpill-222").html(data);
         }
@@ -132,10 +139,81 @@
 
     }
   </script>
+  <title>멤버 페이지</title>
+  <style>
+    #loginLine {
+      width: 1200px;
+      margin-left: 139px;
+      margin-right: 139px;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+
+    .loginLineLi {
+      display: inline-block;
+      margin-right: 7px
+    }
+
+    .loginLineA {
+      font-size: 12.5px;
+      color: #595959;
+    }
+
+    .loginLineA:hover {
+      color: #5d87ff;
+    }
+
+    .h6-style {
+      font-size: 0.79rem !important;
+      font-weight: 500 !important;
+      color: #13171e !important;
+      margin: 0 !important;
+      line-height: 1.2 !important;
+      text-decoration: none !important;
+    }
+
+    #pills-tabContent {
+      padding-top: 20px;
+    }
+
+    #h3 {
+      font-size: 22.5px;
+      margin-bottom: 15px !important;
+    }
+
+    #card-body {
+      font-size: 12.5px;
+      padding: 70px !important;
+      padding-top: 0px !important;
+    }
+  </style>
 </head>
 
 <body class="link-sidebar">
+  <!-- Preloader -->
+  <div class="preloader">
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+  </div>
+  <div id="main-wrapper">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar with-vertical">
+      <!-- <div> -->
+      <!-- ---------------------------------- -->
+      <!-- Start Vertical Layout Sidebar -->
+      <!-- ---------------------------------- -->
+      <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="../horizontal/index.html" class="text-nowrap logo-img">
+            <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          </a>
+          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+            <i class="ti ti-x"></i>
+          </a>
+        </div> -->
+    </aside>
 
+<<<<<<< HEAD
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -157,6 +235,8 @@
             </a>
           </div> -->
     </aside>
+=======
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
 
     <div class="page-wrapper">
       <!--  Header Start -->
@@ -165,15 +245,26 @@
           <nav class="navbar navbar-expand-xl container-fluid p-0" style="margin-top: 10px !important;">
             <ul class="navbar-nav align-items-center">
               <!-- <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+<<<<<<< HEAD
                   <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
                     <i class="ti ti-menu-2"></i>
                   </a>
                 </li> -->
+=======
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li> -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
                   <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
                   <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
+<<<<<<< HEAD
                                           alt="modernize-img" /> -->
+=======
+                                        alt="modernize-img" /> -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                 </a>
               </li>
             </ul>
@@ -377,6 +468,7 @@
 
 
 
+<<<<<<< HEAD
                         <!-- 채팅/마이페이지 시작 -->
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                           <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
@@ -423,6 +515,48 @@
                           </div>
                         </div>
                         <!-- 채팅/마이페이지 끝-->
+=======
+            <!-- 채팅/마이페이지 시작 -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+                <a href="javascript:void(0)"
+                  class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- 다크모드 -->
+                  <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
+                                        <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                                            <i class="ti ti-moon moon"></i>
+                                        </a>
+                                        <a class="nav-link sun light-layout" href="javascript:void(0)">
+                                            <i class="ti ti-sun sun"></i>
+                                        </a>
+                                    </li> -->
+                  <!-- 채팅 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <a class="nav-link position-relative" href="javascript:void(0)" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                  <!-- 마이페이지 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <!-- 링크 수정 필요-->
+                    <a class="nav-link position-relative"
+                      th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
+                      <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
+                        alt="modernize-img" style="width: 30.2px; height: 30px;" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- 채팅/마이페이지 끝-->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
           </nav>
           <!-- 회원가입/로그인 div 시작 -->
           <div id="loginLine">
@@ -446,6 +580,12 @@
         </div>
       </header>
       <!--  Header End -->
+<<<<<<< HEAD
+=======
+
+
+      <!-- 여기부터 본문 시작 -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
       <div class="body-wrapper" style="padding-top: 120px;">
         <div class="container-fluid" style="padding-top: 20px !important">
           <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
@@ -456,7 +596,11 @@
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
+<<<<<<< HEAD
                         <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+=======
+                        <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                       </li>
                       <li class="breadcrumb-item" aria-current="page">User Profile</li>
                     </ol>
@@ -475,6 +619,7 @@
               <img th:src="@{/images/backgrounds/profilebg.jpg}" alt="modernize-img" class="img-fluid">
               <div class="row" style="justify-content: flex-end;">
                 <!-- <div class="col-lg-4 order-lg-1 order-2">
+<<<<<<< HEAD
               <div class="d-flex align-items-center justify-content-around m-4">
                 <div class="text-center">
                   <i class="ti ti-file-description fs-6 d-block mb-2"></i>
@@ -493,6 +638,26 @@
                 </div>
               </div>
             </div> -->
+=======
+                    <div class="d-flex align-items-center justify-content-around m-4">
+                      <div class="text-center">
+                        <i class="ti ti-file-description fs-6 d-block mb-2"></i>
+                        <h4 class="mb-0 lh-1">938</h4>
+                        <p class="mb-0 ">Posts</p>
+                      </div>
+                      <div class="text-center">
+                        <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
+                        <h4 class="mb-0 lh-1">3,586</h4>
+                        <p class="mb-0 ">Followers</p>
+                      </div>
+                      <div class="text-center">
+                        <i class="ti ti-user-check fs-6 d-block mb-2"></i>
+                        <h4 class="mb-0 lh-1">2,659</h4>
+                        <p class="mb-0 ">Following</p>
+                      </div>
+                    </div>
+                  </div> -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                 <div class="col-lg-4 mt-n3 order-lg-2 order-1">
                   <div class="mt-n5">
                     <div class="d-flex align-items-center justify-content-center mb-2">
@@ -501,12 +666,21 @@
                           class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
                           <!-- savedFileName이 존재하는 경우 -->
                           <!-- <img th:if="${member.savedFileName != null}"
+<<<<<<< HEAD
                         th:src="@{/member/showImage/{fileName}(fileName=${member.savedFileName})}" alt="profile image"
                         class="w-100 h-100"> -->
 
                           <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
                           <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
                         alt="default profile image" class="w-100 h-100"> -->
+=======
+                              th:src="@{/member/showImage/{fileName}(fileName=${member.savedFileName})}" alt="profile image"
+                              class="w-100 h-100"> -->
+
+                          <!-- savedFileName이 없는 경우 기본 이미지 사용 -->
+                          <!-- <img th:if="${member.savedFileName == null}" src="/static/images/main/chat.png"
+                              alt="default profile image" class="w-100 h-100"> -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                           <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${member.memberId})}"
                             alt="profile image" class="h-100">
                         </div>
@@ -629,6 +803,7 @@
                   </div>
                 </div>
                 <div class="col-lg-8">
+<<<<<<< HEAD
 
                   <div class="card">
                     <div class="card-body">
@@ -662,12 +837,52 @@
                           </div>
                         </div>
 
+=======
+
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title mb-3">Skill Set</h4>
+                      <p th:text="${memberPage.memberSkill}" id="skillItem" hidden>SkillSet</p>
+                      <ul class="list-group list-group-horizontal" id="skillUl" style="display: flex;
+        flex-wrap: wrap; 
+        padding: 0;
+        margin: 0;
+        list-style-type: none;">
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body border-bottom">
+                      <h4 class="card-title mb-3">Project</h4>
+                      <!-- <p th:text="${memberProject}" id="projects" hidden>Projects</p> -->
+                      <div th:each="entry : ${memberProject}">
+
+                        <div class="card card-hover">
+                          <div class="card-header" style="background-color: rgba(236, 242, 247, 0.897);">
+                            <h4 th:text="${entry.projectTitle}" class="mb-0 text-dark card-title">Card Title</h4>
+                          </div>
+                          <div class="card-body">
+                            <h3 th:text="${entry.projectSubtitle}" class="card-title">Special title treatment</h3>
+                            <p th:text="${entry.projectGit}" class="card-text">
+                              With supporting text below as a natural lead-in to
+                              additional content.
+                            </p>
+                            <a th:href="${entry.projectGit}" class="btn btn-primary">Git Repository 바로가기</a>
+                          </div>
+                        </div>
+
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                       </div>
 
                     </div>
                   </div>
                   <span style="margin: 10px; float: right;">
+<<<<<<< HEAD
                     <a th:href="@{/memberpage/updatepage(memberId=${member.memberId})}"
+=======
+                    <a th:if="${#authentication.name == member.memberId}"
+                      th:href="@{/memberpage/updatepage(memberId=${member.memberId})}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                       class="link-body-emphasis link-offset-2 text-decoration-underline link-underline-opacity-25 link-underline-opacity-75-hover">수정하기</a></span>
 
 
@@ -677,6 +892,7 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
     </div>
   </div>
 
@@ -695,6 +911,40 @@
   <script th:src="@{/libs/select2/dist/js/select2.min.js}"></script>
   <script th:src="@{/js/forms/select2.init.js}"></script>
   <script th:src="@{/js/apps/kanban.js}"></script>
+=======
+      <!-- 본문 끝 -->
+      <script>
+        function handleColorTheme(e) {
+          document.documentElement.setAttribute("data-color-theme", e);
+        }
+      </script>
+
+    </div>
+  </div>
+  <div class="dark-transparent sidebartoggler"></div>
+  <!-- Import Js Files -->
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/app.init.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/vendor.min.js}"></script>
+  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+  <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
+  <!-- This Page JS -->
+  <script th:src="@{/libs/select2/dist/js/select2.full.min.js}"></script>
+  <script th:src="@{/libs/select2/dist/js/select2.min.js}"></script>
+  <script th:src="@{/js/forms/select2.init.js}"></script>
+  <script th:src="@{/js/apps/kanban.js}"></script>
+  <script th:src="@{/libs/fullcalendar/index.global.min.js}"></script>
+  <script th:src="@{/js/apps/contact.js}"></script>
+
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script th:src="@{/libs/fullcalendar/index.global.min.js}"></script>
+  <script th:src="@{/js/apps/contact.js}"></script>
+
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
 </body>
 
 </html>

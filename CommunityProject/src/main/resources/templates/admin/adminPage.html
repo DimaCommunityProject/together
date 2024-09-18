@@ -7,9 +7,24 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
   <link rel="stylesheet" href="/static/css/styles.css" />
   <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
 
+=======
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+  <script>
+    // $(function () {
+    //   $("#deleteMember").on("click", deleteMember);
+    // })
+
+    // function deleteMember() {
+
+    // }
+  </script>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
   <title>관리자 페이지</title>
   <style>
     #loginLine {
@@ -64,7 +79,11 @@
 <body class="link-sidebar">
   <!-- Preloader -->
   <div class="preloader">
+<<<<<<< HEAD
     <img src="/static/images/logos/favicon.png" alt="loader" class="lds-ripple img-fluid" />
+=======
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
   </div>
   <div id="main-wrapper">
     <!-- Sidebar Start -->
@@ -74,11 +93,19 @@
       <!-- Start Vertical Layout Sidebar -->
       <!-- ---------------------------------- -->
       <!-- <div class="brand-logo d-flex align-items-center justify-content-between">
+<<<<<<< HEAD
           <a href="../horizontal/index.html" class="text-nowrap logo-img">
             <img src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
             <img src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+=======
+          <a th:href="../horizontal/index.html" class="text-nowrap logo-img">
+            <img th:src="/static/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+            <img th:src="/static/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" />
+          </a>
+          <a th:href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
             <i class="ti ti-x"></i>
           </a>
         </div> -->
@@ -92,13 +119,21 @@
           <nav class="navbar navbar-expand-xl container-fluid p-0" style="margin-top: 10px !important;">
             <ul class="navbar-nav align-items-center">
               <!-- <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+<<<<<<< HEAD
                 <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
+=======
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" th:href="javascript:void(0)">
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                   <i class="ti ti-menu-2"></i>
                 </a>
               </li> -->
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
+<<<<<<< HEAD
                   <img src="/static/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="modernize-img" />
+=======
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                   <!-- <img src="/static/images/logos/light-logo.svg" class="light-logo" width="180"
                                         alt="modernize-img" /> -->
                 </a>
@@ -126,11 +161,16 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
+<<<<<<< HEAD
                                   <a href="../horizontal/app-chat.html"
+=======
+                                  <a th:href="@{/board/list(category=code)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 195px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/code.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
@@ -143,10 +183,23 @@
                                     </div>
                                   </a>
                                   <a href="../horizontal/app-invoice.html"
+=======
+                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">모르는 코드 물어보세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=project)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 280px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/project.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
@@ -156,6 +209,15 @@
                                       </h6>
                                       <span class="fs-2 d-block text-body-secondary">지난
                                         기수들의 프로젝트를 확인해보세요!</span>
+=======
+                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">지난 기수들의 프로젝트를 확인해보세요!</span>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     </div>
                                   </a>
                                 </div>
@@ -184,27 +246,43 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
+<<<<<<< HEAD
                                   <a href="../horizontal/app-chat.html"
+=======
+                                  <a th:href="@{/board/list(category=activity)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 225px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/job.png" alt="modernize-img" class="img-fluid"
+=======
+                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                         width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
                                         취업 공고 게시판
                                       </h6>
+<<<<<<< HEAD
                                       <span class="fs-2 d-block text-body-secondary">최신
                                         채용 정보를 확인하세요!</span>
                                     </div>
                                   </a>
                                   <a href="../horizontal/app-invoice.html"
+=======
+                                      <span class="fs-2 d-block text-body-secondary">최신 채용 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=recruit)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/recruit.png" alt="modernize-img" class="img-fluid"
                                         width="24" height="24" />
                                     </div>
@@ -214,6 +292,15 @@
                                       </h6>
                                       <span class="fs-2 d-block text-body-secondary">정보를
                                         확인하고 팀원을 모집해보세요!</span>
+=======
+                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 구인 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">정보를 확인하고 팀원을 모집해보세요!</span>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     </div>
                                   </a>
                                 </div>
@@ -242,50 +329,84 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="position-relative">
+<<<<<<< HEAD
                                   <a href="../horizontal/app-chat.html"
+=======
+                                  <a th:href="@{/board/list(category=free)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 230px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/board.png" alt="modernize-img" class="img-fluid"
+=======
+                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                         width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">
                                         자유 게시판
                                       </h6>
+<<<<<<< HEAD
                                       <span class="fs-2 d-block text-body-secondary">자유롭게
                                         게시글을 올려주세요!</span>
                                     </div>
                                   </a>
                                   <a href="../horizontal/app-invoice.html"
+=======
+                                      <span class="fs-2 d-block text-body-secondary">자유롭게 게시글을 올려주세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=info)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/info.png" alt="modernize-img" class="img-fluid"
+=======
+                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                         width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">정보 게시판
                                       </h6>
+<<<<<<< HEAD
                                       <span class="fs-2 d-block text-body-secondary">세상의
                                         모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
                                   <a href="../horizontal/app-invoice.html"
+=======
+                                      <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=group)}"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     class="d-flex align-items-center pb-9 position-relative"
                                     style="width: 266px !important">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+<<<<<<< HEAD
                                       <img src="/static/images/main/classroom.png" alt="modernize-img" class="img-fluid"
+=======
+                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                         width="24" height="24" />
                                     </div>
                                     <div>
                                       <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
                                       </h6>
+<<<<<<< HEAD
                                       <span class="fs-2 d-block text-body-secondary">기수별로
                                         소통하고 정보를 공유하세요!</span>
+=======
+                                      <span class="fs-2 d-block text-body-secondary">기수별로 소통하고 정보를 공유하세요!</span>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                     </div>
                                   </a>
                                 </div>
@@ -317,11 +438,16 @@
             <!-- 채팅/마이페이지 시작 -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+<<<<<<< HEAD
                 <a href="javascript:void(0)"
+=======
+                <!-- <a href="javascript:void(0)"
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                   class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
                   type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
                   aria-controls="offcanvasWithBothOptions">
                   <i class="ti ti-align-justified fs-7"></i>
+<<<<<<< HEAD
                 </a>
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                   <!-- 다크모드 -->
@@ -339,6 +465,24 @@
                       data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                       <img src="/static/images/main/chat.png" alt="modernize-img"
                         style="width: 30.2px; height: 30px;" />
+=======
+                </a> -->
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center" sec:authorize="isAuthenticated()">
+                  <!-- 다크모드 -->
+                  <!-- <li class="nav-item nav-icon-hover-bg rounded-circle">
+                    <a class="nav-link moon dark-layout" href="javascript:void(0)">
+                      <i class="ti ti-moon moon"></i>
+                    </a>
+                    <a class="nav-link sun light-layout" href="javascript:void(0)">
+                      <i class="ti ti-sun sun"></i>
+                    </a>
+                  </li> -->
+                  <!-- 채팅 -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle"  sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" 
+                      th:href="@{api/chat/chatPage} ">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" style="width: 30.2px; height: 30px;" />
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                     </a>
                   </li>
                   <!-- 마이페이지 -->
@@ -347,8 +491,13 @@
                     <a class="nav-link position-relative"
                       th:href="@{/memberpage/showpage(memberId=${#authentication.name})}">
                       <!-- <a class="nav-link position-relative" href="/memberpage/showpage?memberId=ssehn9327"> -->
+<<<<<<< HEAD
                       <img src="/static/images/profile/user-1.jpg" alt="modernize-img"
                         style="width: 30.2px; height: 30px;" />
+=======
+                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                        alt="modernize-img" style="width: 30.2px; height: 30px;" />
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                     </a>
                   </li>
                 </ul>
@@ -380,7 +529,11 @@
       <!--  Header End -->
 
 
+<<<<<<< HEAD
       <!-- 여기부터 본문 시작 -->
+=======
+      <!-- 여기부터 본문 구조 시작(여러분 여기가 본문 구조를 잡아주는거에요 필수) -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
       <div class="body-wrapper" style="padding-top: 120px;">
         <div class="container-fluid" style="padding-top: 20px !important">
           <!-- 파란색 부분 시작 -->
@@ -407,7 +560,11 @@
           <!-- 파란색 부분 끝 -->
           <!-- 게시판 보여주기 시작 -->
 
+<<<<<<< HEAD
           <!-- 사이드바 대신  -->
+=======
+          <!-- 사이드바 대신(admin만 사용)  -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
           <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
             <th:block sec:authorize="hasRole('ADMIN')">
               <a type="submit" th:href="@{/admin/adminPage}"
@@ -429,7 +586,11 @@
           </ul>
           <!-- 사이드바 대신 끝-->
 
+<<<<<<< HEAD
 
+=======
+          <!-- 여기가 실제 본문 글 시작 지점 -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
               aria-labelledby="pills-profile-tab" tabindex="0">
@@ -520,8 +681,12 @@
                                 class="text-primary edit">
                                 <i class="ti ti-eye fs-5"></i>
                               </a>
+<<<<<<< HEAD
                               <a th:href="@{/member/deleteMember(memberId=${member.memberId})}"
                                 class="text-dark delete ms-2">
+=======
+                              <a th:href="@{/member/deleteMember(memberId=${member.memberId})}" class="text-dark ms-2">
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
                                 <i class="ti ti-trash fs-5"></i>
                               </a>
                             </div>
@@ -632,6 +797,7 @@
                 <!-- 승인 안된 회원 보여줌 끝-->
               </div>
             </div>
+<<<<<<< HEAD
             <!-- 첫번째 본문 끝 -->
 
           </div>
@@ -640,11 +806,20 @@
         </div>
       </div>
       <!-- 본문 끝 -->
+=======
+          </div>
+          <!-- 실제 본문 글 끝 지점 -->
+
+        </div>
+      </div>
+      <!-- 여기부터 본문 구조 끝(여러분 여기가 본문 구조를 잡아주는거에요 필수) -->
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
       <script>
         function handleColorTheme(e) {
           document.documentElement.setAttribute("data-color-theme", e);
         }
       </script>
+<<<<<<< HEAD
       <!-- <button
                     class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
                     type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
@@ -830,10 +1005,14 @@
                     </div>
                 </div> -->
       <!-- </div> -->
+=======
+
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
     </div>
   </div>
   <div class="dark-transparent sidebartoggler"></div>
   <!-- Import Js Files -->
+<<<<<<< HEAD
   <script src="/static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/static/libs/simplebar/dist/simplebar.min.js"></script>
   <script src="/static/js/theme/app.init.js"></script>
@@ -847,6 +1026,21 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="/static/libs/fullcalendar/index.global.min.js"></script>
   <script src="/static/js/apps/contact.js"></script>
+=======
+  <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+  <script th:src="@{/js/theme/app.init.js}"></script>
+  <script th:src="@{/js/theme/theme.js}"></script>
+  <script th:src="@{/js/theme/app.min.js}"></script>
+  <script th:src="@{/js/vendor.min.js}"></script>
+  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+  <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
+
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script th:src="@{/libs/fullcalendar/index.global.min.js}"></script>
+  <script th:src="@{/js/apps/contact.js}"></script>
+>>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
 
   <script>
     function pageFormSubmit(page) {

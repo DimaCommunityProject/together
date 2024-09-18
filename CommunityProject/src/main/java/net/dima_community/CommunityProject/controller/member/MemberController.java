@@ -344,28 +344,30 @@ public class MemberController {
 	}
 
 	// ============= 회원 삭제
-	@PostMapping("/member/deleteMember")
-	public void deleteMember(@ModelAttribute("memberId") String memberId) {
+	@GetMapping("/member/deleteMember")
+	public String deleteMember(@RequestParam("memberId") String memberId) {
 		log.info("회원삭제 컨트롤러 도착");
 		memberService.deleteMember(memberId);
 		memberVerifyCodeService.deleteById(memberId);
-	}
 
+		return "redirect:/admin/adminPage";
+	}
+	
 	//============= Board ===============
 	/**
-     * ajax - memberId에 해당하는 memberEntity의 memberGroup 정보 요청 
-     * @param memberId
-     * @return
-     */
-    @ResponseBody
-    @GetMapping("/member/getMemberGroup")
-    public String getMemberGroup(@RequestParam(name = "memberId") String memberId) {
-        Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
-        
-        if (memberEntity.isPresent()) {
-            MemberEntity member = memberEntity.get();
-            return member.getMemberGroup();
-        }else return "";
-    }
+	 * ajax - memberId에 해당하는 memberEntity의 memberGroup 정보 요청 
+	 * @param memberId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/member/getMemberGroup")
+	public String getMemberGroup(@RequestParam(name = "memberId") String memberId) {
+		Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
+		
+		if (memberEntity.isPresent()) {
+			MemberEntity member = memberEntity.get();
+			return member.getMemberGroup();
+		}else return "";
+	}
 
 }// end class
