@@ -18,7 +18,8 @@ public class LoginMemberDetails implements UserDetails {
 	private String memberRole;
 	private String memberGroup;
 	private String memberEmail;
-	
+	private String memberName;
+
 	private static final long serialVersionUID = 1L; // 자동으로 발생
 
 	public LoginMemberDetails(MemberDTO memberDTO) {
@@ -28,8 +29,9 @@ public class LoginMemberDetails implements UserDetails {
 		this.memberRole = memberDTO.getMemberRole();
 		this.memberGroup = memberDTO.getMemberGroup();
 		this.memberEmail = memberDTO.getMemberEmail();
+		this.memberName = memberDTO.getMemberName();
 	}
-	
+
 	@Override
 	// 현재 사용자가 가지고 있는 권한(authorities) 목록을 반환하는 데 사용.
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,22 +50,26 @@ public class LoginMemberDetails implements UserDetails {
 	public String getUsername() {
 		return this.memberId;
 	}
-	
+
 	// 추가: memberRole 반환 메서드
-    public String getRole() {
-        return this.memberRole;
-    }
-    
-    public String getGroup() {
-    	log.info("Group data: {}", this.memberGroup);
-    	return this.memberGroup;
-    }
-    
-    public String getEmail() {
-    	log.info("email data: {}", this.memberEmail);
-    	return this.memberEmail;
-    }
-	
+	public String getRole() {
+		return this.memberRole;
+	}
+
+	public String getGroup() {
+		// log.info("Group data: {}", this.memberGroup);
+		return this.memberGroup;
+	}
+
+	public String getEmail() {
+		// log.info("email data: {}", this.memberEmail);
+		return this.memberEmail;
+	}
+
+	public String getName() {
+		// log.info("name data: {}", this.memberName);
+		return this.memberName;
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {

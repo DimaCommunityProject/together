@@ -34,29 +34,31 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		// // 웹 요청에 대한 접근권한 설정
-		// http
-		// .authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
-		// .requestMatchers(
-		// "/"
-		// , "/member/confirmId"
-		// , "/member/join"
-		// , "/member/joinProc"
-		// , "/member/login"
-		// , "/member/loginProc"
-		// , "/member/findId"
-		// , "/member/findPw"
-		// , "/member/findPwResult"
-		//
-		// , "/images/**"
-		// , "/css/**"
-		// , "/script/**").permitAll()
-		//
-		// .requestMatchers("/admin/**").hasRole("ADMIN")
-		// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
-		// .anyRequest().authenticated()
-
-		// );
+//		// 웹 요청에 대한 접근권한 설정
+//		http
+//		.authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
+//		.requestMatchers(
+//		"/"
+//		, "/member/confirmId"
+//		, "/member/join"
+//		, "/member/joinProc"
+//		, "/member/login"
+//		, "/member/loginProc"
+//		, "/member/findId"
+//		, "/member/findPw"
+//		, "/member/findPwResult"
+//		, "/member/**"
+//	
+//		, "/images/**"
+//		, "/css/**"
+//		, "/fonts/**"
+//		, "/script/**").permitAll()
+//		
+//		.requestMatchers("/admin/**").hasRole("ADMIN")
+//		.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+//		.anyRequest().authenticated()
+//
+//		);
 		http
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						.requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
@@ -92,9 +94,9 @@ public class SecurityConfig {
 		http.headers(headers -> headers.contentSecurityPolicy(
 				cps -> cps.policyDirectives(
 						"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
-								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com; "
+								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com;"
 								+
-								"font-src 'self' https://fonts.gstatic.com; " + // 폰트 출처 추가
+								"font-src 'self' https://fonts.gstatic.com data:; " + // 폰트 출처 추가
 								"object-src 'none';" // object-src 제한
 				)));
 

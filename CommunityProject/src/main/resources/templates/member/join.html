@@ -1111,7 +1111,7 @@
                   <!--  start isAuthenticated -->
                   <!-- ------------------------------- -->
                   <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
-                    <a class="nav-link position-relative" th:href="@{api/chat/chatPage} ">
+                    <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
                       <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
                     </a>
                   </li>
@@ -1198,7 +1198,7 @@
                   <div class="col-md-8 col-lg-6 col-xxl-3 auth-card">
                     <div class="card" style="margin-top: var(--bs-gutter-x)">
                       <div class="card-body">
-                        <a href="../main/index.html" class="text-nowrap logo-img text-center d-block mb-5 w-100">
+                        <a th:href="@{/}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
                           <p for="exampleInputEmail1" class="form-label">디마 커뮤니티</p>
                         </a>
                         <form id="joinForm" th:action="@{/member/join}" method="post" enctype="multipart/form-data">
