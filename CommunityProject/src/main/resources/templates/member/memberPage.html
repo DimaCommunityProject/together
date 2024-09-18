@@ -1041,6 +1041,8 @@
                           <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
                             alt="profile image" width="35" height="35" class="rounded-circle h-100">
                           <div class="ms-3">
+                            <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getUsername()}">
+                              Mathew Anderson</h5>
                             <h5 class="mb-1 fs-3 currentUserName" th:text="${loginName}">Mathew Anderson</h5>
                             <!-- 이름 출력 -->
                             <span class="mb-1 d-block currentUserGroup"
