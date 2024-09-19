@@ -630,4 +630,24 @@ public class BoardService {
         return jobBoardEntity.getJobBoardId();
     }
 
+    public List<BoardDTO> selectPopBoard() {
+        // 객체 3개만 담을 Pageable 생성
+        PageRequest pageRequest = PageRequest.of(0, 3);
+        List<BoardEntity> entitys = boardRepository.selectPopBoard(pageRequest);
+        List<BoardDTO> dtoList = entitys.stream()
+                .map(entity -> BoardDTO.toDTO(entity, entity.getMemberEntity().getMemberId()))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
+    public List<BoardDTO> selectRecentBoard() {
+        // 최신 3개만 담을 Pageable 생성
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        List<BoardEntity> entitys = boardRepository.selectRecentBoard(pageRequest);
+        List<BoardDTO> dtoList = entitys.stream()
+                .map(entity -> BoardDTO.toDTO(entity, entity.getMemberEntity().getMemberId()))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
 }

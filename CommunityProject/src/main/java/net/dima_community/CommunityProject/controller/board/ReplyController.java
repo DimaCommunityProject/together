@@ -39,7 +39,7 @@ public class ReplyController {
      * @param memberId
      * @return
      */
-    @PostMapping("/board/showReply")
+    @PostMapping("/reply/showReply")
     @ResponseBody
     public Map<String, BoardDTO> showReply(@RequestParam(name = "memberId") String memberId) {
         MemberDTO member = memberService.findById(memberId);
