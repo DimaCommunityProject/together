@@ -93,15 +93,16 @@ public class BoardController {
         }
 
         // 현재 로그인한 사용자의 기수
-        String userGroup = memberService.findById(memberId).getMemberGroup();
-
+        String userGroup ="";
+        
         // Pageination
         Page<BoardListDTO> list;
-
+        
         // category에 따른 게시글 DTO를 List 형태로 가져오기
         if (category == BoardCategory.activity || category == BoardCategory.recruit) {
             list = boardService.selectActivityOrRecruitBoards(category, pageable, searchWord);
         } else if (category == BoardCategory.group) {
+            userGroup = memberService.findById(memberId).getMemberGroup();
             list = boardService.selectGroupBoards(userGroup, pageable, searchWord);
         } else {
             list = boardService.selectOtherCategoryBoards(category, pageable, searchWord);
