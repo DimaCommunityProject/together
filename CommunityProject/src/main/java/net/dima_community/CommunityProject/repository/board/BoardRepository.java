@@ -3,6 +3,7 @@ package net.dima_community.CommunityProject.repository.board;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -93,5 +94,13 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
                         "SET b.likeCount = CASE WHEN b.likeCount - 1 < 0 THEN 0 ELSE b.likeCount - 1 END " +
                         "WHERE b.boardId = :boardId")
         void decrementLikeCount(Long boardId);
+
+        // hitcount 제일 많은 게시글 3개 불러오기
+        @Query("SELECT b FROM BoardEntity b ORDER BY b.hitCount DESC")
+        List<BoardEntity> selectPopBoard(Pageable pageable);
+
+        // 최신 게시글 3개 불러오기
+        @Query("SELECT b FROM BoardEntity b ORDER BY b.createDate DESC")
+        List<BoardEntity> selectRecentBoard(PageRequest pageRequest);
 
 }
