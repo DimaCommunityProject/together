@@ -324,7 +324,7 @@
                                     <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
-                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+                                <a th:href="@{/board/list(category=group)}"
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -435,7 +435,7 @@
                           </div>
                         </div>
                         <div class="message-body">
-                          <a th:href="@{/memberpage/showpage(memberId=${loginId})}"
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
                             class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
                               <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24"
@@ -813,7 +813,7 @@
                                       <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+                                  <a th:href="@{/board/list(category=group)}"
                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -923,7 +923,7 @@
                           </div>
                         </div>
                         <div class="message-body">
-                          <a th:href="@{/memberpage/showpage(memberId=${loginId})}"
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
                             class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
                               <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24"

@@ -40,6 +40,7 @@ public class SecurityConfig {
 		.requestMatchers(
 		"/"
 		, "/member/**"
+		, "/email/**"
 		, "/main/**"
 		, "/board/list"
 		, "/ckeditor5/**"
