@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.common.exception.ResourceNotFoundException;
-import net.dima_community.CommunityProject.dto.board.BoardDTO;
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberPageDTO;
 import net.dima_community.CommunityProject.dto.member.MemberProjectDTO;

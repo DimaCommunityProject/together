@@ -29,7 +29,7 @@ import net.dima_community.CommunityProject.dto.board.check.ReportCategory;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@ToString
+//@ToString
 @Builder
 @Entity
 @Table(name = "board_report")

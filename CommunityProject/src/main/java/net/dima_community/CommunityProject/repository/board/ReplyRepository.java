@@ -12,10 +12,9 @@ import net.dima_community.CommunityProject.entity.board.BoardEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
 import net.dima_community.CommunityProject.entity.member.MemberEntity;
 
+public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 
-public interface ReplyRepository extends JpaRepository<ReplyEntity,Long>{
-
-    //Sehyun & Minseo
+    // Sehyun & Minseo
     // 전달받은 member가 작성한 댓글들 반환
     @Query("SELECT r FROM ReplyEntity r WHERE r.memberEntity = :memberEntity")
     List<ReplyEntity> findByMemberId(@Param("memberEntity") MemberEntity memberEntity);
