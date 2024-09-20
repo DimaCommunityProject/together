@@ -1357,8 +1357,8 @@
                           <th:block th:unless="${childReply.memberId==#authentication.name}">
                               <!-- 댓글 좋아요 -->
                               <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${childReply.replyId}">
-                              <i th:if="${childReply.likeCount == 0}" class="ti ti-thumb-up text-dark fs-5 "></i> 
-                              <i th:unless="${childReply.likeCount == 0}" class="ti ti-thumb-up-filled text-dark fs-5 "></i> 
+                              <i th:if="${childReply.likeCount == 0}" class="ti ti-thumb-up text-light fs-5 "></i> 
+                              <i th:unless="${childReply.likeCount == 0}" class="ti ti-thumb-up-filled text-light fs-5 "></i> 
                               <span>[[${reply.likeCount}]]</span>
                               </div>
                           </th:block>
