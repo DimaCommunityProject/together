@@ -42,7 +42,6 @@ public class SecurityConfig {
 		, "/member/**"
 		, "/main/**"
 		, "/board/list"
-	
 		, "/ckeditor5/**"
 		, "/css/**"
 		, "/fonts/**"
@@ -52,14 +51,10 @@ public class SecurityConfig {
 		, "/script/**").permitAll()
 		
 		.requestMatchers("/admin/**").hasRole("ADMIN")
-		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
+		// .requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
+		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").authenticated()
 		.anyRequest().authenticated()
 		);
-//		http
-//				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//						.requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
-//						.anyRequest().permitAll() // 모든 요청에 대해 접근 허용
-//				);
 
 		// Custom Login 설정
 		http

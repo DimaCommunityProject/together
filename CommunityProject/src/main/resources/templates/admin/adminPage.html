@@ -182,7 +182,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}" aria-expanded="false">
                 <span>
                   <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
                     height="23.2" />
@@ -392,7 +392,7 @@
                                       모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
-                                <a th:href="@{/board/list(category=group)}"
+                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -885,7 +885,7 @@
                                         모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a th:href="@{/board/list(category=group)}"
+                                  <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">

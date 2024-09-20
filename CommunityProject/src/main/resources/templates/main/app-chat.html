@@ -324,7 +324,7 @@
                                     <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
-                                <a th:href="@{/board/list(category=group)}"
+                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -813,7 +813,7 @@
                                       <span class="fs-2 d-block text-body-secondary">세상의 모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a th:href="@{/board/list(category=group)}"
+                                  <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
