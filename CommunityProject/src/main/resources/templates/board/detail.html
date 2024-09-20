@@ -25,8 +25,8 @@
   <!-- 좋아요 css -->
   <style>
     #heart:hover, #message:hover{
-        /* background-color: #FFD2D2;  */ 
-        background-color: #EBF5FF; /* 하늘 배경 */
+        /* background-color: #FFE3EE;   핑크 배경 */
+        /* background-color: #EBF5FF;   하늘 배경 */
         border-radius: 50%; /* 배경 둥글게 */
         transform: scale(1.09); /* 살짝 확대 */
         cursor: pointer;
@@ -1166,12 +1166,8 @@
                 <img th:src="@{/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="180">
               </a>
               <!-- 작성자 이미지 -->
-<<<<<<< HEAD
-              <img th:src="@{/images/profile/user-5.jpg}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
-=======
-               <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${board.memberId})}"
+              <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${board.memberId})}"
                 alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
->>>>>>> 1c75ffa8f8cfebd9ac77a5269104ab3d368ed4cd
               <!-- 작성자 ID 및 배지 -->
             </div>
             
@@ -1259,11 +1255,6 @@
             </div>
             <!-- 첨부파일 -->
             <div class="card-body border-top p-4" th:if="${board.originalFileName != null}">
-              <!-- <div class="input-group">
-                <span class="input-group-text" id="attachedFileImg"><i class="ti ti-download"></i></span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"  readonly>
-                <a th:href="@{/download(boardId=${board.boardId})}">[[${board.originalFileName}]]</a>
-              </div>-->
               <div class="input-group">
                 <span class="input-group-text" id="attachedFileImg">
                     <i class="ti ti-download"></i>
@@ -1303,14 +1294,12 @@
                 <th:block th:each="reply : ${list}">
                   <div class="p-4 rounded-4 text-bg-light mb-3">
                     <div class="d-flex align-items-center gap-3">
-                      <img th:src="@{/images/profile/user-2.jpg}" alt="modernize-img" class="rounded-circle" width="33" height="33">
+                      <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${reply.memberId})}" alt="modernize-img" class="rounded-circle" width="33" height="33">
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
                       <span th:if="${reply.memberId==#authentication.name}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                      <!-- <span th:if="${reply.memberId=='hs'}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span> -->
                       <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
                         <th:block th:if="${reply.memberId==#authentication.name}">
-                        <!-- <th:block th:if="${reply.memberId=='hs'}"> -->
                           <!-- 댓글 삭제 -->
                           <div class="btn btn-sm bg-danger-subtle text-danger ms-6 replyDelete" th:data-reply="${reply.replyId}" >
                             <i class="ti ti-trash-x fs-5 " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="삭제"></i> 
@@ -1321,10 +1310,8 @@
                           </div>
                         </th:block>
                         <th:block th:unless="${reply.memberId==#authentication.name}">
-                        <!-- <th:block th:unless="${reply.memberId=='hs'}"> -->
                           <!-- 댓글 좋아요 -->
                           <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${reply.replyId}">
-                          <!-- <div class="btn btn-sm btn-secondary ms-6 replyHeart" th:data-member="hs" th:data-reply="${reply.replyId}"> -->
                             <i th:if="${reply.likeCount == 0}" class="ti ti-thumb-up text-light fs-5 "></i> 
                             <i th:unless="${reply.likeCount == 0}" class="ti ti-thumb-up-filled text-light fs-5 "></i> 
                             <span>[[${reply.likeCount}]]</span>
@@ -1337,7 +1324,6 @@
                       <!-- 댓글 내용 -->
                       <p class="my-3" th:text="${reply.content}"></p>
                       <div>
-                        <!-- <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="hs"></div> -->
                         <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="${#authentication.name}"></div>
                         <div class="d-flex align-items-center gap-2 childReplyForm">
                           <!--대댓글 작성요청 버튼-->
@@ -1352,15 +1338,13 @@
                   <div th:if="${reply.childReplies!=null and !#lists.isEmpty(reply.childReplies)}">
                     <div class="p-4 rounded-4 text-bg-light mb-3 ms-7" th:each="childReply : ${reply.childReplies}">
                       <div class="d-flex align-items-center gap-3">
-                        <img th:src="@{/images/profile/user-6.jpg}" alt="modernize-img" class="rounded-circle" width="40" height="40">
+                        <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${childReply.memberId})}" alt="modernize-img" class="rounded-circle" width="40" height="40">
                         <!-- 댓글 작성자 -->
                         <h6 class="mb-0 fs-4">[[${childReply.memberId}]]</h6> 
                         <!-- 로그인한 사용자와 댓글 작성자가 일치하는 경우만 동그라미 표시 -->
                         <span th:if="${childReply.memberId==#authentication.name}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                        <!-- <span th:if="${childReply.memberId=='hs'}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span> -->
                         <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
                           <th:block th:if="${childReply.memberId==#authentication.name}">
-                          <!-- <th:block th:if="${childReply.memberId=='hs'}"> -->
                               <!-- 댓글 삭제 -->
                               <div class="btn btn-sm bg-danger-subtle text-danger ms-6 replyDelete" th:data-reply="${childReply.replyId}" >
                                   <i class="ti ti-trash-x fs-5 " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="삭제"></i> 
@@ -1371,10 +1355,8 @@
                               </div>
                           </th:block>
                           <th:block th:unless="${childReply.memberId==#authentication.name}">
-                          <!-- <th:block th:unless="${childReply.memberId=='hs'}"> -->
                               <!-- 댓글 좋아요 -->
                               <div class="btn btn-secondary ms-6 replyHeart" th:data-member="${#authentication.name}" th:data-reply="${childReply.replyId}">
-                              <!-- <div class="btn btn-sm btn-secondary ms-6 replyHeart" th:data-member="hs" th:data-reply="${childReply.replyId}"> -->
                               <i th:if="${childReply.likeCount == 0}" class="ti ti-thumb-up text-dark fs-5 "></i> 
                               <i th:unless="${childReply.likeCount == 0}" class="ti ti-thumb-up-filled text-dark fs-5 "></i> 
                               <span>[[${reply.likeCount}]]</span>
