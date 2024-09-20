@@ -18,12 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.common.util.UserStatusManager;
+import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.dto.chat.ChatRoomDTO;
 import net.dima_community.CommunityProject.dto.chat.ChatRoomMemberDTO;
-import net.dima_community.CommunityProject.dto.chat.StatusUpdateRequest;
-import net.dima_community.CommunityProject.dto.chat.StatusUpdateResponse;
-import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
 import net.dima_community.CommunityProject.service.chat.ChatRoomService;
@@ -85,16 +82,11 @@ public class ChatRoomController {
         
         Map<String, Object> response = new HashMap<>();
         response.put("currentUser", currentUser);
-        
-        // 삭제되지 않은 채팅방 정보와 유니크 키를 포함해 반환
-        List<Map<String, Object>> chatRooms = chatRoomService.getChatRoomDetails(currentUserId);
-        response.put("chatRooms", chatRooms);
+        response.put("chatRooms", chatRoomService.getChatRoomDetails(currentUserId));
         response.put("members", chatRoomService.getAllMembers());
         
         return response;
     }
-    
-    
 
     // =======================================================
     // ===================== 메시지 조회 =====================
@@ -166,24 +158,16 @@ public class ChatRoomController {
             if (chatRoomOpt.isPresent()) {
                 ChatRoom chatRoom = chatRoomOpt.get();
 
-                // 멤버들의 상태를 가져옴
+                // 남아 있는 멤버들의 정보를 가져옴
                 List<ChatRoomMemberDTO> memberDetails = chatRoom.getChattingRoomMembers().stream()
-                    .map(member -> {
-                        // UserStatusManager를 통해 상태 조회
-                        String status = UserStatusManager.getUserStatus(member.getMember().getMemberId());  
-                        System.out.println("User: " + member.getMember().getMemberId() + " Status: " + status); // 로그 추가
-
-                        return new ChatRoomMemberDTO(
-                            member.getMember().getMemberId(), 
-                            member.getMember().getMemberName(), 
-                            member.getMember().getMemberGroup(),  // 회원 기수 정보
-                            status,  // 온라인/오프라인 상태
-                            member.getDeleted()  // 삭제 여부
-                        );
-                    })
+                    .map(member -> new ChatRoomMemberDTO(
+                        member.getMember().getMemberId(), 
+                        member.getMember().getMemberName(), 
+                        "offline", 
+                        member.getDeleted()
+                    ))
                     .collect(Collectors.toList());
 
-                // 멤버 정보를 포함한 응답 반환
                 return ResponseEntity.ok(Map.of("members", memberDetails));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Chat room not found"));
@@ -191,26 +175,6 @@ public class ChatRoomController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
-    }
-    
-    /**
-     * 
-     * @param request
-     * @return
-     */
-    @PostMapping("/updateStatus")
-    public ResponseEntity<String> updateStatus(@RequestBody StatusUpdateRequest request) {
-        String userId = request.getUserId();
-        String status = request.getStatus();
-
-        // 사용자 상태 업데이트
-        UserStatusManager.updateUserStatus(userId, status);
-
-        // 상태 변경 알림을 같은 채팅방의 다른 사용자들에게 브로드캐스트
-        messagingTemplate.convertAndSend("/topic/chat.room." + request.getRoomId(),
-            new StatusUpdateResponse(userId, status));
-
-        return ResponseEntity.ok("Status updated successfully");
     }
 
     // =======================================================
@@ -240,7 +204,7 @@ public class ChatRoomController {
      * @param chatRoomDTO 채팅방 DTO
      * @param userIds 알림을 받을 사용자 ID 목록
      */
-    private void notifyUsersAboutNewChatRoom(ChatRoomDTO chatRoomDTO, String... userIds) { 
+    private void notifyUsersAboutNewChatRoom(ChatRoomDTO chatRoomDTO, String... userIds) {
         for (String userId : userIds) {
             String queueName = "/user/" + userId + "/queue/newChatRoom";
             rabbitMessagingTemplate.convertAndSend(queueName, chatRoomDTO);

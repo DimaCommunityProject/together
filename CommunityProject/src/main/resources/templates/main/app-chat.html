@@ -1216,7 +1216,9 @@
                         <div class="px-9 py-6 border-top chat-send-message-footer">
                           <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-2 w-85">
-								<input type="text" class="form-control message-type-box text-muted border-0 p-0 ms-2"
+                              <a class="position-relative nav-icon-hover z-index-5" th:href="@{/}"> <i
+                                  class="ti ti-mood-smile text-dark bg-hover-primary fs-7"></i>
+                              </a> <input type="text" class="form-control message-type-box text-muted border-0 p-0 ms-2"
                                 id="messageInput" placeholder="Type a Message" />
                             </div>
                             <button id="sendButton" class="btn btn-primary">전송</button>
@@ -1697,7 +1699,6 @@
   </div>
   <div class="dark-transparent sidebartoggler"></div>
   <script th:src="@{/js/vendor.min.js}"></script>
-
   <!-- Import Js Files -->
   <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>

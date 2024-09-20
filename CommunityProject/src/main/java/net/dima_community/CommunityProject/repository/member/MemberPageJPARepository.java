@@ -10,7 +10,7 @@ import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
 
 public interface MemberPageJPARepository extends JpaRepository<MemberPageEntity, Long> {
 
-    @Query(value = "SELECT * FROM MEMBERPAGE WHERE member_id = :memberId", nativeQuery = true)
+    @Query(value = "SELECT * FROM MEMBERPAGE WHERE member_id LIKE CONCAT('%', :memberId, '%')", nativeQuery = true)
     Optional<MemberPageEntity> findByMemberId(@Param("memberId") String memberId);
 
 }
