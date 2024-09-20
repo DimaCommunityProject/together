@@ -1252,8 +1252,8 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i>
                   <span id="likeCount">[[${board.likeCount}]]</span>
                 </div>
-                <!--신고 버튼-->
-                <div class="d-flex align-items-center gap-2">
+                <!--신고 버튼 (작성자에게는 보이지 않음)-->
+                <div th:if="${board.memberId != #authentication.name}" class="d-flex align-items-center gap-2">
                   <button type="button" id="reportBtn" class="btn btn-sm bg-danger-subtle text-danger"
                     data-bs-toggle="modal" data-bs-target="#reportModal"><i class="ti ti-urgent fs-6"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고"></i></button>
