@@ -42,7 +42,6 @@ public class SecurityConfig {
 		, "/member/**"
 		, "/main/**"
 		, "/board/list"
-	
 		, "/ckeditor5/**"
 		, "/css/**"
 		, "/fonts/**"
@@ -52,14 +51,10 @@ public class SecurityConfig {
 		, "/script/**").permitAll()
 		
 		.requestMatchers("/admin/**").hasRole("ADMIN")
-		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
+		// .requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
+		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").authenticated()
 		.anyRequest().authenticated()
 		);
-//		http
-//				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//						.requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
-//						.anyRequest().permitAll() // 모든 요청에 대해 접근 허용
-//				);
 
 		// Custom Login 설정
 		http
@@ -88,13 +83,16 @@ public class SecurityConfig {
 		// HTTP 헤더 보안 설정
 		// xss와 csp는 둘 다 xss 보완이지만 xssProtection는 구식 브라우저 보호이며 csp는 현대적이고 더 강력함.
 		http.headers(headers -> headers.contentSecurityPolicy(
-				cps -> cps.policyDirectives(
-						"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
-								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com;"
-								+
-								"font-src 'self' https://fonts.gstatic.com data:; " + // 폰트 출처 추가
-								"object-src 'none';" // object-src 제한
-				)));
+			cps -> cps.policyDirectives(
+				"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
+				"style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com https://fonts.googleapis.com; " +
+				"font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; " + // 폰트 출처에 jsdelivr 추가
+				"img-src 'self' data: https://cdn.jsdelivr.net https://cdn.ckeditor.com; " + // 이미지 출처 허용
+				"connect-src 'self'; " + // XMLHttpRequest, WebSocket 등을 위한 출처 제한
+				"frame-src 'self'; " + // iframe을 허용할 출처
+				"object-src 'none';" // object-src 제한
+			)
+		));
 
 		return http.build();
 	}// end filterchain

@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
+
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
@@ -127,7 +127,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}" aria-expanded="false">
                 <span>
                   <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
                     height="23.2" />
@@ -337,7 +337,7 @@
                                       모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
-                                <a th:href="@{/board/list(category=group)}"
+                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -830,7 +830,7 @@
                                         모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-                                  <a th:href="@{/board/list(category=group)}"
+                                  <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -1034,7 +1034,7 @@
                         th:href="@{/board/detail(boardId=${popBoard.boardId},category=${popBoard.category})}">NFT
                         Landing
                         Page</a></h6>
-                    <span class="fs-3 lh-sm" th:text="${popBoard.content}">Designing an NFT-themed website with a
+                    <span class="fs-3 lh-sm" th:utext="${popBoard.content}">Designing an NFT-themed website with a
                       creative concept
                       so th...</span>
                     <div class="hstack mt-3" style="justify-content: flex-end;;">
