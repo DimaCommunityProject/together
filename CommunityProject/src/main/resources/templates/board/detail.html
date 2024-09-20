@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" dir="ltr"
+  data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical">
 
 
 <head>
@@ -44,666 +45,174 @@
   <div class="preloader">
     <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
   </div>
-<div id="main-wrapper">
-  <!-- ---------------------------------- -->
-  <!--  Sidebar Start -->
-  <!-- ---------------------------------- -->
-  <aside class="left-sidebar with-vertical">
-    <div>
-      <!-- ---------------------------------- -->
-      <!-- Start Vertical Layout Sidebar -->
-      <!-- ---------------------------------- -->
-      <div class="brand-logo d-flex align-items-center justify-content-between">
-        <a th:href="@{/}" class="text-nowrap logo-img">
-          <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
-        </a>
-        <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
-          <i class="ti ti-x"></i>
-        </a>
-      </div>
-
-
-      <nav class="sidebar-nav scroll-sidebar" data-simplebar>
-        <ul id="sidebarnav">
-          <!-- ---------------------------------- -->
-          <!-- 대제목 -->
-          <!-- ---------------------------------- -->
-          <li class="nav-small-cap">
-            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-            <span class="hide-menu">수업</span>
-          </li>
-          <!-- ---------------------------------- -->
-          <!-- 소제목 -->
-          <!-- ---------------------------------- -->
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=code)}" aria-expanded="false">
-              <span>
-                <!-- <i class="ti ti-aperture"></i> -->
-                <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">코드 공유 게시판</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=project)}" aria-expanded="false">
-              <span>
-                <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">프로젝트 공유 게시판</span>
-            </a>
-          </li>
-          <!-- ---------------------------------- -->
-          <!-- 대제목 -->
-          <!-- ---------------------------------- -->
-          <li class="nav-small-cap">
-            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-            <span class="hide-menu">취업</span>
-          </li>
-          <!-- ---------------------------------- -->
-          <!-- 소제목 -->
-          <!-- ---------------------------------- -->
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=activity)}" aria-expanded="false">
-              <span>
-                <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">취업 공고 게시판</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=recruit)}" aria-expanded="false">
-              <span>
-                <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">공모전/프로젝트 모집 게시판</span>
-            </a>
-          </li>
-          <!------------------------------------ -->
-          <!-- 대제목 -->
-          <!-- ---------------------------------- -->
-          <li class="nav-small-cap">
-            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-            <span class="hide-menu">자유</span>
-          </li>
-          <!-- ---------------------------------- -->
-          <!-- 소제목 -->
-          <!-- ---------------------------------- -->
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=free)}" aria-expanded="false">
-              <span>
-                <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">자유 게시판</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=info)}" aria-expanded="false">
-              <span>
-                <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">정보 게시판</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
-              <span>
-                <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
-                  height="23.2" />
-              </span>
-              <span class="hide-menu">기수별 게시판</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3" sec:authorize="isAuthenticated()">
-        <div class="hstack gap-3">
-          <div class="john-img">
-            <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}" alt="profile image"
-              width="30" height="30" class="rounded-circle h-100">
-          </div>
-          <div class="john-title">
-            <h6 class="mb-0 fs-4 fw-semibold" th:text="${#authentication.principal.getName()}">Mathew
-            </h6>
-            <span class="fs-2" th:text="${#authentication.principal.getGroup()}">Designer</span>
-          </div>
-          <a class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout" th:href="@{/member/logout}">
-            <i class="ti ti-power fs-6"></i>
+  <div id="main-wrapper">
+    <!-- ---------------------------------- -->
+    <!--  Sidebar Start -->
+    <!-- ---------------------------------- -->
+    <aside class="left-sidebar with-vertical">
+      <div>
+        <!-- ---------------------------------- -->
+        <!-- Start Vertical Layout Sidebar -->
+        <!-- ---------------------------------- -->
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a th:href="@{/}" class="text-nowrap logo-img">
+            <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+          </a>
+          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+            <i class="ti ti-x"></i>
           </a>
         </div>
-      </div>
-    </div>
-  </aside>
-  <!-- ---------------------------------- -->
-  <!--  Sidebar End -->
-  <!-- ---------------------------------- -->
 
 
-  <!-- ---------------------------------- -->
-  <!-- Start Vertical Layout Sidebar -->
-  <!-- ---------------------------------- -->
-  <div class="page-wrapper">
-    <!--  Header Start -->
-    <header class="topbar">
-      <div class="with-vertical">
-        <!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Header -->
-        <!-- ---------------------------------- -->
-        <nav class="navbar navbar-expand-lg p-0">
-          <ul class="navbar-nav">
-            <li class="nav-item nav-icon-hover-bg rounded-circle ms-n2">
-              <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
-                <i class="ti ti-menu-2"></i>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
+          <ul id="sidebarnav">
+            <!-- ---------------------------------- -->
+            <!-- 대제목 -->
+            <!-- ---------------------------------- -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">수업</span>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 소제목 -->
+            <!-- ---------------------------------- -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=code)}" aria-expanded="false">
+                <span>
+                  <!-- <i class="ti ti-aperture"></i> -->
+                  <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">코드 공유 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=project)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">프로젝트 공유 게시판</span>
+              </a>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 대제목 -->
+            <!-- ---------------------------------- -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">취업</span>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 소제목 -->
+            <!-- ---------------------------------- -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=activity)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">취업 공고 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=recruit)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">공모전/프로젝트 모집 게시판</span>
+              </a>
+            </li>
+            <!------------------------------------ -->
+            <!-- 대제목 -->
+            <!-- ---------------------------------- -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">자유</span>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 소제목 -->
+            <!-- ---------------------------------- -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=free)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">자유 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=info)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">정보 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">기수별 게시판</span>
               </a>
             </li>
           </ul>
-
-          <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center"></ul>
-          <!-- ------------------------------- -->
-          <!-- start apps Dropdown -->
-          <!-- ------------------------------- -->
-          <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
-            <div class="hover-dd">
-              <a class="nav-link" href="javascript:void(0)">
-                수업 <span class="mt-1">
-                  <i class="ti ti-chevron-down fs-3"></i>
-                </span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
-                <div class="row">
-                  <div class="col-8">
-                    <div class="ps-7 pt-7">
-                      <div class="border-bottom">
-                        <div class="row">
-                          <div class="col-6">
-                            <div class="position-relative">
-                              <a th:href="@{/board/list(category='code')}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">모르는
-                                    코드 물어보세요!</span>
-                                </div>
-                              </a>
-                              <a th:href="@{/board/list(category=project)}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">지난
-                                    기수들의 프로젝트를 확인해보세요!</span>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
-            <div class="hover-dd">
-              <a class="nav-link" href="javascript:void(0)">
-                취업 <span class="mt-1">
-                  <i class="ti ti-chevron-down fs-3"></i>
-                </span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340">
-                <div class="row">
-                  <div class="col-8">
-                    <div class="ps-7 pt-7">
-                      <div class="border-bottom">
-                        <div class="row">
-                          <div class="col-6">
-                            <div class="position-relative">
-                              <a th:href="@{/board/list(category=activity)}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">
-                                    취업 공고 게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">최신
-                                    채용 정보를 확인하세요!</span>
-                                </div>
-                              </a>
-                              <a th:href="@{/board/list(category=recruit)}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 모집
-                                    게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">정보를
-                                    확인하고 팀원을 모집해보세요!</span>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
-            <div class="hover-dd">
-              <a class="nav-link" href="javascript:void(0)">
-                자유 <span class="mt-1">
-                  <i class="ti ti-chevron-down fs-3"></i>
-                </span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
-                <div class="row">
-                  <div class="col-8">
-                    <div class="ps-7 pt-7">
-                      <div class="border-bottom">
-                        <div class="row">
-                          <div class="col-6">
-                            <div class="position-relative">
-                              <a th:href="@{/board/list(category=free)}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">
-                                    자유 게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">자유롭게
-                                    게시글을 올려주세요!</span>
-                                </div>
-                              </a>
-                              <a th:href="@{/board/list(category=info)}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">정보 게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">세상의
-                                    모든 정보를 확인하세요!</span>
-                                </div>
-                              </a>
-                              <a th:href="@{/board/list(category=group)}"
-                                class="d-flex align-items-center pb-9 position-relative min-width-340">
-                                <div
-                                  class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                                  <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
-                                    width="24" height="24" />
-                                </div>
-                                <div>
-                                  <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
-                                  </h6>
-                                  <span class="fs-2 d-block text-body-secondary">기수별로
-                                    소통하고 정보를 공유하세요!</span>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <!-- ------------------------------- -->
-          <!-- end apps Dropdown -->
-          <!-- ------------------------------- -->
-          <li class="nav-item dropdown-hover d-none d-lg-block">
-            <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
-          </li>
-          <th:block sec:authorize="hasRole('ADMIN')">
-            <li class="nav-item dropdown-hover d-none d-lg-block">
-              <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
-            </li>
-          </th:block>
-          </ul>
-
-          <div class="d-block d-lg-none py-4">
-            <a th:href="@{/}" class="text-nowrap logo-img">
-              <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
-            </a>
-          </div>
-          <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
-            data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <i class="ti ti-dots fs-7"></i>
-          </a>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <div class="d-flex align-items-center justify-content-between">
-              <a th:href="@{/}"
-                class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-flex d-none align-items-center justify-content-center"
-                type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
-                aria-controls="offcanvasWithBothOptions">
-                <i class="ti ti-align-justified fs-7 d-none"></i>
-              </a>
-              <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-                <!-- ------------------------------- -->
-                <!-- start isAnonymous -->
-                <!-- ------------------------------- -->
-                <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
-                  <a class="nav-link position-relative" th:href="@{/member/join}">
-                    <i class="ti ti-user-plus" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="회원가입"></i>
-                  </a>
-                </li>
-                <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
-                  <a class="nav-link position-relative" th:href="@{/member/login}">
-                    <i class="ti ti-login fs-4" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="로그인"></i>
-                  </a>
-                </li>
-                <!-- ------------------------------- -->
-                <!-- end isAnonymous -->
-                <!-- ------------------------------- -->
-
-                <!-- ------------------------------- -->
-                <!--  start isAuthenticated -->
-                <!-- ------------------------------- -->
-                <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
-                  <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
-                    <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
-                  </a>
-                </li>
-
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                  <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
-                    <div class="d-flex align-items-center">
-                      <div class="user-profile-img">
-                        <img
-                          th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.principal.username})}"
-                          alt="profile image" width="35" height="35" class="rounded-circle h-100">
-                      </div>
-                    </div>
-                  </a>
-                  <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
-                    aria-labelledby="drop1">
-                    <div class="profile-dropdown position-relative" data-simplebar>
-                      <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                        <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
-                          alt="profile image" width="35" height="35" class="rounded-circle h-100">
-                        <div class="ms-3">
-                          <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
-                            Mathew Anderson</h5>
-                          <!-- 이름 출력 -->
-                          <span class="mb-1 d-block currentUserGroup"
-                            th:text="${#authentication.principal.getGroup()}">Designer</span>
-                          <!-- 그룹 출력 -->
-                          <p class="mb-0 d-flex align-items-center gap-2">
-                            <i class="ti ti-mail fs-4"></i>
-                            <span th:text="${#authentication.principal.getEmail()}"></span>
-                            <!-- 이메일 출력 -->
-                          </p>
-                        </div>
-                      </div>
-                      <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
-                        <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
-                          class="btn btn-outline-primary" style="width: 150px;">My
-                          Page</a>
-                        <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
-                          Out</a>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <!-- ------------------------------- -->
-                <!-- end profile Dropdown -->
-                <!-- ------------------------------- -->
-              </ul>
-            </div>
-          </div>
         </nav>
-        <!-- ---------------------------------- -->
-        <!-- End Vertical Layout Header -->
-        <!-- ---------------------------------- -->
 
-        <!-- ------------------------------- -->
-        <!-- apps Dropdown in Small screen -->
-        <!-- ------------------------------- -->
-        <!--  Mobilenavbar -->
-        <!-- 안쓸거 시작 -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar"
-          aria-labelledby="offcanvasWithBothOptionsLabel">
-          <nav class="sidebar-nav scroll-sidebar">
-            <div class="offcanvas-header justify-content-between">
-              <img th:src="@{/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3" sec:authorize="isAuthenticated()">
+          <div class="hstack gap-3">
+            <div class="john-img">
+              <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}" alt="profile image"
+                width="30" height="30" class="rounded-circle h-100">
             </div>
-            <div class="offcanvas-body h-n80" data-simplebar>
-              <ul id="sidebarnav">
-                <li class="sidebar-item">
-                  <a class="sidebar-link has-arrow" th:href="@{/}" aria-expanded="false">
-                    <span>
-                      <i class="ti ti-apps"></i>
-                    </span>
-                    <span class="hide-menu">Apps 1</span>
-                  </a>
-                  <ul aria-expanded="false" class="collapse first-level my-3">
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
-                          <span class="fs-2 d-block text-muted">New messages
-                            arrived</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Invoice App</h6>
-                          <span class="fs-2 d-block text-muted">Get latest invoice</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Contact Application</h6>
-                          <span class="fs-2 d-block text-muted">2 Unsaved Contacts</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Email App</h6>
-                          <span class="fs-2 d-block text-muted">Get new emails</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">User Profile</h6>
-                          <span class="fs-2 d-block text-muted">learn more
-                            information</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Calendar App</h6>
-                          <span class="fs-2 d-block text-muted">Get dates</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Contact List Table</h6>
-                          <span class="fs-2 d-block text-muted">Add new contact</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="sidebar-item py-2">
-                      <a th:href="@{/}" class="d-flex align-items-center">
-                        <div
-                          class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
-                          <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid"
-                            width="24" height="24" />
-                        </div>
-                        <div>
-                          <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
-                          <span class="fs-2 d-block text-muted">To-do and Daily
-                            tasks</span>
-                        </div>
-                      </a>
-                    </li>
-                    <ul class="px-8 mt-7 mb-4">
-                      <li class="sidebar-item mb-3">
-                        <h5 class="fs-5 fw-semibold">Quick Links</h5>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">Pricing Page</a>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">Authentication
-                          Design</a>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">Register Now</a>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">404 Error Page</a>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">Notes App</a>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">User Application</a>
-                      </li>
-                      <li class="sidebar-item py-2">
-                        <a class="fw-semibold text-dark" th:href="@{/}">Account Settings</a>
-                      </li>
-                    </ul>
-                  </ul>
-                </li>
-                <li class="sidebar-item">
-                  <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
-                    <span>
-                      <i class="ti ti-message-dots"></i>
-                    </span>
-                    <span class="hide-menu">Chat</span>
-                  </a>
-                </li>
-                <li class="sidebar-item">
-                  <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
-                    <span>
-                      <i class="ti ti-calendar"></i>
-                    </span>
-                    <span class="hide-menu">Calendar</span>
-                  </a>
-                </li>
-                <li class="sidebar-item">
-                  <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
-                    <span>
-                      <i class="ti ti-mail"></i>
-                    </span>
-                    <span class="hide-menu">Email</span>
-                  </a>
-                </li>
-              </ul>
+            <div class="john-title">
+              <h6 class="mb-0 fs-4 fw-semibold" th:text="${#authentication.principal.getName()}">Mathew
+              </h6>
+              <span class="fs-2" th:text="${#authentication.principal.getGroup()}">Designer</span>
             </div>
-          </nav>
+            <a class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout" th:href="@{/member/logout}">
+              <i class="ti ti-power fs-6"></i>
+            </a>
+          </div>
         </div>
-        <!-- 안쓸거 끝 -->
       </div>
-      <div class="app-header with-horizontal">
-        <nav class="navbar navbar-expand-xl container-fluid p-0">
-          <ul class="navbar-nav align-items-center">
-            <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
-              <a class="nav-link sidebartoggler" id="sidebarCollapse" th:href="@{/}">
-                <i class="ti ti-menu-2"></i>
-              </a>
-            </li>
-            <li class="nav-item d-none d-xl-block">
-              <a th:href="@{/}" class="text-nowrap nav-link">
-                <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
-              </a>
-            </li>
-          </ul>
+    </aside>
+    <!-- ---------------------------------- -->
+    <!--  Sidebar End -->
+    <!-- ---------------------------------- -->
 
-          <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+
+    <!-- ---------------------------------- -->
+    <!-- Start Vertical Layout Sidebar -->
+    <!-- ---------------------------------- -->
+    <div class="page-wrapper">
+      <!--  Header Start -->
+      <header class="topbar">
+        <div class="with-vertical">
+          <!-- ---------------------------------- -->
+          <!-- Start Vertical Layout Header -->
+          <!-- ---------------------------------- -->
+          <nav class="navbar navbar-expand-lg p-0">
+            <ul class="navbar-nav">
+              <li class="nav-item nav-icon-hover-bg rounded-circle ms-n2">
+                <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center"></ul>
             <!-- ------------------------------- -->
             <!-- start apps Dropdown -->
             <!-- ------------------------------- -->
             <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
               <div class="hover-dd">
-                <a class="nav-link" th:href="@{/}">
+                <a class="nav-link" href="javascript:void(0)">
                   수업 <span class="mt-1">
                     <i class="ti ti-chevron-down fs-3"></i>
                   </span>
@@ -716,7 +225,7 @@
                           <div class="row">
                             <div class="col-6">
                               <div class="position-relative">
-                                <a th:href="@{/board/list(category=code)}"
+                                <a th:href="@{/board/list(category='code')}"
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -738,8 +247,7 @@
                                       width="24" height="24" />
                                   </div>
                                   <div>
-                                    <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유
-                                      게시판
+                                    <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
                                     </h6>
                                     <span class="fs-2 d-block text-body-secondary">지난
                                       기수들의 프로젝트를 확인해보세요!</span>
@@ -762,7 +270,7 @@
                     <i class="ti ti-chevron-down fs-3"></i>
                   </span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340">
                   <div class="row">
                     <div class="col-8">
                       <div class="ps-7 pt-7">
@@ -793,8 +301,8 @@
                                       width="24" height="24" />
                                   </div>
                                   <div>
-                                    <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트
-                                      모집 게시판
+                                    <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 모집
+                                      게시판
                                     </h6>
                                     <span class="fs-2 d-block text-body-secondary">정보를
                                       확인하고 팀원을 모집해보세요!</span>
@@ -817,7 +325,7 @@
                     <i class="ti ti-chevron-down fs-3"></i>
                   </span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340">
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
                   <div class="row">
                     <div class="col-8">
                       <div class="ps-7 pt-7">
@@ -889,95 +397,588 @@
                 <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
               </li>
             </th:block>
-          </ul>
+            </ul>
 
-          <div class="d-block d-xl-none">
-            <a th:href="@{/}" class="text-nowrap nav-link">
-              <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
-            </a>
-          </div>
-          <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
-            data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="p-2">
-              <i class="ti ti-dots fs-7"></i>
-            </span>
-          </a>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-              <a th:href="@{/}"
-                class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
-                type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
-                aria-controls="offcanvasWithBothOptions">
-                <i class="ti ti-align-justified fs-7"></i>
+            <div class="d-block d-lg-none py-4">
+              <a th:href="@{/}" class="text-nowrap logo-img">
+                <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
               </a>
-              <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-                <!-- ------------------------------- -->
-                <!-- start isAnonymous -->
-                <!-- ------------------------------- -->
-                <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
-                  <a class="nav-link position-relative" th:href="@{/member/join}">
-                    <i class="ti ti-user-plus"></i>
-                  </a>
-                </li>
-                <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
-                  <a class="nav-link position-relative" th:href="@{/member/login}">
-                    <i class="ti ti-login fs-4"></i>
-                  </a>
-                </li>
-                <!-- ------------------------------- -->
-                <!-- end isAnonymous -->
-                <!-- ------------------------------- -->
+            </div>
+            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <i class="ti ti-dots fs-7"></i>
+            </a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between">
+                <a th:href="@{/}"
+                  class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-flex d-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7 d-none"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- ------------------------------- -->
+                  <!-- start isAnonymous -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/join}">
+                      <i class="ti ti-user-plus" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="회원가입"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/login}">
+                      <i class="ti ti-login fs-4" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="로그인"></i>
+                    </a>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end isAnonymous -->
+                  <!-- ------------------------------- -->
 
-                <!-- ------------------------------- -->
-                <!--  start isAuthenticated -->
-                <!-- ------------------------------- -->
-                <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
-                  <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
-                    <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
-                  </a>
-                </li>
+                  <!-- ------------------------------- -->
+                  <!--  start isAuthenticated -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
+                    </a>
+                  </li>
 
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                  <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
-                    <div class="d-flex align-items-center">
-                      <div class="user-profile-img">
-                        <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
-                          alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                  <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
+                      <div class="d-flex align-items-center">
+                        <div class="user-profile-img">
+                          <img
+                            th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.principal.username})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                        </div>
+                      </div>
+                    </a>
+                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+                      aria-labelledby="drop1">
+                      <div class="profile-dropdown position-relative" data-simplebar>
+                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                          <div class="ms-3">
+                            <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
+                              Mathew Anderson</h5>
+                            <!-- 이름 출력 -->
+                            <span class="mb-1 d-block currentUserGroup"
+                              th:text="${#authentication.principal.getGroup()}">Designer</span>
+                            <!-- 그룹 출력 -->
+                            <p class="mb-0 d-flex align-items-center gap-2">
+                              <i class="ti ti-mail fs-4"></i>
+                              <span th:text="${#authentication.principal.getEmail()}"></span>
+                              <!-- 이메일 출력 -->
+                            </p>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
+                            class="btn btn-outline-primary" style="width: 150px;">My
+                            Page</a>
+                          <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
+                            Out</a>
+                        </div>
                       </div>
                     </div>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end profile Dropdown -->
+                  <!-- ------------------------------- -->
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <!-- ---------------------------------- -->
+          <!-- End Vertical Layout Header -->
+          <!-- ---------------------------------- -->
+
+          <!-- ------------------------------- -->
+          <!-- apps Dropdown in Small screen -->
+          <!-- ------------------------------- -->
+          <!--  Mobilenavbar -->
+          <!-- 안쓸거 시작 -->
+          <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar"
+            aria-labelledby="offcanvasWithBothOptionsLabel">
+            <nav class="sidebar-nav scroll-sidebar">
+              <div class="offcanvas-header justify-content-between">
+                <img th:src="@{/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body h-n80" data-simplebar>
+                <ul id="sidebarnav">
+                  <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-apps"></i>
+                      </span>
+                      <span class="hide-menu">Apps 1</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level my-3">
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
+                            <span class="fs-2 d-block text-muted">New messages
+                              arrived</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Invoice App</h6>
+                            <span class="fs-2 d-block text-muted">Get latest invoice</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Contact Application</h6>
+                            <span class="fs-2 d-block text-muted">2 Unsaved Contacts</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Email App</h6>
+                            <span class="fs-2 d-block text-muted">Get new emails</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">User Profile</h6>
+                            <span class="fs-2 d-block text-muted">learn more
+                              information</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Calendar App</h6>
+                            <span class="fs-2 d-block text-muted">Get dates</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Contact List Table</h6>
+                            <span class="fs-2 d-block text-muted">Add new contact</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
+                            <span class="fs-2 d-block text-muted">To-do and Daily
+                              tasks</span>
+                          </div>
+                        </a>
+                      </li>
+                      <ul class="px-8 mt-7 mb-4">
+                        <li class="sidebar-item mb-3">
+                          <h5 class="fs-5 fw-semibold">Quick Links</h5>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Pricing Page</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Authentication
+                            Design</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Register Now</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">404 Error Page</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Notes App</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">User Application</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Account Settings</a>
+                        </li>
+                      </ul>
+                    </ul>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-message-dots"></i>
+                      </span>
+                      <span class="hide-menu">Chat</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-calendar"></i>
+                      </span>
+                      <span class="hide-menu">Calendar</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-mail"></i>
+                      </span>
+                      <span class="hide-menu">Email</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+          <!-- 안쓸거 끝 -->
+        </div>
+        <div class="app-header with-horizontal">
+          <nav class="navbar navbar-expand-xl container-fluid p-0">
+            <ul class="navbar-nav align-items-center">
+              <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" th:href="@{/}">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
+              <li class="nav-item d-none d-xl-block">
+                <a th:href="@{/}" class="text-nowrap nav-link">
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                </a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+              <!-- ------------------------------- -->
+              <!-- start apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" th:href="@{/}">
+                    수업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
                   </a>
-                  <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
-                    aria-labelledby="drop1">
-                    <div class="profile-dropdown position-relative" data-simplebar>
-                      <!-- <div class="py-3 px-7 pb-0">
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a th:href="@{/board/list(category=code)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">모르는
+                                        코드 물어보세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=project)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유
+                                        게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">지난
+                                        기수들의 프로젝트를 확인해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    취업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a th:href="@{/board/list(category=activity)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        취업 공고 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">최신
+                                        채용 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=recruit)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트
+                                        모집 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">정보를
+                                        확인하고 팀원을 모집해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    자유 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a th:href="@{/board/list(category=free)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        자유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">자유롭게
+                                        게시글을 올려주세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=info)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">세상의
+                                        모든 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=group)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">기수별로
+                                        소통하고 정보를 공유하세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- ------------------------------- -->
+              <!-- end apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item dropdown-hover d-none d-lg-block">
+                <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+              </li>
+              <th:block sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown-hover d-none d-lg-block">
+                  <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+                </li>
+              </th:block>
+            </ul>
+
+            <div class="d-block d-xl-none">
+              <a th:href="@{/}" class="text-nowrap nav-link">
+                <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
+              </a>
+            </div>
+            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="p-2">
+                <i class="ti ti-dots fs-7"></i>
+              </span>
+            </a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+                <a th:href="@{/}"
+                  class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- ------------------------------- -->
+                  <!-- start isAnonymous -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/join}">
+                      <i class="ti ti-user-plus"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/login}">
+                      <i class="ti ti-login fs-4"></i>
+                    </a>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end isAnonymous -->
+                  <!-- ------------------------------- -->
+
+                  <!-- ------------------------------- -->
+                  <!--  start isAuthenticated -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
+                    </a>
+                  </li>
+
+                  <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
+                      <div class="d-flex align-items-center">
+                        <div class="user-profile-img">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                        </div>
+                      </div>
+                    </a>
+                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+                      aria-labelledby="drop1">
+                      <div class="profile-dropdown position-relative" data-simplebar>
+                        <!-- <div class="py-3 px-7 pb-0">
                           <h5 class="mb-0 fs-5 fw-semibold userProfileImage">User Profile2</h5>
                         </div> -->
-                      <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                        <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
-                          alt="profile image" width="35" height="35" class="rounded-circle h-100">
-                        <div class="ms-3">
-                          <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
-                            Mathew Anderson</h5>
-                          <!-- 이름 출력 -->
-                          <span class="mb-1 d-block currentUserGroup"
-                            th:text="${#authentication.principal.getGroup()}">Designer</span>
-                          <!-- <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getEmail()}">Designer</span> -->
-                          <!-- 그룹 출력 -->
-                          <p class="mb-0 d-flex align-items-center gap-2">
-                            <i class="ti ti-mail fs-4"></i>
-                            <span th:text="${#authentication.principal.getEmail()}"></span>
-                            <!-- 이메일 출력 -->
-                          </p>
-                          <!-- <span class="mb-1 d-block currentUserGrouㄴp">
+                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                          <div class="ms-3">
+                            <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
+                              Mathew Anderson</h5>
+                            <!-- 이름 출력 -->
+                            <span class="mb-1 d-block currentUserGroup"
+                              th:text="${#authentication.principal.getGroup()}">Designer</span>
+                            <!-- <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getEmail()}">Designer</span> -->
+                            <!-- 그룹 출력 -->
+                            <p class="mb-0 d-flex align-items-center gap-2">
+                              <i class="ti ti-mail fs-4"></i>
+                              <span th:text="${#authentication.principal.getEmail()}"></span>
+                              <!-- 이메일 출력 -->
+                            </p>
+                            <!-- <span class="mb-1 d-block currentUserGrouㄴp">
                               <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
                                 >
                                 <h6 class="mb-1 fs-3 fw-semibold lh-base">마이페이지</h6>
                               </a>
                             </span> -->
+                          </div>
                         </div>
-                      </div>
-                      <!-- <div class="message-body">
+                        <!-- <div class="message-body">
                           <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
                             class="py-8 px-7 mt-8 d-flex align-items-center">
                             <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
@@ -990,27 +991,27 @@
                             </div>
                           </a>
                         </div> -->
-                      <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
-                        <!-- Flexbox로 감싸서 한 줄로 배치 -->
-                        <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
-                          class="btn btn-outline-primary" style="width: 150px;">My
-                          Page</a>
-                        <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
-                          Out</a>
+                        <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
+                          <!-- Flexbox로 감싸서 한 줄로 배치 -->
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
+                            class="btn btn-outline-primary" style="width: 150px;">My
+                            Page</a>
+                          <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
+                            Out</a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-                <!-- ------------------------------- -->
-                <!-- end isAuthenticated -->
-                <!-- ------------------------------- -->
-              </ul>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end isAuthenticated -->
+                  <!-- ------------------------------- -->
+                </ul>
+              </div>
             </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <!--  Header End -->
+          </nav>
+        </div>
+      </header>
+      <!--  Header End -->
 
 
       <aside class="with-horizontal">
@@ -1109,18 +1110,19 @@
             <!-- 검색창  -->
             <div class="search" style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
               <form id="searchForm" th:action="@{/board/list}" style="display: flex; align-items: center; width: 100%;">
-                  <input type="hidden" name="page" id="requestPage" th:value="${page}">
-                  <input type="hidden" name="category" id="" th:value="${category}">
-                  <input type="text" class="form-control fs-3" name="searchWord" placeholder="검색어를 입력하세요" th:value="${searchWord}" style="width:40%;">
-                  <button type="submit" class="btn btn-primary" style="margin-left: 10px;"> 
-                      <i class="ti ti-search fs-5"></i> 
-                  </button>
+                <input type="hidden" name="page" id="requestPage" th:value="${page}">
+                <input type="hidden" name="category" id="" th:value="${category}">
+                <input type="text" class="form-control fs-3" name="searchWord" placeholder="검색어를 입력하세요"
+                  th:value="${searchWord}" style="width:40%;">
+                <button type="submit" class="btn btn-primary" style="margin-left: 10px;">
+                  <i class="ti ti-search fs-5"></i>
+                </button>
               </form>
             </div>
             <!-- 게시글 작성 버튼 -->
             <div>
               <a class="btn btn-primary" th:href="@{/board/write(category=${category})}">
-                <i class="ti ti-pencil-plus fs-5"></i>  Write
+                <i class="ti ti-pencil-plus fs-5"></i> Write
               </a>
             </div>
           </div>
@@ -1143,7 +1145,8 @@
                         <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
                       </li>
                       <li class="breadcrumb-item" aria-current="page">
-                        <a class="text-muted text-decoration-none" th:href="@{/board/list(category=${category})}">[[${category}]]</a>
+                        <a class="text-muted text-decoration-none"
+                          th:href="@{/board/list(category=${category})}">[[${category}]]</a>
                       </li>
                     </ol>
                   </nav>
@@ -1158,19 +1161,20 @@
               </div>
             </div>
           </div>
-          
+
           <div class="card overflow-hidden">
             <div class="position-relative">
               <a href="javascript:void(0)">
                 <!-- 작성자 바로 위 배경이미지 -->
-                <img th:src="@{/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover" alt="modernize-img" height="180">
+                <img th:src="@{/images/blog/blog-img5.jpg}" class="card-img-top rounded-0 object-fit-cover"
+                  alt="modernize-img" height="180">
               </a>
               <!-- 작성자 이미지 -->
               <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${board.memberId})}"
                 alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="${board.memberId}">
               <!-- 작성자 ID 및 배지 -->
             </div>
-            
+
             <!-- 게시글 작성자 수정/삭제  : 작성자와 현재 로그인한 사용자가 같은 경우에만 보이게-->
             <div>
               <div style="margin-left: 95.5%;" th:if="${board.memberId == #authentication.name}">
@@ -1182,7 +1186,8 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                     <li class="nav-item nav-icon-hover-bg rounded-circle">
-                      <a class="" th:href="@{/board/update(boardId=${board.boardId}, category=${category})}" style="text-align: center;">
+                      <a class="" th:href="@{/board/update(boardId=${board.boardId}, category=${category})}"
+                        style="text-align: center;">
                         <i class="ti ti-edit"></i> edit
                       </a>
                     </li>
@@ -1192,7 +1197,7 @@
                       </a>
                       <!-- Hidden form to handle deletion -->
                       <form id="deleteForm" th:action="@{/board/delete}" method="get">
-                        <input type="hidden" name="boardId"  th:value="${board.boardId}">
+                        <input type="hidden" name="boardId" th:value="${board.boardId}">
                         <input type="hidden" name="category" id="category" th:value="${category}">
                         <input type="hidden" name="searchWord" id="searchWord" th:value="${searchWord}">
                       </form>
@@ -1213,39 +1218,49 @@
                     <i class="ti ti-square-x fs-6"></i> 모집 마감
                   </button>
                   <!--참여 버튼-->
-                  <button id="recruitBtn" class="btn btn-sm btn-primary" th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal" data-bs-target="#recruitModal" style="font-weight: bold;">
+                  <button id="recruitBtn" class="btn btn-sm btn-primary"
+                    th:if="${board.currentNumber&lt;board.limitNumber}" data-bs-toggle="modal"
+                    data-bs-target="#recruitModal" style="font-weight: bold;">
                     <i class="ti ti-user fs-4"></i> 참여 ([[${board.currentNumber}]]/[[${board.limitNumber}]])
                   </button>
                 </div>
                 <!--D-day-->
-                <div id="dDayBtn" class="btn btn-sm btn-primary" th:if="${board.deadline!=null}" style="font-weight: bold;">
-                  <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-4"></i>  D-[[${board.dDay}]] </span> 
-                  <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-4"></i>  D-Day </span> 
-                  <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-4"></i>  마감</span> 
+                <div id="dDayBtn" class="btn btn-sm btn-primary" th:if="${board.deadline!=null}"
+                  style="font-weight: bold;">
+                  <span th:if="${board.dDay>0}"><i class="ti ti-calendar-event fs-4"></i> D-[[${board.dDay}]] </span>
+                  <span th:if="${board.dDay==0}"><i class="ti ti-calendar-event fs-4"></i> D-Day </span>
+                  <span th:if="${board.dDay&lt;0}"><i class="ti ti-calendar-off fs-4"></i> 마감</span>
                 </div>
               </div>
               <div class="d-flex align-items-center gap-4 me-9">
                 <!--조회수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i class="ti ti-eye text-dark fs-6" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수"></i>[[${board.hitCount}]] 
+                  <i class="ti ti-eye text-dark fs-6" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="조회수"></i>[[${board.hitCount}]]
                 </div>
                 <!--댓글 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i id="message" class="ti ti-message-2 text-dark fs-6" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="댓글"></i> <span class="replyCount">[[${board.replyCount}]]</span>  
+                  <i id="message" class="ti ti-message-2 text-dark fs-6" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-title="댓글"></i> <span
+                    class="replyCount">[[${board.replyCount}]]</span>
                 </div>
                 <!--좋아요 수-->
                 <div class="d-flex align-items-center gap-2">
-                  <i id="heart" th:if="${board.likeCount==0}" class="ti ti-heart text-dark fs-6" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i>  
-                  <i id="heart" th:unless="${board.likeCount==0}" class="ti ti-heart-filled text-dark fs-6" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i> 
-                  <span id="likeCount">[[${board.likeCount}]]</span>  
+                  <i id="heart" th:if="${board.likeCount==0}" class="ti ti-heart text-dark fs-6"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i>
+                  <i id="heart" th:unless="${board.likeCount==0}" class="ti ti-heart-filled text-dark fs-6"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요"></i>
+                  <span id="likeCount">[[${board.likeCount}]]</span>
                 </div>
                 <!--신고 버튼-->
                 <div class="d-flex align-items-center gap-2">
-                  <button type="button" id="reportBtn" class="btn btn-sm bg-danger-subtle text-danger" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="ti ti-urgent fs-6" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고"></i></button>
+                  <button type="button" id="reportBtn" class="btn btn-sm bg-danger-subtle text-danger"
+                    data-bs-toggle="modal" data-bs-target="#reportModal"><i class="ti ti-urgent fs-6"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="신고"></i></button>
                 </div>
                 <!--작성 날짜-->
                 <div class="d-flex align-items-center fs-4 ms-auto" style="color : black;">
-                  <i class="ti ti-point text-dark"></i> [[${#temporals.format(board.createDate, 'EEE, MMM dd')}]] 
+                  <i class="ti ti-point text-dark"></i> [[${#temporals.format(board.createDate, 'EEE, MMM dd')}]]
                 </div>
               </div>
             </div>
@@ -1257,35 +1272,39 @@
             <div class="card-body border-top p-4" th:if="${board.originalFileName != null}">
               <div class="input-group">
                 <span class="input-group-text" id="attachedFileImg">
-                    <i class="ti ti-download"></i>
+                  <i class="ti ti-download"></i>
                 </span>
                 <input type="text" class="form-control" id="attachedFile" aria-label="Username"
-                      aria-describedby="basic-addon1" readonly style="padding-left: 150px; padding-right: 80px;">
+                  aria-describedby="basic-addon1" readonly style="padding-left: 150px; padding-right: 80px;">
                 <!-- 가상의 a 태그를 input 위에 배치 -->
-                <a th:href="@{/download(boardId=${board.boardId})}" 
+                <a th:href="@{/download(boardId=${board.boardId})}"
                   style="position: absolute; left: 52px; top: 50%; transform: translateY(-50%); padding: 6px; border-radius: 4px; text-decoration: none;">
                   [[${board.originalFileName}]]
                 </a>
               </div>
-            
-            </div> 
+
+            </div>
           </div>
-          
+
           <!-- 댓글 -->
           <div class="card">
             <div class="card-body" id="replyPart">
               <!-- 댓글 작성 -->
-              <h4 class="mb-4 fw-semibold" style="color: #7c8fac;"><i class="ti ti-message-plus fs-7 me-1"></i> Post Comments</h4>
+              <h4 class="mb-4 fw-semibold" style="color: #7c8fac;"><i class="ti ti-message-plus fs-7 me-1"></i> Post
+                Comments</h4>
               <div>
                 <input type="hidden" id="replyBoard" th:value="${board.boardId}"> <!--댓글달 게시글 ID-->
                 <input type="hidden" id="replyWriter" th:value="${#authentication.name}"> <!--댓글 작성자 ID-->
                 <textarea class="form-control mb-4" rows="4" id="replyContent"></textarea> <!--댓글 내용-->
-                <button class="btn btn-sm btn-primary" id="replySubmit"> Post Comment <i class="ti ti-brand-telegram fs-6 ms-1"></i></button> <!-- 댓글 작성 버튼 -->
+                <button class="btn btn-sm btn-primary" id="replySubmit"> Post Comment <i
+                    class="ti ti-brand-telegram fs-6 ms-1"></i></button> <!-- 댓글 작성 버튼 -->
               </div>
 
               <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
                 <h4 class="mb-0" style="color: #7c8fac;"><i class="ti ti-messages fs-8 me-1"></i> Comments</h4>
-                <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded replyCount">[[${board.replyCount}]]</span> <!-- 댓글 수 -->
+                <span
+                  class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded replyCount">[[${board.replyCount}]]</span>
+                <!-- 댓글 수 -->
               </div>
 
               <!-- 댓글 목록 -->
@@ -1295,19 +1314,24 @@
                   <div class="p-4 rounded-4 text-bg-light mb-3">
                     <div class="d-flex align-items-center gap-3">
                       <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${reply.memberId})}"
-                      alt="modernize-img" class="rounded-circle" width="40" height="40">
+                      alt="modernize-img" class="rounded-circle" width="33" height="33">
                       <!-- 댓글 작성자 ID-->
                       <h6 class="mb-0 fs-4">[[${reply.memberId}]]</h6> 
                       <span th:if="${reply.memberId==#authentication.name}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
+                      <!-- <span th:if="${reply.memberId=='hs'}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span> -->
                       <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
                         <th:block th:if="${reply.memberId==#authentication.name}">
+                        <!-- <th:block th:if="${reply.memberId=='hs'}"> -->
                           <!-- 댓글 삭제 -->
-                          <div class="btn btn-sm bg-danger-subtle text-danger ms-6 replyDelete" th:data-reply="${reply.replyId}" >
-                            <i class="ti ti-trash-x fs-5 " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="삭제"></i> 
+                          <div class="btn btn-sm bg-danger-subtle text-danger ms-6 replyDelete"
+                            th:data-reply="${reply.replyId}">
+                            <i class="ti ti-trash-x fs-5 " data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-title="삭제"></i>
                           </div>
                           <!-- 댓글 수정 -->
-                          <div class="btn btn-sm btn-primary ms-6 replyUpdateForm" th:data-reply="${reply.replyId}" >
-                            <i class="ti ti-edit text-light fs-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="수정"></i> 
+                          <div class="btn btn-sm btn-primary ms-6 replyUpdateForm" th:data-reply="${reply.replyId}">
+                            <i class="ti ti-edit text-light fs-5" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-title="수정"></i>
                           </div>
                         </th:block>
                         <th:block th:unless="${reply.memberId==#authentication.name}">
@@ -1328,8 +1352,10 @@
                         <div class="childReplyInfo" th:data-parent="${reply.replyId}" th:data-user="${#authentication.name}"></div>
                         <div class="d-flex align-items-center gap-2 childReplyForm">
                           <!--대댓글 작성요청 버튼-->
-                          <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                            <i class="ti ti-arrow-back-up"></i> 
+                          <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle childReplyBtn"
+                            href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Reply">
+                            <i class="ti ti-arrow-back-up"></i>
                           </a>
                         </div>
                       </div>
@@ -1340,9 +1366,9 @@
                     <div class="p-4 rounded-4 text-bg-light mb-3 ms-7" th:each="childReply : ${reply.childReplies}">
                       <div class="d-flex align-items-center gap-3">
                         <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${childReply.memberId})}"
-                        alt="modernize-img" class="rounded-circle" width="40" height="40">
+                          alt="modernize-img" class="rounded-circle" width="40" height="40">
                         <!-- 댓글 작성자 -->
-                        <h6 class="mb-0 fs-4">[[${childReply.memberId}]]</h6> 
+                        <h6 class="mb-0 fs-4">[[${childReply.memberId}]]</h6>
                         <!-- 로그인한 사용자와 댓글 작성자가 일치하는 경우만 동그라미 표시 -->
                         <span th:if="${childReply.memberId==#authentication.name}" class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                         <div class="ms-auto d-flex align-items-center" style="padding-right: 20px;">
@@ -1362,7 +1388,7 @@
                               <i th:if="${childReply.likeCount == 0}" class="ti ti-thumb-up text-light fs-5 "></i> 
                               <i th:unless="${childReply.likeCount == 0}" class="ti ti-thumb-up-filled text-light fs-5 "></i> 
                               <span>[[${reply.likeCount}]]</span>
-                              </div>
+                            </div>
                           </th:block>
                         </div>
                       </div>
@@ -1416,7 +1442,8 @@
               <!-- Modal Footer -->
               <div class="modal-footer">
                 <button type="button" id="submitRecruitBtn" class="btn btn-primary">참여</button>
-                <button type="button" id="closeBtn" class="btn bg-danger-subtle text-danger ms-6" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="closeBtn" class="btn bg-danger-subtle text-danger ms-6"
+                  data-bs-dismiss="modal">Close</button>
               </div>
             </form>
           </div>
@@ -1431,18 +1458,19 @@
               <!-- Modal Header -->
               <div class="modal-header">
                 <h5 class="modal-title">Report</h5>
-                <button type="button" class="btn-close" id="reportModalCloseBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" id="reportModalCloseBtn" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
               </div>
               <!-- Modal Body -->
               <div class="modal-body">
                 <table class="table">
                   <tr>
                     <th>신고 게시글 제목 <span>*</span></th>
-                    <td><input type="text" class="form-control"  id="reportModalTitle" readonly></td>
+                    <td><input type="text" class="form-control" id="reportModalTitle" readonly></td>
                   </tr>
                   <tr>
                     <th>신고 게시글 작성자 <span>*</span></th>
-                    <td><input type="text" class="form-control"  name="memberId" id="reportModalWriter" readonly></td>
+                    <td><input type="text" class="form-control" name="memberId" id="reportModalWriter" readonly></td>
                   </tr>
                   <tr>
                     <th>신고 카테고리 <span>*</span></th>
@@ -1455,13 +1483,14 @@
                         <option value="ETC">기타</option>
                       </select>
                     </td>
-                  </tr> 
+                  </tr>
                   <tr>
                     <th>신고사유 <span>*</span></th>
                   </tr>
                   <tr>
                     <td colspan="2">
-                      <textarea class="form-control" name="reason" id="modalContent" cols="30" rows="5" required></textarea>
+                      <textarea class="form-control" name="reason" id="modalContent" cols="30" rows="5"
+                        required></textarea>
                     </td>
                   </tr>
                   <input type="hidden" name="boardId" id="reportModalBoardId">
@@ -1478,7 +1507,7 @@
           </div>
         </div>
       </div>
-    
+
     </div>
 
     <script>
@@ -1490,7 +1519,7 @@
         document.body.classList.remove('modal-open');
         var backdrop = document.querySelector('.modal-backdrop');
         if (backdrop) {
-            backdrop.remove();
+          backdrop.remove();
         }
       });
       // report 모달 닫기
@@ -1498,19 +1527,21 @@
         document.body.classList.remove('modal-open');
         var backdrop = document.querySelector('.modal-backdrop');
         if (backdrop) {
-            backdrop.remove();
+          backdrop.remove();
         }
       });
-      
+
 
     </script>
 
     <div>
-      <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
+        type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="icon ti ti-settings fs-7"></i>
       </button>
 
-      <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
         <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
           <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
             Settings
@@ -1521,7 +1552,8 @@
           <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
 
           <div class="d-flex flex-row gap-3 customizer-box" role="group">
-            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
+            <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout"
+              autocomplete="off" />
             <label class="btn p-9 btn-outline-primary rounded-2" for="light-layout">
               <i class="icon ti ti-brightness-up fs-7 me-2"></i>Light
             </label>
@@ -1549,42 +1581,56 @@
 
           <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
             <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Blue_Theme')" for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="BLUE_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
             <input type="radio" class="btn-check" name="color-theme-layout" id="Aqua_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Aqua_Theme')" for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="AQUA_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
             <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Purple_Theme')" for="Purple_Theme" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="PURPLE_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
-            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
+            <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout"
+              autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Green_Theme')" for="green-theme-layout" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="GREEN_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
             <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Cyan_Theme')" for="cyan-theme-layout" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="CYAN_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
             </label>
 
-            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
+            <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout"
+              autocomplete="off" />
+            <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center"
+              onclick="handleColorTheme('Orange_Theme')" for="orange-theme-layout" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="ORANGE_THEME">
               <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
                 <i class="ti ti-check text-white d-flex icon fs-5"></i>
               </div>
@@ -1666,11 +1712,11 @@
     <script th:src="@{/js/theme/theme.js}"></script>
     <script th:src="@{/js/theme/app.min.js}"></script>
     <script th:src="@{/js/theme/sidebarmenu.js}"></script>
-    
-    
+
+
     <!-- Bootstrap JavaScript -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
-  </body>
+</body>
 
 </html>
