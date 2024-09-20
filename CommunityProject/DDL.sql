@@ -11,6 +11,10 @@ drop table if exists member_verify_code;
 drop table if exists memberpage;
 drop table if exists memberproject;
 
+-- reply data 삭제
+drop table if exists reply;
+
+
 -- chat data 삭제 
 DROP TABLE IF EXISTS chat_rooms;
 DROP TABLE IF EXISTS chatting_room_member;
@@ -88,10 +92,24 @@ select * from memberpage;
 select * from member_verify_code;
 select * from memberproject;
 select * from adminnote;
+select * from user_status;
+select * from reply;
+
+# board data 조회
+select * from reply;
+select * from board_report;
+select * from board;
+
 
 # chat data 조회
-select * from chat_rooms;
+select * from chat_rooms; 
 select * from chatting_room_member;
+
+# 특정 값 추가 
+DELETE FROM member WHERE member_id = 'admin';
+UPDATE member
+SET member_role = 'ROLE_ADMIN'
+WHERE member_id = 'admin123';
 
 # 특정 값 조회 
 SELECT * FROM chatting_room_member WHERE member_id = 'aaaaa';
