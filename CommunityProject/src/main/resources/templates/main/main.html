@@ -1030,92 +1030,17 @@
                       <span class="fs-3 ms-auto" th:text="*{#temporals.format(popBoard.createDate, 'yyyy-MM-dd')}">8
                         March 2020</span>
                     </div>
-                    <!-- <h6 class="mt-3" th:text="${popBoard.title}">NFT Landing Page<a class="fs-2 h6-style"
+                    <h6 class="mt-3"><a class="mt-3" th:text="${popBoard.title}"
                         th:href="@{/board/detail(boardId=${popBoard.boardId},category=${popBoard.category})}">NFT
                         Landing
-                        Page</a></h6> -->
-                    <a class="fs-2 h6-style" th:href="@{/board/detail(boardId=${popBoard.boardId},category=${popBoard.category})}">
-                      <h6 class="mt-3" th:text="${popBoard.title}"></h6>
-                    </a>
-
+                        Page</a></h6>
                     <span class="fs-3 lh-sm" th:utext="${popBoard.content}">Designing an NFT-themed website with a
                       creative concept
                       so th...</span>
                     <div class="hstack mt-3" style="justify-content: flex-end;;">
-                      <!-- <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none"
-                        th:text="'조회수 ' + ${popBoard.hitCount}"> -->
-                      <!-- <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> -->
                       <span th:text="'조회수 ' + ${popBoard.hitCount}"></span>
-                      <!-- </a> -->
-                      <!-- <a href="javascript:void(0)"
-                          class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                          <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 13
-                          Commets
-                        </a> -->
                     </div>
                   </div>
-
-                  <!-- <div class="mt-4 pb-3 border-bottom">
-                    <div class="d-flex align-items-center">
-                      <span class="bg-primary-subtle text-primary badge">Inprogress</span>
-                      <span class="fs-3 ms-auto">8 March 2020</span>
-                    </div>
-                    <h6 class="mt-3">NFT Landing Page</h6>
-                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept
-                      so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 2 Tasks
-                      </a>
-                      <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 13
-                        Commets
-                      </a>
-                    </div>
-                  </div>
-                  <div class="py-3 border-bottom">
-                    <div class="d-flex align-items-center">
-                      <span class="bg-danger-subtle text-danger badge">Inpending</span>
-                      <span class="fs-3 ms-auto">8 Jan 2024</span>
-                    </div>
-                    <h6 class="mt-3">Dashboard Finanace Management</h6>
-                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept
-                      so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 4 Tasks
-                      </a>
-                      <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 50
-                        Commets
-                      </a>
-                    </div>
-                  </div>
-                  <div class="pt-3">
-                    <div class="d-flex align-items-center">
-                      <span class="bg-success-subtle text-success badge">Completed</span>
-                      <span class="fs-3 ms-auto">8 Feb 2024</span>
-                    </div>
-                    <h6 class="mt-3">Logo Branding</h6>
-                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept
-                      so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 1 Task
-                      </a>
-                      <a href="javascript:void(0)"
-                        class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 12
-                        Commets
-                      </a>
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -1123,7 +1048,6 @@
 
 
             <div class="col-lg-7 d-flex align-items-stretch">
-
               <div class="card w-100">
                 <!-- 전체 게시글 시작-->
                 <div class="card-body">
@@ -1139,54 +1063,6 @@
                         Landing
                         Page</a></h6>
                   </div>
-                  <!-- mt-4 pb-3 -->
-                  <!-- <div class="border-bottom">
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto">8 March 2020</span>
-                    </div>
-                    <h6 class="fs-2">NFT Landing Page</h6>
-                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept
-                      so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 13
-                        Commets
-                      </a>
-                    </div>
-                  </div> -->
-                  <!-- py-3 -->
-                  <!-- <div class="border-bottom">
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto">8 Jan 2024</span>
-                    </div>
-                    <h6 class="fs-2">Dashboard Finanace Management</h6>
-                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept
-                      so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 50
-                        Commets
-                      </a>
-                    </div>
-                  </div> -->
-                  <!-- pt-3 -->
-                  <!-- <div>
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto">8 Feb 2024</span>
-                    </div>
-                    <h6 class="fs-2">Logo Branding</h6>
-                    <span class="fs-2 lh-sm">Designing an NFT-themed website with a creative concept
-                      so th...</span>
-                    <div class="hstack gap-3 mt-3">
-                      <a href="javascript:void(0)"
-                        class="fs-2 text-bodycolor d-flex align-items-center text-decoration-none">
-                        <i class="ti ti-message-dots fs-3 text-primary me-2 d-flex"></i> 12
-                        Commets
-                      </a>
-                    </div>
-                  </div> -->
                 </div>
                 <!-- 전체 게시글 끝-->
                 <!-- 공지사항 시작-->

@@ -1094,8 +1094,8 @@
             <!--  Header End -->
 
             <!-- 여기부터 본문 시작 -->
-            <div class="body-wrapper" style="padding-top: 120px;">
-                <div class="container-fluid" style="padding-top: 20px !important">
+            <div class="body-wrapper" >
+                <div class="container-fluid" >
                     <!-- 파란색 부분 시작 -->
                     <!-- <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
                         <div class="card-body px-4 py-3">
@@ -1122,9 +1122,9 @@
 
                     <!-- 사이드바 대신  -->
                     <ul
-                        class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
+                        class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle  rounded-2 rounded-top-2">
                         <th:block sec:authorize="hasRole('ADMIN')">
-                            <a type="submit" th:href="@{/admin/adminPage}"
+                            <a type="submit" th:href="@{/admin/adminPage}" class="d-flex align-items-center m-12"
                                 style="display: flex; align-items: center; font-size: 14.5px; margin: 12px;">
                                 <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
                                 <span class="d-none d-md-block">회원 관리</span>
