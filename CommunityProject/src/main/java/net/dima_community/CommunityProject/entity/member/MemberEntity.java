@@ -20,11 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
-import net.dima_community.CommunityProject.entity.board.JobBoardRecruitEntity;
-import net.dima_community.CommunityProject.entity.board.LikeEntity;
 import net.dima_community.CommunityProject.entity.board.ReplyEntity;
-import net.dima_community.CommunityProject.entity.member.MemberPageEntity;
-import net.dima_community.CommunityProject.entity.member.MemberProjectEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -85,36 +81,17 @@ public class MemberEntity {
 	 */
 	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@OrderBy("memberproject_seq asc")
-	// private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
-	private List<MemberProjectEntity> memberProjectEntity;
+	private List<MemberProjectEntity> memberProjectEntity = new ArrayList<MemberProjectEntity>();
 
 	// 1) Board
-	// @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	// @OrderBy("board_id")
-	// private List<BoardEntity> BoardEntities = new ArrayList<BoardEntity>();
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("board_id")
+	private List<BoardEntity> BoardEntities = new ArrayList<BoardEntity>();
 
-    // ========== 도연 추가 ===============
-    // 자식
-    // 1) Board
-    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("board_id")
-    private List<BoardEntity> boardEntities;
-    
-    // 2) JobBoardRecruit
-    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("board_id")
-    private List<JobBoardRecruitEntity> jobBoardRecruitEntities;
-    
-    // 3) Reply
-    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("create_date")
-    private List<ReplyEntity> replyEntities;
-    
-    // 4) Like
-    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("board_id")
-    private List<LikeEntity> likeEntities;
-
+	// 3) Reply
+	@OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OrderBy("create_date")
+	private List<ReplyEntity> replyEntities;
 
 	public static MemberEntity toEntity(MemberDTO memberDTO) {
 		return MemberEntity.builder()

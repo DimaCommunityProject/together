@@ -165,19 +165,13 @@ function getReplyList() {
         method:"GET",
         data:{"boardId":boardId, "memberId":currentUser},
         success:function (list) {
-            console.log("댓글 목록 가져오기 성공!!");
+            console.log("!!가져오기 성공!!");
             $("#result").replaceWith(list);
-
-            // 클릭 이벤트 핸들러 등록
             $(".replyHeart").click(replyLikeToggle);
             $(".childReplyBtn").click(childReplyWrite);
             $(".childReplySubmit").click(childReplySubmit);
             $(".replyDelete").click(replyDelete); // 댓글 삭제
             $(".replyUpdateForm").click(replyUpdate); // 댓글 수정
-
-            // 툴팁 초기화
-            $('[data-bs-toggle="tooltip"]').tooltip();
-            
         }
     });
 }

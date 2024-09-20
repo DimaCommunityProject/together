@@ -14,12 +14,12 @@ import net.dima_community.CommunityProject.entity.member.MemberVerifyCodeEntity;
 @Repository
 public interface MemberVerifyCodeRepository extends JpaRepository<MemberVerifyCodeEntity, Long> {
 
-    @Query(value = "SELECT * FROM MEMBER_VERIFY_CODE WHERE member_id LIKE CONCAT('%', :memberId, '%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM MEMBER_VERIFY_CODE WHERE member_id = :memberId", nativeQuery = true)
     Optional<MemberVerifyCodeEntity> findByMemberId(@Param("memberId") String memberId);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM MEMBER_VERIFY_CODE WHERE member_id LIKE CONCAT('%', :memberId, '%')", nativeQuery = true)
-    void deleteByMemberId(String memberId);
+    @Query(value = "DELETE FROM MEMBER_VERIFY_CODE WHERE member_id = :memberId", nativeQuery = true)
+    void deleteByMemberId(@Param("memberId") String memberId);
 
 }
