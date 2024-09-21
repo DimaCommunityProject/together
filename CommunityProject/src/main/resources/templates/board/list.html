@@ -16,8 +16,13 @@
   <!-- Tabler icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
-  <title> 게시글 목록</title>
-
+  <title th:if="${category.name() == 'activity'}">취업 공고 게시판 </title>
+  <title th:if="${category.name() == 'recruit'}">공모전/프로젝트 모집 게시판 </title>
+  <title th:if="${category.name() == 'code'}">코드 공유 게시판 </title>
+  <title th:if="${category.name() == 'group'}">[[${userGroup}]] 게시판 </title>
+  <title th:if="${category.name() == 'project'}">프로젝트 공유 게시판 </title>
+  <title th:if="${category.name() == 'free'}">자유 게시판 </title>
+  <title th:if="${category.name() == 'info'}">정보 게시판 </title>
 </head>
 
 <body class="link-sidebar">
