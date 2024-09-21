@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
+import net.dima_community.CommunityProject.handler.AccessDeniedHandlerImpl;
 import net.dima_community.CommunityProject.handler.CustomFailureHandler;
 import net.dima_community.CommunityProject.handler.CustomSuccessHandler;
 
@@ -19,6 +19,7 @@ public class SecurityConfig {
 
 	private final CustomFailureHandler failureHandler; // 로그인 실패 시 처리 동작
 	private final CustomSuccessHandler successHandler; // 로그인 성공 시 처리 동작
+	private final AccessDeniedHandlerImpl accessDeniedHandler;
 
 	// 예외처리할 url 설정
 	// WebSecurityCustomizer : HTTP 요청에 대한 보안 구성을 커스터마이징. 웹 요청을 무시하도록 설정
@@ -59,10 +60,13 @@ public class SecurityConfig {
 		, "/script/**").permitAll()
 		
 		.requestMatchers("/admin/**").hasRole("ADMIN")
-		.requestMatchers("/memberpage/showpage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
-		//.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").authenticated()
-		.anyRequest().authenticated()
-		);
+		.requestMatchers("/memberpage/showpage", "/member/updatePage", "/member/changePw", "/board/detail", "/api/chat/chatPage").hasAnyRole("ADMIN", "USER")
+		.anyRequest().authenticated())
+		
+		//권한이 없으면 처리
+		 .exceptionHandling(exceptions -> 
+	        exceptions.accessDeniedHandler(accessDeniedHandler)
+	    );
 
 		// Custom Login 설정
 		http
