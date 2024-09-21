@@ -38,22 +38,20 @@ public class SecurityConfig {
 		http
 				.authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
 						.requestMatchers(
-								"/", "/member/**", "/main/**", "/board/list"
+								"/", "/member/adminPageNote", "/member/adminPageDetail", "/member/findId",
+								"/member/findPw", "/member/join", "/member/login", "/member/checkDuplicate"
 
-								, "/ckeditor5/**", "/css/**", "/fonts/**", "/images/**", "/js/**", "/libs/**",
-								"/script/**")
+								, "/email/**", "/main/**", "/board/list", "/ckeditor5/**", "/css/**", "/fonts/**",
+								"/images/**", "/js/**", "/libs/**", "/script/**")
 						.permitAll()
 
 						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw",
+						.requestMatchers("/memberpage/showpage", "/member/updatePage", "/member/changePw",
 								"/board/detail")
 						.hasAnyRole("ADMIN", "USER")
+						// .requestMatchers("/member/memberPage", "/member/updatePage",
+						// "/member/changePw", "/board/detail").authenticated()
 						.anyRequest().authenticated());
-		// http
-		// .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-		// .requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
-		// .anyRequest().permitAll() // 모든 요청에 대해 접근 허용
-		// );
 
 		// Custom Login 설정
 		http
@@ -84,9 +82,15 @@ public class SecurityConfig {
 		http.headers(headers -> headers.contentSecurityPolicy(
 				cps -> cps.policyDirectives(
 						"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
-								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com;"
+								"style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com https://fonts.googleapis.com; "
 								+
-								"font-src 'self' https://fonts.gstatic.com data:; " + // 폰트 출처 추가
+								"font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; " + // 폰트 출처에
+																												// jsdelivr
+																												// 추가
+								"img-src 'self' data: https://cdn.jsdelivr.net https://cdn.ckeditor.com; " + // 이미지 출처
+																												// 허용
+								"connect-src 'self'; " + // XMLHttpRequest, WebSocket 등을 위한 출처 제한
+								"frame-src 'self'; " + // iframe을 허용할 출처
 								"object-src 'none';" // object-src 제한
 				)));
 

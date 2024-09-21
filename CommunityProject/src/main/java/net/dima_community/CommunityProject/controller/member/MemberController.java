@@ -81,6 +81,7 @@ public class MemberController {
 	@ResponseBody
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberService.findByIdThroughConn(memberId);
+		log.info("" + result);
 		return result;
 	}
 
