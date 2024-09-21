@@ -11,16 +11,19 @@
   <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
 
   <!-- Core Css -->
-  <link rel="stylesheet" th:href="@{/css/styles.css}" />
- 
+  <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+
+  <!-- Tabler icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
   <title> 게시글 목록</title>
+
 </head>
 
 <body class="link-sidebar">
   <!-- model에 담겨온 것들 -->
   <input type="hidden" name="searchWord" th:value="${searchWord}">
-  <input type="hidden" name="searchWord" th:value="${searchWord}">
+  <input type="hidden" name="" id="currentUser" th:value="${#authentication.name}">
 <!-- Preloader -->
 <div class="preloader">
   <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -132,7 +135,7 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
+            <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}" aria-expanded="false">
               <span>
                 <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
                   height="23.2" />
@@ -342,7 +345,7 @@
                                     모든 정보를 확인하세요!</span>
                                 </div>
                               </a>
-                              <a th:href="@{/board/list(category=group)}"
+                              <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                 class="d-flex align-items-center pb-9 position-relative min-width-340">
                                 <div
                                   class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -835,7 +838,7 @@
                                       모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
-                                <a th:href="@{/board/list(category=group)}"
+                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -1111,8 +1114,8 @@
               <div class="row align-items-center">
 
                 <div class="col-9">
-                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'activity'}">대외활동 게시판 </h4>
-                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'recruit'}">모집 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'activity'}">취업 공고 게시판 </h4>
+                  <h4 class="fw-semibold mb-8" th:if="${category.name() == 'recruit'}">공모전/프로젝트 모집 게시판 </h4>
                   <h4 class="fw-semibold mb-8" th:if="${category.name() == 'code'}">코드 공유 게시판 </h4>
                   <h4 class="fw-semibold mb-8" th:if="${category.name() == 'group'}">[[${userGroup}]] 게시판 </h4>
                   <h4 class="fw-semibold mb-8" th:if="${category.name() == 'project'}">프로젝트 공유 게시판 </h4>

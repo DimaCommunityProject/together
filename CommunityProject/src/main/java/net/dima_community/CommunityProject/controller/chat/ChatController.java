@@ -2,7 +2,6 @@ package net.dima_community.CommunityProject.controller.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.dto.chat.StatusUpdateMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.service.chat.ChatRoomService;
 import net.dima_community.CommunityProject.service.chat.ChatService;
@@ -30,16 +29,6 @@ public class ChatController {
 
 	private static final String CHAT_EXCHANGE_NAME = "chat.exchange"; // RabbitMQ의 교환기 이름
 
-	// =======================================================
-	// ===================== 채팅페이지 입장 =====================
-	// =======================================================
-	@MessageMapping("/statusUpdate") // 전체 회원이 구독
-	@SendTo("/topic/statusUpdates")
-	public StatusUpdateMessage sendStatusUpdate(StatusUpdateMessage message) {
-	    // 전체 구독자에게 상태 업데이트 메시지를 전송
-	    return message;
-	}
-	
 	// =======================================================
 	// ===================== 채팅방 입장 =====================
 	// =======================================================

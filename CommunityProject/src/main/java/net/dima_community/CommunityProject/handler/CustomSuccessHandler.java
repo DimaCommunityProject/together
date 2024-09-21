@@ -50,13 +50,13 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		
 		redirectStrategy.sendRedirect(request, response, URL);
 	}//end onAuthenticationSuccess
-	
+
 	// 로그인 실패 후 성공 시 남아있는 에러 세션 제거
 	private void clearSession(HttpServletRequest request) {
-		 HttpSession session = request.getSession(false);
-	     if (session != null) {
-	         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-	     }
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		}
 		
 	}//end clearSession
 	

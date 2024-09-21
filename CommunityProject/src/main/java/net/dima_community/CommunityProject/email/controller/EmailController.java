@@ -33,7 +33,7 @@ public class EmailController {
     @PostMapping("/send")
     public boolean send(@RequestParam(name = "memberId") String memberId,
             @RequestParam(name = "memberEmail") String memberEmail) {
-
+                log.info("==================== 지금 이메일 보내기 요청 컨트롤러야==================");
         String generatedString = verifyRandomCodeHolder.setRandomCode();
         memberVerifyCodeService.insert(memberId, generatedString);
         Email email = Email.builder()
