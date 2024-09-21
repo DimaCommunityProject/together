@@ -10,6 +10,18 @@
 
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  
+  <script>
+  $(document).ready(function() {
+    $('figure.image img').each(function() {
+      $(this).css({
+        'aspect-ratio': 'unset',
+        'width': '50%',
+        'height': '50%'
+      });
+    });
+  });
+</script>
 
   <title>디지털마스터 커뮤니티</title>
   <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
@@ -1018,7 +1030,7 @@
           <!-- 게시판 보여주기 시작 -->
           <!-- 인기 게시글 시작-->
           <div class="d-flex">
-            <div class="col-5 d-flex align-items-stretch">
+            <div class="col-6 px-2 d-flex align-items-stretch">
               <div class="card w-100">
                 <div class="card-body">
                   <h4 class="card-title fw-semibold">인기 게시글</h4>
@@ -1027,13 +1039,16 @@
                     <div class="d-flex align-items-center">
                       <span class="bg-primary-subtle text-primary badge"
                         th:text="${popBoard.category}">Inprogress</span>
-                      <span class="fs-3 ms-auto" th:text="*{#temporals.format(popBoard.createDate, 'yyyy-MM-dd')}">8
-                        March 2020</span>
-                    </div>
-                    <h6 class="mt-3"><a class="mt-3" th:text="${popBoard.title}"
+                        
+                        <h6 class="mt-2 ms-2"><a class="" th:text="${popBoard.title}"
                         th:href="@{/board/detail(boardId=${popBoard.boardId},category=${popBoard.category})}">NFT
                         Landing
                         Page</a></h6>
+                        
+                      <span class="fs-3 ms-auto" th:text="*{#temporals.format(popBoard.createDate, 'yyyy-MM-dd')}">8
+                        March 2020</span>
+                    </div>
+                    
                     <span class="fs-3 lh-sm" th:utext="${popBoard.content}">Designing an NFT-themed website with a
                       creative concept
                       so th...</span>
@@ -1047,7 +1062,7 @@
             <!-- 인기 게시글 끝 -->
 
 
-            <div class="col-7 d-flex align-items-stretch">
+            <div class=" col-6 px-2 d-flex align-items-stretch">
               <div class="card w-100">
                 <!-- 전체 게시글 시작-->
                 <div class="card-body">
