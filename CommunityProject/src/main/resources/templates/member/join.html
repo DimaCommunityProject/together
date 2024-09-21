@@ -24,6 +24,13 @@
         let memberId = $("#memberId").val().trim();
         let memberEmail = $("#memberEmail").val().trim();
 
+        if (!memberId || !memberEmail) {
+          alert("아이디와 이메일을 입력해주세요");
+          return;
+        }
+        toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
+          progressBar: true,
+        });
         $.ajax({
           url: "/email/send",
           method: "POST",
@@ -34,9 +41,7 @@
               return;
             }
             else {
-              toastr.warning("메일을 보내는 중입니다", "Progress Bar", {
-                progressBar: true,
-              });
+
               alert("메일을 성공적으로 전송했습니다.");
             }
           }
