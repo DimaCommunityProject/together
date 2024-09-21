@@ -9,10 +9,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- <link rel="stylesheet" href="/static/css/styles.css"/> -->
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" rel="stylesheet">
+
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
   <title>디지털마스터 커뮤니티</title>
   <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
+  <style>
+    .custom-font {
+      font-family: 'Playpen Sans', cursive;
+      font-optical-sizing: auto;
+      font-style: normal;
+      font-weight: bold;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 
 <body class="link-sidebar">
@@ -376,7 +388,9 @@
 
             <div class="d-block d-lg-none py-4">
               <a th:href="@{/}" class="text-nowrap logo-img">
-                <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+                <!-- <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" /> -->
+                <img th:src="@{/images/main/MAINLOGO3.png}" class="dark-logo" alt="Logo-Dark"
+                  style="width: 270px; height: 300px;" />
               </a>
             </div>
             <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
@@ -668,7 +682,12 @@
               </li>
               <li class="nav-item d-none d-xl-block">
                 <a th:href="@{/}" class="text-nowrap nav-link">
-                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                  <!-- <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" /> -->
+                  <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
+                  <!-- <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" /> -->
+                  <img th:src="@{/images/logos/favicon.png}" style="width: 25px !important; height: 25px !important; margin-right: 10px;">
+                  <h4 class="custom-font">DIMACOMMUNITY</h4>
+                  <!-- <img th:src="@{/images/main/MAINLOGO8.png}" class="dark-logo" alt="Logo-Dark" style="width: 240px; height: 250px;"/> -->
                 </a>
               </li>
             </ul>
@@ -869,7 +888,9 @@
 
             <div class="d-block d-xl-none">
               <a th:href="@{/}" class="text-nowrap nav-link">
-                <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
+                <!-- <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" /> -->
+                <img th:src="@{/images/main/MAINLOGO2.png}" class="dark-logo" alt="Logo-Dark"
+                  style="width: 300px; height: 300px;" />
               </a>
             </div>
             <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
