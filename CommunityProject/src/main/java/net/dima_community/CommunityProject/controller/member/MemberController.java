@@ -58,18 +58,18 @@ public class MemberController {
 	}
 
 	/**
-	 * 회원가입 처리
-	 * 
-	 * @param memberId
-	 * @return
-	 */
-	@PostMapping("/member/join")
-	public String joinProc(@ModelAttribute MemberDTO memberDTO) {
-		MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
-		memberService.saveMember(newMember);
-		memberPageService.saveMemberPage(newMember);
-		return "/main/main";
-	}
+	    * 회원가입 처리
+	    * 
+	    * @param memberId
+	    * @return
+	    */
+	   @PostMapping("/member/join")
+	   public String joinProc(@ModelAttribute MemberDTO memberDTO) {
+	      MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
+	      memberService.saveMember(newMember);
+	      memberPageService.saveMemberPage(newMember);
+	      return "redirect:/";
+	   }
 
 	/**
 	 * ID 중복확인
@@ -81,6 +81,7 @@ public class MemberController {
 	@ResponseBody
 	public boolean checkDuplicate(@RequestParam(name = "memberId") String memberId) {
 		boolean result = memberService.findByIdThroughConn(memberId);
+		log.info("" + result);
 		return result;
 	}
 

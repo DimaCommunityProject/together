@@ -45,8 +45,8 @@
                                   <div class="task-header">
                                     <div>
                                       <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                                  margin-bottom: 0;">
-                                        ${item.title}</h4>
+                                  margin-bottom: 0;"><a href="/board/detail?boardId=${item.boardId}&category=${item.category}">${item.title}</a>
+                                        </h4>
                                     </div>
                                     <div class="tb-section-2">
                                       <span class="badge text-bg-warning fs-1" >${item.category}</span>
@@ -93,7 +93,7 @@
                                   <div class="task-header">
                                     <div>
                                       <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
-                                  margin-bottom: 0;">${key}
+                                  margin-bottom: 0;"><a href="/board/detail?boardId=${value.boardId}&category=${value.category}">${key}</a>
                                         </h4>
                                     </div>
                                     <div class="tb-section-2">
@@ -1186,7 +1186,7 @@
                     class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
                     <li>
                       <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
-                        href=`chat?memberId=${member.memberId}` width="30" height="30">
+                        th:href="@{/api/chat/chatPage}" width="30" height="30">
                         <i class="ti ti-message-chatbot"></i>
                       </a>
                     </li>
@@ -1195,15 +1195,6 @@
                         href="mailto:${member.memberEmail}">
                         <i class=" ti ti-mail"></i>
                       </a>
-                    </li>
-                    <li>
-                      <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                        th:href="${memberPage.memberBlog}">
-                        <i class="ti ti-brand-blogger"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <button class="btn btn-primary text-nowrap">Add To Story</button>
                     </li>
                   </ul>
                 </div>
