@@ -182,7 +182,8 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}" aria-expanded="false">
+              <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+                aria-expanded="false">
                 <span>
                   <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
                     height="23.2" />
@@ -1047,33 +1048,50 @@
 
       <!-- 여기부터 본문 구조 시작(여러분 여기가 본문 구조를 잡아주는거에요 필수) -->
       <div class="body-wrapper">
-        <div class="container-fluid" >
+        <div class="container-fluid">
           <!-- 파란색 부분 시작 -->
-          <!-- <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
-                        <div class="card-body px-4 py-3">
-                            <div class="row align-items-center">
-                                <div class="col-9">
-                                    <h4 class="fw-semibold mb-8">디지털 마스터 커뮤니티</h4>
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item" aria-current="page">환영합니다!</li>
-                                        </ol>
-                                    </nav>
-                                </div>
-                                <div class="col-3">
-                                    <div class="text-center mb-n5" style="height: 100%;">
-                                        <img src="/static/images/main/coding.png" alt="modernize-img"
-                                            class="img-fluid mb-n4" style="padding-right: 30px;" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">회원관리</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page" sec:authorize="hasRole('ADMIN')"><a type="submit"
+                          th:href="@{/admin/adminPage}" class="d-flex align-items-center m-12"
+                          style="display: flex; align-items: center; font-size: 14.5px;">
+                          <span class="d-none d-md-block">회원 관리</span>
+                        </a></li>
+                      <li class="breadcrumb-item" aria-current="page" sec:authorize="hasRole('ADMIN')"><a type="submit"
+                          th:href="@{/admin/adminPageBoard}"
+                          style="display: flex; align-items: center; font-size: 14.5px;">
+                          <span class="d-none d-md-block">게시글 관리</span>
+                        </a></li>
+                      <li class="breadcrumb-item" aria-current="page" sec:authorize="hasRole('ADMIN')"><a type="submit"
+                          th:href="@{/member/adminPageNote}"
+                          style="display: flex; align-items: center; font-size: 14.5px;">
+                          <span class="d-none d-md-block">공지사항</span>
+                        </a></li>
+                    </ol>
+                  </nav>
+
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- 파란색 부분 끝 -->
           <!-- 게시판 보여주기 시작 -->
 
           <!-- 사이드바 대신(admin만 사용)  -->
-          <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
+          <!-- <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0">
             <th:block sec:authorize="hasRole('ADMIN')">
               <a type="submit" th:href="@{/admin/adminPage}"
                 style="display: flex; align-items: center; font-size: 14.5px; margin: 12px;">
@@ -1091,7 +1109,7 @@
               <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
               <span class="d-none d-md-block">공지사항</span>
             </a>
-          </ul>
+          </ul> -->
           <!-- 사이드바 대신 끝-->
 
           <!-- 여기가 실제 본문 글 시작 지점 -->
@@ -1101,18 +1119,6 @@
               <!-- <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">승인된 회원</h3> -->
               <!-- 회원 테이블 본문 시작 -->
               <div class="widget-content searchable-container list">
-                <!-- <div class="card card-body" style="margin-bottom: 0px;">
-                  <div class="row">
-                    <div class="col-md-4 col-xl-3">
-                      <form class="position-relative">
-                        <input type="text" class="form-control product-search ps-5" id="input-search"
-                          placeholder="Search Contacts..." />
-                        <i
-                          class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                      </form>
-                    </div>
-                  </div>
-                </div> -->
                 <div class="card card-body" style="margin-bottom: 0px; ">
                   <div class="row" style="align-items: center;">
                     <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">승인된 회원
@@ -1126,11 +1132,10 @@
                       </form>
                     </div>
                   </div>
-                </div>
 
-                <!-- 승인된 회원 보여줌 -->
-                <div class="card card-body" id="card-body">
-                  <div class="table-responsive">
+
+                  <!-- 승인된 회원 보여줌 -->
+                  <div class="table-responsive" style="margin-top: 30px;">
                     <table class="table search-table align-middle text-nowrap" style="text-align: center;">
                       <p style="display: inline;">게시글 개수 : [[${enablelist.totalElements}]] </p>
                       <form id="searchForm" th:action="@{/admin/adminPage}" method="GET">
@@ -1196,8 +1201,9 @@
                     </table>
                   </div>
                 </div>
+
                 <!-- 페이징 -->
-                <nav class="pagination" style="text-align: center; display: block; font-size: 18px;">
+                <nav class="pagination" style="text-align: center; display: block; font-size: 18px; margin-top: 10px;">
                   <a th:if="${navi.startPageGroup > 1}"
                     th:href="@{|/admin/adminPage?page=${navi.startPageGroup - 10}&memberGroup=${memberGroup}|}"
                     class="btn prev">&laquo; Previous</a>
@@ -1231,10 +1237,8 @@
                       </form>
                     </div>
                   </div>
-                </div>
 
-                <div class="card card-body" id="card-body">
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="margin-top: 30px;">
                     <table class="table search-table align-middle text-nowrap" style="text-align: center;">
                       <p style="display: inline;" th:text="'게시글 개수 : ' + ${disablelist.size()}"> </p>
                       <thead class="header-item">
@@ -1487,7 +1491,7 @@
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script th:src="@{/libs/fullcalendar/index.global.min.js}"></script>
-  <script th:src="@{/js/apps/contact.js}"></script>
+
 
   <script>
     function pageFormSubmit(page) {
