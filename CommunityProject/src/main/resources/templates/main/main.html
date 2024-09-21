@@ -990,7 +990,7 @@
                         <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
                           <!-- Flexbox로 감싸서 한 줄로 배치 -->
                           <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
-                            class="btn btn-outline-primary" style="width: 150px;">My
+                            class="btn btn-outline-primary" style="width: 150px;" sec:authorize="hasAnyRole('ADMIN', 'USER')">My
                             Page</a>
                           <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
                             Out</a>

@@ -1,26 +1,26 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.2'
-	id 'io.spring.dependency-management' version '1.1.6'
+   id 'java'
+   id 'org.springframework.boot' version '3.3.2'
+   id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'net.dima_community'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+   toolchain {
+      languageVersion = JavaLanguageVersion.of(17)
+   }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+   compileOnly {
+      extendsFrom annotationProcessor
+   }
 }
 
 repositories {
-	mavenCentral()
+   mavenCentral()
 }
 
 dependencies {
@@ -34,8 +34,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     // runtimeOnly 'com.mysql:mysql-connector-j'    
-	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
-	implementation 'mysql:mysql-connector-java:8.0.33'
+   runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+   implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.webjars:sockjs-client:1.5.1'
     implementation 'org.webjars:stomp-websocket:2.3.3'
 
@@ -45,40 +45,40 @@ dependencies {
 
 
     //보안관련
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'	//추가했음
-    implementation 'org.springframework.boot:spring-boot-starter-security'	
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'   //추가했음
+    implementation 'org.springframework.boot:spring-boot-starter-security'   
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	//외부 브로커를 사용하기 위해
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
+   //외부 브로커를 사용하기 위해
+   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
 
-	//jackson2json에서 LocalDateTime을 handling 하기 위해
-	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
-	
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	
-	testImplementation 'org.springframework.amqp:spring-rabbit-test'
-	
+   //jackson2json에서 LocalDateTime을 handling 하기 위해
+   implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
+   
+   implementation 'org.springframework.boot:spring-boot-starter-amqp'
+   
+   testImplementation 'org.springframework.amqp:spring-rabbit-test'
+   
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 
 
-	//외부 브로커를 사용하기 위해
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
+   //외부 브로커를 사용하기 위해
+   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
 
-	//jackson2json에서 LocalDateTime을 handling 하기 위해
-	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
-	
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	
-	testImplementation 'org.springframework.amqp:spring-rabbit-test'
-	
+   //jackson2json에서 LocalDateTime을 handling 하기 위해
+   implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
+   
+   implementation 'org.springframework.boot:spring-boot-starter-amqp'
+   
+   testImplementation 'org.springframework.amqp:spring-rabbit-test'
+   
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 
     implementation 'org.springframework.security:spring-security-messaging'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+   useJUnitPlatform()
 }
 
 tasks.withType(JavaCompile) {

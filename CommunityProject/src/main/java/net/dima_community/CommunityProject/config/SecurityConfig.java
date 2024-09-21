@@ -39,7 +39,14 @@ public class SecurityConfig {
 		.authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
 		.requestMatchers(
 		"/"
-		, "/member/**"
+		, "/member/adminPageNote"
+		, "/member/adminPageDetail"
+		, "/member/findId"
+		, "/member/findPw"
+		, "/member/join"
+		, "/member/login"
+		, "/member/checkDuplicate"
+		
 		, "/email/**"
 		, "/main/**"
 		, "/board/list"
@@ -52,8 +59,8 @@ public class SecurityConfig {
 		, "/script/**").permitAll()
 		
 		.requestMatchers("/admin/**").hasRole("ADMIN")
-		// .requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
-		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").authenticated()
+		.requestMatchers("/memberpage/showpage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
+		//.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").authenticated()
 		.anyRequest().authenticated()
 		);
 
