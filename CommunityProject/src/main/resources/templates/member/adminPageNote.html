@@ -45,9 +45,6 @@
             text-decoration: none !important;
         }
 
-        #pills-tabContent {
-            padding-top: 20px;
-        }
 
         #h3 {
             font-size: 22.5px;
@@ -175,7 +172,13 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+<<<<<<< HEAD
                             <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
+=======
+                            <a class="sidebar-link"
+                                th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+                                aria-expanded="false">
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                 <span>
                                     <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
                                         width="21.21" height="23.2" />
@@ -400,7 +403,11 @@
                                                                             모든 정보를 확인하세요!</span>
                                                                     </div>
                                                                 </a>
+<<<<<<< HEAD
                                                                 <a th:href="@{/board/list(category=group)}"
+=======
+                                                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                                                     <div
                                                                         class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -926,7 +933,11 @@
                                                                                 모든 정보를 확인하세요!</span>
                                                                         </div>
                                                                     </a>
+<<<<<<< HEAD
                                                                     <a th:href="@{/board/list(category=group)}"
+=======
+                                                                    <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                                                         class="d-flex align-items-center pb-9 position-relative min-width-340">
                                                                         <div
                                                                             class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -1094,34 +1105,64 @@
             <!--  Header End -->
 
             <!-- 여기부터 본문 시작 -->
+<<<<<<< HEAD
             <div class="body-wrapper" >
                 <div class="container-fluid" >
+=======
+            <div class="body-wrapper">
+                <div class="container-fluid">
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                     <!-- 파란색 부분 시작 -->
-                    <!-- <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+                    <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
                         <div class="card-body px-4 py-3">
                             <div class="row align-items-center">
                                 <div class="col-9">
-                                    <h4 class="fw-semibold mb-8">디지털 마스터 커뮤니티</h4>
+                                    <h4 class="fw-semibold mb-8">공지사항</h4>
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item" aria-current="page">환영합니다!</li>
+                                            <li class="breadcrumb-item">
+                                                <a class="text-muted text-decoration-none" th:href="@{/}">Home</a>
+                                            </li>
+                                            <li class="breadcrumb-item" aria-current="page"
+                                                sec:authorize="hasRole('ADMIN')"><a type="submit"
+                                                    th:href="@{/admin/adminPage}" class="d-flex align-items-center m-12"
+                                                    style="display: flex; align-items: center; font-size: 14.5px;">
+                                                    <span class="d-none d-md-block">회원 관리</span>
+                                                </a></li>
+                                            <li class="breadcrumb-item" aria-current="page"
+                                                sec:authorize="hasRole('ADMIN')"><a type="submit"
+                                                    th:href="@{/admin/adminPageBoard}"
+                                                    style="display: flex; align-items: center; font-size: 14.5px;">
+                                                    <span class="d-none d-md-block">게시글 관리</span>
+                                                </a></li>
+                                            <li class="breadcrumb-item" aria-current="page"
+                                                sec:authorize="hasRole('ADMIN')"><a type="submit"
+                                                    th:href="@{/member/adminPageNote}"
+                                                    style="display: flex; align-items: center; font-size: 14.5px;">
+                                                    <span class="d-none d-md-block">공지사항</span>
+                                                </a></li>
                                         </ol>
                                     </nav>
+
                                 </div>
                                 <div class="col-3">
-                                    <div class="text-center mb-n5" style="height: 100%;">
-                                        <img src="/static/images/main/coding.png" alt="modernize-img"
-                                            class="img-fluid mb-n4" style="padding-right: 30px;" />
+                                    <div class="text-center mb-n5">
+                                        <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img"
+                                            class="img-fluid mb-n4" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <!-- 파란색 부분 끝 -->
                     <!-- 게시판 보여주기 시작 -->
 
                     <!-- 사이드바 대신  -->
+<<<<<<< HEAD
                     <ul
+=======
+                    <!-- <ul
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                         class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle  rounded-2 rounded-top-2">
                         <th:block sec:authorize="hasRole('ADMIN')">
                             <a type="submit" th:href="@{/admin/adminPage}" class="d-flex align-items-center m-12"
@@ -1140,7 +1181,7 @@
                             <i class="ti ti-user-circle fs-5" style="margin-right: 8px;"></i>
                             <span class="d-none d-md-block">공지사항</span>
                         </a>
-                    </ul>
+                    </ul> -->
                     <!-- 사이드바 대신 끝-->
 
                     <!-- 배너 밑 끝 본문 시작 전 -->
@@ -1150,10 +1191,9 @@
                             aria-labelledby="pills-profile-tab" tabindex="0">
                             <!-- 회원 테이블 본문 시작 -->
                             <div class="widget-content searchable-container list">
-                                <div class="card card-body" style="margin-bottom: 0px; ">
+                                <div class="card card-body" style="margin-bottom: 0px;">
                                     <div class="row" style="align-items: center;">
-                                        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">공지사항
-                                        </h3>
+                                        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center" id="h3">공지사항</h3>
                                         <div class="col-md-4 col-xl-3">
                                             <form class="position-relative">
                                                 <input type="text" class="form-control product-search ps-5"
@@ -1163,11 +1203,9 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- 공지사항 보여줌 -->
-                                <div class="card card-body" id="card-body">
-                                    <div class="table-responsive">
+                                    <!-- 공지사항 보여줌 -->
+                                    <div class="table-responsive" style="margin-top: 30px;">
                                         <p style="display: inline;">게시글 개수 : [[${list.totalElements}]] </p>
                                         <table class="table search-table align-middle text-nowrap"
                                             style="text-align: center;">
@@ -1208,50 +1246,51 @@
                                                     </td>
                                                     <td>
                                                         <span class="usr-location"
-                                                            th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}">
-                                                            공지사항 작성일</span>
+                                                            th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}">공지사항
+                                                            작성일</span>
                                                     </td>
                                                 </tr>
                                                 <!-- end row -->
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <!-- 글쓰기 버튼 -->
+                                    <th:block sec:authorize="hasRole('ADMIN')">
+                                        <div style="font-size: 15px; margin-left: 1000px;">
+                                            <a th:href="@{/admin/adminPageNoteWrite}" class="btn btn-secondary">글쓰기</a>
+                                        </div>
+                                    </th:block>
+
+                                    <!-- 페이징 -->
+                                    <nav class="pagination"
+                                        style="text-align: center; display: block; font-size: 18px;">
+                                        <a th:if="${navi.startPageGroup > 1}"
+                                            th:href="@{|/member/adminPageNote?page=${navi.startPageGroup - 10}|}"
+                                            class="btn prev">&laquo; Previous</a>
+                                        <span
+                                            th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+                                            <span th:if="${count == navi.page}">
+                                                <b class="page-no current" th:text="${count}"></b>
+                                            </span>
+                                            <span th:unless="${count == navi.page}">
+                                                <a class="page-no" th:href="@{|/member/adminPageNote?page=${count}|}"
+                                                    th:text="${count}"></a>
+                                            </span>
+                                        </span>
+                                        <a th:if="${navi.endPageGroup < navi.totalPages}"
+                                            th:href="@{|/member/adminPageNote?page=${navi.endPageGroup + 1}|}"
+                                            class="btn next10">Next &raquo;</a>
+                                    </nav>
+                                    <!-- 페이징 끝 -->
                                 </div>
-
-                                <!--글쓰기 버튼-->
-                                <th:block sec:authorize="hasRole('ADMIN')">
-                                    <div style="font-size: 15px; float: right; margin-bottom: 130px;">
-                                        <a th:href="@{/admin/adminPageNoteWrite}" class="btn btn-secondary">글쓰기</a>
-                                    </div>
-                                </th:block>
-
-                                <!-- 페이징 -->
-                                <nav class="pagination" style="text-align: center; display: block; font-size: 18px;">
-                                    <a th:if="${navi.startPageGroup > 1}"
-                                        th:href="@{|/member/adminPageNote?page=${navi.startPageGroup - 10}|}"
-                                        class="btn prev">&laquo; Previous</a>
-                                    <span
-                                        th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-                                        <span th:if="${count == navi.page}">
-                                            <b class="page-no current" th:text="${count}"></b>
-                                        </span>
-                                        <span th:unless="${count == navi.page}">
-                                            <a class="page-no" th:href="@{|/member/adminPageNote?page=${count}|}"
-                                                th:text="${count}"></a>
-                                        </span>
-                                    </span>
-                                    <a th:if="${navi.endPageGroup < navi.totalPages}"
-                                        th:href="@{|/member/adminPageNote?page=${navi.endPageGroup + 1}|}"
-                                        class="btn next10">Next &raquo;</a>
-                                </nav>
-                                <!--페이징 끝-->
-                                <!-- 승인된 회원 보여줌 끝-->
                             </div>
+                            <!-- 첫번째 본문 끝 -->
                         </div>
-                        <!-- 첫번째 본문 끝 -->
+                        <!-- 이 div가 본문들의 전체를 감싸야함 -->
                     </div>
-                    <!-- 이 div가 본문들의 전체를 감싸야함 -->
                 </div>
+<<<<<<< HEAD
             </div>
             <!-- 본문 끝 -->
             <script>
@@ -1289,6 +1328,28 @@
                         <label class="btn p-9 btn-outline-primary rounded-2" for="dark-layout">
                             <i class="icon ti ti-moon fs-7 me-2"></i>Dark
                         </label>
+=======
+                <!-- 본문 끝 -->
+                <script>
+                    function handleColorTheme(e) {
+                        document.documentElement.setAttribute("data-color-theme", e);
+                    }
+                </script>
+                <button
+                    class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
+                    type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                    aria-controls="offcanvasExample">
+                    <i class="icon ti ti-settings fs-7"></i>
+                </button>
+
+                <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
+                    aria-labelledby="offcanvasExampleLabel">
+                    <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+                        <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
+                            Settings
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                     </div>
 
                     <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
@@ -1391,6 +1452,7 @@
                             </label>
                         </div>
                     </div>
+<<<<<<< HEAD
 
                     <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
 
@@ -1439,6 +1501,8 @@
                             <i class="icon ti ti-border-none fs-7 me-2"></i>Shadow
                         </label>
                     </div>
+=======
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                 </div>
             </div>
         </div>

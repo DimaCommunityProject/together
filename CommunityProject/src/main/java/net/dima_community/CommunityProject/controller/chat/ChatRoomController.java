@@ -83,13 +83,16 @@ public class ChatRoomController {
         String currentUserId = principal.getName();
         MemberDTO currentUser = chatRoomService.findByMemberId(currentUserId);
         
+        // 관리자와 사용자 구분하여 사용자의 경우 role이 user인 사람의 목록 반환 
+        List<MemberDTO> members = chatRoomService.getMembersBasedOnRole(currentUserId);
+       
         Map<String, Object> response = new HashMap<>();
         response.put("currentUser", currentUser);
         
         // 삭제되지 않은 채팅방 정보와 유니크 키를 포함해 반환
         List<Map<String, Object>> chatRooms = chatRoomService.getChatRoomDetails(currentUserId);
         response.put("chatRooms", chatRooms);
-        response.put("members", chatRoomService.getAllMembers());
+        response.put("members", members);
         
         return response;
     }
@@ -125,6 +128,7 @@ public class ChatRoomController {
     @PostMapping("/start")
     public ResponseEntity<Map<String, Object>> startChatRoom(Principal principal, @RequestParam("recipientId") String recipientId) {
         String currentUserId = principal.getName();
+        log.info("Current User ID: {}, Recipient ID: {}", currentUserId, recipientId);
         ChatRoom chatRoom = chatRoomService.createChatRoom(currentUserId, recipientId);
         notifyUsersAboutNewChatRoom(ChatRoomDTO.fromEntity(chatRoom), currentUserId, recipientId);
         return ResponseEntity.ok(createChatRoomResponse(ChatRoomDTO.fromEntity(chatRoom)));
@@ -168,7 +172,8 @@ public class ChatRoomController {
 
                 // 멤버들의 상태를 가져옴
                 List<ChatRoomMemberDTO> memberDetails = chatRoom.getChattingRoomMembers().stream()
-                    .map(member -> {
+                		.filter(member -> "ROLE_USER".equals(member.getMember().getMemberRole()))
+                		.map(member -> {
                         // UserStatusManager를 통해 상태 조회
                         String status = UserStatusManager.getUserStatus(member.getMember().getMemberId());  
                         System.out.println("User: " + member.getMember().getMemberId() + " Status: " + status); // 로그 추가
@@ -194,9 +199,31 @@ public class ChatRoomController {
     }
     
     /**
-     * 
-     * @param request
-     * @return
+     * 초대 가능한 멤버 목록을 반환하는 API.
+     * @param uniqueKey 채팅방의 고유 키
+     * @return 초대 가능한 멤버 목록
+     */
+    @GetMapping("/getAvailableMembersForInvitation/{uniqueKey}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getAvailableMembersForInvitation(@PathVariable("uniqueKey") String uniqueKey) {
+        try {
+            List<ChatRoomMemberDTO> availableMembers = chatRoomService.getAvailableMembersForInvitation(uniqueKey);
+            Map<String, Object> response = new HashMap<>();
+            response.put("availableMembers", availableMembers);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    // =======================================================
+    // ================  사용자 상태 업데이트 ==================
+    // =======================================================
+    /**
+     * 사용자의 상태를 업데이트하는 API.
+     * @param request 상태 업데이트 요청 객체
+     * @return 성공 메시지
      */
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestBody StatusUpdateRequest request) {
@@ -253,6 +280,10 @@ public class ChatRoomController {
      * @return 채팅방의 ID와 이름이 담긴 맵
      */
     private Map<String, Object> createChatRoomResponse(ChatRoomDTO chatRoomDTO) {
-        return Map.of("id", chatRoomDTO.getRoomId(), "name", chatRoomDTO.getName());
+        return Map.of(
+        		"id", chatRoomDTO.getRoomId(), 
+        		"name", chatRoomDTO.getName(),
+        		"uniqueKey", chatRoomDTO.getUniqueKey()
+        		);
     }
 }

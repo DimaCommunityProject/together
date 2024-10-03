@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -18,6 +21,7 @@ import net.dima_community.CommunityProject.dto.board.JobBoardRecruitDTO;
 import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.dto.board.combine.BoardListDTO;
 import net.dima_community.CommunityProject.service.board.BoardService;
+import net.dima_community.CommunityProject.service.member.MemberService;
 import net.dima_community.CommunityProject.util.PageNavigator;
 
 import java.util.stream.Collectors;
@@ -33,6 +37,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
+    private final MemberService memberService;
 
     // 첨부 파일 경로 요청
     @Value("${spring.servlet.multipart.location}")
@@ -66,6 +71,10 @@ public class BoardController {
      * 3 : 목록의 하단에서 페이지 선택한 경우 선택한 페이지 값 사용, searchWord가 있는 경우는 그 값 사용
      * 
      * @param ctgr       (카테고리)
+<<<<<<< HEAD
+=======
+     * @param memberId   (현재 로그인한 사용자)
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
      * @param pageable   (페이징 객체)
      * @param searchWord (검색어)
      * @param model
@@ -73,16 +82,40 @@ public class BoardController {
      */
     @GetMapping("/board/list")
     public String boardList(@RequestParam(name = "category") BoardCategory category,
+<<<<<<< HEAD
             @RequestParam(name = "userGroup", defaultValue = "3기") String userGroup, // 로그인한 사용자의 기수 (기본값 0)
             @PageableDefault(page = 1) Pageable pageable, // 페이징 해주는 객체, 요청한 페이지가 없으면 1로 세팅
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
             Model model) {
+=======
+            @RequestParam(name = "memberId", defaultValue = "") String memberId, // 로그인한 사용자의 기수를 찾기 위해 (기본값 0)
+            @PageableDefault(page = 1) Pageable pageable, // 페이징 해주는 객체, 요청한 페이지가 없으면 1로 세팅
+            @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
+            Model model) {
+        
+        // 카테고리가 "group"인 경우 인증 여부를 체크
+        if (category==BoardCategory.group) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+                return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
+            }
+        }
+
+        // 현재 로그인한 사용자의 기수
+        String userGroup ="";
+        
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
         // Pageination
         Page<BoardListDTO> list;
+        
         // category에 따른 게시글 DTO를 List 형태로 가져오기
         if (category == BoardCategory.activity || category == BoardCategory.recruit) {
             list = boardService.selectActivityOrRecruitBoards(category, pageable, searchWord);
         } else if (category == BoardCategory.group) {
+<<<<<<< HEAD
+=======
+            userGroup = memberService.findById(memberId).getMemberGroup();
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
             list = boardService.selectGroupBoards(userGroup, pageable, searchWord);
         } else {
             list = boardService.selectOtherCategoryBoards(category, pageable, searchWord);
@@ -101,6 +134,10 @@ public class BoardController {
 
         return "board/list";
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
     // ======================== 게시글 삭제 ========================
 

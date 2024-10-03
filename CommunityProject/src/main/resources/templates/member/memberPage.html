@@ -45,8 +45,13 @@
                                   <div class="task-header">
                                     <div>
                                       <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+<<<<<<< HEAD
                                   margin-bottom: 0;">
                                         ${item.title}</h4>
+=======
+                                  margin-bottom: 0;"><a href="/board/detail?boardId=${item.boardId}&category=${item.category}">${item.title}</a>
+                                        </h4>
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                     </div>
                                     <div class="tb-section-2">
                                       <span class="badge text-bg-warning fs-1" >${item.category}</span>
@@ -93,7 +98,11 @@
                                   <div class="task-header">
                                     <div>
                                       <h4 data-item-title="Lets do some task on pd" style="font-size: 14px; font-weight: 600;
+<<<<<<< HEAD
                                   margin-bottom: 0;">${key}
+=======
+                                  margin-bottom: 0;"><a href="/board/detail?boardId=${value.boardId}&category=${value.category}">${key}</a>
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                         </h4>
                                     </div>
                                     <div class="tb-section-2">
@@ -243,7 +252,11 @@
               </a>
             </li>
             <li class="sidebar-item">
+<<<<<<< HEAD
               <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
+=======
+              <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}" aria-expanded="false">
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                 <span>
                   <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
                     height="23.2" />
@@ -453,7 +466,11 @@
                                       모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
+<<<<<<< HEAD
                                 <a th:href="@{/board/list(category=group)}"
+=======
+                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -946,7 +963,11 @@
                                         모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
+<<<<<<< HEAD
                                   <a th:href="@{/board/list(category=group)}"
+=======
+                                  <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+>>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -1186,7 +1207,7 @@
                     class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
                     <li>
                       <a class="d-flex align-items-center justify-content-center btn btn-primary p-2 fs-4 rounded-circle"
-                        href=`chat?memberId=${member.memberId}` width="30" height="30">
+                        th:href="@{/api/chat/chatPage}" width="30" height="30">
                         <i class="ti ti-message-chatbot"></i>
                       </a>
                     </li>
@@ -1195,15 +1216,6 @@
                         href="mailto:${member.memberEmail}">
                         <i class=" ti ti-mail"></i>
                       </a>
-                    </li>
-                    <li>
-                      <a class="btn btn-danger d-flex align-items-center justify-content-center p-2 fs-4 rounded-circle"
-                        th:href="${memberPage.memberBlog}">
-                        <i class="ti ti-brand-blogger"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <button class="btn btn-primary text-nowrap">Add To Story</button>
                     </li>
                   </ul>
                 </div>

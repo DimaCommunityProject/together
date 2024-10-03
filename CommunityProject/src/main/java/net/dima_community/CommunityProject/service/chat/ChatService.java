@@ -138,8 +138,4 @@ public class ChatService {
         rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "chat.room." + chatRoomId, message); // 메시지 전송
     }
 
-	public List<ChatMessage> getMessagesAfterInvite(Long roomId, String memberId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -29,6 +29,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+/**
+ * ChatRoomService - 채팅방 생성 및 관리, 회원 정보 조회 등을 담당하는 서비스 클래스. 
+ */
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -82,6 +86,56 @@ public class ChatRoomService {
         return memberRepository.findByMemberId(memberId)
                 .map(MemberEntity::getMemberName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + memberId));
+    }
+    
+    /**
+     * 초대 가능한 멤버 목록을 반환하는 메서드.
+     * @param uniqueKey 채팅방의 고유 키
+     * @return 초대 가능한 멤버 목록
+     */
+    public List<ChatRoomMemberDTO> getAvailableMembersForInvitation(String uniqueKey) {
+        Optional<ChatRoom> chatRoomOpt = findChatRoomByUniqueKey(uniqueKey);
+
+        if (chatRoomOpt.isPresent()) {
+            ChatRoom chatRoom = chatRoomOpt.get();
+
+            // 채팅방에 속한 회원들의 ID 집합
+            Set<String> chatRoomMemberIds = chatRoom.getChattingRoomMembers().stream()
+                    .map(member -> member.getMember().getMemberId())
+                    .collect(Collectors.toSet());
+
+            // 전체 회원 중 role이 'ROLE_USER'인 회원들을 가져옴
+            List<MemberEntity> allUsers = memberRepository.findByMemberRole("ROLE_USER");
+
+            // 채팅방에 속하지 않았거나, deleted == 1 인 회원들을 필터링
+            List<ChatRoomMemberDTO> availableMembers = allUsers.stream()
+                    .map(user -> {
+                        Optional<ChattingRoomMemberEntity> chatMemberOpt = chatRoom.getChattingRoomMembers().stream()
+                                .filter(member -> member.getMember().getMemberId().equals(user.getMemberId()))
+                                .findFirst();
+
+                        Integer deleted = chatMemberOpt.map(ChattingRoomMemberEntity::getDeleted).orElse(null);
+
+                        // 채팅방에 속하지 않았거나, deleted == 1 인 회원만 포함
+                        if (!chatMemberOpt.isPresent() || (deleted != null && deleted == 1)) {
+                            return new ChatRoomMemberDTO(
+                                    user.getMemberId(),
+                                    user.getMemberName(),
+                                    user.getMemberGroup(),
+                                    UserStatusManager.getUserStatus(user.getMemberId()),
+                                    deleted != null ? deleted : 0);
+                        } else {
+                            return null; // 활성 상태의 채팅방 멤버는 제외
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+
+            return availableMembers;
+
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     
@@ -432,13 +486,35 @@ public class ChatRoomService {
 	             .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + memberId));
 	 }
 	
+	 @Transactional
+	 public List<MemberDTO> getMembersBasedOnRole(String currentUserId) {
+	     // 현재 로그인한 사용자의 Role을 확인
+	     MemberEntity currentUser = memberRepository.findByMemberId(currentUserId)
+	         .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + currentUserId));
+
+	     // 관리자인 경우 모든 회원을 반환
+	     if ("ROLE_ADMIN".equals(currentUser.getMemberRole())) {
+	         return memberRepository.findAll().stream()
+	             .map(MemberDTO::toDTO)
+	             .collect(Collectors.toList());
+	     }
+	     
+	     // 일반 사용자일 경우 USER 역할만 반환
+	     return memberRepository.findByMemberRole("ROLE_USER").stream()
+	         .map(MemberDTO::toDTO)
+	         .collect(Collectors.toList());
+	 }
+	 
 	 /**
 	  * 모든 회원 목록을 반환 (삭제 상태 포함).
 	  * @return 회원 목록
-	  */
+	  
 	 public List<MemberDTO> getAllMembers() {
-	     return memberRepository.findAll().stream().map(MemberDTO::toDTO).collect(Collectors.toList());
+	     return memberRepository.findAll().stream()
+	    		 .map(MemberDTO::toDTO)
+	    		 .collect(Collectors.toList());
 	 }
+	 */
 	
 	 /**
 	  * 특정 채팅방에 사용자를 추가.
