@@ -2,7 +2,7 @@ $(document).ready(function () {
     let stompClient = null;
     let currentUserId = $('.userId').text().trim();
     let currentUserName = $('.userName').text().trim();
-    let currentUserRole = null;
+    let currentUserGroup = null;
     let currentUserEmail = null;
     let currentUserImage = null;
     let currentUniqueKey = null;
@@ -109,12 +109,12 @@ $(document).ready(function () {
             currentUserName = currentUser.memberName;
             currentUserId = currentUser.memberId.trim();
             currentUserEmail = currentUser.memberEmail;
-            currentUserRole = currentUser.memberRole;
+            currentUserMemberGroup = currentUser.memberGroup;
             currentUserImage = `/member/showImageAtMain/${currentUserId}`;
 
             $('.currentUserName').text(currentUserName);
             $('.currentUserId').text(currentUserId);
-            $('.currentUserRole').text(currentUserRole);
+            $('.currentUserMemberGroup').text(currentUserMemberGroup);
             $('.currentUserEmail').text(currentUserEmail);
             $('.userProfileImage').attr('src', currentUserImage);
         } else {
@@ -286,7 +286,11 @@ $(document).ready(function () {
     }
 
     function generateSentMessageHtml(message) {
-        const timeString = new Date(message.timestamp).toLocaleTimeString();
+        //const timeString = new Date(message.timestamp).toLocaleTimeString();
+        const messageDate = new Date(message.timestamp);
+        const hours = messageDate.getHours().toString().padStart(2, '0');
+        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}`;
         return `
             <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
                 <div class="text-end">
@@ -300,8 +304,12 @@ $(document).ready(function () {
     }
 
     function generateReceivedMessageHtml(message) {
-        const imageUrl = `/member/showImageAtMain/${memberId}`;
-        const timeString = new Date(message.timestamp).toLocaleTimeString();
+        const senderId = message.senderId;
+        const imageUrl = `/member/showImageAtMain/${senderId}`;
+        const messageDate = new Date(message.timestamp);
+        const hours = messageDate.getHours().toString().padStart(2, '0');
+        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}`;
         return `
             <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
                  <img src="${imageUrl}" alt="${message.senderName}" width="40" height="40" class="rounded-circle userProfileImage" />
@@ -363,6 +371,25 @@ $(document).ready(function () {
                 });
         } else {
             console.error('Recipient ID is not selected.');
+        }
+    });
+
+    $('#sendButton').click(function () {
+        const content = $('#messageInput').val();
+        if (content && stompClient && currentChatRoomId) {
+            const message = {
+                chatRoomId: currentChatRoomId,
+                senderId: currentUserId,
+                senderName: currentUserName,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+
+            // 서버로 메시지 전송
+            stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
+            $('#messageInput').val(''); // 입력란 초기화
+
+            showMessage(message);
         }
     });
 

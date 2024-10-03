@@ -12,7 +12,7 @@ import net.dima_community.CommunityProject.common.port.DBConnector;
 public class DBConnectorImpl implements DBConnector {
 
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/dmcommunity";
+    private String url = "jdbc:mysql://localhost:3306/dima";
     private String id = "root";
     private String pwd = "0305";
 

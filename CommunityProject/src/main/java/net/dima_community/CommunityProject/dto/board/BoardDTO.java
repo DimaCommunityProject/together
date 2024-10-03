@@ -10,15 +10,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import net.dima_community.CommunityProject.entity.board.BoardEntity;
-
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import net.dima_community.CommunityProject.dto.board.check.BoardCategory;
 import net.dima_community.CommunityProject.entity.board.BoardEntity;
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Setter
 @Getter
 @ToString
@@ -32,18 +28,20 @@ public class BoardDTO {
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-    private Integer hitCount;
-    private Integer likeCount;
+    private int hitCount;
+    private int likeCount;
+    private int replyCount;
     private MultipartFile uploadFile;
     private String originalFileName;
     private String savedFileName;
-    private Integer reported;
+    private boolean reported;
     private Long jobBoardId;
 
     // Job board specific fields
     private LocalDateTime deadline;
     private int limitNumber;
     private int currentNumber;
+    private int dDay;
 
     /**
      * jobBoard 정보가 없는 게시글인 경우 DTO변환 함수
@@ -64,9 +62,39 @@ public class BoardDTO {
                 .updateDate(entity.getUpdateDate())
                 .hitCount(entity.getHitCount())
                 .likeCount(entity.getLikeCount())
+                .replyCount(entity.getReplyCount())
                 .originalFileName(entity.getOriginalFileName())
                 .savedFileName(entity.getSavedFileName())
-                // .reported(entity.isReported())
+                .reported(entity.isReported())
+                .jobBoardId(null)
+                .build();
+    }
+
+    /**
+     * jobBoard 정보가 있는 게시글인 경우 DTO 변환 함수
+     * 
+     * @param entity
+     * @param memberId
+     * @param jobBoardId
+     * @return
+     */
+    public static BoardDTO toDTO(BoardEntity entity, String memberId, Long jobBoardId) {
+        return BoardDTO.builder()
+                .boardId(entity.getBoardId())
+                .memberId(memberId)
+                .memberGroup(entity.getMemberGroup())
+                .category(entity.getCategory())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .createDate(entity.getCreateDate())
+                .updateDate(entity.getUpdateDate())
+                .hitCount(entity.getHitCount())
+                .likeCount(entity.getLikeCount())
+                .replyCount(entity.getReplyCount())
+                .originalFileName(entity.getOriginalFileName())
+                .savedFileName(entity.getSavedFileName())
+                .reported(entity.isReported())
+                .jobBoardId(jobBoardId)
                 .build();
     }
 

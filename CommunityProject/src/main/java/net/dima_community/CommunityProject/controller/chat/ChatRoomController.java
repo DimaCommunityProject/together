@@ -69,7 +69,7 @@ public class ChatRoomController {
         
         model.addAttribute("currentUserId", currentUserId);
         model.addAttribute("chatRooms", chatRoomService.getChatRoomDetails(currentUserId));
-        return "chat/app-chat";  // 템플릿 경로
+        return "main/app-chat";  // 템플릿 경로
     }
 
     /**

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.core.io.Resource;
@@ -27,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
 import net.dima_community.CommunityProject.email.domain.Email;
 import net.dima_community.CommunityProject.email.service.EmailSender;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
+import net.dima_community.CommunityProject.repository.member.MemberRepository;
 import net.dima_community.CommunityProject.service.member.MemberPageService;
 import net.dima_community.CommunityProject.service.member.MemberService;
 import net.dima_community.CommunityProject.service.member.MemberVerifyCodeService;
@@ -39,6 +42,7 @@ public class MemberController {
 	private final EmailSender emailSender;
 	private final MemberPageService memberPageService;
 	private final MemberVerifyCodeService memberVerifyCodeService;
+	private final MemberRepository memberRepository;
 
 	// ===================== 회원가입 요청 페이지 =====================
 
@@ -48,6 +52,7 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/member/join")
+
 	public String join() {
 		return "member/join";
 	}
@@ -63,7 +68,7 @@ public class MemberController {
 		MemberDTO newMember = memberService.setEncodedPassword(memberDTO);
 		memberService.saveMember(newMember);
 		memberPageService.saveMemberPage(newMember);
-		return "main/main";
+		return "/main/main";
 	}
 
 	/**
@@ -340,10 +345,32 @@ public class MemberController {
 	}
 
 	// ============= 회원 삭제
-	@PostMapping("/member/deleteMember")
-	public void deleteMember(@ModelAttribute("memberId") String memberId) {
+	@GetMapping("/member/deleteMember")
+	public String deleteMember(@RequestParam("memberId") String memberId) {
 		log.info("회원삭제 컨트롤러 도착");
 		memberService.deleteMember(memberId);
 		memberVerifyCodeService.deleteById(memberId);
+
+		return "redirect:/admin/adminPage";
 	}
+
+	// ============= Board ===============
+	/**
+	 * ajax - memberId에 해당하는 memberEntity의 memberGroup 정보 요청
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/member/getMemberGroup")
+	public String getMemberGroup(@RequestParam(name = "memberId") String memberId) {
+		Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
+
+		if (memberEntity.isPresent()) {
+			MemberEntity member = memberEntity.get();
+			return member.getMemberGroup();
+		} else
+			return "";
+	}
+
 }// end class

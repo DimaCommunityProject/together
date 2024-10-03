@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
 import lombok.RequiredArgsConstructor;
 import net.dima_community.CommunityProject.handler.CustomFailureHandler;
@@ -36,33 +35,31 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		// 웹 요청에 대한 접근권한 설정
-		// http
-		// .authorizeHttpRequests((auth) -> auth //로그인을 안해도 누구나 다 볼 수 있는 설정
-		// .requestMatchers(
-		// "/"
-		// , "/member/confirmId"
-		// , "/member/join"
-		// , "/member/joinProc"
-		// , "/member/login"
-		// , "/member/loginProc"
-		// , "/member/findId"
-		// , "/member/findPw"
-		// , "/member/findPwResult"
-		//
-		// , "/images/**"
-		// , "/css/**"
-		// , "script/**").permitAll() //permitAll : 인증절차 없이도 접근가능한 요청
-		//
-		// .requestMatchers("/admin/**").hasRole("ADMIN") //hasRole : 인증절차 필요
-		// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER") //hasAnyRole : 여러 개의
-		// 역할 중 하나 이상을 가진 사용자만 해당 경로에 접근할 수 있도록 권한을 설정
-		// .anyRequest().authenticated() //기타 다른 경로는 인증된 사용자만 접근가능. anyRequest는 가장 마지막에
-		// 와야함
-		// );
 		http
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.anyRequest().permitAll() // 모든 요청에 대해 접근 허용
-				);
+		.authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
+		.requestMatchers(
+		"/"
+		, "/member/**"
+		, "/main/**"
+		, "/board/list"
+	
+		, "/ckeditor5/**"
+		, "/css/**"
+		, "/fonts/**"
+		, "/images/**"
+		, "/js/**"
+		, "/libs/**"
+		, "/script/**").permitAll()
+		
+		.requestMatchers("/admin/**").hasRole("ADMIN")
+		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
+		.anyRequest().authenticated()
+		);
+//		http
+//				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+//						.requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
+//						.anyRequest().permitAll() // 모든 요청에 대해 접근 허용
+//				);
 
 		// Custom Login 설정
 		http
@@ -90,10 +87,14 @@ public class SecurityConfig {
 
 		// HTTP 헤더 보안 설정
 		// xss와 csp는 둘 다 xss 보완이지만 xssProtection는 구식 브라우저 보호이며 csp는 현대적이고 더 강력함.
-		http.headers(headers -> headers.xssProtection(
-				xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-				.contentSecurityPolicy(
-						cps -> cps.policyDirectives("script-src 'self' 'unsafe-inline'")));
+		http.headers(headers -> headers.contentSecurityPolicy(
+				cps -> cps.policyDirectives(
+						"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
+								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com;"
+								+
+								"font-src 'self' https://fonts.gstatic.com data:; " + // 폰트 출처 추가
+								"object-src 'none';" // object-src 제한
+				)));
 
 		return http.build();
 	}// end filterchain

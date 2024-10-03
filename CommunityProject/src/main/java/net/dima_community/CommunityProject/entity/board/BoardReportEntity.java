@@ -4,14 +4,17 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,19 +29,20 @@ import net.dima_community.CommunityProject.dto.board.check.ReportCategory;
 @RequiredArgsConstructor
 @Setter
 @Getter
-// @ToString
+//@ToString
 @Builder
 @Entity
 @Table(name = "board_report")
 public class BoardReportEntity {
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id")
     private Long reportId;
-
-    // FK
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    // FK (1:1)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    @ToString.Exclude
     private BoardEntity boardEntity;
 
     @Column(name = "member_id", nullable = false)
@@ -47,21 +51,21 @@ public class BoardReportEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     private ReportCategory category;
-
+    
     private String reason;
 
     @Column(name = "report_date")
     @CreationTimestamp
     private LocalDateTime reportDate;
 
-    public static BoardReportEntity toEntity(BoardReportDTO dto, BoardEntity boardEntity) {
+    public static BoardReportEntity toEntity (BoardReportDTO dto, BoardEntity boardEntity){
         return BoardReportEntity.builder()
-                .reportId(dto.getReportId())
-                .boardEntity(boardEntity)
-                .memberId(dto.getMemberId())
-                .category(dto.getCategory())
-                .reason(dto.getReason())
-                .reportDate(dto.getReportDate())
-                .build();
+            .reportId(dto.getReportId())
+            .boardEntity(boardEntity)
+            .memberId(dto.getMemberId())
+            .category(dto.getCategory())
+            .reason(dto.getReason())
+            .reportDate(dto.getReportDate())
+            .build();
     }
 }
