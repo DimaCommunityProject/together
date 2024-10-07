@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@media print {
+	body {
+		margin: 0 !important;
+	}
+}
+
+.main-container {
+	font-family: 'Lato';
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ck-content {
+	font-family: 'Lato';
+	line-height: 1.6;
+	word-break: break-word;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+	min-width: 795px;
+	max-width: 795px;
+}
+
+
+
+/* ckeditor 크기 조정 - panel */
+
+/* ckeditor 크기 조정 - content */
+.ck.ck-editor__main > .ck-editor__editable {
+	/* https://github.com/ckeditor/ckeditor5-theme-lark/issues/113 */
+	background: var(--ck-color-base-background);
+
+	@mixin ck-rounded-corners {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	&:not(.ck-focused) {
+		border-color: var(--ck-color-base-border);
+		height: 330px !important;
+	}
+}
+/* 내용 입력하려고 클릭했을 때 원래 작은 크기로 돌아와서 height 설정해줌 */
+.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable){
+	height: 330px !important;
+}
+
+
