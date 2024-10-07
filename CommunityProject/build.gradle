@@ -28,53 +28,42 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    // runtimeOnly 'com.mysql:mysql-connector-j'    
-   runtimeOnly 'mysql:mysql-connector-java:8.0.33'
-   implementation 'mysql:mysql-connector-java:8.0.33'
+    
+    // MySQL 커넥터
+    runtimeOnly 'mysql:mysql-connector-java:8.0.39'
+    implementation 'mysql:mysql-connector-java:8.0.39'
+
+    // Webjars 관련 의존성
     implementation 'org.webjars:sockjs-client:1.5.1'
     implementation 'org.webjars:stomp-websocket:2.3.3'
 
+    // Lombok 설정
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // 개발 전용 의존성 (Devtools)
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-
-    //보안관련
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'   //추가했음
-    implementation 'org.springframework.boot:spring-boot-starter-security'   
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-   //외부 브로커를 사용하기 위해
-   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
-
-   //jackson2json에서 LocalDateTime을 handling 하기 위해
-   implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
-   
-   implementation 'org.springframework.boot:spring-boot-starter-amqp'
-   
-   testImplementation 'org.springframework.amqp:spring-rabbit-test'
-   
-    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
-
-
-   //외부 브로커를 사용하기 위해
-   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.4.6'
-
-   //jackson2json에서 LocalDateTime을 handling 하기 위해
-   implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
-   
-   implementation 'org.springframework.boot:spring-boot-starter-amqp'
-   
-   testImplementation 'org.springframework.amqp:spring-rabbit-test'
-   
-    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
-
+    // 보안 관련 의존성
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.springframework.security:spring-security-messaging'
+
+    // Jackson 관련 의존성 (LocalDateTime 핸들링)
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
+   
+    // RabbitMQ 관련 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    
+    // 테스트 관련 의존성
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+    // Netty DNS Resolver (MacOS 환경)
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 }
 
 tasks.named('test') {
