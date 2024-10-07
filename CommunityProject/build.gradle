@@ -35,6 +35,9 @@ dependencies {
     
     // MySQL 커넥터
     runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+    
+    // Hibernate core
+    implementation 'org.hibernate.orm:hibernate-core:6.5.2.Final'
 
     // Webjars 관련 의존성
     implementation 'org.webjars:sockjs-client:1.5.1'
