@@ -27,15 +27,14 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket' 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     
     // MySQL 커넥터
-    runtimeOnly 'mysql:mysql-connector-java:8.0.39'
-    implementation 'mysql:mysql-connector-java:8.0.39'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
     // Webjars 관련 의존성
     implementation 'org.webjars:sockjs-client:1.5.1'
