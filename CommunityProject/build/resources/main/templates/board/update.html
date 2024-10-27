@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tab title -->
+  <title>게시글 수정</title> 
+
+  <!-- Favicon icon-->
+  <link rel="shortcut icon" type="image/png" th:href="@{/images/logos/favicon.png}" />
+
+  <!-- Core Css -->
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+  <!-- CKEditor5 -->
+  <link rel="stylesheet" th:href="@{/ckeditor5/style.css}">
+  <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
+
+  
+  <!-- Ajax -->
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  
+</head>
+
+<body class="link-sidebar">
+  <input type="hidden" id="memberId" th:value="${#authentication.name}">
+  <input type="hidden" id="boardContent" th:value="${board.content}">
+  <!-- Preloader -->
+  <div class="preloader">
+    <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
+  </div>
+  <div id="main-wrapper">
+    <!-- ---------------------------------- -->
+    <!--  Sidebar Start -->
+    <!-- ---------------------------------- -->
+    <aside class="left-sidebar with-vertical">
+      <div>
+        <!-- ---------------------------------- -->
+        <!-- Start Vertical Layout Sidebar -->
+        <!-- ---------------------------------- -->
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a th:href="@{/}" class="text-nowrap logo-img">
+            <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+          </a>
+          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+            <i class="ti ti-x"></i>
+          </a>
+        </div>
+
+
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
+          <ul id="sidebarnav">
+            <!-- ---------------------------------- -->
+            <!-- 대제목 -->
+            <!-- ---------------------------------- -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">수업</span>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 소제목 -->
+            <!-- ---------------------------------- -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=code)}" aria-expanded="false">
+                <span>
+                  <!-- <i class="ti ti-aperture"></i> -->
+                  <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">코드 공유 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=project)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">프로젝트 공유 게시판</span>
+              </a>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 대제목 -->
+            <!-- ---------------------------------- -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">취업</span>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 소제목 -->
+            <!-- ---------------------------------- -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=activity)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">취업 공고 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=recruit)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">공모전/프로젝트 모집 게시판</span>
+              </a>
+            </li>
+            <!------------------------------------ -->
+            <!-- 대제목 -->
+            <!-- ---------------------------------- -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">자유</span>
+            </li>
+            <!-- ---------------------------------- -->
+            <!-- 소제목 -->
+            <!-- ---------------------------------- -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=free)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">자유 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=info)}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">정보 게시판</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}" aria-expanded="false">
+                <span>
+                  <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
+                    height="23.2" />
+                </span>
+                <span class="hide-menu">기수별 게시판</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3" sec:authorize="isAuthenticated()">
+          <div class="hstack gap-3">
+            <div class="john-img">
+              <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}" alt="profile image"
+                width="30" height="30" class="rounded-circle h-100">
+            </div>
+            <div class="john-title">
+              <h6 class="mb-0 fs-4 fw-semibold" th:text="${#authentication.principal.getName()}">Mathew
+              </h6>
+              <span class="fs-2" th:text="${#authentication.principal.getGroup()}">Designer</span>
+            </div>
+            <a class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout" th:href="@{/member/logout}">
+              <i class="ti ti-power fs-6"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <!-- ---------------------------------- -->
+    <!--  Sidebar End -->
+    <!-- ---------------------------------- -->
+
+
+    <!-- ---------------------------------- -->
+    <!-- Start Vertical Layout Sidebar -->
+    <!-- ---------------------------------- -->
+    <div class="page-wrapper">
+      <!--  Header Start -->
+      <header class="topbar">
+        <div class="with-vertical">
+          <!-- ---------------------------------- -->
+          <!-- Start Vertical Layout Header -->
+          <!-- ---------------------------------- -->
+          <nav class="navbar navbar-expand-lg p-0">
+            <ul class="navbar-nav">
+              <li class="nav-item nav-icon-hover-bg rounded-circle ms-n2">
+                <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center"></ul>
+            <!-- ------------------------------- -->
+            <!-- start apps Dropdown -->
+            <!-- ------------------------------- -->
+            <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+              <div class="hover-dd">
+                <a class="nav-link" href="javascript:void(0)">
+                  수업 <span class="mt-1">
+                    <i class="ti ti-chevron-down fs-3"></i>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="ps-7 pt-7">
+                        <div class="border-bottom">
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="position-relative">
+                                <a th:href="@{/board/list(category='code')}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">모르는
+                                      코드 물어보세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=project)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">지난
+                                      기수들의 프로젝트를 확인해보세요!</span>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+              <div class="hover-dd">
+                <a class="nav-link" href="javascript:void(0)">
+                  취업 <span class="mt-1">
+                    <i class="ti ti-chevron-down fs-3"></i>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="ps-7 pt-7">
+                        <div class="border-bottom">
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="position-relative">
+                                <a th:href="@{/board/list(category=activity)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">
+                                      취업 공고 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">최신
+                                      채용 정보를 확인하세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=recruit)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트 모집
+                                      게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">정보를
+                                      확인하고 팀원을 모집해보세요!</span>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+              <div class="hover-dd">
+                <a class="nav-link" href="javascript:void(0)">
+                  자유 <span class="mt-1">
+                    <i class="ti ti-chevron-down fs-3"></i>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="ps-7 pt-7">
+                        <div class="border-bottom">
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="position-relative">
+                                <a th:href="@{/board/list(category=free)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">
+                                      자유 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">자유롭게
+                                      게시글을 올려주세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=info)}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">세상의
+                                      모든 정보를 확인하세요!</span>
+                                  </div>
+                                </a>
+                                <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+                                  class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                  <div
+                                    class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                    <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+                                      width="24" height="24" />
+                                  </div>
+                                  <div>
+                                    <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                    </h6>
+                                    <span class="fs-2 d-block text-body-secondary">기수별로
+                                      소통하고 정보를 공유하세요!</span>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- ------------------------------- -->
+            <!-- end apps Dropdown -->
+            <!-- ------------------------------- -->
+            <li class="nav-item dropdown-hover d-none d-lg-block">
+              <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+            </li>
+            <th:block sec:authorize="hasRole('ADMIN')">
+              <li class="nav-item dropdown-hover d-none d-lg-block">
+                <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+              </li>
+            </th:block>
+            </ul>
+
+            <div class="d-block d-lg-none py-4">
+              <a th:href="@{/}" class="text-nowrap logo-img">
+                <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" alt="Logo-Dark" />
+              </a>
+            </div>
+            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <i class="ti ti-dots fs-7"></i>
+            </a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between">
+                <a th:href="@{/}"
+                  class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-flex d-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7 d-none"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- ------------------------------- -->
+                  <!-- start isAnonymous -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/join}">
+                      <i class="ti ti-user-plus" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="회원가입"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/login}">
+                      <i class="ti ti-login fs-4" data-bs-toggle="tooltip" data-bs-placement="top" th:data-bs-title="로그인"></i>
+                    </a>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end isAnonymous -->
+                  <!-- ------------------------------- -->
+
+                  <!-- ------------------------------- -->
+                  <!--  start isAuthenticated -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
+                    </a>
+                  </li>
+
+                  <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
+                      <div class="d-flex align-items-center">
+                        <div class="user-profile-img">
+                          <img
+                            th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.principal.username})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                        </div>
+                      </div>
+                    </a>
+                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+                      aria-labelledby="drop1">
+                      <div class="profile-dropdown position-relative" data-simplebar>
+                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                          <div class="ms-3">
+                            <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
+                              Mathew Anderson</h5>
+                            <!-- 이름 출력 -->
+                            <span class="mb-1 d-block currentUserGroup"
+                              th:text="${#authentication.principal.getGroup()}">Designer</span>
+                            <!-- 그룹 출력 -->
+                            <p class="mb-0 d-flex align-items-center gap-2">
+                              <i class="ti ti-mail fs-4"></i>
+                              <span th:text="${#authentication.principal.getEmail()}"></span>
+                              <!-- 이메일 출력 -->
+                            </p>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
+                            class="btn btn-outline-primary" style="width: 150px;">My
+                            Page</a>
+                          <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
+                            Out</a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end profile Dropdown -->
+                  <!-- ------------------------------- -->
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <!-- ---------------------------------- -->
+          <!-- End Vertical Layout Header -->
+          <!-- ---------------------------------- -->
+
+          <!-- ------------------------------- -->
+          <!-- apps Dropdown in Small screen -->
+          <!-- ------------------------------- -->
+          <!--  Mobilenavbar -->
+          <!-- 안쓸거 시작 -->
+          <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar"
+            aria-labelledby="offcanvasWithBothOptionsLabel">
+            <nav class="sidebar-nav scroll-sidebar">
+              <div class="offcanvas-header justify-content-between">
+                <img th:src="@{/images/logos/favicon.ico}" alt="modernize-img" class="img-fluid" />
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body h-n80" data-simplebar>
+                <ul id="sidebarnav">
+                  <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-apps"></i>
+                      </span>
+                      <span class="hide-menu">Apps 1</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level my-3">
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-chat.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Chat Application</h6>
+                            <span class="fs-2 d-block text-muted">New messages
+                              arrived</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-invoice.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Invoice App</h6>
+                            <span class="fs-2 d-block text-muted">Get latest invoice</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-mobile.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Contact Application</h6>
+                            <span class="fs-2 d-block text-muted">2 Unsaved Contacts</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-message-box.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Email App</h6>
+                            <span class="fs-2 d-block text-muted">Get new emails</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-cart.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">User Profile</h6>
+                            <span class="fs-2 d-block text-muted">learn more
+                              information</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-date.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Calendar App</h6>
+                            <span class="fs-2 d-block text-muted">Get dates</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-lifebuoy.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Contact List Table</h6>
+                            <span class="fs-2 d-block text-muted">Add new contact</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="sidebar-item py-2">
+                        <a th:href="@{/}" class="d-flex align-items-center">
+                          <div
+                            class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                            <img th:src="@{/images/svgs/icon-dd-application.svg}" alt="modernize-img" class="img-fluid"
+                              width="24" height="24" />
+                          </div>
+                          <div>
+                            <h6 class="mb-1 bg-hover-primary">Notes Application</h6>
+                            <span class="fs-2 d-block text-muted">To-do and Daily
+                              tasks</span>
+                          </div>
+                        </a>
+                      </li>
+                      <ul class="px-8 mt-7 mb-4">
+                        <li class="sidebar-item mb-3">
+                          <h5 class="fs-5 fw-semibold">Quick Links</h5>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Pricing Page</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Authentication
+                            Design</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Register Now</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">404 Error Page</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Notes App</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">User Application</a>
+                        </li>
+                        <li class="sidebar-item py-2">
+                          <a class="fw-semibold text-dark" th:href="@{/}">Account Settings</a>
+                        </li>
+                      </ul>
+                    </ul>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-message-dots"></i>
+                      </span>
+                      <span class="hide-menu">Chat</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-calendar"></i>
+                      </span>
+                      <span class="hide-menu">Calendar</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" th:href="@{/}" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-mail"></i>
+                      </span>
+                      <span class="hide-menu">Email</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+          <!-- 안쓸거 끝 -->
+        </div>
+        <div class="app-header with-horizontal">
+          <nav class="navbar navbar-expand-xl container-fluid p-0">
+            <ul class="navbar-nav align-items-center">
+              <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
+                <a class="nav-link sidebartoggler" id="sidebarCollapse" th:href="@{/}">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
+              <li class="nav-item d-none d-xl-block">
+                <a th:href="@{/}" class="text-nowrap nav-link">
+                  <img th:src="@{/images/logos/dark-logo.svg}" class="dark-logo" width="180" alt="modernize-img" />
+                </a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
+              <!-- ------------------------------- -->
+              <!-- start apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" th:href="@{/}">
+                    수업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a th:href="@{/board/list(category=code)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/code.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">코드 공유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">모르는
+                                        코드 물어보세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=project)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/project.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">프로젝트 공유
+                                        게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">지난
+                                        기수들의 프로젝트를 확인해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    취업 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a th:href="@{/board/list(category=activity)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/job.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        취업 공고 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">최신
+                                        채용 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=recruit)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/recruit.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">공모전/프로젝트
+                                        모집 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">정보를
+                                        확인하고 팀원을 모집해보세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item nav-icon-hover-bg rounded w-auto dropdown d-none d-lg-flex">
+                <div class="hover-dd">
+                  <a class="nav-link" href="javascript:void(0)">
+                    자유 <span class="mt-1">
+                      <i class="ti ti-chevron-down fs-3"></i>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-nav dropdown-menu-animate-up py-0 min-width-340">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="ps-7 pt-7">
+                          <div class="border-bottom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="position-relative">
+                                  <a th:href="@{/board/list(category=free)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/board.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">
+                                        자유 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">자유롭게
+                                        게시글을 올려주세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=info)}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/info.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">정보 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">세상의
+                                        모든 정보를 확인하세요!</span>
+                                    </div>
+                                  </a>
+                                  <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
+                                    class="d-flex align-items-center pb-9 position-relative min-width-340">
+                                    <div
+                                      class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                      <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid"
+                                        width="24" height="24" />
+                                    </div>
+                                    <div>
+                                      <h6 class="mb-1 fw-semibold fs-3">기수별 게시판
+                                      </h6>
+                                      <span class="fs-2 d-block text-body-secondary">기수별로
+                                        소통하고 정보를 공유하세요!</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- ------------------------------- -->
+              <!-- end apps Dropdown -->
+              <!-- ------------------------------- -->
+              <li class="nav-item dropdown-hover d-none d-lg-block">
+                <a class="nav-link" th:href="@{/member/adminPageNote}">공지사항</a>
+              </li>
+              <th:block sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown-hover d-none d-lg-block">
+                  <a class="nav-link" th:href="@{/admin/adminPage}">관리자 페이지</a>
+                </li>
+              </th:block>
+            </ul>
+
+            <div class="d-block d-xl-none">
+              <a th:href="@{/}" class="text-nowrap nav-link">
+                <img th:src="@{/images/logos/dark-logo.svg}" width="180" alt="modernize-img" />
+              </a>
+            </div>
+            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="p-2">
+                <i class="ti ti-dots fs-7"></i>
+              </span>
+            </a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
+                <a th:href="@{/}"
+                  class="nav-link round-40 p-1 ps-0 d-flex d-xl-none align-items-center justify-content-center"
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
+                  aria-controls="offcanvasWithBothOptions">
+                  <i class="ti ti-align-justified fs-7"></i>
+                </a>
+                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+                  <!-- ------------------------------- -->
+                  <!-- start isAnonymous -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/join}">
+                      <i class="ti ti-user-plus"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAnonymous()">
+                    <a class="nav-link position-relative" th:href="@{/member/login}">
+                      <i class="ti ti-login fs-4"></i>
+                    </a>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end isAnonymous -->
+                  <!-- ------------------------------- -->
+
+                  <!-- ------------------------------- -->
+                  <!--  start isAuthenticated -->
+                  <!-- ------------------------------- -->
+                  <li class="nav-item nav-icon-hover-bg rounded-circle" sec:authorize="isAuthenticated()">
+                    <a class="nav-link position-relative" th:href="@{/api/chat/chatPage} ">
+                      <img th:src="@{/images/main/chat.png}" alt="modernize-img" width="35" height="35" />
+                    </a>
+                  </li>
+
+                  <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
+                      <div class="d-flex align-items-center">
+                        <div class="user-profile-img">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                        </div>
+                      </div>
+                    </a>
+                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up"
+                      aria-labelledby="drop1">
+                      <div class="profile-dropdown position-relative" data-simplebar>
+                        <!-- <div class="py-3 px-7 pb-0">
+                          <h5 class="mb-0 fs-5 fw-semibold userProfileImage">User Profile2</h5>
+                        </div> -->
+                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
+                          <img th:src="@{/member/showImageAtMain/{memberId}(memberId=${#authentication.name})}"
+                            alt="profile image" width="35" height="35" class="rounded-circle h-100">
+                          <div class="ms-3">
+                            <h5 class="mb-1 fs-3 currentUserName" th:text="${#authentication.principal.getName()}">
+                              Mathew Anderson</h5>
+                            <!-- 이름 출력 -->
+                            <span class="mb-1 d-block currentUserGroup"
+                              th:text="${#authentication.principal.getGroup()}">Designer</span>
+                            <!-- <span class="mb-1 d-block currentUserGroup" th:text="${#authentication.principal.getEmail()}">Designer</span> -->
+                            <!-- 그룹 출력 -->
+                            <p class="mb-0 d-flex align-items-center gap-2">
+                              <i class="ti ti-mail fs-4"></i>
+                              <span th:text="${#authentication.principal.getEmail()}"></span>
+                              <!-- 이메일 출력 -->
+                            </p>
+                            <!-- <span class="mb-1 d-block currentUserGrouㄴp">
+                              <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
+                                >
+                                <h6 class="mb-1 fs-3 fw-semibold lh-base">마이페이지</h6>
+                              </a>
+                            </span> -->
+                          </div>
+                        </div>
+                        <!-- <div class="message-body">
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
+                            class="py-8 px-7 mt-8 d-flex align-items-center">
+                            <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
+                              <img th:src="@{/images/svgs/icon-account.svg}" alt="modernize-img" width="24"
+                                height="24" />
+                            </span>
+                            <div class="w-100 ps-3">
+                              <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
+                              <span class="fs-2 d-block text-body-secondary">Account Settings</span>
+                            </div>
+                          </a>
+                        </div> -->
+                        <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
+                          <!-- Flexbox로 감싸서 한 줄로 배치 -->
+                          <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
+                            class="btn btn-outline-primary" style="width: 150px;">My
+                            Page</a>
+                          <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
+                            Out</a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- ------------------------------- -->
+                  <!-- end isAuthenticated -->
+                  <!-- ------------------------------- -->
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+      <!--  Header End -->
+
+
+      <aside class="with-horizontal">
+        <!-- Sidebar scroll-->
+        <div>
+          <!-- Sidebar navigation-->
+          <nav id="sidebarnavh" class="sidebar-nav scroll-sidebar container-fluid d-none">
+            <ul id="sidebarnav">
+              <!-- ============================= -->
+              <!-- 대주제 -->
+              <!-- ============================= -->
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">수업</span>
+              </li>
+              <!-- =================== -->
+              <!-- 소주제 -->
+              <!-- =================== -->
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" th:href="@{/}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-home-2"></i>
+                  </span>
+                  <span class="hide-menu">코드 공유 게시판</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a th:href="@{/}" class="sidebar-link">
+                      <i class="ti ti-aperture"></i>
+                      <span class="hide-menu">프로젝트 공유 게시판</span>
+                    </a>
+                  </li>
+                  <!-- ============================= -->
+                  <!-- 대주제 -->
+                  <!-- ============================= -->
+                  <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">취업</span>
+                  </li>
+                  <!-- =================== -->
+                  <!-- 소주제 -->
+                  <!-- =================== -->
+                  <li class="sidebar-item">
+                    <a th:href="@{/}" class="sidebar-link">
+                      <i class="ti ti-shopping-cart"></i>
+                      <span class="hide-menu">취업 공고 게시판</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a th:href="@{/}" class="sidebar-link">
+                      <i class="ti ti-currency-dollar"></i>
+                      <span class="hide-menu">공모전/프로젝트 구인 게시판</span>
+                    </a>
+                  </li>
+                  <!-- ============================= -->
+                  <!-- 대주제 -->
+                  <!-- ============================= -->
+                  <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">자유</span>
+                  </li>
+                  <!-- =================== -->
+                  <!-- 소주제 -->
+                  <!-- =================== -->
+                  <li class="sidebar-item">
+                    <a th:href="@{/}" class="sidebar-link">
+                      <i class="ti ti-cpu"></i>
+                      <span class="hide-menu">자유 게시판</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a th:href="@{/}" class="sidebar-link">
+                      <i class="ti ti-activity-heartbeat"></i>
+                      <span class="hide-menu">정보 게시판</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a th:href="@{/}" class="sidebar-link">
+                      <i class="ti ti-playlist"></i>
+                      <span class="hide-menu">기수별 게시판</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+      </aside>
+
+      <div class="body-wrapper">
+        <div class="container-fluid">
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8"> 게시글 수정 </h4> 
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" th:href="@{/}">Home</a> <!--메인 화면으로-->
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">
+                        <a th:href="@{/board/list(category=${category})}">[[${category}]]</a>  <!--게시글 목록으로-->
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img th:src="@{/images/breadcrumb/ChatBc.png}" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row -->
+          <div class="row">
+            <div class="col-12">
+              <!-- start Project Assinging -->
+              <div class="card">
+                <!-- <div class="card-body">
+                  <h4 class="card-title">게시글 등록 </h4>
+                  <p class="card-subtitle mb-0">
+                    To use add <mark>
+                      <code>.r-separator</code>
+                    </mark> class in
+                    the form with form styling.
+                  </p>
+                </div> -->
+                <!-- 수정 폼 시작 -->
+                <form class="form-horizontal r-separator" id="updateForm" th:action="@{/board/update}" method="post" enctype="multipart/form-data">
+                  <div class="card-body">
+                    <!-- 카테고리 -->
+                    <div class="form-group mb-0">
+                      <div class="row align-items-center">
+                        <label for="inputText1" class="col-3 text-end  col-form-label">Category</label>
+                        <div class="col-9 border-start pb-2 pt-2">
+                          <input type="text" name="category" class="form-control" id="inputText1" th:value="${category}" disabled style="font-weight: 800;"/>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 게시글 제목 -->
+                    <div class="form-group mb-0">
+                      <div class="row align-items-center">
+                        <label for="inputText2" class="col-3 text-end  col-form-label">Title</label>
+                        <div class="col-9 border-start pb-2 pt-2">
+                          <input type="text" name="title" class="form-control" id="inputText2" th:value="${board.title}" />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 게시글 내용 -->
+                    <div class="form-group mb-0">
+                      <div class="row align-items-center">
+                        <label for="inputEmail1" class="col-3 text-end  col-form-label">Content</label>
+                        <div class="col-9 border-start pb-2 pt-2">
+                          <!--CKEditor 들어갈 자리-->
+                          <div class="editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor"><div id="editor"></div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 첨부 파일 -->
+                    <div class="form-group mb-0">
+                      <div class="row align-items-center">
+                        <label for="inputGroupFile01" class="col-3 text-end  col-form-label">Select File</label>
+                        <div class="col-9 border-start pb-2 pt-2" id="filePart">
+                          <!-- 파일 존재하는 경우 -->
+                          <div th:if="${board.originalFileName != null}" class="input-group" style="position: relative;">
+                            <div class="input-group-prepend">
+                                <button class="btn bg-danger-subtle text-danger" id="fileDeleteBtn" type="button">
+                                    <i data-feather="trash-2" class="ti ti-trash fs-5"></i>
+                                </button>
+                            </div>
+                            <!-- Input 필드 -->
+                            <div style="position: relative;">
+                              <input type="text" class="form-control ms-1" aria-describedby="basic-addon1" readonly
+                                  style="padding-left: 150px; padding-right: 100px;"> <!-- 왼쪽과 오른쪽 여유 공간 확보 -->
+                              <!-- 링크가 input 안에 있는 것처럼 보이게 만들기 위한 a 태그 -->
+                              <a th:href="@{/download(boardId=${board.boardId})}" 
+                                style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background-color: transparent; padding: 6px; text-decoration: none; z-index: 1;">
+                                [[${board.originalFileName}]]
+                              </a>
+                          </div>
+                        </div>
+                        
+                          <!-- 파일 존재하지 않으면 파일 선택할 수 있게 -->
+                          <div th:unless="${board.originalFileName != null}" class="input-group">
+                            <span class="input-group-text">Upload</span>
+                            <div class="custom-file">
+                              <input type="file" name="uploadFile" class="form-control" id="inputGroupFile01"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--submit을 위한 필수 값-->
+                    <div class="form-group mb-0 text-end"> 
+                      <div class="row align-items-center">
+                        <div class="col-9 border-start pb-2 pt-2">
+                          <input type="hidden" name="memberId" th:value="${#authentication.name}">
+                          <input type="hidden" name="boardId" th:value="${board.boardId}">
+                          <input type="hidden" id="memberGroup" name="memberGroup" > <!--ajax-->
+                          <input type="hidden" name="content" id="content"> <!--ckEditor에서 내용 읽어와서 value 채우기 (script에서 처리)-->
+                          <input type="hidden" name="searchWord" th:value="${searchWord}">
+                          <input type="hidden" name="receivedCategory" th:value="${category}">
+                          <input type="hidden" name="deleteOriginalFile" id="deleteOriginalFile" value="no">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <!-- 초기화/전송/취소/ 버튼-->
+                    <div class="form-group mb-0 text-end" style="padding-right:30px"> 
+                      <button type="button" id="cancelBtn" class="btn bg-danger-subtle text-danger ms-6">취소</button>
+                      <button type="button" id="resetBtn" class="btn bg-info-subtle text-info ms-6">초기화</button>               
+                      <button type="button" id="submitBtn" class="btn btn-primary" style="margin-left:12px">수정</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- end Project Assinging -->
+              <div class="col-12" style="height:90px"></div>
+            </div>
+          </div>
+          <!-- End Row -->
+        </div>
+      </div>
+
+      <!-- 수정 취소 버튼 클릭 시 board/detail로 돌아감 -->
+      <form th:action="@{/board/detail}" method="GET" id="backToDetail">
+        <input type="hidden" name="boardId" th:value="${board.boardId}">
+        <input type="hidden" name="category" th:value="${category}">
+        <input type="hidden" name="searchWord" th:value="${searchWord}">
+      </form>
+
+    </div>
+      
+    <script>
+      function handleColorTheme(e) {
+        document.documentElement.setAttribute("data-color-theme", e);
+      }
+    </script>
+
+
+    <div class="dark-transparent sidebartoggler"></div>
+    <!-- Import Js Files -->
+    <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/js/theme/app.init.js}"></script>
+    <script th:src="@{/js/theme/theme.js}"></script>
+    <script th:src="@{/js/theme/app.min.js}"></script>
+    <script th:src="@{/js/theme/sidebarmenu.js}"></script>
+
+    <!-- solar icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+    <!-- board write javascript file -->
+    <script th:src="@{/script/boardUpdate.js}"></script>
+
+    <!-- CKEditor5 -->
+    <script type="importmap">
+    {
+      "imports": {
+        "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+        "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+      }
+    }
+    </script>
+    <script type="module" th:src="@{/ckeditor5/main.js}"></script>
+
+  </body>
+
+</html>
