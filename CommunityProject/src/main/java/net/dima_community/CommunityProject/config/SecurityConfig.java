@@ -5,10 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-<<<<<<< HEAD
-
-=======
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
@@ -44,12 +40,6 @@ public class SecurityConfig {
 		.authorizeHttpRequests((auth) -> auth // 로그인을 안해도 누구나 다 볼 수 있는 설정
 		.requestMatchers(
 		"/"
-<<<<<<< HEAD
-		, "/member/**"
-		, "/main/**"
-		, "/board/list"
-	
-=======
 		, "/member/adminPageNote"
 		, "/member/adminPageDetail"
 		, "/member/findId"
@@ -61,7 +51,6 @@ public class SecurityConfig {
 		, "/email/**"
 		, "/main/**"
 		, "/board/list"
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 		, "/ckeditor5/**"
 		, "/css/**"
 		, "/fonts/**"
@@ -71,16 +60,6 @@ public class SecurityConfig {
 		, "/script/**").permitAll()
 		
 		.requestMatchers("/admin/**").hasRole("ADMIN")
-<<<<<<< HEAD
-		.requestMatchers("/member/memberPage", "/member/updatePage", "/member/changePw", "/board/detail").hasAnyRole("ADMIN", "USER")
-		.anyRequest().authenticated()
-		);
-//		http
-//				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//						.requestMatchers("/admin/**").hasRole("ADMIN") // hasRole : 인증절차 필요
-//						.anyRequest().permitAll() // 모든 요청에 대해 접근 허용
-//				);
-=======
 		.requestMatchers("/memberpage/showpage", "/member/updatePage", "/member/changePw", "/board/detail", "/api/chat/chatPage").hasAnyRole("ADMIN", "USER")
 		.anyRequest().authenticated())
 		
@@ -88,7 +67,6 @@ public class SecurityConfig {
 		 .exceptionHandling(exceptions -> 
 	        exceptions.accessDeniedHandler(accessDeniedHandler)
 	    );
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
 		// Custom Login 설정
 		http
@@ -119,11 +97,6 @@ public class SecurityConfig {
 		http.headers(headers -> headers.contentSecurityPolicy(
 				cps -> cps.policyDirectives(
 						"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com; " +
-<<<<<<< HEAD
-								"style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com https://fonts.googleapis.com;"
-								+
-								"font-src 'self' https://fonts.gstatic.com data:; " + // 폰트 출처 추가
-=======
 								"style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.ckeditor.com https://fonts.googleapis.com; "
 								+
 								"font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; " + // 폰트 출처에
@@ -133,7 +106,6 @@ public class SecurityConfig {
 																												// 허용
 								"connect-src 'self'; " + // XMLHttpRequest, WebSocket 등을 위한 출처 제한
 								"frame-src 'self'; " + // iframe을 허용할 출처
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 								"object-src 'none';" // object-src 제한
 				)));
 

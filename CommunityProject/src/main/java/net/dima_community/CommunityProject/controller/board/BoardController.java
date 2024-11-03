@@ -71,10 +71,7 @@ public class BoardController {
      * 3 : 목록의 하단에서 페이지 선택한 경우 선택한 페이지 값 사용, searchWord가 있는 경우는 그 값 사용
      * 
      * @param ctgr       (카테고리)
-<<<<<<< HEAD
-=======
      * @param memberId   (현재 로그인한 사용자)
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
      * @param pageable   (페이징 객체)
      * @param searchWord (검색어)
      * @param model
@@ -82,12 +79,6 @@ public class BoardController {
      */
     @GetMapping("/board/list")
     public String boardList(@RequestParam(name = "category") BoardCategory category,
-<<<<<<< HEAD
-            @RequestParam(name = "userGroup", defaultValue = "3기") String userGroup, // 로그인한 사용자의 기수 (기본값 0)
-            @PageableDefault(page = 1) Pageable pageable, // 페이징 해주는 객체, 요청한 페이지가 없으면 1로 세팅
-            @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
-            Model model) {
-=======
             @RequestParam(name = "memberId", defaultValue = "") String memberId, // 로그인한 사용자의 기수를 찾기 위해 (기본값 0)
             @PageableDefault(page = 1) Pageable pageable, // 페이징 해주는 객체, 요청한 페이지가 없으면 1로 세팅
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
@@ -104,7 +95,6 @@ public class BoardController {
         // 현재 로그인한 사용자의 기수
         String userGroup ="";
         
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
         // Pageination
         Page<BoardListDTO> list;
         
@@ -112,10 +102,7 @@ public class BoardController {
         if (category == BoardCategory.activity || category == BoardCategory.recruit) {
             list = boardService.selectActivityOrRecruitBoards(category, pageable, searchWord);
         } else if (category == BoardCategory.group) {
-<<<<<<< HEAD
-=======
             userGroup = memberService.findById(memberId).getMemberGroup();
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
             list = boardService.selectGroupBoards(userGroup, pageable, searchWord);
         } else {
             list = boardService.selectOtherCategoryBoards(category, pageable, searchWord);
@@ -134,10 +121,7 @@ public class BoardController {
 
         return "board/list";
     }
-<<<<<<< HEAD
-=======
     
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
     // ======================== 게시글 삭제 ========================
 

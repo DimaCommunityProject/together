@@ -86,22 +86,14 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
         // boardId에 해당하는 Entity의 likeCount를 1 증가시킴
         @Modifying
         @Query("UPDATE BoardEntity b SET b.likeCount = b.likeCount + 1 WHERE b.boardId = :boardId")
-<<<<<<< HEAD
-        void incrementLikeCount(Long boardId);
-=======
         void incrementLikeCount(@Param("boardId") Long boardId);
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
         // boardId에 해당하는 Entity의 likeCount를 1 감소시킴 (연산 시 likeCount가 0보다 작은 경우는 0으로 세팅)
         @Modifying
         @Query("UPDATE BoardEntity b " +
                         "SET b.likeCount = CASE WHEN b.likeCount - 1 < 0 THEN 0 ELSE b.likeCount - 1 END " +
                         "WHERE b.boardId = :boardId")
-<<<<<<< HEAD
-        void decrementLikeCount(Long boardId);
-=======
         void decrementLikeCount(@Param("boardId") Long boardId);
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
         // hitcount 제일 많은 게시글 3개 불러오기
         @Query("SELECT b FROM BoardEntity b ORDER BY b.hitCount DESC")

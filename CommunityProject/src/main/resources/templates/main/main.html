@@ -36,10 +36,23 @@
       font-weight: bold;
       margin-top: 50px;
     }
+
+    #notification {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff9800;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
   </style>
 </head>
 
 <body class="link-sidebar">
+  <div id="notification">새로운 알림이 도착했습니다!</div>
   <!-- Preloader -->
   <div class="preloader">
     <img th:src="@{/images/logos/favicon.png}" alt="loader" class="lds-ripple img-fluid" />
@@ -151,12 +164,8 @@
               </a>
             </li>
             <li class="sidebar-item">
-<<<<<<< HEAD
-              <a class="sidebar-link" th:href="@{/board/list(category=group)}" aria-expanded="false">
-=======
               <a class="sidebar-link" th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
                 aria-expanded="false">
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                 <span>
                   <img th:src="@{/images/main/classroom.png}" alt="modernize-img" class="img-fluid" width="21.21"
                     height="23.2" />
@@ -366,11 +375,7 @@
                                       모든 정보를 확인하세요!</span>
                                   </div>
                                 </a>
-<<<<<<< HEAD
-                                <a th:href="@{/board/list(category=group)}"
-=======
                                 <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                   class="d-flex align-items-center pb-9 position-relative min-width-340">
                                   <div
                                     class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -869,11 +874,7 @@
                                         모든 정보를 확인하세요!</span>
                                     </div>
                                   </a>
-<<<<<<< HEAD
-                                  <a th:href="@{/board/list(category=group)}"
-=======
                                   <a th:href="@{/board/list(category=group,memberId=${#authentication.name})}"
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                                     class="d-flex align-items-center pb-9 position-relative min-width-340">
                                     <div
                                       class="text-bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
@@ -1012,12 +1013,8 @@
                         <div class="d-flex justify-content-center gap-2 py-4 px-7 pt-8">
                           <!-- Flexbox로 감싸서 한 줄로 배치 -->
                           <a th:href="@{/memberpage/showpage(memberId=${#authentication.name})}"
-<<<<<<< HEAD
-                            class="btn btn-outline-primary" style="width: 150px;">My
-=======
                             class="btn btn-outline-primary" style="width: 150px;"
                             sec:authorize="hasAnyRole('ADMIN', 'USER')">My
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                             Page</a>
                           <a th:href="@{/member/logout}" class="btn btn-outline-primary" style="width: 150px;">Log
                             Out</a>
@@ -1075,16 +1072,6 @@
                     <div class="d-flex align-items-center">
                       <span class="bg-primary-subtle text-primary badge"
                         th:text="${popBoard.category}">Inprogress</span>
-<<<<<<< HEAD
-                      <span class="fs-3 ms-auto" th:text="*{#temporals.format(popBoard.createDate, 'yyyy-MM-dd')}">8
-                        March 2020</span>
-                    </div>
-                    <h6 class="mt-3"><a class="mt-3" th:text="${popBoard.title}"
-                        th:href="@{/board/detail(boardId=${popBoard.boardId},category=${popBoard.category})}">NFT
-                        Landing
-                        Page</a></h6>
-                    <span class="fs-3 lh-sm" th:text="${popBoard.content}">Designing an NFT-themed website with a
-=======
 
                       <h6 class="mt-2 ms-2"><a class="" th:text="${popBoard.title}"
                           th:href="@{/board/detail(boardId=${popBoard.boardId},category=${popBoard.category})}">NFT
@@ -1096,7 +1083,6 @@
                     </div>
 
                     <span class="fs-3 lh-sm" th:utext="${popBoard.content}">Designing an NFT-themed website with a
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                       creative concept
                       so th...</span>
                     <div class="hstack mt-3" style="justify-content: flex-end;;">
@@ -1109,27 +1095,12 @@
             <!-- 인기 게시글 끝 -->
 
 
-<<<<<<< HEAD
-            <div class="col-lg-7 d-flex align-items-stretch">
-=======
             <div class=" col-6 px-2 d-flex align-items-stretch">
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
               <div class="card w-100">
                 <!-- 전체 게시글 시작-->
                 <div class="card-body">
                   <h4 class="card-title fw-semibold">전체 게시글</h4>
                   <!-- <p class="card-subtitle">지금 가장 인기있는 게시글입니다</p> -->
-<<<<<<< HEAD
-                  <div class="border-bottom" th:each="recentBoard, status : ${recentList}">
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto" th:text="*{#temporals.format(recentBoard.createDate, 'yyyy-MM-dd')}">8
-                        March 2020</span>
-                    </div>
-                    <h6 class="fs-2"><a class="fs-2 h6-style" th:text="${recentBoard.title}"
-                        th:href="@{/board/detail(boardId=${recentBoard.boardId},category=${recentBoard.category})}">NFT
-                        Landing
-                        Page</a></h6>
-=======
                   <div class="border-bottom d-flex justify-content-between align-items-center py-2"
                     th:each="recentBoard, status : ${recentList}">
 
@@ -1142,7 +1113,6 @@
                     <span class="fs-2 ms-auto" th:text="*{#temporals.format(recentBoard.createDate, 'yyyy-MM-dd')}">8
                       March 2020</span>
 
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                   </div>
                 </div>
                 <!-- 전체 게시글 끝-->
@@ -1150,19 +1120,6 @@
                 <div class="card-body">
                   <h4 class="card-title fw-semibold">공지사항</h4>
                   <div class="border-bottom" th:each="adminNote, status : ${noteList}">
-<<<<<<< HEAD
-                    <div class="d-flex align-items-center">
-                      <span class="fs-2 ms-auto"
-                        th:text="*{#temporals.format(adminNote.adminNoteCreateDate, 'yyyy-MM-dd')}">8
-                        March 2020</span>
-                    </div>
-                    <h6 class="fs-2"><a class="fs-2 h6-style" th:text="${adminNote.adminNoteTitle}"
-                        th:href="@{/member/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT
-                        Landing
-                        Page</a></h6>
-                    <!-- <a class="fs-2"  th:text="${adminNote.adminNoteTitle}" th:href="@{/admin/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT Landing Page</a> -->
-                    <!-- <span class="fs-2 lh-sm" th:text="${adminNote.adminNoteContent}">[[ ${adminNote.adminNoteContent} ]]</span> -->
-=======
                     <div class="d-flex justify-content-between align-items-center py-2">
 
 
@@ -1177,7 +1134,6 @@
                       <!-- <a class="fs-2"  th:text="${adminNote.adminNoteTitle}" th:href="@{/admin/adminPageNoteDetail(adminNoteNum=${adminNote.adminNoteNum})}">NFT Landing Page</a> -->
                       <!-- <span class="fs-2 lh-sm" th:text="${adminNote.adminNoteContent}">[[ ${adminNote.adminNoteContent} ]]</span> -->
                     </div>
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
                   </div>
                   <!-- 공지사항 끝-->
                 </div>
@@ -1360,7 +1316,6 @@
           </div>
           <!-- theme end -->
         </div>
-        <!-- theme end -->
       </div>
     </div>
     <div class="dark-transparent sidebartoggler"></div>
@@ -1370,22 +1325,61 @@
     <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/libs/simplebar/dist/simplebar.min.js}"></script>
 
-<<<<<<< HEAD
-  <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
-  <script th:src="@{/js/theme/app.min.js}"></script>
-  <script th:src="@{/js/theme/theme.js}"></script>
-
-  <script th:src="@{/js/theme/sidebarmenu.js}"></script>
-=======
     <script th:src="@{/js/theme/app.horizontal.init.js}"></script>
     <script th:src="@{/js/theme/app.min.js}"></script>
     <script th:src="@{/js/theme/theme.js}"></script>
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
     <script th:src="@{/js/theme/sidebarmenu.js}"></script>
 
     <!-- solar icons -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> -->
+
+    <!-- chat notification -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+
+    <script>
+      var socket = new SockJS('/stomp/chat');  // WebSocket 서버와 연결
+      var stompClient = Stomp.over(socket);
+
+      // WebSocket 연결 시작
+      stompClient.connect({}, function (frame) {
+        console.log('Notification connected: ' + frame);
+
+        // '/topic/notifications' 경로를 구독하여 알림 수신
+        stompClient.subscribe('/topic/notifications', function (notification) {
+          showNotification(notification.body);
+        });
+      });
+
+      // 알림을 화면에 표시하는 함수
+      function showNotification(message) {
+        var notificationElement = document.getElementById("notification");
+        notificationElement.innerText = message;
+        notificationElement.style.display = "block";
+
+        // 일정 시간 후 알림을 숨김
+        setTimeout(function () {
+          notificationElement.style.display = "none";
+        }, 5000); // 5초 후 알림 사라짐
+      }
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        fetch('/sendNotification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify('Hello, this is a notification!'), // 보낼 메시지
+        })
+          .then(response => response.json())
+          .then(data => console.log('Success:', data))
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      });
+    </script>
 </body>
 
 </html>

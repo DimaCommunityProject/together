@@ -108,13 +108,8 @@ select * from chatting_room_member;
 # 특정 값 추가 
 DELETE FROM member WHERE member_id = 'admin';
 UPDATE member
-<<<<<<< HEAD
-SET member_role = 'ROLE_ADMIN'
-WHERE member_id = 'admin123';
-=======
 SET member_role = 'ROLE_USER'
 WHERE member_id = 'bbbbbbbb';
->>>>>>> 4f25cbb253b20a874f3d1f475b291f34d462dae4
 
 # 특정 값 조회 
 SELECT * FROM chatting_room_member WHERE member_id = 'aaaaa';

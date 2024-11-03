@@ -109,7 +109,6 @@ public class RabbitMQConfig {
         return new RabbitAdmin(connectionFactory);
     }
     
-    
 
     
 }
