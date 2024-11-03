@@ -1,0 +1,106 @@
+@charset "UTF-8";
+@import "main.css";
+
+/* **************************************
+	글쓰기 화면
+**************************************** */
+div.content td {
+	text-align :left;
+	width : 800px;
+}
+
+div.content td input[type="text"]{
+	width : 500px;
+}
+
+div.content td textarea{
+	width : 750px;
+	height: 200px;
+}
+
+/* **************************************
+	글보기 화면
+**************************************** */
+pre {
+	width: 750px;
+	height: 200px;
+}
+
+/* **************************************
+	댓글
+**************************************** */
+div.reply-write {
+	width : 1000px;
+	margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input#replyText {
+	display: inline-block;
+	width :910px;
+	height: 35px;
+}
+
+/* **************************************
+	댓글
+**************************************** */
+div#reply-list {
+	width: 1200px;
+	margin: 0 auto;
+}
+div.reply-write {
+	width: 1000px;
+	margin: 20px auto;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+ 
+input#replyText {
+    display: inline-block;
+    width: 900px;
+    height: 35px; 
+}
+
+/* 댓글 내용 */
+td.reply-no {
+	background-color:red;
+	width: 50px;
+}
+tr.reply-tr>td.reply-writer {
+	width: 200px;
+	text-align: center;
+}
+
+tr.reply-tr > td.reply-text {
+	
+	text-align: center;
+}
+tr.reply-tr > td.reply-date {
+	width: 300px;
+	text-align: center;
+}
+tr.reply-tr > td.reply-date {
+	width: 300px;
+	text-align: center;
+}
+tr.reply-tr > td.btns {
+	width: 200px;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
