@@ -2,13 +2,11 @@ package net.dima_community.CommunityProject.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
 import net.dima_community.CommunityProject.repository.chat.ChatMessageRepository;
 import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRepository;
 
-import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,8 +138,4 @@ public class ChatService {
         rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "chat.room." + chatRoomId, message); // 메시지 전송
     }
 
-	public List<ChatMessage> getMessagesAfterInvite(Long roomId, String memberId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

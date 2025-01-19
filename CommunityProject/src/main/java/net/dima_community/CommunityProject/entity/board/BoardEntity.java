@@ -60,7 +60,6 @@ public class BoardEntity {
     @Column(name = "title", nullable = false)
     private String title;
     
-    @Column(name = "content", nullable = false)
     private String content;
     
     @Column(name = "create_date")

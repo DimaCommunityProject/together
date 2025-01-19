@@ -1,16 +1,19 @@
 $(document).ready(function () {
+	// ===== 전역 변수 선언 =====
     let stompClient = null;
     let currentUserId = $('.userId').text().trim();
     let currentUserName = $('.userName').text().trim();
-    let currentUserGroup = null;
     let currentUserEmail = null;
     let currentUserImage = null;
     let currentUniqueKey = null; 
     let currentChatRoomId = null;
-    let userStatusCache = {};
-    let subscribedRooms = {};
 
     // ========== 공통 함수 ==========
+    /**
+     * Ajax를 통해 데이터를 가져오는 함수
+     * @param {string} url - 요청할 URL
+     * @param {function} onSuccess - 성공 시 호출할 콜백 함수
+     */
     function fetchData(url, onSuccess) {
         $.ajax({
             url: url,
@@ -20,15 +23,6 @@ $(document).ready(function () {
                 console.error(`Error fetching data from ${url}:`, error);
             }
         });
-    }
-
-    function handleUserStatus(message) {
-        if (!message.content) return;
-        if (message.content.includes("접속하셨습니다")) {
-            updateBadgeStatus(message.senderId, "online");
-        } else if (message.content.includes("로그아웃 하셨습니다")) {
-            updateBadgeStatus(message.senderId, "offline");
-        }
     }
 
 	// chatPartner 채팅창 뱃지 업데이트 
@@ -42,7 +36,7 @@ $(document).ready(function () {
 	    }
 	}
 	
-	// chatList 뱃지
+	// chatList 
 	function createMemberImageHTMLWithoutBadge(memberName, memberId) {
 		const imageUrl = `/member/showImageAtMain/${memberId}`;  // 동적으로 이미지 URL 생성
 	    return `
@@ -52,6 +46,7 @@ $(document).ready(function () {
 	    `;
 	}
 
+	// 채팅방리스트의 채팅방 항목을 생성하는 함수 
     function createChatRoomHTML(room, memberNames, imagesHtml) {
         return `
             <li>
@@ -70,7 +65,7 @@ $(document).ready(function () {
         `;
     }
 	
-	// chatPartnerImages html 
+	// 채팅방 멤버 이미지를 생성하는 함수 (채팅방 상단용)
     function createMemberImageHTML(memberName, memberId, status) {
 		const imageUrl = `/member/showImageAtMain/${memberId}`;
         const badgeClass = status === 'online' ? 'bg-success' : 'bg-light';
@@ -85,25 +80,50 @@ $(document).ready(function () {
     }
 
     // ========== 초기 데이터 로드 및 처리 ==========
+    /**
+	 * 초대 데이터를 로드하는 함수 
+	 */
     function loadInitialData() {
         fetchData('/api/chat/chatData', handleInitialData);
     }
 
+	/**
+     * 초기 데이터를 처리하는 함수
+     * @param {object} response - 서버로부터 받은 데이터
+     */
     function handleInitialData(response) {
         updateRecipientSelect(response.members);
         updateUserInfo(response.currentUser);
         updateChatRooms(response.chatRooms);
     }
 
+	// 사용자 선택 셀렉트를 업데이트하는 함수 ( 새 채팅 시작용)
     function updateRecipientSelect(members) {
-        $('.recipientSelect').empty();
-        members.forEach(function (member) {
-            if (member.memberId !== currentUserId) {
-                $('.recipientSelect').append(`<option value="${member.memberId}">${member.memberName}</option>`);
-            }
-        });
-    }
-
+	    const recipientSelects = $('.recipientSelect');
+	    recipientSelects.each(function() {
+	        const recipientSelect = $(this);
+	        const currentSelection = recipientSelect.val();  // 현재 선택된 값 저장
+	        recipientSelect.empty();
+	        
+	        // 기본 옵션 추가
+	        recipientSelect.append('<option value="" disabled selected>대화 상대를 선택하세요</option>');
+	        
+	        members.forEach(function (member) {
+	            if (member.memberId !== currentUserId) {
+	                recipientSelect.append(`<option value="${member.memberId}">${member.memberName}</option>`);
+	            }
+	        });
+	        
+	        // 이전에 선택한 값이 있으면 다시 선택 설정
+	        if (currentSelection && recipientSelect.find(`option[value="${currentSelection}"]`).length > 0) {
+	            recipientSelect.val(currentSelection);
+	        } else {
+	            recipientSelect.val('');  // 기본 옵션 선택
+	        }
+	    });
+	}
+	
+	// 현재 사용자 정보 업데이트하는 함수 
     function updateUserInfo(currentUser) {
         if (currentUser && currentUser.memberId) {
             currentUserName = currentUser.memberName;
@@ -121,7 +141,9 @@ $(document).ready(function () {
             console.error("Invalid user data.");
         }
     }
-
+	
+	
+	// 채팅방 리스트 업데이트하는 함수 
     function updateChatRooms(chatRooms) {
         $('.chatList').empty();
         chatRooms.forEach(function(room) {
@@ -129,20 +151,20 @@ $(document).ready(function () {
         });
     }
 
+	// 개별 채팅방을 렌더링하는 함수 
     function renderChatRoom(room) {
 	    let imagesHtml = '';
 	    let memberNames = '';
-	    currentUniqueKey = room.uniqueKey;
+	    console.log("Room Unique Key:", room.uniqueKey);
 	
-	    if (currentUniqueKey) {
-	        const members = currentUniqueKey.split(',');
-	        members.forEach(function (memberName, index) {
+	    if (room.members && room.members.length > 0) {
+	        room.members.forEach(function (member, index) {
 	            // ChatList에서는 배지를 적용하지 않음
-	            imagesHtml += createMemberImageHTMLWithoutBadge(memberName, room.members[index]?.memberId);
-	            memberNames += memberName + (index < members.length - 1 ? ', ' : '');
+	            imagesHtml += createMemberImageHTMLWithoutBadge(member.name, member.memberId);
+	            memberNames += member.name + (index < room.members.length - 1 ? ', ' : '');
 	        });
 	    } else {
-	        console.error('currentUniqueKey is undefined!');
+	        console.error('room.members is undefined or empty!');
 	    }
 	
 	    const roomListHtml = createChatRoomHTML(room, memberNames, imagesHtml);
@@ -151,7 +173,12 @@ $(document).ready(function () {
 	}
 	
 	
-
+	// ===== 채팅방 입장 및 퇴장 관리 =====
+    /**
+     * 채팅방에 입장하는 함수
+     * @param {number} roomId - 채팅방 ID
+     * @param {string} uniqueKey - 채팅방 고유 키
+     */
     function joinChatRoom(roomId, uniqueKey) {
         if (stompClient && roomId) {
             if (currentChatRoomId) {
@@ -159,6 +186,7 @@ $(document).ready(function () {
             }
             currentChatRoomId = roomId;
             currentUniqueKey = uniqueKey;
+            $('.chat-not-selected').addClass('d-none');
             stompClient.subscribe(`/queue/chat.room.${roomId}`, function (messageOutput) {
 			    const message = JSON.parse(messageOutput.body);
 			
@@ -184,11 +212,14 @@ $(document).ready(function () {
 			}, { id: `sub-${roomId}` });
             updateStatus("online", roomId);
             loadChatMessages(roomId);
-            loadChatRoomMembers(roomId);
+            loadChatRoomMembers(roomId, uniqueKey);
             sendEnterMessage(roomId);
         }
     }
     
+    /**
+	 * 채팅방 입장 시 메시지 전송 함수 
+	 */
     function sendEnterMessage(roomId) {
 	    if (stompClient && roomId) {
 	        const enterMessage = {
@@ -200,7 +231,11 @@ $(document).ready(function () {
 	        stompClient.send(`/app/chat.enter/${roomId}`, {}, JSON.stringify(enterMessage));
 	    }
 	}
-
+	
+	/**
+     * 채팅방에서 나가는 함수
+     * @param {number} roomId - 채팅방 ID
+     */
     function leaveChatRoom(roomId) {
         if (stompClient && roomId) {
             sendExitMessage(roomId);
@@ -209,24 +244,27 @@ $(document).ready(function () {
         }
     }
     
+    /**
+	 * 채팅방 퇴장 시 메시지 전송 함수 
+	 */
     function sendExitMessage(roomId) {
-    if (stompClient && roomId) {
-        const exitMessage = {
-            senderId: currentUserId,
-            chatRoomId: roomId,
-            content: `${currentUserName}님이 퇴장하셨습니다.`,
-            timestamp: new Date().toISOString()
-        };
-        stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
-    }
-}
+	    if (stompClient && roomId) {
+	        const exitMessage = {
+	            senderId: currentUserId,
+	            chatRoomId: roomId,
+	            content: `${currentUserName}님이 퇴장하셨습니다.`,
+	            timestamp: new Date().toISOString()
+	        };
+	        stompClient.send(`/app/chat.exit/${roomId}`, {}, JSON.stringify(exitMessage));
+	    }
+	}
 
-    function handleMessageOutput(messageOutput) {
-        const message = JSON.parse(messageOutput.body);
-        handleUserStatus(message);
-        showMessage(message);
-    }
 
+	// ===== 메시지 로드 및 표시 =====
+    /**
+     * 채팅 메시지를 로드하는 함수
+     * @param {number} roomId - 채팅방 ID
+     */
     function loadChatMessages(roomId) {
         fetchData(`/api/chat/getMessages/${roomId}`, function (response) {
             $('#messageArea').empty();
@@ -236,28 +274,33 @@ $(document).ready(function () {
             scrollToBottom();
         });
     }
-
-    function loadChatRoomMembers(roomId) {
-        fetchData(`/api/chat/getRoomMemberNamesByUniqueKey/${currentUniqueKey}`, function (response) {
-            updateChatPartnerUI(response.members);
-        });
-    }
-
+	
+	// 채팅방 멤버를 로드하는 함수 
+    function loadChatRoomMembers(roomId, uniqueKey) {
+	    const encodedUniqueKey = encodeURIComponent(uniqueKey); // uniqueKey 인코딩
+	    fetchData(`/api/chat/getRoomMemberNamesByUniqueKey/${encodedUniqueKey}`, function (response) {
+	        updateChatPartnerUI(response.members);
+	    });
+	}
+	
+	// 채팅방 상단의 멤버 정보를 업데이트하는 함수 
     function updateChatPartnerUI(members) {
-        let imagesHtml = '';
-        let namesHtml = '';
-        const activeMembers = members.filter(member => member.deleted === 0);
-        activeMembers.forEach(function (member) {
-            imagesHtml += createMemberImageHTML(member.name, member.memberId, member.status);
-            namesHtml += `${member.name} (${member.memberGroup}), `;
-        });
-        $('.chatPartnerImages').html(imagesHtml);
-        $('.chatPartnerName').text(namesHtml.slice(0, -2));
-        activeMembers.forEach(function(member) {
-            updateBadgeStatus(member.memberId, member.status);
-        });
-    }
-
+		console.log('members:', members);
+	    let imagesHtml = '';
+	    let namesHtml = '';
+	    const activeMembers = members.filter(member => member.deleted === 0);
+	    activeMembers.forEach(function (member) {
+	        imagesHtml += createMemberImageHTML(member.name, member.memberId, member.status);
+	        namesHtml += `${member.name} (${member.memberGroup}), `;
+	    });
+	    $('.chatPartnerImages').html(imagesHtml);
+	    $('.chatPartnerName').text(namesHtml.slice(0, -2));
+	    activeMembers.forEach(function(member) {
+	        updateBadgeStatus(member.memberId, member.status);
+	    });
+	}
+	
+	// 사용자 상태를 서버에 업데이트하는 함수 
     function updateStatus(status, roomId) {
         $.ajax({
             url: '/api/chat/updateStatus',
@@ -276,7 +319,12 @@ $(document).ready(function () {
             }
         });
     }
-
+    
+    // ===== 메시지 처리 =====
+    /**
+     * 메시지를 화면에 표시하는 함수
+     * @param {object} message - 메시지 객체
+     */
     function showMessage(message) {
         const messageHtml = message.senderId === currentUserId
             ? generateSentMessageHtml(message)
@@ -284,13 +332,10 @@ $(document).ready(function () {
         $('#messageArea').append(messageHtml);
         scrollToBottom();
     }
-
+	
+	// 회원이 보낸 메시지 html 
     function generateSentMessageHtml(message) {
-        //const timeString = new Date(message.timestamp).toLocaleTimeString();
-        const messageDate = new Date(message.timestamp);
-        const hours = messageDate.getHours().toString().padStart(2, '0');
-        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
-        const timeString = `${hours}:${minutes}`;
+        const timeString = new Date(message.timestamp).toLocaleTimeString();
         return `
             <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
                 <div class="text-end">
@@ -303,13 +348,10 @@ $(document).ready(function () {
         `;
     }
 
+	// 회원이 받은 메시지 html
     function generateReceivedMessageHtml(message) {
-		const senderId = message.senderId;
-		const imageUrl = `/member/showImageAtMain/${senderId}`;
-        const messageDate = new Date(message.timestamp);
-        const hours = messageDate.getHours().toString().padStart(2, '0');
-        const minutes = messageDate.getMinutes().toString().padStart(2, '0');
-        const timeString = `${hours}:${minutes}`;
+		const imageUrl = `/member/showImageAtMain/${message.senderId}`;
+        const timeString = new Date(message.timestamp).toLocaleTimeString();
         return `
             <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
                  <img src="${imageUrl}" alt="${message.senderName}" width="40" height="40" class="rounded-circle userProfileImage" />
@@ -325,16 +367,22 @@ $(document).ready(function () {
             </div>
         `;
     }
-
+	
+	// 채팅영역 스크롤해서 최신 메시지로 이동하는 함수 
     function scrollToBottom() {
         const chatBox = document.querySelector('.chat-box-inner');
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
+	// ===== 이벤트 핸들러 등록 =====
+    /**
+     * 채팅방 클릭 이벤트 등록
+     */
     function registerChatRoomClickEvent() {
         $('.chat-user').off('click').on('click', function () {
             const selectedRoomId = $(this).data('room-id');
             const selectedUniqueKey = $(this).data('unique-key');
+            console.log('Clicked chat room:', selectedRoomId, selectedUniqueKey); // 추가
             if (selectedRoomId) {
                 $('.chat-not-selected').addClass('d-none');
                 joinChatRoom(selectedRoomId, selectedUniqueKey);
@@ -343,8 +391,15 @@ $(document).ready(function () {
     }
     
     // 채팅방을 시작하는 기능
-	$('.startChat').click(function () {
-	    const recipientId = $('.recipientSelect').val();  // 선택한 상대방의 ID
+	$('.startChat').click(function (event) {
+		event.preventDefault();
+	    const recipientSelect = $(this).siblings('.recipientSelect');
+	    console.log("RecipientSelect options at click time:");
+	    recipientSelect.find('option').each(function() {
+	        console.log($(this).val(), $(this).text());
+	    });
+	    const recipientId = recipientSelect.val();  // 선택한 상대방의 ID
+	    console.log("Selected recipientId:", recipientId);
 	    if (recipientId) {
 	        axios.post('/api/chat/start', `recipientId=${encodeURIComponent(recipientId)}`, {
 	            headers: {
@@ -353,9 +408,10 @@ $(document).ready(function () {
 	        })
 	        .then(response => {
 	            const chatRoomId = response.data.id; // 서버에서 반환된 채팅방 ID
-	            if (chatRoomId) {
+	            const uniqueKey = response.data.uniqueKey; // 서버에서 반환된 uniqueKey
+	            if (chatRoomId && uniqueKey) {
 	                // 새 채팅방으로 입장
-	                joinChatRoom(chatRoomId); 
+	                joinChatRoom(chatRoomId, uniqueKey);  
 	
 	                // 초기 데이터를 로드하여 UI 갱신
 	                loadInitialData(); 
@@ -373,25 +429,29 @@ $(document).ready(function () {
 	        console.error('Recipient ID is not selected.');
 	    }
 	});
+    
+    // 메시지 전송 버튼 클릭 이벤트 
+    $('#sendButton').click(function () {
+	    const content = $('#messageInput').val();
+	    if (content && stompClient && currentChatRoomId) {
+	        const message = {
+	            chatRoomId: currentChatRoomId,
+	            senderId: currentUserId,
+	            senderName: currentUserName,
+	            content: content,
+	            timestamp: new Date().toISOString()
+	        };
 	
-	$('#sendButton').click(function () {
-        const content = $('#messageInput').val();
-        if (content && stompClient && currentChatRoomId) {
-            const message = {
-                chatRoomId: currentChatRoomId,
-                senderId: currentUserId,
-                senderName: currentUserName,
-                content: content,
-                timestamp: new Date().toISOString()
-            };
-
-            // 서버로 메시지 전송
-            stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
-            $('#messageInput').val(''); // 입력란 초기화
-            
-            showMessage(message);
-        }
-    });
+	        // 서버로 메시지 전송
+	        stompClient.send(`/app/chat.message/${currentChatRoomId}`, {}, JSON.stringify(message));
+	
+	        // 메시지를 화면에 바로 추가
+	        showMessage(message);
+	
+	        // 입력란 초기화
+	        $('#messageInput').val('');
+	    }
+	});
     
     // 초대하기 버튼 클릭 이벤트
 	$('.inviteButton').click(function () {
@@ -402,15 +462,13 @@ $(document).ready(function () {
 	
 	    console.log("Selected uniqueKey:", currentUniqueKey);
 	
-	    const uniqueKeyMembers = currentUniqueKey.split(','); // 쉼표로 구분된 멤버 ID 배열
-	
-	    // 서버로부터 방의 전체 멤버 목록을 가져옴 (deleted 상태 포함)
+	    // 서버로부터 초대 가능한 멤버 목록을 가져옴
 	    $.ajax({
-	        url: `/api/chat/getRoomMemberNamesByUniqueKey/${currentUniqueKey}`,  // 서버에서 멤버 목록을 가져오는 API 경로
+	        url: `/api/chat/getAvailableMembersForInvitation/${currentUniqueKey}`,
 	        method: 'GET',
 	        success: function (response) {
-	            const allMembers = response.members;
-	            const availableMembers = allMembers.filter(member => member.deleted === 1 && !uniqueKeyMembers.includes(member.memberId));
+	            const availableMembers = response.availableMembers;
+	            console.log("availableMembers", availableMembers);
 	
 	            // 멤버 목록을 모달에 표시
 	            const membersCheckboxes = $('#inviteMembersCheckboxes');
@@ -449,10 +507,27 @@ $(document).ready(function () {
 	        })
 	        .then(response => {
 	            const newRoomId = response.data.roomId;
-	            if (newRoomId) {
-	                joinChatRoom(newRoomId);
-	                loadInitialData();
-	                stompClient.send(`/app/chat.newRoom`, {}, JSON.stringify({ roomId: newRoomId }));
+	            const newUniqueKey = response.data.uniqueKey;
+	            const newMembers = response.data.members;
+	            if (newRoomId && newUniqueKey && newMembers) {
+	                // 새로운 채팅방을 채팅방 목록에 추가
+	                renderChatRoom({
+	                    id: newRoomId,
+	                    uniqueKey: newUniqueKey,
+	                    members: newMembers
+	                });
+	
+	                // 새로운 채팅방으로 입장
+	                joinChatRoom(newRoomId, newUniqueKey);
+	
+	                // 새로운 채팅방이 생겼음을 상대방들에게 알림
+	                selectedMembers.forEach(memberId => {
+	                    stompClient.send(`/user/${memberId}/queue/newChatRoom`, {}, JSON.stringify({
+	                        roomId: newRoomId,
+	                        uniqueKey: newUniqueKey,
+	                        members: newMembers
+	                    }));
+	                });
 	            }
 	        })
 	        .catch(error => {
@@ -506,18 +581,25 @@ $(document).ready(function () {
 
     // ========== WebSocket 연결 및 초기 데이터 로드 ==========
     function connect() {
-        const socket = new SockJS('/stomp/chat');
-        stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
-            if (currentChatRoomId) {
-                joinChatRoom(currentChatRoomId);
-            }
-        }, function (error) {
-            console.log("WebSocket connection closed:", error);
-            updateStatus("offline");
-        });
-    }
+	    const socket = new SockJS('/stomp/chat');
+	    stompClient = Stomp.over(socket);
+	    stompClient.connect({}, function (frame) {
+	        console.log('Connected: ' + frame);
+	
+	        // 새로운 채팅방 알림 구독
+	        stompClient.subscribe(`/user/${currentUserId}/queue/newChatRoom`, function (message) {
+	            const newRoomData = JSON.parse(message.body);
+	            renderChatRoom(newRoomData);
+	        });
+	
+	        if (currentChatRoomId && currentUniqueKey) {
+	            joinChatRoom(currentChatRoomId, currentUniqueKey);
+	        }
+	    }, function (error) {
+	        console.log("WebSocket connection closed:", error);
+	        updateStatus("offline");
+	    });
+	}
 
     // 페이지를 벗어날 때 WebSocket 연결 종료 및 퇴장 처리
     window.addEventListener('beforeunload', function () {

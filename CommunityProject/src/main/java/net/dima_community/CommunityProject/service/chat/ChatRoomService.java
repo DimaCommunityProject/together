@@ -2,17 +2,20 @@ package net.dima_community.CommunityProject.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dima_community.CommunityProject.common.util.UserStatusManager;
+import net.dima_community.CommunityProject.dto.chat.ChatRoomMemberDTO;
 import net.dima_community.CommunityProject.dto.member.MemberDTO;
-import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.entity.chat.ChatMessage;
 import net.dima_community.CommunityProject.entity.chat.ChatRoom;
 import net.dima_community.CommunityProject.entity.chat.ChattingRoomMemberEntity;
+import net.dima_community.CommunityProject.entity.member.MemberEntity;
 import net.dima_community.CommunityProject.repository.chat.ChatMessageRepository;
 import net.dima_community.CommunityProject.repository.chat.ChatRoomRepository;
 import net.dima_community.CommunityProject.repository.chat.ChattingRoomMemberRepository;
 import net.dima_community.CommunityProject.repository.member.MemberRepository;
 
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -25,7 +28,10 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+/**
+ * ChatRoomService - 채팅방 생성 및 관리, 회원 정보 조회 등을 담당하는 서비스 클래스. 
+ */
 
 @Slf4j
 @Service
@@ -37,6 +43,7 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final RabbitAdmin rabbitAdmin;
+    private final RabbitTemplate rabbitTemplate;
     
     private static final String MEMBER_SEPARATOR = ",";
     private static final String QUEUE_PREFIX = "chat.room.";
@@ -58,6 +65,17 @@ public class ChatRoomService {
                 .sorted()
                 .collect(Collectors.joining(MEMBER_SEPARATOR));
     }
+    
+    /**
+     * 주어진 회원 이름을 회원 ID로 변환하여 유니크 키 생성. 
+     * @param memberIds
+     * @return
+     */
+    private String generateUniqueKeyFromIds(List<String> memberIds) {
+        return memberIds.stream()
+                .sorted()  // memberId를 정렬
+                .collect(Collectors.joining("-"));  // 구분자로 "-" 사용
+    }
 
     /**
      * 회원 ID로 해당 회원의 이름을 조회
@@ -69,6 +87,57 @@ public class ChatRoomService {
                 .map(MemberEntity::getMemberName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + memberId));
     }
+    
+    /**
+     * 초대 가능한 멤버 목록을 반환하는 메서드.
+     * @param uniqueKey 채팅방의 고유 키
+     * @return 초대 가능한 멤버 목록
+     */
+    public List<ChatRoomMemberDTO> getAvailableMembersForInvitation(String uniqueKey) {
+        Optional<ChatRoom> chatRoomOpt = findChatRoomByUniqueKey(uniqueKey);
+
+        if (chatRoomOpt.isPresent()) {
+            ChatRoom chatRoom = chatRoomOpt.get();
+
+            // 채팅방에 속한 회원들의 ID 집합
+            Set<String> chatRoomMemberIds = chatRoom.getChattingRoomMembers().stream()
+                    .map(member -> member.getMember().getMemberId())
+                    .collect(Collectors.toSet());
+
+            // 전체 회원 중 role이 'ROLE_USER'인 회원들을 가져옴
+            List<MemberEntity> allUsers = memberRepository.findByMemberRole("ROLE_USER");
+
+            // 채팅방에 속하지 않았거나, deleted == 1 인 회원들을 필터링
+            List<ChatRoomMemberDTO> availableMembers = allUsers.stream()
+                    .map(user -> {
+                        Optional<ChattingRoomMemberEntity> chatMemberOpt = chatRoom.getChattingRoomMembers().stream()
+                                .filter(member -> member.getMember().getMemberId().equals(user.getMemberId()))
+                                .findFirst();
+
+                        Integer deleted = chatMemberOpt.map(ChattingRoomMemberEntity::getDeleted).orElse(null);
+
+                        // 채팅방에 속하지 않았거나, deleted == 1 인 회원만 포함
+                        if (!chatMemberOpt.isPresent() || (deleted != null && deleted == 1)) {
+                            return new ChatRoomMemberDTO(
+                                    user.getMemberId(),
+                                    user.getMemberName(),
+                                    user.getMemberGroup(),
+                                    UserStatusManager.getUserStatus(user.getMemberId()),
+                                    deleted != null ? deleted : 0);
+                        } else {
+                            return null; // 활성 상태의 채팅방 멤버는 제외
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+
+            return availableMembers;
+
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
     
     // =======================================================
     // ===================== 채팅방 생성 및 관리 =====================
@@ -84,7 +153,8 @@ public class ChatRoomService {
     public ChatRoom createChatRoom(String createdBy, String recipientId) {
         List<String> memberIds = List.of(createdBy, recipientId);
         String uniqueKey = generateUniqueKeyFromNames(memberIds);
-        return existingChatRoomCheck(createdBy, uniqueKey, memberIds, false);
+        // roomName이 필요 없는 오버로딩된 메서드를 호출
+        return existingChatRoomCheck(createdBy, uniqueKey, memberIds, false);  // 1:1 채팅방이므로 false
     }
     
     /**
@@ -94,13 +164,21 @@ public class ChatRoomService {
      * @param newMemberIds 새로 추가된 멤버 ID 리스트
      * @return 생성된 또는 기존 채팅방
      */
-    @Transactional
-    public ChatRoom createGroupChat(String currentUserId, String existingRoomId, List<String> newMemberIds) {
-        Long roomId = Long.parseLong(existingRoomId);
-        List<String> allMemberIds = mergeMemberIds(roomId, newMemberIds);
-        String uniqueKey = generateUniqueKeyFromNames(allMemberIds);
-        return existingChatRoomCheck(currentUserId, uniqueKey, allMemberIds, true);
-    }
+	@Transactional
+	public ChatRoom createGroupChat(String currentUserId, String existingRoomId, List<String> newMemberIds) {
+	    Long roomId = Long.parseLong(existingRoomId);
+	    
+	    // 전체 멤버 ID 병합
+	    List<String> allMemberIds = mergeMemberIds(roomId, newMemberIds);
+	    
+	    // 유니크 키 생성: "," 구분 (이름 기반)
+	    String uniqueKey = generateUniqueKeyFromNames(allMemberIds);
+	    
+	    // 방 이름 생성: "-" 구분 (ID 기반)
+	    String roomName = generateUniqueKeyFromIds(allMemberIds);
+	    
+	    return existingChatRoomCheck(currentUserId, uniqueKey, roomName, allMemberIds, true);  // 그룹 채팅방이므로 true
+	}
 
     /**
      * 고유한 uniqueKey로 기존 채팅방이 존재하는지 확인하고, 필요 시 새로운 채팅방을 생성.
@@ -110,27 +188,39 @@ public class ChatRoomService {
      * @param isGroupChat 그룹 채팅 여부
      * @return 기존 채팅방 또는 새로운 채팅방
      */
-    private ChatRoom existingChatRoomCheck(String currentUserId, String uniqueKey, List<String> allMemberIds, boolean isGroupChat) {
-        Optional<ChatRoom> existingChatRoomOpt = chatRoomRepository.findByUniqueKey(uniqueKey);
+	// 기존의 그룹 채팅용 메서드
+	private ChatRoom existingChatRoomCheck(String currentUserId, String uniqueKey, String roomName, List<String> allMemberIds, boolean isGroupChat) {
+	    Optional<ChatRoom> existingChatRoomOpt = chatRoomRepository.findByUniqueKey(uniqueKey);
 
-        if (existingChatRoomOpt.isPresent()) {
-            ChatRoom existingChatRoom = existingChatRoomOpt.get();
+	    if (existingChatRoomOpt.isPresent()) {
+	        ChatRoom existingChatRoom = existingChatRoomOpt.get();
+	        boolean hasDeletedMember = existingChatRoom.getChattingRoomMembers().stream().anyMatch(member -> member.getDeleted() == 1);
 
-            // 삭제된 멤버가 있는지 확인
-            boolean hasDeletedMember = existingChatRoom.getChattingRoomMembers()
-                    .stream().anyMatch(member -> member.getDeleted() == 1);
+	        if (hasDeletedMember) {
+	            return createNewChatRoom(currentUserId, allMemberIds, uniqueKey, isGroupChat);
+	        } else {
+	            return existingChatRoom;
+	        }
+	    }
+	    return createNewChatRoom(currentUserId, allMemberIds, uniqueKey, isGroupChat);
+	}
 
-            // 삭제된 멤버가 있는 경우 새로운 채팅방 생성
-            if (hasDeletedMember) {
-                return createNewChatRoom(currentUserId, allMemberIds, uniqueKey, isGroupChat);
-            } else {
-                // 삭제된 멤버가 없으면 기존 채팅방 반환
-                return existingChatRoom;
-            }
-        }
-        // 새로운 채팅방 생성 (기존 채팅방이 없을 경우)
-        return createNewChatRoom(currentUserId, allMemberIds, uniqueKey, isGroupChat);
-    }
+	// 1:1 채팅용 메서드 (roomName을 필요로 하지 않음)
+	private ChatRoom existingChatRoomCheck(String currentUserId, String uniqueKey, List<String> allMemberIds, boolean isGroupChat) {
+	    Optional<ChatRoom> existingChatRoomOpt = chatRoomRepository.findByUniqueKey(uniqueKey);
+
+	    if (existingChatRoomOpt.isPresent()) {
+	        ChatRoom existingChatRoom = existingChatRoomOpt.get();
+	        boolean hasDeletedMember = existingChatRoom.getChattingRoomMembers().stream().anyMatch(member -> member.getDeleted() == 1);
+
+	        if (hasDeletedMember) {
+	            return createNewChatRoom(currentUserId, allMemberIds, uniqueKey, isGroupChat);
+	        } else {
+	            return existingChatRoom;
+	        }
+	    }
+	    return createNewChatRoom(currentUserId, allMemberIds, uniqueKey, isGroupChat);
+	}
     
     /**
      * 새로운 1:1 또는 그룹 채팅방 생성
@@ -140,23 +230,39 @@ public class ChatRoomService {
      * @param isGroupChat 그룹 채팅 여부
      * @return 새로 생성된 채팅방
      */
-    private ChatRoom createNewChatRoom(String createdBy, List<String> memberIds, String uniqueKey, boolean isGroupChat) {
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setName(isGroupChat ? uniqueKey : createdBy + "-" + memberIds.get(1));
-        chatRoom.setCreatedDate(LocalDateTime.now());
-        chatRoom.setCreatedBy(createdBy);
-        chatRoom.setUniqueKey(uniqueKey);
-        chatRoomRepository.save(chatRoom);
+	private ChatRoom createNewChatRoom(String createdBy, List<String> memberIds, String uniqueKey, boolean isGroupChat) {
+	    ChatRoom chatRoom = new ChatRoom();
+	    chatRoom.setName(isGroupChat ? generateUniqueKeyFromIds(memberIds) : createdBy + "-" + memberIds.get(1));  // 그룹 채팅과 1:1 채팅 방 이름 구분
+	    chatRoom.setCreatedDate(LocalDateTime.now());
+	    chatRoom.setCreatedBy(createdBy);
+	    chatRoom.setUniqueKey(uniqueKey);
+	    chatRoomRepository.save(chatRoom);
 
-        addMembersToChatRoom(chatRoom.getId(), memberIds);
-        createRabbitMQQueue(chatRoom.getId());
+	    addMembersToChatRoom(chatRoom.getId(), memberIds);
+	    createRabbitMQQueue(chatRoom.getId());
 
-        return chatRoom;
-    }
+	    return chatRoom;
+	}
     
     // =======================================================
     // ===================== RabbitMQ Queue 생성 =====================
     // =======================================================
+    
+    /**
+     * 모든 회원이 구독하는 공통 큐 
+     */
+    private void createRabbitMQCommonQueue() {
+        String queueName = "chat.common";
+        Queue queue = new Queue(queueName, true);
+        rabbitAdmin.declareQueue(queue);
+        Binding binding = BindingBuilder.bind(queue).to(new TopicExchange("chat.exchange")).with(queueName);
+        rabbitAdmin.declareBinding(binding);
+    }
+
+    // 모든 회원에게 알림 전송
+    private void sendCommonQueueMessage(ChatMessage message) {
+        rabbitTemplate.convertAndSend("chat.exchange", "chat.common", message);
+    }
 
     /**
      * RabbitMQ 큐 생성
@@ -236,6 +342,20 @@ public class ChatRoomService {
 	                 return true;
 	             }).orElse(false);
 	 }
+	 
+	 /**
+	  * 
+	  * @param userId
+	  * @param roomId
+	  * @param status
+	  */
+	 public void updateMemberStatus(String userId, Long roomId, String status) {
+		    // UserStatusManager를 사용해 상태를 업데이트
+		    UserStatusManager.updateUserStatus(userId, status);
+		    
+		    // 이 경우 더 이상 상태를 DB에 저장하지 않음.
+		    // chattingRoomMemberRepository.save(member);는 필요하지 않음.
+		}
 	
 	 /**
 	  * 유니크 키에서 나간 사용자의 이름을 삭제하고 갱신하는 메서드.
@@ -296,45 +416,60 @@ public class ChatRoomService {
 	  * @return 채팅방 상세 정보 목록
 	  */
 	 public List<Map<String, Object>> getChatRoomDetails(String userId) {
-	     // 1. 삭제되지 않은 채팅방 ID 목록을 가져옴
-	     List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberIdAndDeleted(userId, 0)
-	             .stream().map(member -> member.getChatRoom().getId()).collect(Collectors.toList());
-	
-	     // 2. 채팅방 ID로 세부 정보 조회
-	     return chatRoomRepository.findAllById(roomIds)
-	             .stream()
-	             .map(this::mapChatRoomToDetails)
-	             .collect(Collectors.toList());
-	 }
+		    // 1. 삭제되지 않은 채팅방 ID 목록을 가져옴 (deleted 값이 0인 사람만)
+		    List<Long> roomIds = chattingRoomMemberRepository.findByMember_MemberIdAndDeleted(userId, 0)
+		            .stream().map(member -> member.getChatRoom().getId()).collect(Collectors.toList());
+
+		    // 2. 채팅방 ID로 세부 정보 조회
+		    return chatRoomRepository.findAllById(roomIds)
+		            .stream()
+		            .map(this::mapChatRoomToDetails) // 각 채팅방의 세부 정보를 변환
+		            .collect(Collectors.toList());
+		}
 	
 	 /**
-	  * 채팅방 객체를 맵으로 변환하는 메서드.
+	  * 채팅방 객체를 맵으로 변환하여 유니크 키를 이름으로 변경하여 회원 정보 반환 
 	  * @param chatRoom 변환할 채팅방 객체
 	  * @return 채팅방 세부 정보가 담긴 맵
 	  */
 	 private Map<String, Object> mapChatRoomToDetails(ChatRoom chatRoom) {
-	     Map<String, Object> roomDetails = new HashMap<>();
-	     
-	     // 채팅방 ID, 이름, 유니크 키 저장
-	     roomDetails.put("id", chatRoom.getId());
-	     roomDetails.put("name", chatRoom.getName());
-	     roomDetails.put("uniqueKey", chatRoom.getUniqueKey());
-	
-	     // 채팅방 멤버 정보 변환
-	     List<Map<String, Object>> members = chatRoom.getChattingRoomMembers()
-	             .stream()
-	             .map(member -> {
-	                 Map<String, Object> memberMap = new HashMap<>();
-	                 memberMap.put("memberId", member.getMember().getMemberId());
-	                 memberMap.put("memberName", member.getMember().getMemberName());
-	                 memberMap.put("deleted", member.getDeleted());
-	                 return memberMap;
-	             })
-	             .collect(Collectors.toList());
-	
-	     roomDetails.put("members", members);
-	     return roomDetails;
-	 }
+		    Map<String, Object> roomDetails = new HashMap<>();
+		    
+		    // 1. 채팅방 ID와 이름을 저장
+		    roomDetails.put("id", chatRoom.getId());
+		    roomDetails.put("name", chatRoom.getName());
+
+		    // 2. 삭제되지 않은 멤버들의 이름을 유니크 키로 변환
+		    String uniqueKey = chatRoom.getChattingRoomMembers()
+		        .stream()
+		        .filter(member -> member.getDeleted() == 0)  // 삭제되지 않은 멤버들만 필터링
+		        .map(member -> member.getMember().getMemberName()) // 이름을 가져옴
+		        .sorted()  // 알파벳순 정렬
+		        .collect(Collectors.joining(","));  // 쉼표로 이어서 유니크 키 생성
+		    
+		    roomDetails.put("uniqueKey", uniqueKey);
+
+		    // 3. 채팅방 멤버들의 정보 저장 (ChatRoomMemberDTO로 변환)
+		    List<ChatRoomMemberDTO> members = chatRoom.getChattingRoomMembers()
+		        .stream()
+		        .map(member -> {
+		            String memberId = member.getMember().getMemberId();
+		            String memberName = member.getMember().getMemberName();
+		            String memberGroup = member.getMember().getMemberGroup(); // memberGroup 추가
+		            Integer deleted = member.getDeleted();
+
+		            // UserStatusManager를 사용해 상태를 조회
+		            String status = UserStatusManager.getUserStatus(memberId).equals("online") ? "online" : "offline";
+
+		            // 명시적으로 ChatRoomMemberDTO 생성
+		            return new ChatRoomMemberDTO(memberId, memberName, memberGroup, status, deleted);
+		        })
+		        .collect(Collectors.toList());
+
+		    roomDetails.put("members", members);
+		    
+		    return roomDetails;
+		}
 	
 	 // =======================================================
 	 // ================== 회원 및 채팅방 관리 ==================
@@ -351,13 +486,35 @@ public class ChatRoomService {
 	             .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + memberId));
 	 }
 	
+	 @Transactional
+	 public List<MemberDTO> getMembersBasedOnRole(String currentUserId) {
+	     // 현재 로그인한 사용자의 Role을 확인
+	     MemberEntity currentUser = memberRepository.findByMemberId(currentUserId)
+	         .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + currentUserId));
+
+	     // 관리자인 경우 모든 회원을 반환
+	     if ("ROLE_ADMIN".equals(currentUser.getMemberRole())) {
+	         return memberRepository.findAll().stream()
+	             .map(MemberDTO::toDTO)
+	             .collect(Collectors.toList());
+	     }
+	     
+	     // 일반 사용자일 경우 USER 역할만 반환
+	     return memberRepository.findByMemberRole("ROLE_USER").stream()
+	         .map(MemberDTO::toDTO)
+	         .collect(Collectors.toList());
+	 }
+	 
 	 /**
 	  * 모든 회원 목록을 반환 (삭제 상태 포함).
 	  * @return 회원 목록
-	  */
+	  
 	 public List<MemberDTO> getAllMembers() {
-	     return memberRepository.findAll().stream().map(MemberDTO::toDTO).collect(Collectors.toList());
+	     return memberRepository.findAll().stream()
+	    		 .map(MemberDTO::toDTO)
+	    		 .collect(Collectors.toList());
 	 }
+	 */
 	
 	 /**
 	  * 특정 채팅방에 사용자를 추가.
